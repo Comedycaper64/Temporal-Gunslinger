@@ -26,6 +26,13 @@ public class Bullet : MonoBehaviour
 
     private void RedirectBullet()
     {
-        bulletMovement.RedirectBullet(bulletCameraController.GetCameraRotation());
+        if (RedirectManager.Instance.TryRedirect())
+        {
+            bulletMovement.RedirectBullet(bulletCameraController.GetCameraRotation());
+        }
+        else
+        {
+            //Sound effect or other indicator
+        }
     }
 }

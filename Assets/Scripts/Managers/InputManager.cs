@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public static InputManager Instance { get; private set; }
     private Controls controls;
     private Vector2 mouseMovement;
+    private bool bIsFocusing;
+    private bool bIsRewinding;
     public event Action OnShootAction;
 
     private void Awake()
@@ -24,6 +26,21 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         controls = new Controls();
         controls.Player.SetCallbacks(this);
         controls.Player.Enable();
+    }
+
+    public Vector2 GetMouseMovement()
+    {
+        return mouseMovement;
+    }
+
+    public bool GetIsFocusing()
+    {
+        return bIsFocusing;
+    }
+
+    public bool GetIsRewinding()
+    {
+        return bIsRewinding;
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -44,8 +61,27 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
-    public Vector2 GetMouseMovement()
+    public void OnFocus(InputAction.CallbackContext context)
     {
-        return mouseMovement;
+        if (context.performed)
+        {
+            bIsFocusing = true;
+        }
+        else if (context.canceled)
+        {
+            bIsFocusing = false;
+        }
+    }
+
+    public void OnRewind(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            bIsRewinding = true;
+        }
+        else if (context.canceled)
+        {
+            bIsRewinding = false;
+        }
     }
 }

@@ -44,6 +44,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Focus"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd61eaa3-af84-4f50-9382-efc146aecf68"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rewind"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7299eb9-8811-41b8-a17b-7006549e093d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +86,28 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cff57e56-66d7-4917-87a5-c30e17fe023f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Focus"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6f608a2-e896-4533-bf10-a6d3bf928343"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Rewind"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -84,6 +124,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_Focus = m_Player.FindAction("Focus", throwIfNotFound: true);
+        m_Player_Rewind = m_Player.FindAction("Rewind", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -145,12 +187,16 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_Focus;
+    private readonly InputAction m_Player_Rewind;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @Focus => m_Wrapper.m_Player_Focus;
+        public InputAction @Rewind => m_Wrapper.m_Player_Rewind;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -166,6 +212,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                @Focus.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFocus;
+                @Focus.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFocus;
+                @Focus.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFocus;
+                @Rewind.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewind;
+                @Rewind.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewind;
+                @Rewind.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRewind;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -176,6 +228,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @Focus.started += instance.OnFocus;
+                @Focus.performed += instance.OnFocus;
+                @Focus.canceled += instance.OnFocus;
+                @Rewind.started += instance.OnRewind;
+                @Rewind.performed += instance.OnRewind;
+                @Rewind.canceled += instance.OnRewind;
             }
         }
     }
@@ -193,5 +251,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     {
         void OnLook(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnFocus(InputAction.CallbackContext context);
+        void OnRewind(InputAction.CallbackContext context);
     }
 }
