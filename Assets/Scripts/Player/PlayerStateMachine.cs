@@ -6,8 +6,8 @@ public class PlayerStateMachine : StateMachine
 {
     public GameObject bulletPrefab;
 
-    public Transform playerBody;
-    public Transform cameraBody;
+    // public Transform playerBody;
+    // public Transform cameraBody;
     public Transform bulletEmitter;
 
     private void Start()

@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 {
     public static InputManager Instance { get; private set; }
     private Controls controls;
-    public Vector2 mouseMovement;
+    private Vector2 mouseMovement;
     public event Action OnShootAction;
 
     private void Awake()
@@ -42,5 +42,10 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         {
             OnShootAction?.Invoke();
         }
+    }
+
+    public Vector2 GetMouseMovement()
+    {
+        return mouseMovement;
     }
 }

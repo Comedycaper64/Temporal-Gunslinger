@@ -4,23 +4,35 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private State currentState;
-
+    //private State currentState;
     private float mouseSensitivity = 15f;
-    public Transform playerBody;
-    float xRotation = 0f;
+    private float xRotation = 0f;
+    private bool bMovementEnabled = false;
+    private InputManager input;
+
+    [SerializeField]
+    private Transform playerBody;
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
+        input = InputManager.Instance;
     }
 
     void Update()
     {
-        currentState?.Tick(Time.deltaTime);
+        if (!bMovementEnabled)
+        {
+            return;
+        }
 
-        Vector2 mouseMovement =
-            InputManager.Instance.mouseMovement * mouseSensitivity * Time.deltaTime;
+        RotatePlayer();
+    }
+
+    //Rotates player view and player model based on mouse movement
+    private void RotatePlayer()
+    {
+        Vector2 mouseMovement = input.GetMouseMovement() * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseMovement.y;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -30,10 +42,8 @@ public class PlayerController : MonoBehaviour
         playerBody.Rotate(Vector3.up * mouseMovement.x);
     }
 
-    public void SwitchState(State newState)
+    public void TogglePlayerController(bool toggle)
     {
-        currentState?.Exit();
-        currentState = newState;
-        currentState?.Enter();
+        bMovementEnabled = toggle;
     }
 }

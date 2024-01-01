@@ -5,47 +5,48 @@ using UnityEngine;
 
 public class PlayerAimingState : PlayerBaseState
 {
-    float xRotation = 0f;
-    private float mouseSensitivity = 15f;
+    private PlayerController playerController;
 
     public PlayerAimingState(PlayerStateMachine stateMachine)
         : base(stateMachine) { }
 
     public override void Enter()
     {
+        //When aiming, ensures mouse is captured
         Cursor.lockState = CursorLockMode.Locked;
+
+        playerController = stateMachine.GetComponent<PlayerController>();
+        playerController.TogglePlayerController(true);
         InputManager.Instance.OnShootAction += ShootBullet;
     }
 
     public override void Tick(float deltaTime)
     {
-        Vector2 mouseMovement =
-            InputManager.Instance.mouseMovement * mouseSensitivity * Time.deltaTime;
+        // Vector2 mouseMovement =
+        //     InputManager.Instance.mouseMovement * mouseSensitivity * Time.deltaTime;
 
-        xRotation -= mouseMovement.y;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        // xRotation -= mouseMovement.y;
+        // xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        stateMachine.cameraBody.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        // stateMachine.cameraBody.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
-        stateMachine.playerBody.Rotate(Vector3.up * mouseMovement.x);
+        // stateMachine.playerBody.Rotate(Vector3.up * mouseMovement.x);
     }
 
     public override void Exit()
     {
         Cursor.lockState = CursorLockMode.None;
+        playerController.TogglePlayerController(false);
         InputManager.Instance.OnShootAction -= ShootBullet;
     }
 
     private void ShootBullet()
     {
-        Bullet bullet = GameObject
-            .Instantiate(
-                stateMachine.bulletPrefab,
-                stateMachine.bulletEmitter.position,
-                Quaternion.Euler(stateMachine.bulletEmitter.forward)
-            )
-            .GetComponent<Bullet>();
-        bullet.SetupBullet(1f);
-        stateMachine.SwitchState(new PlayerBulletState(stateMachine, bullet));
+        GameObject.Instantiate(
+            stateMachine.bulletPrefab,
+            stateMachine.bulletEmitter.position,
+            stateMachine.bulletEmitter.rotation
+        );
+        stateMachine.SwitchState(new PlayerBulletState(stateMachine));
     }
 }
