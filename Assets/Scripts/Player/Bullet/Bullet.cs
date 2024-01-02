@@ -28,11 +28,19 @@ public class Bullet : MonoBehaviour
     {
         if (RedirectManager.Instance.TryRedirect())
         {
-            bulletMovement.RedirectBullet(bulletCameraController.GetCameraRotation());
+            Redirect.BulletRedirected(transform.position, bulletMovement.GetRotation(), this);
+            bulletMovement.RedirectBullet(bulletCameraController.GetCameraForward());
         }
         else
         {
             //Sound effect or other indicator
         }
+    }
+
+    public void UndoRedirect(Vector3 position, Quaternion rotation)
+    {
+        bulletMovement.RedirectBullet(rotation);
+        transform.position = position;
+        RedirectManager.Instance.IncrementRedirects();
     }
 }

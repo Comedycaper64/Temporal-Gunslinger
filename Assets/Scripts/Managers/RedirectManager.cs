@@ -49,4 +49,9 @@ public class RedirectManager : MonoBehaviour
         redirects = newRedirects;
         OnRedirectsChanged?.Invoke(this, redirects);
     }
+
+    public void IncrementRedirects()
+    {
+        SetRedirects(++redirects);
+    }
 }

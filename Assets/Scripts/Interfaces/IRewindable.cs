@@ -4,8 +4,7 @@ using UnityEngine;
 
 public interface IRewindable
 {
-    void Execute();
-    void Undo();
-    float GetTimestamp();
-    void SetTimestamp(float timestamp);
+    void BeginRewind();
+
+    void BeginPlay();
 }

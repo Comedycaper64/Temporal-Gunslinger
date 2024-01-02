@@ -2,16 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Redirect : IRewindable
+public class Redirect : IRewindableAction
 {
     private float timestamp;
     private Vector3 redirectPosition;
     private Quaternion initialRotation;
+    private Bullet redirectedBullet;
 
-    public Redirect(Vector3 redirectPosition, Quaternion initialRotation)
+    public static void BulletRedirected(
+        Vector3 redirectPosition,
+        Quaternion initialRotation,
+        Bullet redirectedBullet
+    )
+    {
+        if (!RewindManager.Instance)
+        {
+            return;
+        }
+
+        Redirect newRedirect = new Redirect(redirectPosition, initialRotation, redirectedBullet);
+    }
+
+    public Redirect(Vector3 redirectPosition, Quaternion initialRotation, Bullet redirectedBullet)
     {
         this.redirectPosition = redirectPosition;
         this.initialRotation = initialRotation;
+        this.redirectedBullet = redirectedBullet;
+
+        Execute();
     }
 
     public void Execute()
@@ -31,8 +49,6 @@ public class Redirect : IRewindable
 
     public void Undo()
     {
-        //set position of bullet
-        //set rotation of bullet
-        //add redirect to redirect manager
+        redirectedBullet.UndoRedirect(redirectPosition, initialRotation);
     }
 }
