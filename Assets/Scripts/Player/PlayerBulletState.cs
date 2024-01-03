@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class PlayerBulletState : PlayerBaseState
 {
-    public PlayerBulletState(PlayerStateMachine stateMachine)
-        : base(stateMachine) { }
+    Transform bulletTransform;
+
+    public PlayerBulletState(PlayerStateMachine stateMachine, Transform bullet)
+        : base(stateMachine)
+    {
+        bulletTransform = bullet;
+    }
 
     public override void Enter()
     {
@@ -19,5 +24,10 @@ public class PlayerBulletState : PlayerBaseState
     public override void Exit()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public Transform GetBulletTransform()
+    {
+        return bulletTransform;
     }
 }

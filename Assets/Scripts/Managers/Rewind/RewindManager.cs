@@ -10,7 +10,7 @@ public class RewindManager : MonoBehaviour
     private float rewindTimer = 0f;
     private bool bTimerActive = false;
     private bool bRewindActive = false;
-    private Stack<IRewindableAction> rewindables = new Stack<IRewindableAction>();
+    private Stack<RewindableAction> rewindables = new Stack<RewindableAction>();
     private InputManager input;
     public event EventHandler<bool> OnRewindToggled;
 
@@ -58,7 +58,7 @@ public class RewindManager : MonoBehaviour
         bool bNoOutstandingRewindables = false;
         while (!bNoOutstandingRewindables)
         {
-            if (!rewindables.TryPeek(out IRewindableAction rewindable))
+            if (!rewindables.TryPeek(out RewindableAction rewindable))
             {
                 bNoOutstandingRewindables = true;
                 ResetManager();
@@ -80,7 +80,7 @@ public class RewindManager : MonoBehaviour
         }
     }
 
-    public void AddRewindable(IRewindableAction rewindable)
+    public void AddRewindable(RewindableAction rewindable)
     {
         if ((rewindables.Count == 0) && !bTimerActive)
         {

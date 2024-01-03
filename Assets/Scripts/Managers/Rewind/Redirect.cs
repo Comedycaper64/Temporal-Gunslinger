@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Redirect : IRewindableAction
+public class Redirect : RewindableAction
 {
-    private float timestamp;
     private Vector3 redirectPosition;
     private Quaternion initialRotation;
     private Bullet redirectedBullet;
@@ -32,22 +31,7 @@ public class Redirect : IRewindableAction
         Execute();
     }
 
-    public void Execute()
-    {
-        RewindManager.Instance.AddRewindable(this);
-    }
-
-    public float GetTimestamp()
-    {
-        return timestamp;
-    }
-
-    public void SetTimestamp(float timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-
-    public void Undo()
+    public override void Undo()
     {
         redirectedBullet.UndoRedirect(redirectPosition, initialRotation);
     }

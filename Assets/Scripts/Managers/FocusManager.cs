@@ -8,11 +8,14 @@ public class FocusManager : MonoBehaviour
     private bool bCanFocus = false;
     private bool bFocusing = false;
     private float focusTimeScale = 0.5f;
-
+    private Transform bulletTransform;
+    private Transform mainCameraTransform;
+    private AimLine focusAimLine;
     private InputManager inputManager;
 
     private void Start()
     {
+        mainCameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;
         PlayerStateMachine.OnPlayerStateChanged += ToggleCanFocus;
     }
@@ -33,13 +36,22 @@ public class FocusManager : MonoBehaviour
         {
             ToggleFocusing(inputManager.GetIsFocusing());
         }
+
+        if (bFocusing)
+        {
+            focusAimLine.UpdateLineDirection(mainCameraTransform.forward);
+        }
     }
 
-    private void ToggleCanFocus(object sender, State e)
+    private void ToggleCanFocus(object sender, State newState)
     {
-        if (e.GetType() == typeof(PlayerBulletState))
+        if (newState.GetType() == typeof(PlayerBulletState))
         {
             bCanFocus = true;
+
+            //Not terribly happy with this
+            PlayerBulletState bulletState = (PlayerBulletState)newState;
+            bulletTransform = bulletState.GetBulletTransform();
         }
         else
         {
@@ -65,10 +77,27 @@ public class FocusManager : MonoBehaviour
     private void UnFocus()
     {
         Time.timeScale = 1f;
+
+        if (focusAimLine)
+        {
+            focusAimLine.ToggleLine(false);
+        }
     }
 
     private void Focus()
     {
         Time.timeScale = focusTimeScale;
+        if (!focusAimLine)
+        {
+            if (!AimLineManager.Instance || !bulletTransform)
+            {
+                return;
+            }
+            focusAimLine = AimLineManager.Instance.CreateAimLine(
+                bulletTransform,
+                mainCameraTransform.forward
+            );
+        }
+        focusAimLine.ToggleLine(true);
     }
 }

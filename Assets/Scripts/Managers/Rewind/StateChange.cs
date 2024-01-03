@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateChange : IRewindableAction
+public class StateChange : RewindableAction
 {
-    private float timestamp;
-
     private StateMachine stateMachine;
     private State previousState;
 
@@ -27,7 +25,7 @@ public class StateChange : IRewindableAction
         Execute();
     }
 
-    public void Execute()
+    public override void Execute()
     {
         RewindManager rewindManager = RewindManager.Instance;
 
@@ -37,17 +35,7 @@ public class StateChange : IRewindableAction
         }
     }
 
-    public float GetTimestamp()
-    {
-        return timestamp;
-    }
-
-    public void SetTimestamp(float timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-
-    public void Undo()
+    public override void Undo()
     {
         stateMachine.SwitchState(previousState);
     }

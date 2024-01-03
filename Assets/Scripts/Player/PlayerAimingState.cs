@@ -42,12 +42,13 @@ public class PlayerAimingState : PlayerBaseState
 
     private void ShootBullet()
     {
-        GameObject gameObject = GameObject.Instantiate(
-            stateMachine.bulletPrefab,
-            stateMachine.bulletEmitter.position,
-            stateMachine.bulletEmitter.rotation
-        );
-        ObjectInstantiation.ObjectCreated(gameObject);
-        stateMachine.SwitchState(new PlayerBulletState(stateMachine));
+        Transform bulletTransform = Factory.Instance
+            .InstantiateGameObject(
+                stateMachine.bulletPrefab,
+                stateMachine.bulletEmitter.position,
+                stateMachine.bulletEmitter.rotation
+            )
+            .transform;
+        stateMachine.SwitchState(new PlayerBulletState(stateMachine, bulletTransform));
     }
 }

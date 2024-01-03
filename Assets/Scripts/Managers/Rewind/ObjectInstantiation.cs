@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectInstantiation : IRewindableAction
+public class ObjectInstantiation : RewindableAction
 {
-    private float timestamp;
     private GameObject createdGameObject;
 
     public static void ObjectCreated(GameObject gameObject)
@@ -23,22 +22,7 @@ public class ObjectInstantiation : IRewindableAction
         Execute();
     }
 
-    public void Execute()
-    {
-        RewindManager.Instance.AddRewindable(this);
-    }
-
-    public float GetTimestamp()
-    {
-        return timestamp;
-    }
-
-    public void SetTimestamp(float timestamp)
-    {
-        this.timestamp = timestamp;
-    }
-
-    public void Undo()
+    public override void Undo()
     {
         GameObject.Destroy(createdGameObject);
     }
