@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBulletState : PlayerBaseState
+public class PlayerBulletState : State
 {
-    Transform bulletTransform;
+    //Transform bulletTransform;
 
-    public PlayerBulletState(PlayerStateMachine stateMachine, Transform bullet)
+    public PlayerBulletState(PlayerStateMachine stateMachine)
         : base(stateMachine)
     {
-        bulletTransform = bullet;
+        //bulletTransform = bullet;
     }
 
     public override void Enter()
@@ -26,8 +26,8 @@ public class PlayerBulletState : PlayerBaseState
         Cursor.lockState = CursorLockMode.None;
     }
 
-    public Transform GetBulletTransform()
-    {
-        return bulletTransform;
-    }
+    // public Transform GetBulletTransform()
+    // {
+    //     return bulletTransform;
+    // }
 }

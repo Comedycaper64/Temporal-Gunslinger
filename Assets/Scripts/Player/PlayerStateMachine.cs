@@ -6,22 +6,22 @@ using UnityEngine.Events;
 
 public class PlayerStateMachine : StateMachine
 {
-    public GameObject bulletPrefab;
-
-    // public Transform playerBody;
-    // public Transform cameraBody;
-    public Transform bulletEmitter;
-
-    public static event EventHandler<State> OnPlayerStateChanged;
+    //public static event EventHandler<State> OnPlayerStateChanged;
 
     private void Start()
     {
-        SwitchState(new PlayerAimingState(this));
+        SwitchState(stateDictionary[StateEnum.inactive]);
     }
 
-    public override void SwitchState(State newState)
+    // public override void SwitchState(State newState)
+    // {
+    //     base.SwitchState(newState);
+    //     OnPlayerStateChanged?.Invoke(this, newState);
+    // }
+
+    protected override void SetupDictionary()
     {
-        base.SwitchState(newState);
-        OnPlayerStateChanged?.Invoke(this, newState);
+        stateDictionary.Add(StateEnum.inactive, new PlayerAimingState(this));
+        stateDictionary.Add(StateEnum.active, new PlayerBulletState(this));
     }
 }

@@ -14,11 +14,6 @@ public class Redirect : RewindableAction
         Bullet redirectedBullet
     )
     {
-        if (!RewindManager.Instance)
-        {
-            return;
-        }
-
         Redirect newRedirect = new Redirect(redirectPosition, initialRotation, redirectedBullet);
     }
 

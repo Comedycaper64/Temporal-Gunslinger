@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IRewindable
+public interface IDamageable
 {
-    void BeginRewind();
-
-    void BeginPlay();
+    void ProjectileHit(Bullet projectile);
 }

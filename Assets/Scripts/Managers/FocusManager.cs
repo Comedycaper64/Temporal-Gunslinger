@@ -17,12 +17,7 @@ public class FocusManager : MonoBehaviour
     {
         mainCameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;
-        PlayerStateMachine.OnPlayerStateChanged += ToggleCanFocus;
-    }
-
-    private void OnDisable()
-    {
-        PlayerStateMachine.OnPlayerStateChanged -= ToggleCanFocus;
+        bulletTransform = transform;
     }
 
     private void Update()
@@ -43,21 +38,10 @@ public class FocusManager : MonoBehaviour
         }
     }
 
-    private void ToggleCanFocus(object sender, State newState)
+    public void ToggleCanFocus(bool toggle)
     {
-        if (newState.GetType() == typeof(PlayerBulletState))
-        {
-            bCanFocus = true;
-
-            //Not terribly happy with this
-            PlayerBulletState bulletState = (PlayerBulletState)newState;
-            bulletTransform = bulletState.GetBulletTransform();
-        }
-        else
-        {
-            bCanFocus = false;
-            ToggleFocusing(false);
-        }
+        bCanFocus = toggle;
+        ToggleFocusing(false);
     }
 
     private void ToggleFocusing(bool isFocusing)

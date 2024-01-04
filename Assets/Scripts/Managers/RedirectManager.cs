@@ -5,24 +5,11 @@ using UnityEngine;
 
 public class RedirectManager : MonoBehaviour
 {
-    public static RedirectManager Instance { get; private set; }
+    //public static RedirectManager Instance { get; private set; }
 
     private int redirects = 0;
 
-    public event EventHandler<int> OnRedirectsChanged;
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError(
-                "There's more than one RedirectManager! " + transform + " - " + Instance
-            );
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+    public static event EventHandler<int> OnRedirectsChanged;
 
     //Debug, redirects should be set in level/game manager
     private void Start()

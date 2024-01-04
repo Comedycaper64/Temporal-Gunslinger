@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private Transform playerBody;
 
+    [SerializeField]
+    private PlayerGun playerGun;
+
     void Start()
     {
-        //Cursor.lockState = CursorLockMode.Locked;
         input = InputManager.Instance;
+        input.OnShootAction += FireGun;
+    }
+
+    private void OnDisable()
+    {
+        input.OnShootAction -= FireGun;
     }
 
     void Update()
@@ -45,5 +54,16 @@ public class PlayerController : MonoBehaviour
     public void TogglePlayerController(bool toggle)
     {
         bMovementEnabled = toggle;
+    }
+
+    private void FireGun()
+    {
+        if (!bMovementEnabled)
+        {
+            return;
+        }
+        //Gun fired signal to Game Manager
+        GameManager.Instance.LevelStart();
+        playerGun.ShootBullet();
     }
 }

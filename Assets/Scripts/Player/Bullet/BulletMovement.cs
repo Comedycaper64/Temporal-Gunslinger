@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMovement : MonoBehaviour, IRewindable
+public class BulletMovement : RewindableMovement
 {
     [SerializeField]
     private float bulletStartSpeed = 1f;
@@ -12,32 +12,26 @@ public class BulletMovement : MonoBehaviour, IRewindable
     [SerializeField]
     private Transform bulletModel;
 
-    private void Start()
+    private void StartBullet()
     {
-        SetupBullet(bulletStartSpeed);
-        RewindManager.Instance.OnRewindToggled += RewindToggled;
+        bulletSpeed = bulletStartSpeed;
     }
 
-    private void OnDisable()
+    private void StopBullet()
     {
-        RewindManager.Instance.OnRewindToggled -= RewindToggled;
+        bulletSpeed = 0f;
     }
 
-    private void RewindToggled(object sender, bool rewindToggled)
+    public void ToggleBulletMovement(bool toggle)
     {
-        if (rewindToggled)
+        if (toggle)
         {
-            BeginRewind();
+            StartBullet();
         }
         else
         {
-            BeginPlay();
+            StopBullet();
         }
-    }
-
-    public void SetupBullet(float speed)
-    {
-        bulletSpeed = speed;
     }
 
     public void RedirectBullet(Quaternion newRotation)
@@ -56,12 +50,12 @@ public class BulletMovement : MonoBehaviour, IRewindable
         transform.Translate(bulletModel.forward * bulletSpeed * Time.deltaTime);
     }
 
-    public void BeginRewind()
+    public override void BeginRewind()
     {
         bulletSpeed = Mathf.Abs(bulletSpeed) * -1;
     }
 
-    public void BeginPlay()
+    public override void BeginPlay()
     {
         bulletSpeed = Mathf.Abs(bulletSpeed);
     }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAimingState : PlayerBaseState
+public class PlayerAimingState : State
 {
     private PlayerController playerController;
 
@@ -17,7 +17,7 @@ public class PlayerAimingState : PlayerBaseState
 
         playerController = stateMachine.GetComponent<PlayerController>();
         playerController.TogglePlayerController(true);
-        InputManager.Instance.OnShootAction += ShootBullet;
+        //InputManager.Instance.OnShootAction += ShootBullet;
     }
 
     public override void Tick(float deltaTime)
@@ -37,18 +37,6 @@ public class PlayerAimingState : PlayerBaseState
     {
         Cursor.lockState = CursorLockMode.None;
         playerController.TogglePlayerController(false);
-        InputManager.Instance.OnShootAction -= ShootBullet;
-    }
-
-    private void ShootBullet()
-    {
-        Transform bulletTransform = Factory.Instance
-            .InstantiateGameObject(
-                stateMachine.bulletPrefab,
-                stateMachine.bulletEmitter.position,
-                stateMachine.bulletEmitter.rotation
-            )
-            .transform;
-        stateMachine.SwitchState(new PlayerBulletState(stateMachine, bulletTransform));
+        //InputManager.Instance.OnShootAction -= ShootBullet;
     }
 }

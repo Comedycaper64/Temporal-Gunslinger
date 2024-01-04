@@ -11,4 +11,9 @@ public class BulletCameraController : MonoBehaviour
     {
         return Quaternion.LookRotation(bulletCamera.forward);
     }
+
+    public void ToggleCamera(bool toggle)
+    {
+        bulletCamera.gameObject.SetActive(toggle);
+    }
 }

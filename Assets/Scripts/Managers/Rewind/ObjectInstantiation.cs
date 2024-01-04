@@ -8,11 +8,6 @@ public class ObjectInstantiation : RewindableAction
 
     public static void ObjectCreated(GameObject gameObject)
     {
-        if (!RewindManager.Instance)
-        {
-            return;
-        }
-
         ObjectInstantiation objectInstantiation = new ObjectInstantiation(gameObject);
     }
 

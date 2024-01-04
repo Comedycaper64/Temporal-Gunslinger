@@ -9,9 +9,9 @@ public class RedirectUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI redirectText;
 
-    private void Start()
+    private void Awake()
     {
-        RedirectManager.Instance.OnRedirectsChanged += UpdateText;
+        RedirectManager.OnRedirectsChanged += UpdateText;
     }
 
     private void UpdateText(object sender, int e)
@@ -21,6 +21,6 @@ public class RedirectUI : MonoBehaviour
 
     private void OnDisable()
     {
-        RedirectManager.Instance.OnRedirectsChanged -= UpdateText;
+        RedirectManager.OnRedirectsChanged -= UpdateText;
     }
 }

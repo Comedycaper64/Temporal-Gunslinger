@@ -5,29 +5,38 @@ using UnityEngine;
 
 public class RewindManager : MonoBehaviour
 {
-    public static RewindManager Instance { get; private set; }
+    //public static RewindManager Instance { get; private set; }
 
     private float rewindTimer = 0f;
     private bool bTimerActive = false;
     private bool bRewindActive = false;
-    private Stack<RewindableAction> rewindables = new Stack<RewindableAction>();
+    private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
+    private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
-    public event EventHandler<bool> OnRewindToggled;
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("There's more than one RewindManager! " + transform + " - " + Instance);
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+    //public event EventHandler<bool> OnRewindToggled;
+
+    // private void Awake()
+    // {
+    //     if (Instance != null)
+    //     {
+    //         Debug.LogError("There's more than one RewindManager! " + transform + " - " + Instance);
+    //         Destroy(gameObject);
+    //         return;
+    //     }
+    //     Instance = this;
+    // }
 
     private void Start()
     {
         input = InputManager.Instance;
+        rewindableMovements = RewindableMovement.Instances;
+        RewindableAction.OnRewindableActionCreated += RewindableActionCreated;
+    }
+
+    private void OnDisable()
+    {
+        RewindableAction.OnRewindableActionCreated -= RewindableActionCreated;
     }
 
     private void Update()
@@ -58,7 +67,7 @@ public class RewindManager : MonoBehaviour
         bool bNoOutstandingRewindables = false;
         while (!bNoOutstandingRewindables)
         {
-            if (!rewindables.TryPeek(out RewindableAction rewindable))
+            if (!rewindableActions.TryPeek(out RewindableAction rewindable))
             {
                 bNoOutstandingRewindables = true;
                 ResetManager();
@@ -73,7 +82,8 @@ public class RewindManager : MonoBehaviour
                 else
                 {
                     Debug.Log("Undo");
-                    rewindables.Pop();
+                    rewindableActions.Pop();
+
                     rewindable.Undo();
                 }
             }
@@ -82,12 +92,13 @@ public class RewindManager : MonoBehaviour
 
     public void AddRewindable(RewindableAction rewindable)
     {
-        if ((rewindables.Count == 0) && !bTimerActive)
+        if (!bTimerActive)
         {
-            ToggleTimer(true);
+            return;
         }
+
         rewindable.SetTimestamp(rewindTimer);
-        rewindables.Push(rewindable);
+        rewindableActions.Push(rewindable);
         Debug.Log("Timestamp: " + rewindTimer + ", Object: " + rewindable.GetType());
     }
 
@@ -99,7 +110,23 @@ public class RewindManager : MonoBehaviour
     private void ToggleRewind(bool toggle)
     {
         bRewindActive = toggle;
-        OnRewindToggled?.Invoke(this, bRewindActive);
+        ToggleRewindableMovements(toggle);
+        //OnRewindToggled?.Invoke(this, bRewindActive);
+    }
+
+    private void ToggleRewindableMovements(bool toggle)
+    {
+        foreach (RewindableMovement rewindableMovement in rewindableMovements)
+        {
+            if (toggle)
+            {
+                rewindableMovement.BeginRewind();
+            }
+            else
+            {
+                rewindableMovement.BeginPlay();
+            }
+        }
     }
 
     private void ResetManager()
@@ -117,5 +144,15 @@ public class RewindManager : MonoBehaviour
     public bool GetTimerActive()
     {
         return bTimerActive;
+    }
+
+    public void StartTimer()
+    {
+        ToggleTimer(true);
+    }
+
+    private void RewindableActionCreated(object sender, RewindableAction newRewindable)
+    {
+        AddRewindable(newRewindable);
     }
 }

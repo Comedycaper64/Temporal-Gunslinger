@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Factory : MonoBehaviour
 {
-    public static Factory Instance { get; private set; }
+    // public static Factory Instance { get; private set; }
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Debug.LogError("There's more than one Factory! " + transform + " - " + Instance);
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+    // private void Awake()
+    // {
+    //     if (Instance != null)
+    //     {
+    //         Debug.LogError("There's more than one Factory! " + transform + " - " + Instance);
+    //         Destroy(gameObject);
+    //         return;
+    //     }
+    //     Instance = this;
+    // }
 
-    public GameObject InstantiateGameObject(
+    public static GameObject InstantiateGameObject(
         GameObject prefab,
         Vector3 position,
         Quaternion rotation
@@ -28,7 +28,7 @@ public class Factory : MonoBehaviour
         return gameObject;
     }
 
-    public GameObject InstantiateGameObject(GameObject prefab, Transform parent)
+    public static GameObject InstantiateGameObject(GameObject prefab, Transform parent)
     {
         GameObject gameObject = Instantiate(prefab, parent);
         ObjectInstantiation.ObjectCreated(gameObject);
