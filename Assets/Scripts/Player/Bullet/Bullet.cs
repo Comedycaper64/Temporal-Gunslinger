@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Bullet : MonoBehaviour
     private bool bBulletActive;
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
+    private BulletStateMachine bulletStateMachine;
     private RedirectManager redirectManager;
     private FocusManager focusManager;
 
@@ -15,13 +17,9 @@ public class Bullet : MonoBehaviour
     {
         bulletMovement = GetComponent<BulletMovement>();
         bulletCameraController = GetComponent<BulletCameraController>();
+        bulletStateMachine = GetComponent<BulletStateMachine>();
         redirectManager = GetComponent<RedirectManager>();
         focusManager = GetComponent<FocusManager>();
-    }
-
-    private void Start()
-    {
-        InputManager.Instance.OnShootAction += RedirectBullet;
     }
 
     private void OnDisable()
@@ -31,10 +29,10 @@ public class Bullet : MonoBehaviour
 
     private void RedirectBullet()
     {
-        if (bBulletActive && redirectManager.TryRedirect())
+        if (redirectManager.TryRedirect())
         {
-            Redirect.BulletRedirected(transform.position, bulletMovement.GetRotation(), this);
-            bulletMovement.RedirectBullet(bulletCameraController.GetCameraForward());
+            Redirect.BulletRedirected(transform.position, bulletMovement.GetBulletRotation(), this);
+            bulletMovement.RedirectBullet(bulletCameraController.GetCameraRotation());
         }
         else
         {
@@ -55,11 +53,24 @@ public class Bullet : MonoBehaviour
         bulletMovement.ToggleBulletMovement(toggle);
         focusManager.ToggleCanFocus(toggle);
         bBulletActive = toggle;
+        if (toggle)
+        {
+            InputManager.Instance.OnShootAction += RedirectBullet;
+        }
+        else
+        {
+            InputManager.Instance.OnShootAction -= RedirectBullet;
+        }
     }
 
     public bool IsBulletActive()
     {
         return bBulletActive;
+    }
+
+    public void BulletImpact()
+    {
+        bulletStateMachine.SwitchState(new BulletDeadState(bulletStateMachine));
     }
 
     private void OnTriggerEnter(Collider other)

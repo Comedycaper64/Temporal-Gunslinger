@@ -18,6 +18,10 @@ public class FocusManager : MonoBehaviour
         mainCameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;
         bulletTransform = transform;
+        focusAimLine = AimLineManager.Instance.CreateAimLine(
+            bulletTransform,
+            mainCameraTransform.forward
+        );
     }
 
     private void Update()
@@ -71,17 +75,10 @@ public class FocusManager : MonoBehaviour
     private void Focus()
     {
         Time.timeScale = focusTimeScale;
-        if (!focusAimLine)
+
+        if (focusAimLine)
         {
-            if (!AimLineManager.Instance || !bulletTransform)
-            {
-                return;
-            }
-            focusAimLine = AimLineManager.Instance.CreateAimLine(
-                bulletTransform,
-                mainCameraTransform.forward
-            );
+            focusAimLine.ToggleLine(true);
         }
-        focusAimLine.ToggleLine(true);
     }
 }

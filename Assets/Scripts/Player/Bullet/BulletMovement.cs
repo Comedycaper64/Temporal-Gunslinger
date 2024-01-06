@@ -6,11 +6,22 @@ using UnityEngine;
 public class BulletMovement : RewindableMovement
 {
     [SerializeField]
+    private bool startOnSpawn;
+
+    [SerializeField]
     private float bulletStartSpeed = 1f;
     private float bulletSpeed = 0f;
 
     [SerializeField]
     private Transform bulletModel;
+
+    private void Start()
+    {
+        if (startOnSpawn)
+        {
+            ToggleBulletMovement(true);
+        }
+    }
 
     private void StartBullet()
     {
@@ -34,13 +45,13 @@ public class BulletMovement : RewindableMovement
         }
     }
 
-    public void RedirectBullet(Quaternion newRotation)
+    public void RedirectBullet(Quaternion newForward)
     {
         //Rudimentary redirect, uses rotation of camera
-        bulletModel.rotation = newRotation;
+        //bulletModel.localRotation = newRotation;
     }
 
-    public Quaternion GetRotation()
+    public Quaternion GetBulletRotation()
     {
         return bulletModel.rotation;
     }
@@ -53,10 +64,12 @@ public class BulletMovement : RewindableMovement
     public override void BeginRewind()
     {
         bulletSpeed = Mathf.Abs(bulletSpeed) * -1;
+        bulletStartSpeed = Mathf.Abs(bulletStartSpeed) * -1;
     }
 
     public override void BeginPlay()
     {
         bulletSpeed = Mathf.Abs(bulletSpeed);
+        bulletStartSpeed = Mathf.Abs(bulletStartSpeed);
     }
 }

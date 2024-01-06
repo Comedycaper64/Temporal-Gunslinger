@@ -7,9 +7,9 @@ public class BulletCameraController : MonoBehaviour
     [SerializeField]
     private Transform bulletCamera;
 
-    public Quaternion GetCameraForward()
+    public Quaternion GetCameraRotation()
     {
-        return Quaternion.LookRotation(bulletCamera.forward);
+        return Quaternion.LookRotation(Camera.main.transform.forward);
     }
 
     public void ToggleCamera(bool toggle)
