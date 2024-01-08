@@ -8,8 +8,13 @@ public class FocusManager : MonoBehaviour
     private bool bCanFocus = false;
     private bool bFocusing = false;
     private float focusTimeScale = 0.5f;
-    private Transform bulletTransform;
+
+    //private Vector3 aimLineDirection;
+
+    [SerializeField]
+    private Transform bulletModelTransform;
     private Transform mainCameraTransform;
+    private Transform currentAimTransform;
     private AimLine focusAimLine;
     private InputManager inputManager;
 
@@ -17,29 +22,33 @@ public class FocusManager : MonoBehaviour
     {
         mainCameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;
-        bulletTransform = transform;
-        focusAimLine = AimLineManager.Instance.CreateAimLine(
-            bulletTransform,
-            mainCameraTransform.forward
-        );
+        CreateAimLine();
     }
 
     private void Update()
     {
+        focusAimLine.UpdateLineDirection(currentAimTransform.forward);
+
         if (!bCanFocus)
         {
             return;
         }
 
-        if (inputManager.GetIsFocusing() != bFocusing)
-        {
-            ToggleFocusing(inputManager.GetIsFocusing());
-        }
+        // if (inputManager.GetIsFocusing() != bFocusing)
+        // {
+        //     ToggleFocusing(inputManager.GetIsFocusing());
+        // }
+    }
 
-        if (bFocusing)
-        {
-            focusAimLine.UpdateLineDirection(mainCameraTransform.forward);
-        }
+    private void CreateAimLine()
+    {
+        focusAimLine = AimLineManager.Instance.CreateAimLine(
+            bulletModelTransform,
+            bulletModelTransform.forward
+        );
+        //aimLineDirection = bulletModelTransform.forward;
+        SetCurrentAimTransform(bulletModelTransform);
+        focusAimLine.ToggleLine(true);
     }
 
     public void ToggleCanFocus(bool toggle)
@@ -48,7 +57,7 @@ public class FocusManager : MonoBehaviour
         ToggleFocusing(false);
     }
 
-    private void ToggleFocusing(bool isFocusing)
+    public void ToggleFocusing(bool isFocusing)
     {
         bFocusing = isFocusing;
 
@@ -68,7 +77,8 @@ public class FocusManager : MonoBehaviour
 
         if (focusAimLine)
         {
-            focusAimLine.ToggleLine(false);
+            //aimLineDirection = bulletModelTransform.forward;
+            SetCurrentAimTransform(bulletModelTransform);
         }
     }
 
@@ -78,7 +88,20 @@ public class FocusManager : MonoBehaviour
 
         if (focusAimLine)
         {
-            focusAimLine.ToggleLine(true);
+            //aimLineDirection = mainCameraTransform.forward;
+            SetCurrentAimTransform(mainCameraTransform);
         }
     }
+
+    private void SetCurrentAimTransform(Transform newTransform)
+    {
+        currentAimTransform = newTransform;
+    }
+
+    public bool IsFocusing()
+    {
+        return bFocusing;
+    }
+
+    public Vector3 GetAimDirection() => focusAimLine.GetLineDirection();
 }

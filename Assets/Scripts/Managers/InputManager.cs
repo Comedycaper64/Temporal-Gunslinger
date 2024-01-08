@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private bool bIsFocusing;
     private bool bIsRewinding;
     public event Action OnShootAction;
+    public event Action OnPossessAction;
 
     private void Awake()
     {
@@ -82,6 +83,18 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else if (context.canceled)
         {
             bIsRewinding = false;
+        }
+    }
+
+    public void OnPossess(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            OnPossessAction?.Invoke();
         }
     }
 }

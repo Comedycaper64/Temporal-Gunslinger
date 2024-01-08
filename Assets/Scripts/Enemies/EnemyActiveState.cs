@@ -9,8 +9,8 @@ public class EnemyActiveState : State
 
     public override void Enter()
     {
-        EnemyStateMachine enemyStateMachine = stateMachine as EnemyStateMachine;
-        Factory.InstantiateGameObject(enemyStateMachine.projectile, enemyStateMachine.emitter);
+        // EnemyStateMachine enemyStateMachine = stateMachine as EnemyStateMachine;
+        // Factory.InstantiateGameObject(enemyStateMachine.projectile, enemyStateMachine.emitter);
     }
 
     public override void Exit() { }

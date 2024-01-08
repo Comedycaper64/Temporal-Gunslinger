@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyStateMachine : StateMachine
 {
-    public GameObject projectile;
-    public Transform emitter;
+    // public GameObject projectile;
+    // public Transform emitter;
 
     private void Start()
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 // The player's bullet
 public class Bullet : MonoBehaviour
 {
-    private bool bBulletActive;
+    //private bool bBulletActive;
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
@@ -18,21 +18,35 @@ public class Bullet : MonoBehaviour
         bulletMovement = GetComponent<BulletMovement>();
         bulletCameraController = GetComponent<BulletCameraController>();
         bulletStateMachine = GetComponent<BulletStateMachine>();
-        redirectManager = GetComponent<RedirectManager>();
         focusManager = GetComponent<FocusManager>();
     }
 
-    private void OnDisable()
+    private void Start()
     {
-        InputManager.Instance.OnShootAction -= RedirectBullet;
+        redirectManager = RedirectManager.Instance;
     }
 
-    private void RedirectBullet()
+    // private void OnDisable()
+    // {
+    //     InputManager.Instance.OnShootAction -= RedirectBullet;
+    // }
+
+    public void RedirectBullet()
     {
-        if (redirectManager.TryRedirect())
+        if (!redirectManager)
         {
-            Redirect.BulletRedirected(transform.position, bulletMovement.GetBulletRotation(), this);
-            bulletMovement.RedirectBullet(bulletCameraController.GetCameraRotation());
+            Debug.Log("No Redirect Manager Instance!");
+            return;
+        }
+
+        if (focusManager.IsFocusing() && redirectManager.TryRedirect())
+        {
+            Redirect.BulletRedirected(
+                transform.position,
+                bulletMovement.GetFlightDirection(),
+                this
+            );
+            bulletMovement.RedirectBullet(focusManager.GetAimDirection(), GetAimRotation());
         }
         else
         {
@@ -40,33 +54,65 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void UndoRedirect(Vector3 position, Quaternion rotation)
+    private Quaternion GetAimRotation()
     {
-        bulletMovement.RedirectBullet(rotation);
+        return Quaternion.LookRotation(focusManager.GetAimDirection());
+    }
+
+    public void UndoRedirect(Vector3 position, Vector3 direction)
+    {
+        Quaternion undoRotation = Quaternion.LookRotation(direction);
+        bulletMovement.RedirectBullet(direction, undoRotation);
         transform.position = position;
         redirectManager.IncrementRedirects();
     }
 
+    //Should be split into making the bullet active / taking control of bullet
+    //Active bullet moves, controlled bullet toggles camera + focus can focus
+    //+ subbing to OnShoot
     public void ToggleBulletActive(bool toggle)
     {
-        bulletCameraController.ToggleCamera(toggle);
         bulletMovement.ToggleBulletMovement(toggle);
-        focusManager.ToggleCanFocus(toggle);
-        bBulletActive = toggle;
+
         if (toggle)
         {
-            InputManager.Instance.OnShootAction += RedirectBullet;
+            bulletMovement.RedirectBullet(focusManager.GetAimDirection(), GetAimRotation());
         }
-        else
-        {
-            InputManager.Instance.OnShootAction -= RedirectBullet;
-        }
+
+        //bBulletActive = toggle;
+        // if (toggle)
+        // {
+        //     InputManager.Instance.OnShootAction += RedirectBullet;
+
+        //     //Refactor needed
+
+        // }
+        // else
+        // {
+        //     InputManager.Instance.OnShootAction -= RedirectBullet;
+        // }
     }
 
-    public bool IsBulletActive()
+    public void ToggleBulletPossessed(bool toggle)
     {
-        return bBulletActive;
+        bulletCameraController.ToggleCamera(toggle);
+        focusManager.ToggleCanFocus(toggle);
     }
+
+    public void SetIsFocusing(bool isFocusing)
+    {
+        focusManager.ToggleFocusing(isFocusing);
+    }
+
+    public bool IsFocusing()
+    {
+        return focusManager.IsFocusing();
+    }
+
+    // public bool IsBulletActive()
+    // {
+    //     return bBulletActive;
+    // }
 
     public void BulletImpact()
     {

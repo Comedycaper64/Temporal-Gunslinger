@@ -5,22 +5,22 @@ using UnityEngine;
 public class Redirect : RewindableAction
 {
     private Vector3 redirectPosition;
-    private Quaternion initialRotation;
+    private Vector3 initialDirection;
     private Bullet redirectedBullet;
 
     public static void BulletRedirected(
         Vector3 redirectPosition,
-        Quaternion initialRotation,
+        Vector3 initialDirection,
         Bullet redirectedBullet
     )
     {
-        Redirect newRedirect = new Redirect(redirectPosition, initialRotation, redirectedBullet);
+        Redirect newRedirect = new Redirect(redirectPosition, initialDirection, redirectedBullet);
     }
 
-    public Redirect(Vector3 redirectPosition, Quaternion initialRotation, Bullet redirectedBullet)
+    public Redirect(Vector3 redirectPosition, Vector3 initialDirection, Bullet redirectedBullet)
     {
         this.redirectPosition = redirectPosition;
-        this.initialRotation = initialRotation;
+        this.initialDirection = initialDirection;
         this.redirectedBullet = redirectedBullet;
 
         Execute();
@@ -28,6 +28,6 @@ public class Redirect : RewindableAction
 
     public override void Undo()
     {
-        redirectedBullet.UndoRedirect(redirectPosition, initialRotation);
+        redirectedBullet.UndoRedirect(redirectPosition, initialDirection);
     }
 }

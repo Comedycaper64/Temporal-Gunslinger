@@ -73,4 +73,16 @@ public class AimLine : MonoBehaviour
     {
         lineDirection = direction;
     }
+
+    public Vector3 GetLineDirection()
+    {
+        if (lineRenderer.positionCount <= 0)
+        {
+            return Vector3.forward;
+        }
+
+        Vector3[] rendererPositions = new Vector3[lineRenderer.positionCount];
+        lineRenderer.GetPositions(rendererPositions);
+        return (rendererPositions[1] - rendererPositions[0]).normalized;
+    }
 }
