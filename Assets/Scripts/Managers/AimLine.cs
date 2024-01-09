@@ -5,6 +5,7 @@ using UnityEngine;
 public class AimLine : MonoBehaviour
 {
     private float lineRange = 100f;
+    private float hitVisualHoverDistance = 0.01f;
     private bool bShowLine = false;
     private Transform lineOrigin;
     private Vector3 lineDirection;
@@ -46,7 +47,8 @@ public class AimLine : MonoBehaviour
         if (Physics.Raycast(originPosition, lineDirection, out hit, lineRange, hitLayerMask))
         {
             ToggleHitVisualVisibility(true);
-            hitVisual.position = hit.point;
+            hitVisual.position = hit.point + (hit.normal * hitVisualHoverDistance);
+            hitVisual.rotation = Quaternion.LookRotation(-hit.normal);
             positionArray[1] = hit.point;
         }
         else

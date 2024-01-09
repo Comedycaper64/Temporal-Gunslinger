@@ -5,5 +5,6 @@ using UnityEngine;
 public enum StateEnum
 {
     inactive,
-    active
+    active,
+    dead
 }

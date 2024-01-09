@@ -11,12 +11,12 @@ public abstract class StateMachine : MonoBehaviour
     private void Awake()
     {
         SetupDictionary();
-        GameManager.OnGameStateChange += GameManagerStateChange;
+        GameManager.OnGameStateChange += GameManager_OnGameStateChange;
     }
 
     private void OnDisable()
     {
-        GameManager.OnGameStateChange -= GameManagerStateChange;
+        GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
     }
 
     void Update()
@@ -39,9 +39,14 @@ public abstract class StateMachine : MonoBehaviour
         currentState?.Enter();
     }
 
+    public virtual void SwitchToDeadState()
+    {
+        SwitchState(stateDictionary[StateEnum.dead]);
+    }
+
     protected abstract void SetupDictionary();
 
-    private void GameManagerStateChange(object sender, StateEnum stateChange)
+    private void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
     {
         SwitchState(stateDictionary[stateChange]);
     }

@@ -23,5 +23,6 @@ public class PlayerStateMachine : StateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new PlayerAimingState(this));
         stateDictionary.Add(StateEnum.active, new PlayerBulletState(this));
+        stateDictionary.Add(StateEnum.dead, new PlayerDeadState(this));
     }
 }

@@ -16,10 +16,11 @@ public class EnemyStateMachine : StateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.active, new EnemyActiveState(this));
+        stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 
-    public void EnterDeadState()
-    {
-        SwitchState(new EnemyDeadState(this));
-    }
+    // public void EnterDeadState()
+    // {
+    //     SwitchState(new EnemyDeadState(this));
+    // }
 }

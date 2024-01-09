@@ -55,6 +55,20 @@ public class BulletPossessor : MonoBehaviour
         {
             possessedBullet.UnpossessBullet();
         }
+        BulletPossess.BulletPossessed(this, possessedBullet);
+        newBullet.PossessBullet();
+        possessedBullet = newBullet;
+    }
+
+    public void UndoPossess(BulletPossessTarget newBullet)
+    {
+        possessedBullet.UnpossessBullet();
+        if (!newBullet)
+        {
+            possessedBullet = null;
+            return;
+        }
+
         newBullet.PossessBullet();
         possessedBullet = newBullet;
     }
@@ -75,7 +89,6 @@ public class BulletPossessor : MonoBehaviour
         {
             return;
         }
-        //Highlight all possessables near bullet in BulletPossessTarget
         bIsFocusing = isFocusing;
         possessedBullet.SetIsFocusing(isFocusing);
     }
