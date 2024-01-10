@@ -6,7 +6,7 @@ using UnityEngine;
 // The player's bullet
 public class Bullet : MonoBehaviour
 {
-    //private bool bBulletActive;
+    private bool bBulletActive;
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
@@ -72,7 +72,8 @@ public class Bullet : MonoBehaviour
     //+ subbing to OnShoot
     public void ToggleBulletActive(bool toggle)
     {
-        bulletMovement.ToggleBulletMovement(toggle);
+        bulletMovement.ToggleMovement(toggle);
+        bBulletActive = toggle;
 
         if (toggle)
         {
@@ -121,6 +122,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!bBulletActive)
+        {
+            return;
+        }
+
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             damageable.ProjectileHit(this);

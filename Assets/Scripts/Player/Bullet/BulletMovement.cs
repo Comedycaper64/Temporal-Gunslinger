@@ -5,44 +5,35 @@ using UnityEngine;
 
 public class BulletMovement : RewindableMovement
 {
-    // [SerializeField]
-    // private bool startOnSpawn;
+    private bool bShouldRotate;
+    private float rotationTimer;
 
-    [SerializeField]
-    private float bulletStartSpeed = 1f;
-    private float bulletSpeed = 0f;
+    private float rotationSpeed = 2.5f;
     private Vector3 flightDirection;
+    private Quaternion targetRotation;
 
     [SerializeField]
     private Transform bulletModel;
 
-    // private void Start()
-    // {
-    //     if (startOnSpawn)
-    //     {
-    //         ToggleBulletMovement(true);
-    //     }
-    // }
-
-    private void StartBullet()
+    private void Update()
     {
-        bulletSpeed = bulletStartSpeed;
-    }
+        transform.position += flightDirection * speed * Time.deltaTime;
 
-    private void StopBullet()
-    {
-        bulletSpeed = 0f;
-    }
-
-    public void ToggleBulletMovement(bool toggle)
-    {
-        if (toggle)
+        if (!bShouldRotate)
         {
-            StartBullet();
+            return;
         }
-        else
+
+        bulletModel.rotation = Quaternion.Slerp(
+            bulletModel.rotation,
+            targetRotation,
+            rotationTimer * rotationSpeed
+        );
+        rotationTimer += Time.deltaTime;
+
+        if (Quaternion.Angle(bulletModel.rotation, targetRotation) < 0.1f)
         {
-            StopBullet();
+            bShouldRotate = false;
         }
     }
 
@@ -50,7 +41,10 @@ public class BulletMovement : RewindableMovement
     {
         //Rudimentary redirect, uses rotation of camera
         flightDirection = newDirection;
-        bulletModel.rotation = newRotation;
+        //bulletModel.rotation = newRotation;
+        targetRotation = newRotation;
+        rotationTimer = 0f;
+        bShouldRotate = true;
     }
 
     public Vector3 GetFlightDirection()
@@ -61,23 +55,5 @@ public class BulletMovement : RewindableMovement
     public Vector3 GetBulletUp()
     {
         return bulletModel.up;
-    }
-
-    private void Update()
-    {
-        //transform.Translate(flightDirection * bulletSpeed * Time.deltaTime);
-        transform.position += flightDirection * bulletSpeed * Time.deltaTime;
-    }
-
-    public override void BeginRewind()
-    {
-        bulletSpeed = Mathf.Abs(bulletSpeed) * -1;
-        bulletStartSpeed = Mathf.Abs(bulletStartSpeed) * -1;
-    }
-
-    public override void BeginPlay()
-    {
-        bulletSpeed = Mathf.Abs(bulletSpeed);
-        bulletStartSpeed = Mathf.Abs(bulletStartSpeed);
     }
 }

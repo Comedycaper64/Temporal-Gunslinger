@@ -75,19 +75,29 @@ public class PlayerController : MonoBehaviour
     public void TogglePlayerController(bool toggle)
     {
         bMovementEnabled = toggle;
+
+        if (bMovementEnabled)
+        {
+            playerGun.ToggleAimGun(false);
+        }
     }
 
     private void InputManager_OnShootAction()
     {
+        if (!bIsFocusing)
+        {
+            return;
+        }
+
         if (!bMovementEnabled)
         {
             bulletPossessor.RedirectBullet();
-            return;
         }
-        //Gun fired signal to Game Manager
-        GameManager.Instance.LevelStart();
-        bulletPossessor.PossessBullet(initialBullet);
-        //playerGun.ShootBullet();
+        else
+        {
+            GameManager.Instance.LevelStart();
+            bulletPossessor.PossessBullet(initialBullet);
+        }
     }
 
     private void InputManager_OnPossessAction()
@@ -97,6 +107,13 @@ public class PlayerController : MonoBehaviour
 
     private void IsFocusingChanged(bool isFocusing)
     {
-        bulletPossessor.SetIsFocusing(isFocusing);
+        if (!bMovementEnabled)
+        {
+            bulletPossessor.SetIsFocusing(isFocusing);
+        }
+        else
+        {
+            playerGun.ToggleAimGun(isFocusing);
+        }
     }
 }

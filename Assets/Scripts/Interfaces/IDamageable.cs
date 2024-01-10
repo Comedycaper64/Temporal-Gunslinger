@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IDamageable
 {
+    void ProjectileHit(MeleeWeapon weapon);
     void ProjectileHit(Bullet projectile);
 }

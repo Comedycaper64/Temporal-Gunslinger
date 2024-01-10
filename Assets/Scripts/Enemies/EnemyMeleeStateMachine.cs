@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine : StateMachine
+public class EnemyMeleeStateMachine : StateMachine
 {
     private void Start()
     {
@@ -12,7 +12,7 @@ public class EnemyStateMachine : StateMachine
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyActiveState(this));
+        stateDictionary.Add(StateEnum.active, new EnemyMeleeActiveState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 }

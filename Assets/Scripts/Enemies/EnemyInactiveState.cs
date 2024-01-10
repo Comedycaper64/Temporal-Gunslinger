@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyInactiveState : State
 {
-    public EnemyInactiveState(EnemyStateMachine stateMachine)
+    public EnemyInactiveState(StateMachine stateMachine)
         : base(stateMachine) { }
 
     public override void Enter()

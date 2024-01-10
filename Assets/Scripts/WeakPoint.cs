@@ -11,4 +11,10 @@ public class WeakPoint : MonoBehaviour, IDamageable
     {
         OnHit?.Invoke();
     }
+
+    public void ProjectileHit(MeleeWeapon weapon)
+    {
+        weapon.WeaponImpact();
+        OnHit?.Invoke();
+    }
 }

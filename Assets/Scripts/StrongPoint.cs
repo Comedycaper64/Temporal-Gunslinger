@@ -6,7 +6,11 @@ public class StrongPoint : MonoBehaviour, IDamageable
 {
     public void ProjectileHit(Bullet projectile)
     {
-        //Currently not good, breaks bullet rewind
         projectile.BulletImpact();
+    }
+
+    public void ProjectileHit(MeleeWeapon weapon)
+    {
+        weapon.WeaponImpact();
     }
 }

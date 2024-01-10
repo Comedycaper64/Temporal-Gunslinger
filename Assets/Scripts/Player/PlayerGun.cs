@@ -4,13 +4,51 @@ using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
 {
-    //public Bullet bullet;
+    private bool shouldGunMove;
+    private float gunMoveTime = 0.1f;
+    private float distanceAllowance = 0.001f;
+    private Vector3 gunVelocity = Vector3.zero;
+    private Transform target;
 
-    public void ShootBullet()
+    [SerializeField]
+    private Transform gunModel;
+
+    [SerializeField]
+    private Transform standbyPosition;
+
+    [SerializeField]
+    private Transform aimingPosition;
+
+    private void Update()
     {
-        // Transform bulletTransform = Factory.Instance
-        //     .InstantiateGameObject(bulletPrefab, bulletEmitter.position, bulletEmitter.rotation)
-        //     .transform;
-        //stateMachine.SwitchState(new PlayerBulletState(stateMachine, bulletTransform));
+        if (!shouldGunMove)
+        {
+            return;
+        }
+
+        gunModel.position = Vector3.SmoothDamp(
+            gunModel.position,
+            target.position,
+            ref gunVelocity,
+            gunMoveTime
+        );
+
+        if (Vector3.Distance(gunModel.position, target.position) < distanceAllowance)
+        {
+            shouldGunMove = false;
+        }
+    }
+
+    public void ToggleAimGun(bool toggle)
+    {
+        if (toggle)
+        {
+            target = aimingPosition;
+        }
+        else
+        {
+            target = standbyPosition;
+        }
+        shouldGunMove = true;
     }
 }
