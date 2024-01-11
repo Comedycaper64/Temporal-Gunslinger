@@ -5,27 +5,12 @@ using UnityEngine;
 
 public class RewindManager : MonoBehaviour
 {
-    //public static RewindManager Instance { get; private set; }
-
     private float rewindTimer = 0f;
     private bool bTimerActive = false;
     private bool bRewindActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
     private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
-
-    //public event EventHandler<bool> OnRewindToggled;
-
-    // private void Awake()
-    // {
-    //     if (Instance != null)
-    //     {
-    //         Debug.LogError("There's more than one RewindManager! " + transform + " - " + Instance);
-    //         Destroy(gameObject);
-    //         return;
-    //     }
-    //     Instance = this;
-    // }
 
     private void Start()
     {
@@ -75,7 +60,7 @@ public class RewindManager : MonoBehaviour
             else
             {
                 float timestamp = rewindable.GetTimestamp();
-                if (timestamp <= rewindTimer)
+                if ((timestamp < rewindTimer) && (rewindable.GetType() != typeof(StopTime)))
                 {
                     bNoOutstandingRewindables = true;
                 }

@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //enum tracker for inactive / active game state
-    // fires off event when switching between the two
-    //state machine implement an abstract SetupDictionary for setting up what states correspond to inactive / active
-    //Player / enemy statemachine then have to setup their active / inactive states that they'll switch to depending on game manager
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
 
@@ -33,6 +29,4 @@ public class GameManager : MonoBehaviour
 
         OnGameStateChange?.Invoke(this, StateEnum.active);
     }
-
-    //Method for setting level into inactive state again, signal sent from rewind manager when rewindable stack is empty
 }

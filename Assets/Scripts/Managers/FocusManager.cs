@@ -7,7 +7,6 @@ public class FocusManager : MonoBehaviour
 {
     private bool bCanFocus = false;
     private bool bFocusing = false;
-    private float focusTimeScale = 0.5f;
 
     //private Vector3 aimLineDirection;
 
@@ -73,7 +72,7 @@ public class FocusManager : MonoBehaviour
 
     private void UnFocus()
     {
-        Time.timeScale = 1f;
+        TimeManager.SetNormalTime();
 
         if (focusAimLine)
         {
@@ -84,7 +83,7 @@ public class FocusManager : MonoBehaviour
 
     private void Focus()
     {
-        Time.timeScale = focusTimeScale;
+        TimeManager.SetSlowedTime();
 
         if (focusAimLine)
         {

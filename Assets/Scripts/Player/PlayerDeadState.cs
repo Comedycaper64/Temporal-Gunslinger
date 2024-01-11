@@ -14,6 +14,7 @@ public class PlayerDeadState : State
     public override void Enter()
     {
         //Retry UI
+        TimeManager.SetPausedTime();
         OnPlayerDied?.Invoke(this, true);
     }
 
