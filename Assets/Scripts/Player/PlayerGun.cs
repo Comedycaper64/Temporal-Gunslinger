@@ -19,6 +19,9 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private Transform aimingPosition;
 
+    [SerializeField]
+    private VFXPlayback gunShotVFX;
+
     private void Update()
     {
         if (!shouldGunMove)
@@ -50,5 +53,11 @@ public class PlayerGun : MonoBehaviour
             target = standbyPosition;
         }
         shouldGunMove = true;
+    }
+
+    public void FireGun()
+    {
+        //SFX
+        gunShotVFX.PlayEffect();
     }
 }

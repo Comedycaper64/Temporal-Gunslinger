@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             GameManager.Instance.LevelStart();
+            playerGun.FireGun();
             bulletPossessor.PossessBullet(initialBullet);
         }
     }
