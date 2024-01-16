@@ -95,6 +95,7 @@ public class RewindManager : MonoBehaviour
     private void ToggleRewind(bool toggle)
     {
         bRewindActive = toggle;
+
         ToggleRewindableMovements(toggle);
         //OnRewindToggled?.Invoke(this, bRewindActive);
     }

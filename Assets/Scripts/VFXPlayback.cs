@@ -5,66 +5,42 @@ using UnityEngine.VFX;
 
 public class VFXPlayback : RewindableMovement
 {
-    // private float vfxPlayRate;
-    // private float simulationTime = 0.0f;
-    // private float startTime = 0.0f;
-    // private bool effectPlaying;
+    private float vfxPlayRate;
+    private float simulationTime = 0.0f;
+    private bool effectPlaying;
     private VisualEffect visualEffect;
+    private const string TIME_VARIABLE = "Time";
 
     private void Start()
     {
         visualEffect = GetComponent<VisualEffect>();
-        //visualEffect.Simulate(startTime);
     }
 
-    // private void Update()
-    // {
-    //     //Little jank
-    //     if (vfxPlayRate != speed)
-    //     {
-    //         vfxPlayRate = speed;
-    //         ChangeVFXPlayRate(vfxPlayRate);
-    //     }
+    private void Update()
+    {
+        if (!effectPlaying)
+        {
+            return;
+        }
+        simulationTime += Time.deltaTime * speed;
+        visualEffect.SetFloat(TIME_VARIABLE, simulationTime);
+    }
 
-    //     if (!effectPlaying)
-    //     {
-    //         return;
-    //     }
-
-    //     // visualEffect.Stop();
-
-    //     // bool useAutoRandomSeed = visualEffect.resetSeedOnPlay;
-    //     // visualEffect.resetSeedOnPlay = false;
-
-    //     // visualEffect.Play();
-
-    //     // float deltaTime = visualEffect.
-    //     //     ? Time.unscaledDeltaTime
-    //     //     : Time.deltaTime;
-    //     simulationTime += (Time.deltaTime * visualEffect.playRate) * vfxPlayRate;
-
-    //     float currentSimulationTime = startTime + simulationTime;
-    //     visualEffect.Simulate(currentSimulationTime);
-
-    //     //visualEffect.resetSeedOnPlay = useAutoRandomSeed;
-
-    //     if (currentSimulationTime < 0.0f)
-    //     {
-    //         visualEffect.Play();
-    //         visualEffect.Stop();
-    //     }
-    // }
-
-    // private void ChangeVFXPlayRate(float playRate)
-    // {
-    //     // visualEffect.playRate = playRate;
-    //     // visualEffect.Simulate(1);
-    // }
+    public void StopEffect()
+    {
+        visualEffect.Reinit();
+        visualEffect.Stop();
+        effectPlaying = false;
+        simulationTime = 0.0f;
+        ToggleMovement(false);
+    }
 
     public void PlayEffect()
     {
         visualEffect.Play();
-
-        //ToggleMovement(true);
+        simulationTime = 0.0f;
+        effectPlaying = true;
+        ToggleMovement(true);
+        VFXPlayed.VFXPlay(this);
     }
 }

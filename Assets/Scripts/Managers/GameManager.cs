@@ -2,11 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
+
+    //private PlayableDirector director;
 
     [SerializeField]
     private RewindManager rewindManager;
@@ -26,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         //Would like to stop using the instance
         rewindManager.StartTimer();
-
+        //director.Play();
         OnGameStateChange?.Invoke(this, StateEnum.active);
     }
 }
