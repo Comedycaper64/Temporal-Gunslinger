@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class BulletStateMachine : StateMachine
 {
+    // public override void Awake()
+    // {
+    //     SetupDictionary();
+    // }
+
     private void Start()
     {
         SwitchState(stateDictionary[StateEnum.inactive]);

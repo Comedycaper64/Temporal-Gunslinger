@@ -8,7 +8,7 @@ public abstract class StateMachine : MonoBehaviour
     private State currentState;
     protected Dictionary<StateEnum, State> stateDictionary = new Dictionary<StateEnum, State>();
 
-    private void Awake()
+    public virtual void Awake()
     {
         SetupDictionary();
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;

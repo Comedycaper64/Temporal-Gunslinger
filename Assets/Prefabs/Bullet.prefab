@@ -755,7 +755,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7828219722662083364}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.596, y: -0.1925, z: 1.9444001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
@@ -764,7 +764,7 @@ Transform:
   - {fileID: 5493667388143854021}
   - {fileID: 7734651061289415249}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7828219722662083360
 MonoBehaviour:
@@ -778,6 +778,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb94c0d236da19b459b3fc7bf8e1b6de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redirectVFXPrefab: {fileID: 3088319004803970211, guid: 36e7360dbcd21e84ea74d7180599ec8f,
+    type: 3}
 --- !u!114 &7828219722662083361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,7 +792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b6f594a620de714784f14bb6bc06fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletStartSpeed: 1
+  startSpeed: 1
   bulletModel: {fileID: 5493667388143854021}
 --- !u!114 &7828219722662083366
 MonoBehaviour:

@@ -11,9 +11,17 @@ public class VFXPlayback : RewindableMovement
     private VisualEffect visualEffect;
     private const string TIME_VARIABLE = "Time";
 
+    [SerializeField]
+    private bool bPlayOnStart;
+
     private void Start()
     {
         visualEffect = GetComponent<VisualEffect>();
+
+        if (bPlayOnStart)
+        {
+            PlayEffect();
+        }
     }
 
     private void Update()

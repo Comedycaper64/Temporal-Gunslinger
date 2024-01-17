@@ -13,6 +13,9 @@ public class Bullet : MonoBehaviour
     private RedirectManager redirectManager;
     private FocusManager focusManager;
 
+    [SerializeField]
+    private GameObject redirectVFXPrefab;
+
     private void Awake()
     {
         bulletMovement = GetComponent<BulletMovement>();
@@ -45,6 +48,11 @@ public class Bullet : MonoBehaviour
                 transform.position,
                 bulletMovement.GetFlightDirection(),
                 this
+            );
+            Factory.InstantiateGameObject(
+                redirectVFXPrefab,
+                transform.position,
+                Quaternion.LookRotation(bulletMovement.GetFlightDirection())
             );
             bulletMovement.RedirectBullet(focusManager.GetAimDirection(), GetAimRotation());
         }
