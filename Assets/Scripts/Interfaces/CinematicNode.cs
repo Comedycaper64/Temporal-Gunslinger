@@ -1,0 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
+public abstract class CinematicNode : ScriptableObject
+{
+    public event Action OnNodeFinished;
+}

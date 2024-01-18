@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BulletStateMachine : StateMachine
 {
-    // public override void Awake()
-    // {
-    //     SetupDictionary();
-    // }
+    public override void Awake()
+    {
+        SetupDictionary();
+    }
 
     private void Start()
     {
@@ -18,5 +18,10 @@ public class BulletStateMachine : StateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new BulletInactiveState(this));
         stateDictionary.Add(StateEnum.active, new BulletActiveState(this));
+    }
+
+    public void SwitchToActive()
+    {
+        SwitchState(stateDictionary[StateEnum.active]);
     }
 }

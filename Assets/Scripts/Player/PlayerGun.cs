@@ -22,6 +22,9 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private VFXPlayback gunShotVFX;
 
+    [SerializeField]
+    private BulletStateMachine bullet;
+
     private void Update()
     {
         if (!shouldGunMove)
@@ -59,5 +62,6 @@ public class PlayerGun : MonoBehaviour
     {
         //SFX
         gunShotVFX.PlayEffect();
+        bullet.SwitchToActive();
     }
 }
