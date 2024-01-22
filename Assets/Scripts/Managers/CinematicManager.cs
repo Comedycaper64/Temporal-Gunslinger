@@ -16,10 +16,8 @@ public class CinematicManager : MonoBehaviour
     //Hands off music change to audio manager
     private Queue<CinematicNode> cinematicNodes;
     private Action OnCinematicFinished;
-
-    [SerializeField]
     private DialogueManager dialogueManager;
-    public CinematicManager Instance { get; private set; }
+    public static CinematicManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -32,6 +30,11 @@ public class CinematicManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    private void Start()
+    {
+        dialogueManager = DialogueManager.Instance;
     }
 
     public void PlayCinematic(CinematicSO cinematicSO, Action OnCinematicFinished)
