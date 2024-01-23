@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
     //private State currentState;
     private float mouseSensitivity = 15f;
     private float xRotation = 0f;
-    private bool bMovementEnabled = false;
+    private bool bBulletFired = false;
+    private bool bIsPlayerActive = false;
     private bool bIsFocusing = false;
-    private InputManager input;
     private BulletPossessor bulletPossessor;
 
     [SerializeField]
@@ -30,28 +30,20 @@ public class PlayerController : MonoBehaviour
         bulletPossessor = GetComponent<BulletPossessor>();
     }
 
-    void Start()
-    {
-        input = InputManager.Instance;
-        input.OnShootAction += InputManager_OnShootAction;
-        input.OnPossessAction += InputManager_OnPossessAction;
-    }
-
-    private void OnDisable()
-    {
-        input.OnShootAction -= InputManager_OnShootAction;
-        input.OnPossessAction -= InputManager_OnPossessAction;
-    }
-
     void Update()
     {
-        if (input.GetIsFocusing() != bIsFocusing)
+        if (!bIsPlayerActive)
+        {
+            return;
+        }
+
+        if (InputManager.Instance.GetIsFocusing() != bIsFocusing)
         {
             bIsFocusing = !bIsFocusing;
             IsFocusingChanged(bIsFocusing);
         }
 
-        if (!bMovementEnabled)
+        if (bBulletFired)
         {
             return;
         }
@@ -62,7 +54,8 @@ public class PlayerController : MonoBehaviour
     //Rotates player view and player model based on mouse movement
     private void RotatePlayer()
     {
-        Vector2 mouseMovement = input.GetMouseMovement() * mouseSensitivity * Time.deltaTime;
+        Vector2 mouseMovement =
+            InputManager.Instance.GetMouseMovement() * mouseSensitivity * Time.deltaTime;
 
         xRotation -= mouseMovement.y;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -74,9 +67,25 @@ public class PlayerController : MonoBehaviour
 
     public void TogglePlayerController(bool toggle)
     {
-        bMovementEnabled = toggle;
+        bIsPlayerActive = toggle;
 
-        if (bMovementEnabled)
+        if (bIsPlayerActive)
+        {
+            InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+            InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
+        }
+        else
+        {
+            InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
+            InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
+        }
+    }
+
+    public void ToggleBulletFired(bool toggle)
+    {
+        bBulletFired = toggle;
+
+        if (bBulletFired)
         {
             playerGun.ToggleAimGun(false);
         }
@@ -89,7 +98,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (!bMovementEnabled)
+        if (bBulletFired)
         {
             bulletPossessor.RedirectBullet();
         }
@@ -108,7 +117,7 @@ public class PlayerController : MonoBehaviour
 
     private void IsFocusingChanged(bool isFocusing)
     {
-        if (!bMovementEnabled)
+        if (bBulletFired)
         {
             bulletPossessor.SetIsFocusing(isFocusing);
         }

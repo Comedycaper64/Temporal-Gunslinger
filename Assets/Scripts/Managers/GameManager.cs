@@ -9,10 +9,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
 
-    //private PlayableDirector director;
-
     [SerializeField]
     private RewindManager rewindManager;
+
+    [SerializeField]
+    private CinematicSO levelIntroCinematic;
 
     private void Awake()
     {
@@ -25,11 +26,20 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        OnGameStateChange?.Invoke(this, StateEnum.inactive);
+        CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
+    }
+
+    private void SetupLevel()
+    {
+        OnGameStateChange?.Invoke(this, StateEnum.idle);
+    }
+
     public void LevelStart()
     {
-        //Would like to stop using the instance
         rewindManager.StartTimer();
-        //director.Play();
         OnGameStateChange?.Invoke(this, StateEnum.active);
     }
 }

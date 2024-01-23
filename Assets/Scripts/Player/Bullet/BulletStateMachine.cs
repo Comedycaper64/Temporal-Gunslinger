@@ -11,11 +11,12 @@ public class BulletStateMachine : StateMachine
 
     private void Start()
     {
-        SwitchState(stateDictionary[StateEnum.inactive]);
+        SwitchState(stateDictionary[StateEnum.idle]);
     }
 
     protected override void SetupDictionary()
     {
+        stateDictionary.Add(StateEnum.idle, new BulletInactiveState(this));
         stateDictionary.Add(StateEnum.inactive, new BulletInactiveState(this));
         stateDictionary.Add(StateEnum.active, new BulletActiveState(this));
     }

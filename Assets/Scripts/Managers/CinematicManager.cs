@@ -6,16 +6,10 @@ using UnityEngine;
 
 public class CinematicManager : MonoBehaviour
 {
-    //Gets in a CinematicSO
-    //Determines what type of node it is
-    //Handles node appropriately
-    //Subscribes to OnNodeComplete event and waits for it to call before continuing
-    //Goes through list
-    //Hands off Dialogues to Dialogue Manager
-    //Hands off Timelines to Timeline manager
-    //Hands off music change to audio manager
     private Queue<CinematicNode> cinematicNodes;
     private Action OnCinematicFinished;
+
+    [SerializeField]
     private DialogueManager dialogueManager;
     public static CinematicManager Instance { get; private set; }
 
@@ -30,11 +24,6 @@ public class CinematicManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-
-    private void Start()
-    {
-        dialogueManager = DialogueManager.Instance;
     }
 
     public void PlayCinematic(CinematicSO cinematicSO, Action OnCinematicFinished)

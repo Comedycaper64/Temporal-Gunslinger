@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum StateEnum
 {
-    inactive,
+    idle,
     active,
-    dead
+    dead,
+    inactive
 }

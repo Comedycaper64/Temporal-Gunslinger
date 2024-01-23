@@ -4,12 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.Animations;
 using UnityEngine;
-using Random = UnityEngine.Random;
+
+public struct DialogueUIEventArgs
+{
+    public DialogueUIEventArgs(ActorSO actorSO, string sentence, Action onTypingFinished)
+    {
+        this.actorSO = actorSO;
+        this.sentence = sentence;
+        this.onTypingFinished = onTypingFinished;
+    }
+
+    public ActorSO actorSO;
+    public string sentence;
+    public Action onTypingFinished;
+}
 
 public class DialogueManager : MonoBehaviour
 {
     private bool bIsSentenceTyping;
-    private float timeBetweenLetterTyping = 0.05f;
+    private float crossFadeTime = 0.1f;
     private ActorSO currentActor;
     private Animator actorAnimator;
     private string currentSentence;
@@ -19,25 +32,15 @@ public class DialogueManager : MonoBehaviour
     private Queue<CameraMode> currentCameraModes;
     private Dictionary<AnimatorController, Animator> actorAnimatorPair =
         new Dictionary<AnimatorController, Animator>();
-    private Coroutine typingCoroutine;
 
     private Action onDialogueComplete;
     private Queue<Dialogue> dialogues;
-
-    public static DialogueManager Instance { get; private set; }
+    public static event Action OnFinishTypingDialogue;
+    public static event EventHandler<bool> OnToggleDialogueUI;
+    public static event EventHandler<DialogueUIEventArgs> OnDialogue;
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogError(
-                "There's more than one DialogueManager! " + transform + " - " + Instance
-            );
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
         dialogueCameraDirector = GetComponent<DialogueCameraDirector>();
     }
 
@@ -46,6 +49,7 @@ public class DialogueManager : MonoBehaviour
         this.onDialogueComplete = onDialogueComplete;
         dialogues = new Queue<Dialogue>(dialogueSO.GetDialogues());
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+        OnToggleDialogueUI?.Invoke(this, true);
         TryPlayNextDialogue();
     }
 
@@ -58,13 +62,12 @@ public class DialogueManager : MonoBehaviour
         }
         currentActor = dialogueNode.actor;
 
-        //Set name text to be actor name
         AnimatorController actorController = currentActor.GetAnimatorController();
         if (!actorAnimatorPair.TryGetValue(actorController, out Animator actorAnimator))
         {
-            //Find Gameobject with the animator controller, add to dictionary
+            //Finds Gameobject with the animator controller, adds to dictionary
             Animator[] animators = FindObjectsOfType<Animator>();
-            Animator desiredAnimator = animators.Single(
+            Animator desiredAnimator = animators.First(
                 animator => animator.runtimeAnimatorController == actorController
             );
             if (!desiredAnimator)
@@ -87,54 +90,46 @@ public class DialogueManager : MonoBehaviour
     {
         if (bIsSentenceTyping)
         {
-            FinishTypingSentence();
+            OnFinishTypingDialogue?.Invoke();
             return;
         }
 
         if (!currentDialogue.TryDequeue(out currentSentence))
         {
             TryPlayNextDialogue();
+            return;
         }
 
-        actorAnimator.Play(currentAnimations.Dequeue().GetHashCode());
+        actorAnimator.CrossFadeInFixedTime(currentAnimations.Dequeue().name, crossFadeTime);
 
         dialogueCameraDirector.ChangeCameraMode(
             currentCameraModes.Dequeue(),
             actorAnimator.transform
         );
 
-        typingCoroutine = StartCoroutine(TypeSentence());
+        StartTypingSentence();
     }
 
-    private IEnumerator TypeSentence()
+    private void StartTypingSentence()
     {
         bIsSentenceTyping = true;
-        //Clear dialogue Ui text
-        AudioClip[] actorClips = currentActor.GetDialogueNoises();
-        int clipsLength = actorClips.Length;
-        foreach (char letter in currentSentence.ToCharArray())
-        {
-            //dialogueText.text += letter;
 
-            AudioClip textSound = actorClips[Random.Range(0, clipsLength - 1)];
-            //get random dialogue sound from actor and play it in audio source
-
-            yield return new WaitForSeconds(timeBetweenLetterTyping);
-        }
-        bIsSentenceTyping = false;
+        OnDialogue?.Invoke(
+            this,
+            new DialogueUIEventArgs(currentActor, currentSentence, FinishTypingSentence)
+        );
     }
 
     private void FinishTypingSentence()
     {
-        StopCoroutine(typingCoroutine);
-        //Set dialogue UI text to be current sentence
         bIsSentenceTyping = false;
     }
 
     private void EndDialogue()
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
-        //Withdraw dialogue UI
+        OnToggleDialogueUI?.Invoke(this, false);
+        dialogueCameraDirector.ChangeCameraMode(CameraMode.none, transform);
         onDialogueComplete();
     }
 

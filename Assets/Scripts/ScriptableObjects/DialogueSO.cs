@@ -7,7 +7,8 @@ public enum CameraMode
 {
     fullbody,
     faceZoom,
-    wideAngle
+    wideAngle,
+    none,
 }
 
 [Serializable]
