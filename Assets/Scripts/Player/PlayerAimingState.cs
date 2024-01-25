@@ -26,5 +26,6 @@ public class PlayerAimingState : State
     public override void Exit()
     {
         Cursor.lockState = CursorLockMode.None;
+        playerController.TogglePlayerController(false);
     }
 }

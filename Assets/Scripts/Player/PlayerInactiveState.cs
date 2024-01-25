@@ -16,8 +16,6 @@ public class PlayerInactiveState : State
     {
         //When aiming, ensures mouse is captured
         //Cursor.lockState = CursorLockMode.Locked;
-
-        playerController.TogglePlayerController(false);
     }
 
     public override void Tick(float deltaTime) { }

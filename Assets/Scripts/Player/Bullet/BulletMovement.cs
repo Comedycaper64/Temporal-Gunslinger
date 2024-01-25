@@ -7,7 +7,8 @@ public class BulletMovement : RewindableMovement
 {
     private bool bShouldRotate;
     private float rotationTimer;
-
+    private float startVelocity = 1f;
+    private float velocityModifier;
     private float rotationSpeed = 2.5f;
     private Vector3 flightDirection;
     private Quaternion targetRotation;
@@ -15,9 +16,20 @@ public class BulletMovement : RewindableMovement
     [SerializeField]
     private Transform bulletModel;
 
+    [SerializeField]
+    private GameObject redirectVFXPrefab;
+
+    private RedirectManager redirectManager;
+
+    private void Start()
+    {
+        redirectManager = RedirectManager.Instance;
+        velocityModifier = startVelocity;
+    }
+
     private void Update()
     {
-        transform.position += flightDirection * speed * Time.deltaTime;
+        transform.position += flightDirection * speed * velocityModifier * Time.deltaTime;
 
         if (!bShouldRotate)
         {
@@ -39,12 +51,59 @@ public class BulletMovement : RewindableMovement
 
     public void RedirectBullet(Vector3 newDirection, Quaternion newRotation)
     {
-        //Rudimentary redirect, uses rotation of camera
+        if (redirectManager.TryRedirect())
+        {
+            Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
+            Factory.InstantiateGameObject(
+                redirectVFXPrefab,
+                transform.position,
+                Quaternion.LookRotation(GetFlightDirection())
+            );
+            ChangeTravelDirection(newDirection, newRotation);
+        }
+    }
+
+    public void ChangeTravelDirection(Vector3 newDirection, Quaternion newRotation)
+    {
         flightDirection = newDirection;
-        //bulletModel.rotation = newRotation;
         targetRotation = newRotation;
         rotationTimer = 0f;
         bShouldRotate = true;
+    }
+
+    public void RicochetBullet(Collider hitObject, float velocityAugment)
+    {
+        Vector3 testNormal = (
+            transform.position - hitObject.ClosestPoint(transform.position)
+        ).normalized;
+        Vector3 flightNormalized = GetFlightDirection().normalized;
+
+        Vector3 ricochetDirection =
+            2 * Vector3.Dot(-flightNormalized, testNormal) * (testNormal + flightNormalized);
+
+        Redirect.BulletRedirected(
+            transform.position,
+            GetFlightDirection(),
+            this,
+            velocityAugment,
+            true
+        );
+
+        AugmentVelocity(velocityAugment);
+        ChangeTravelDirection(ricochetDirection, Quaternion.LookRotation(ricochetDirection));
+    }
+
+    public void SlowBullet(float velocityAugment)
+    {
+        Redirect.BulletRedirected(
+            transform.position,
+            GetFlightDirection(),
+            this,
+            velocityAugment,
+            true
+        );
+
+        AugmentVelocity(velocityAugment);
     }
 
     public Vector3 GetFlightDirection()
@@ -52,8 +111,26 @@ public class BulletMovement : RewindableMovement
         return flightDirection;
     }
 
-    public Vector3 GetBulletUp()
+    public void AugmentVelocity(float velocityMultiplier)
     {
-        return bulletModel.up;
+        velocityModifier *= velocityMultiplier;
+        //rewindable action for undoing augmention
+    }
+
+    public void UndoRedirect(
+        Vector3 position,
+        Vector3 direction,
+        float velocityAugment,
+        bool bIsRicochet
+    )
+    {
+        Quaternion undoRotation = Quaternion.LookRotation(direction);
+        ChangeTravelDirection(direction, undoRotation);
+        transform.position = position;
+        velocityModifier /= velocityAugment;
+        if (!bIsRicochet)
+        {
+            redirectManager.IncrementRedirects();
+        }
     }
 }

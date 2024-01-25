@@ -10,11 +10,8 @@ public class Bullet : MonoBehaviour
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
-    private RedirectManager redirectManager;
-    private FocusManager focusManager;
 
-    [SerializeField]
-    private GameObject redirectVFXPrefab;
+    private FocusManager focusManager;
 
     private void Awake()
     {
@@ -24,11 +21,6 @@ public class Bullet : MonoBehaviour
         focusManager = GetComponent<FocusManager>();
     }
 
-    private void Start()
-    {
-        redirectManager = RedirectManager.Instance;
-    }
-
     // private void OnDisable()
     // {
     //     InputManager.Instance.OnShootAction -= RedirectBullet;
@@ -36,24 +28,8 @@ public class Bullet : MonoBehaviour
 
     public void RedirectBullet()
     {
-        if (!redirectManager)
+        if (focusManager.IsFocusing())
         {
-            Debug.Log("No Redirect Manager Instance!");
-            return;
-        }
-
-        if (focusManager.IsFocusing() && redirectManager.TryRedirect())
-        {
-            Redirect.BulletRedirected(
-                transform.position,
-                bulletMovement.GetFlightDirection(),
-                this
-            );
-            Factory.InstantiateGameObject(
-                redirectVFXPrefab,
-                transform.position,
-                Quaternion.LookRotation(bulletMovement.GetFlightDirection())
-            );
             bulletMovement.RedirectBullet(focusManager.GetAimDirection(), GetAimRotation());
         }
         else
@@ -67,17 +43,6 @@ public class Bullet : MonoBehaviour
         return Quaternion.LookRotation(focusManager.GetAimDirection());
     }
 
-    public void UndoRedirect(Vector3 position, Vector3 direction)
-    {
-        Quaternion undoRotation = Quaternion.LookRotation(direction);
-        bulletMovement.RedirectBullet(direction, undoRotation);
-        transform.position = position;
-        redirectManager.IncrementRedirects();
-    }
-
-    //Should be split into making the bullet active / taking control of bullet
-    //Active bullet moves, controlled bullet toggles camera + focus can focus
-    //+ subbing to OnShoot
     public void ToggleBulletActive(bool toggle)
     {
         bulletMovement.ToggleMovement(toggle);
@@ -85,21 +50,9 @@ public class Bullet : MonoBehaviour
 
         if (toggle)
         {
-            bulletMovement.RedirectBullet(focusManager.GetAimDirection(), GetAimRotation());
+            bulletMovement.ChangeTravelDirection(focusManager.GetAimDirection(), GetAimRotation());
+            UnparentObject.ObjectUnparented(transform, transform.parent);
         }
-
-        //bBulletActive = toggle;
-        // if (toggle)
-        // {
-        //     InputManager.Instance.OnShootAction += RedirectBullet;
-
-        //     //Refactor needed
-
-        // }
-        // else
-        // {
-        //     InputManager.Instance.OnShootAction -= RedirectBullet;
-        // }
     }
 
     public void ToggleBulletPossessed(bool toggle)
@@ -137,7 +90,15 @@ public class Bullet : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            damageable.ProjectileHit(this);
+            damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
+            if (!bIsPassable)
+            {
+                bulletMovement.RicochetBullet(other, velocityConservation);
+            }
+            else
+            {
+                bulletMovement.SlowBullet(velocityConservation);
+            }
         }
     }
 }

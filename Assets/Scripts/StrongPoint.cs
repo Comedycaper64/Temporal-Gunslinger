@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class StrongPoint : MonoBehaviour, IDamageable
 {
-    public void ProjectileHit(Bullet projectile)
+    [SerializeField]
+    private float velocityConservation = 0.8f;
+
+    public void ProjectileHit(out float velocityConservation, out bool bIsPassable) //Bullet projectile)
     {
-        projectile.BulletImpact();
+        //projectile.BulletImpact();
+        velocityConservation = this.velocityConservation;
+        bIsPassable = false;
     }
 
-    public void ProjectileHit(MeleeWeapon weapon)
-    {
-        weapon.WeaponImpact();
-    }
+    // public void ProjectileHit(MeleeWeapon weapon)
+    // {
+    //     weapon.WeaponImpact();
+    // }
 }

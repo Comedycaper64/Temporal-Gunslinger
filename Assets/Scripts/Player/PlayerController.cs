@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (!bIsPlayerActive)
+        if (!bIsPlayerActive && !bBulletFired)
         {
             return;
         }
@@ -72,12 +72,10 @@ public class PlayerController : MonoBehaviour
         if (bIsPlayerActive)
         {
             InputManager.Instance.OnShootAction += InputManager_OnShootAction;
-            InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
         }
         else
         {
             InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
-            InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
         }
     }
 
@@ -87,8 +85,19 @@ public class PlayerController : MonoBehaviour
 
         if (bBulletFired)
         {
-            playerGun.ToggleAimGun(false);
+            InputManager.Instance.OnShootAction += InputManager_OnRedirectAction;
+            InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
         }
+        else
+        {
+            InputManager.Instance.OnShootAction -= InputManager_OnRedirectAction;
+            InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
+        }
+
+        // if (bBulletFired)
+        // {
+        //     playerGun.ToggleAimGun(false);
+        // }
     }
 
     private void InputManager_OnShootAction()
@@ -98,16 +107,19 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (bBulletFired)
+        GameManager.Instance.LevelStart();
+        playerGun.FireGun();
+        bulletPossessor.PossessBullet(initialBullet);
+    }
+
+    private void InputManager_OnRedirectAction()
+    {
+        if (!bIsFocusing)
         {
-            bulletPossessor.RedirectBullet();
+            return;
         }
-        else
-        {
-            GameManager.Instance.LevelStart();
-            playerGun.FireGun();
-            bulletPossessor.PossessBullet(initialBullet);
-        }
+
+        bulletPossessor.RedirectBullet();
     }
 
     private void InputManager_OnPossessAction()

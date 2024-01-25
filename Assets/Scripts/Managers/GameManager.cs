@@ -28,8 +28,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        OnGameStateChange?.Invoke(this, StateEnum.inactive);
-        CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
+        //OnGameStateChange?.Invoke(this, StateEnum.inactive);
+        //CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
+        OnGameStateChange?.Invoke(this, StateEnum.idle);
     }
 
     private void SetupLevel()
