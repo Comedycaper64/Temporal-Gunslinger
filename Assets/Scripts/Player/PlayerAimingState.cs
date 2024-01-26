@@ -17,7 +17,7 @@ public class PlayerAimingState : State
     {
         //When aiming, ensures mouse is captured
         Cursor.lockState = CursorLockMode.Locked;
-
+        TimeManager.SetNormalTime();
         playerController.TogglePlayerController(true);
     }
 

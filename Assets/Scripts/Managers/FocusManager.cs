@@ -72,7 +72,7 @@ public class FocusManager : MonoBehaviour
 
     private void UnFocus()
     {
-        TimeManager.SetNormalTime();
+        TimeManager.SetSlowedTime(false);
 
         if (focusAimLine)
         {
@@ -83,7 +83,7 @@ public class FocusManager : MonoBehaviour
 
     private void Focus()
     {
-        TimeManager.SetSlowedTime();
+        TimeManager.SetSlowedTime(true);
 
         if (focusAimLine)
         {

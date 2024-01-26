@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TimeManager
 {
+    private static bool bTimeSlowed;
     private static float normalTimeScale = 1f;
     private static float slowTimeScale = 0.5f;
     private static float pausedTimeScale = 0f;
@@ -18,14 +19,20 @@ public class TimeManager
         Time.timeScale = normalTimeScale;
     }
 
-    public static void SetSlowedTime()
+    public static void SetSlowedTime(bool toggle)
     {
-        if (Time.timeScale == pausedTimeScale)
-        {
-            return;
-        }
+        bTimeSlowed = toggle;
+        UpdateTimeScale(Time.timeScale);
+    }
 
-        Time.timeScale = slowTimeScale;
+    public static void UpdateTimeScale(float newTimeScale)
+    {
+        float timeScale = newTimeScale;
+        if (bTimeSlowed)
+        {
+            timeScale *= slowTimeScale;
+        }
+        Time.timeScale = timeScale;
     }
 
     public static void SetPausedTime()

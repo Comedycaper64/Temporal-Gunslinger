@@ -7,6 +7,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private bool bBulletActive;
+    private bool bBulletPossessed;
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
@@ -21,10 +22,19 @@ public class Bullet : MonoBehaviour
         focusManager = GetComponent<FocusManager>();
     }
 
-    // private void OnDisable()
-    // {
-    //     InputManager.Instance.OnShootAction -= RedirectBullet;
-    // }
+    private void Update()
+    {
+        if (bBulletActive)
+        {
+            bulletMovement.LoseVelocity();
+        }
+
+        if (bBulletPossessed)
+        {
+            BulletVelocityUI.Instance.VelocityChanged(bulletMovement.GetVelocity());
+            TimeManager.UpdateTimeScale(1f / bulletMovement.GetVelocity());
+        }
+    }
 
     public void RedirectBullet()
     {
@@ -59,6 +69,7 @@ public class Bullet : MonoBehaviour
     {
         bulletCameraController.ToggleCamera(toggle);
         focusManager.ToggleCanFocus(toggle);
+        bBulletPossessed = toggle;
     }
 
     public void SetIsFocusing(bool isFocusing)
@@ -81,8 +92,10 @@ public class Bullet : MonoBehaviour
         bulletStateMachine.SwitchState(new BulletDeadState(bulletStateMachine));
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("ayaya");
+
         if (!bBulletActive)
         {
             return;
@@ -91,14 +104,24 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
-            if (!bIsPassable)
-            {
-                bulletMovement.RicochetBullet(other, velocityConservation);
-            }
-            else
-            {
-                bulletMovement.SlowBullet(velocityConservation);
-            }
+            bulletMovement.RicochetBullet(other, velocityConservation);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("bayaya");
+
+        if (!bBulletActive)
+        {
+            return;
+        }
+
+        if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
+        {
+            damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
+
+            bulletMovement.SlowBullet(velocityConservation);
         }
     }
 }

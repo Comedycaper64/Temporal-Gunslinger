@@ -7,9 +7,10 @@ public class BulletMovement : RewindableMovement
 {
     private bool bShouldRotate;
     private float rotationTimer;
-    private float startVelocity = 1f;
+    private float startVelocity = 50f;
     private float velocityModifier;
     private float rotationSpeed = 2.5f;
+    public float velocityLossRate = 20f;
     private Vector3 flightDirection;
     private Quaternion targetRotation;
 
@@ -71,15 +72,17 @@ public class BulletMovement : RewindableMovement
         bShouldRotate = true;
     }
 
-    public void RicochetBullet(Collider hitObject, float velocityAugment)
+    public void RicochetBullet(Collision hitObject, float velocityAugment)
     {
-        Vector3 testNormal = (
-            transform.position - hitObject.ClosestPoint(transform.position)
-        ).normalized;
+        Vector3 hitNormal = hitObject.GetContact(0).normal;
+
+        // Vector3 testNormal = (
+        //     transform.position - hitObject.ClosestPoint(transform.position)
+        // ).normalized;
         Vector3 flightNormalized = GetFlightDirection().normalized;
 
         Vector3 ricochetDirection =
-            2 * Vector3.Dot(-flightNormalized, testNormal) * (testNormal + flightNormalized);
+            2 * Vector3.Dot(-flightNormalized, hitNormal) * (hitNormal + flightNormalized);
 
         Redirect.BulletRedirected(
             transform.position,
@@ -111,10 +114,20 @@ public class BulletMovement : RewindableMovement
         return flightDirection;
     }
 
+    public float GetVelocity()
+    {
+        return velocityModifier;
+    }
+
     public void AugmentVelocity(float velocityMultiplier)
     {
         velocityModifier *= velocityMultiplier;
         //rewindable action for undoing augmention
+    }
+
+    public void LoseVelocity()
+    {
+        velocityModifier -= velocityLossRate * speed * Time.deltaTime;
     }
 
     public void UndoRedirect(
