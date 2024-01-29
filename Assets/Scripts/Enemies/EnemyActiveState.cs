@@ -32,7 +32,7 @@ public class EnemyActiveState : State
 
     public override void Tick(float deltaTime)
     {
-        timer += Time.unscaledDeltaTime * rewindState.GetTimeSpeed();
+        timer += Time.deltaTime * rewindState.GetTimeSpeed();
 
         if (!projectileFired && timer >= shootTime)
         {

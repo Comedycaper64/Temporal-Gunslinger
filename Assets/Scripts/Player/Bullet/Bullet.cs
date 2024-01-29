@@ -32,7 +32,8 @@ public class Bullet : MonoBehaviour
         if (bBulletPossessed)
         {
             BulletVelocityUI.Instance.VelocityChanged(bulletMovement.GetVelocity());
-            TimeManager.UpdateTimeScale(1f / bulletMovement.GetVelocity());
+            //TimeManager.UpdateTimeScale(1f / bulletMovement.GetVelocity());
+            RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
         }
     }
 
@@ -69,6 +70,7 @@ public class Bullet : MonoBehaviour
     {
         bulletCameraController.ToggleCamera(toggle);
         focusManager.ToggleCanFocus(toggle);
+        RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
         bBulletPossessed = toggle;
     }
 
@@ -110,8 +112,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("bayaya");
-
         if (!bBulletActive)
         {
             return;

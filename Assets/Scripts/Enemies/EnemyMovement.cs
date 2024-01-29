@@ -6,6 +6,6 @@ public class EnemyMovement : RewindableMovement
 {
     private void Update()
     {
-        transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position += transform.forward * GetSpeed() * Time.deltaTime;
     }
 }

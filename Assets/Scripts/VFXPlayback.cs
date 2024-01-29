@@ -30,7 +30,7 @@ public class VFXPlayback : RewindableMovement
         {
             return;
         }
-        simulationTime += Time.deltaTime * speed;
+        simulationTime += Time.deltaTime * GetSpeed();
         visualEffect.SetFloat(TIME_VARIABLE, simulationTime);
     }
 

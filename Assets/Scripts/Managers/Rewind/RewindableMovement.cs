@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class RewindableMovement : MonoBehaviour
 {
     [SerializeField]
-    protected float startSpeed = 1f;
-    protected float speed = 0f;
-
+    private float startSpeed = 1f;
+    private float speed = 0f;
+    private static float timeScale = 1f;
     public static HashSet<RewindableMovement> Instances = new HashSet<RewindableMovement>();
 
     public virtual void BeginRewind()
@@ -44,6 +44,21 @@ public abstract class RewindableMovement : MonoBehaviour
         }
     }
 
+    protected float GetSpeed()
+    {
+        return speed * timeScale;
+    }
+
+    protected float GetUnscaledSpeed()
+    {
+        return speed;
+    }
+
+    protected void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
     protected virtual void Awake()
     {
         Instances.Add(this);
@@ -52,5 +67,10 @@ public abstract class RewindableMovement : MonoBehaviour
     protected virtual void OnDisable()
     {
         Instances.Remove(this);
+    }
+
+    public static void UpdateMovementTimescale(float newTimeScale)
+    {
+        timeScale = newTimeScale;
     }
 }

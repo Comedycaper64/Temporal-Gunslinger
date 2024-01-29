@@ -7,10 +7,8 @@ public class BulletMovement : RewindableMovement
 {
     private bool bShouldRotate;
     private float rotationTimer;
-    private float startVelocity = 50f;
-    private float velocityModifier;
     private float rotationSpeed = 2.5f;
-    public float velocityLossRate = 20f;
+    public float velocityLossRate = 5f;
     private Vector3 flightDirection;
     private Quaternion targetRotation;
 
@@ -25,12 +23,11 @@ public class BulletMovement : RewindableMovement
     private void Start()
     {
         redirectManager = RedirectManager.Instance;
-        velocityModifier = startVelocity;
     }
 
     private void Update()
     {
-        transform.position += flightDirection * speed * velocityModifier * Time.deltaTime;
+        transform.position += flightDirection * GetSpeed() * Time.deltaTime;
 
         if (!bShouldRotate)
         {
@@ -116,18 +113,20 @@ public class BulletMovement : RewindableMovement
 
     public float GetVelocity()
     {
-        return velocityModifier;
+        return Mathf.Abs(GetUnscaledSpeed());
     }
 
     public void AugmentVelocity(float velocityMultiplier)
     {
-        velocityModifier *= velocityMultiplier;
+        float speed = GetUnscaledSpeed();
+        SetSpeed(speed *= velocityMultiplier);
         //rewindable action for undoing augmention
     }
 
     public void LoseVelocity()
     {
-        velocityModifier -= velocityLossRate * speed * Time.deltaTime;
+        float speed = GetUnscaledSpeed();
+        SetSpeed(speed -= velocityLossRate * Time.deltaTime);
     }
 
     public void UndoRedirect(
@@ -140,7 +139,8 @@ public class BulletMovement : RewindableMovement
         Quaternion undoRotation = Quaternion.LookRotation(direction);
         ChangeTravelDirection(direction, undoRotation);
         transform.position = position;
-        velocityModifier /= velocityAugment;
+        float speed = GetUnscaledSpeed();
+        SetSpeed(speed /= velocityAugment);
         if (!bIsRicochet)
         {
             redirectManager.IncrementRedirects();

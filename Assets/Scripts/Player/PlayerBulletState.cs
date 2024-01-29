@@ -18,6 +18,7 @@ public class PlayerBulletState : State
         //When controlling bullet, ensures mouse is captured
         Cursor.lockState = CursorLockMode.Locked;
         playerController.ToggleBulletFired(true);
+        BulletVelocityUI.Instance.ToggleUIActive(true);
     }
 
     public override void Tick(float deltaTime) { }
@@ -26,6 +27,7 @@ public class PlayerBulletState : State
     {
         Cursor.lockState = CursorLockMode.None;
         playerController.ToggleBulletFired(false);
+        BulletVelocityUI.Instance.ToggleUIActive(false);
     }
 
     // public Transform GetBulletTransform()

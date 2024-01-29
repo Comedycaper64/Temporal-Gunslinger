@@ -6,6 +6,6 @@ public class RewindState : RewindableMovement
 {
     public float GetTimeSpeed()
     {
-        return speed;
+        return GetUnscaledSpeed();
     }
 }

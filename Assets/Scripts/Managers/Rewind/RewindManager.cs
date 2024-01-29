@@ -9,6 +9,7 @@ public class RewindManager : MonoBehaviour
     private bool bTimerActive = false;
     private bool bRewindActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
+    private Stack<RewindableAction> priorityActions = new Stack<RewindableAction>();
     private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
 
@@ -52,6 +53,16 @@ public class RewindManager : MonoBehaviour
         bool bNoOutstandingRewindables = false;
         while (!bNoOutstandingRewindables)
         {
+            if (priorityActions.TryPeek(out RewindableAction priorityRewindable))
+            {
+                priorityActions.Pop();
+                priorityRewindable.Undo();
+                if (priorityRewindable.GetType() == typeof(StopTime))
+                {
+                    rewindTimer = priorityRewindable.GetTimestamp();
+                }
+            }
+
             if (!rewindableActions.TryPeek(out RewindableAction rewindable))
             {
                 bNoOutstandingRewindables = true;
@@ -60,7 +71,7 @@ public class RewindManager : MonoBehaviour
             else
             {
                 float timestamp = rewindable.GetTimestamp();
-                if ((timestamp < rewindTimer) && (rewindable.GetType() != typeof(StopTime)))
+                if (timestamp < rewindTimer)
                 {
                     bNoOutstandingRewindables = true;
                 }
@@ -83,7 +94,15 @@ public class RewindManager : MonoBehaviour
         }
 
         rewindable.SetTimestamp(rewindTimer);
-        rewindableActions.Push(rewindable);
+        if (rewindable.IsPriority())
+        {
+            priorityActions.Push(rewindable);
+        }
+        else
+        {
+            rewindableActions.Push(rewindable);
+        }
+
         Debug.Log("Timestamp: " + rewindTimer + ", Object: " + rewindable.GetType());
     }
 

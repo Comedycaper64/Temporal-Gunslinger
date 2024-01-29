@@ -25,4 +25,9 @@ public abstract class RewindableAction
     {
         this.timestamp = timestamp;
     }
+
+    public virtual bool IsPriority()
+    {
+        return false;
+    }
 }

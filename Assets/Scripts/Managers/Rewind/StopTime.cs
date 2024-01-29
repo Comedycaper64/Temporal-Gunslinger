@@ -18,4 +18,9 @@ public class StopTime : RewindableAction
     {
         TimeManager.UnpauseTime();
     }
+
+    public override bool IsPriority()
+    {
+        return true;
+    }
 }

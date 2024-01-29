@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BulletVelocityUI : MonoBehaviour
 {
+    private bool bActive;
     private float velocity;
 
     [SerializeField]
@@ -23,6 +24,12 @@ public class BulletVelocityUI : MonoBehaviour
             return;
         }
         Instance = this;
+        ClearText();
+    }
+
+    private void ClearText()
+    {
+        velocityText.text = "";
     }
 
     private void UpdateText()
@@ -33,6 +40,19 @@ public class BulletVelocityUI : MonoBehaviour
     public void VelocityChanged(float newVelocity)
     {
         velocity = newVelocity;
+        if (!bActive)
+        {
+            return;
+        }
         UpdateText();
+    }
+
+    public void ToggleUIActive(bool toggle)
+    {
+        bActive = toggle;
+        if (!toggle)
+        {
+            ClearText();
+        }
     }
 }

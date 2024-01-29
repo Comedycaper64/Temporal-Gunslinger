@@ -22,12 +22,17 @@ public class TimeManager
     public static void SetSlowedTime(bool toggle)
     {
         bTimeSlowed = toggle;
-        UpdateTimeScale(Time.timeScale);
+        UpdateTimeScale();
     }
 
-    public static void UpdateTimeScale(float newTimeScale)
+    public static void UpdateTimeScale()
     {
-        float timeScale = newTimeScale;
+        if (Time.timeScale == pausedTimeScale)
+        {
+            return;
+        }
+
+        float timeScale = normalTimeScale;
         if (bTimeSlowed)
         {
             timeScale *= slowTimeScale;
@@ -44,5 +49,6 @@ public class TimeManager
     public static void UnpauseTime()
     {
         Time.timeScale = normalTimeScale;
+        UpdateTimeScale();
     }
 }
