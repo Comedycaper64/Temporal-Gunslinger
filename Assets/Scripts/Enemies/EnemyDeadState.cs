@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class EnemyDeadState : State
 {
+    public static int enemyNumber;
+
     public EnemyDeadState(StateMachine stateMachine)
-        : base(stateMachine) { }
+        : base(stateMachine)
+    {
+        enemyNumber++;
+    }
 
     public override void Enter()
     {
         //Temp debug death
         stateMachine.transform.position += new Vector3(0, -10, 0);
+        enemyNumber--;
+        if (enemyNumber <= 0)
+        {
+            GameManager.Instance.EndLevel();
+        }
     }
 
     public override void Exit()
     {
         stateMachine.transform.position += new Vector3(0, 10, 0);
+        enemyNumber++;
     }
 
     public override void Tick(float deltaTime) { }

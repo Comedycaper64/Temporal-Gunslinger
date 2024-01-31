@@ -6,12 +6,16 @@ using UnityEngine;
 public class RewindManager : MonoBehaviour
 {
     private float rewindTimer = 0f;
+    private float resetTimer;
+    private const float RESET_TIME = 1f;
     private bool bTimerActive = false;
     private bool bRewindActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
     private Stack<RewindableAction> priorityActions = new Stack<RewindableAction>();
     private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
+
+    public event Action OnResetLevel;
 
     private void Start()
     {
@@ -27,16 +31,28 @@ public class RewindManager : MonoBehaviour
 
     private void Update()
     {
+        CheckIsResetting();
+
         if (!bTimerActive)
         {
             return;
         }
 
+        CheckIsRewinding();
+
+        IncrementRewindTimer();
+    }
+
+    private void CheckIsRewinding()
+    {
         if (bRewindActive != input.GetIsRewinding())
         {
             ToggleRewind(input.GetIsRewinding());
         }
+    }
 
+    private void IncrementRewindTimer()
+    {
         if (!bRewindActive)
         {
             rewindTimer += Time.deltaTime;
@@ -45,6 +61,23 @@ public class RewindManager : MonoBehaviour
         {
             rewindTimer -= Time.deltaTime;
             TryUndoRewindables();
+        }
+    }
+
+    private void CheckIsResetting()
+    {
+        if (input.GetIsResetting())
+        {
+            resetTimer += Time.unscaledDeltaTime;
+            if (resetTimer > RESET_TIME)
+            {
+                OnResetLevel?.Invoke();
+                resetTimer = 0f;
+            }
+        }
+        else
+        {
+            resetTimer = 0f;
         }
     }
 

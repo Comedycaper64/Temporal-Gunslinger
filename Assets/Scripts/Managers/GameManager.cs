@@ -3,9 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private bool bLevelActive;
+
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
 
@@ -14,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private CinematicSO levelIntroCinematic;
+
+    public event EventHandler<bool> OnLevelLost;
 
     private void Awake()
     {
@@ -30,17 +35,59 @@ public class GameManager : MonoBehaviour
     {
         //OnGameStateChange?.Invoke(this, StateEnum.inactive);
         //CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
+        SetupLevel();
+        rewindManager.OnResetLevel += RewindManager_OnResetLevel;
         OnGameStateChange?.Invoke(this, StateEnum.idle);
+    }
+
+    private void OnDisable()
+    {
+        rewindManager.OnResetLevel -= RewindManager_OnResetLevel;
     }
 
     private void SetupLevel()
     {
         OnGameStateChange?.Invoke(this, StateEnum.idle);
+        bLevelActive = true;
     }
 
     public void LevelStart()
     {
         rewindManager.StartTimer();
         OnGameStateChange?.Invoke(this, StateEnum.active);
+    }
+
+    private void ResetLevel()
+    {
+        //Temp reset, shouldn't reload Scene
+        SceneManager.LoadScene(0);
+    }
+
+    public void EndLevel()
+    {
+        bLevelActive = false;
+        Debug.Log("Level Won");
+    }
+
+    public void LevelLost()
+    {
+        TimeManager.SetPausedTime();
+        OnLevelLost?.Invoke(this, true);
+    }
+
+    public void UndoLevelLost()
+    {
+        OnLevelLost?.Invoke(this, false);
+    }
+
+    private void RewindManager_OnResetLevel()
+    {
+        Debug.Log("RESET!");
+        if (!bLevelActive)
+        {
+            return;
+        }
+
+        ResetLevel();
     }
 }

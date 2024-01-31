@@ -29,7 +29,7 @@ public class AimLine : MonoBehaviour
         this.lineDirection = lineDirection;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (!lineOrigin || !bShowLine)
         {

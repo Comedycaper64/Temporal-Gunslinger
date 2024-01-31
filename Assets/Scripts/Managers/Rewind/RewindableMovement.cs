@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public abstract class RewindableMovement : MonoBehaviour
     private float startSpeed = 1f;
     private float speed = 0f;
     private static float timeScale = 1f;
+
+    //private const float timeScaleLowerLimit = 0.0001f;
     public static HashSet<RewindableMovement> Instances = new HashSet<RewindableMovement>();
 
     public virtual void BeginRewind()
@@ -46,6 +49,7 @@ public abstract class RewindableMovement : MonoBehaviour
 
     protected float GetSpeed()
     {
+        // Debug.Log("Speed: " + speed + " Timescale: " + timeScale);
         return speed * timeScale;
     }
 
@@ -71,6 +75,6 @@ public abstract class RewindableMovement : MonoBehaviour
 
     public static void UpdateMovementTimescale(float newTimeScale)
     {
-        timeScale = newTimeScale;
+        timeScale = Mathf.Clamp01(newTimeScale);
     }
 }

@@ -27,6 +27,11 @@ public class Bullet : MonoBehaviour
         if (bBulletActive)
         {
             bulletMovement.LoseVelocity();
+
+            if (bulletMovement.ShouldBulletDrop())
+            {
+                bulletStateMachine.SwitchToDeadState();
+            }
         }
 
         if (bBulletPossessed)
@@ -41,7 +46,8 @@ public class Bullet : MonoBehaviour
     {
         if (focusManager.IsFocusing())
         {
-            bulletMovement.RedirectBullet(focusManager.GetAimDirection(), GetAimRotation());
+            Vector3 aimDirection = focusManager.GetAimDirection();
+            bulletMovement.RedirectBullet(aimDirection, GetAimRotation(aimDirection));
         }
         else
         {
@@ -49,9 +55,9 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private Quaternion GetAimRotation()
+    private Quaternion GetAimRotation(Vector3 aimDirection)
     {
-        return Quaternion.LookRotation(focusManager.GetAimDirection());
+        return Quaternion.LookRotation(aimDirection);
     }
 
     public void ToggleBulletActive(bool toggle)
@@ -61,7 +67,8 @@ public class Bullet : MonoBehaviour
 
         if (toggle)
         {
-            bulletMovement.ChangeTravelDirection(focusManager.GetAimDirection(), GetAimRotation());
+            Vector3 aimDirection = focusManager.GetAimDirection();
+            bulletMovement.ChangeTravelDirection(aimDirection, GetAimRotation(aimDirection));
             UnparentObject.ObjectUnparented(transform, transform.parent);
         }
     }
@@ -96,8 +103,6 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("ayaya");
-
         if (!bBulletActive)
         {
             return;

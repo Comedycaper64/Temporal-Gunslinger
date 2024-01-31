@@ -8,6 +8,7 @@ public class BulletMovement : RewindableMovement
     private bool bShouldRotate;
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
+    private float dropVelocity = 50f;
     public float velocityLossRate = 5f;
     private Vector3 flightDirection;
     private Quaternion targetRotation;
@@ -127,6 +128,11 @@ public class BulletMovement : RewindableMovement
     {
         float speed = GetUnscaledSpeed();
         SetSpeed(speed -= velocityLossRate * Time.deltaTime);
+    }
+
+    public bool ShouldBulletDrop()
+    {
+        return Mathf.Abs(GetUnscaledSpeed()) < dropVelocity;
     }
 
     public void UndoRedirect(

@@ -8,18 +8,18 @@ public class LevelRetryUI : MonoBehaviour
     [SerializeField]
     private GameObject retryUI;
 
-    private void Awake()
+    private void Start()
     {
-        PlayerDeadState.OnPlayerDied += PlayerDeadState_OnPlayerDied;
+        GameManager.Instance.OnLevelLost += GameManager_OnLevelLost;
         retryUI.SetActive(false);
     }
 
     private void OnDisable()
     {
-        PlayerDeadState.OnPlayerDied -= PlayerDeadState_OnPlayerDied;
+        GameManager.Instance.OnLevelLost -= GameManager_OnLevelLost;
     }
 
-    private void PlayerDeadState_OnPlayerDied(object sender, bool e)
+    private void GameManager_OnLevelLost(object sender, bool e)
     {
         retryUI.SetActive(e);
     }

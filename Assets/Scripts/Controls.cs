@@ -71,6 +71,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reset"",
+                    ""type"": ""Button"",
+                    ""id"": ""39acdcb4-60e0-4962-ac2b-7098ed307af6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -128,6 +137,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Possess"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""222c0b53-2d0b-410f-8b13-720526f0aca0"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Reset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -147,6 +167,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Focus = m_Player.FindAction("Focus", throwIfNotFound: true);
         m_Player_Rewind = m_Player.FindAction("Rewind", throwIfNotFound: true);
         m_Player_Possess = m_Player.FindAction("Possess", throwIfNotFound: true);
+        m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -211,6 +232,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Focus;
     private readonly InputAction m_Player_Rewind;
     private readonly InputAction m_Player_Possess;
+    private readonly InputAction m_Player_Reset;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -220,6 +242,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Focus => m_Wrapper.m_Player_Focus;
         public InputAction @Rewind => m_Wrapper.m_Player_Rewind;
         public InputAction @Possess => m_Wrapper.m_Player_Possess;
+        public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -244,6 +267,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Possess.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPossess;
                 @Possess.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPossess;
                 @Possess.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPossess;
+                @Reset.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
+                @Reset.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
+                @Reset.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReset;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -263,6 +289,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Possess.started += instance.OnPossess;
                 @Possess.performed += instance.OnPossess;
                 @Possess.canceled += instance.OnPossess;
+                @Reset.started += instance.OnReset;
+                @Reset.performed += instance.OnReset;
+                @Reset.canceled += instance.OnReset;
             }
         }
     }
@@ -283,5 +312,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnFocus(InputAction.CallbackContext context);
         void OnRewind(InputAction.CallbackContext context);
         void OnPossess(InputAction.CallbackContext context);
+        void OnReset(InputAction.CallbackContext context);
     }
 }

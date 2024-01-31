@@ -764,7 +764,7 @@ Transform:
   - {fileID: 5493667388143854021}
   - {fileID: 7734651061289415249}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7828219722662083360
 MonoBehaviour:
@@ -1037,6 +1037,7 @@ GameObject:
   - component: {fileID: 7828219723591832201}
   - component: {fileID: 7828219723591832207}
   - component: {fileID: 7828219723591832200}
+  - component: {fileID: 5691978101274758792}
   m_Layer: 2
   m_Name: Bullet Camera
   m_TagString: Untagged
@@ -1128,7 +1129,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 0
-    m_MaxSpeed: 300
+    m_MaxSpeed: 150
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -1183,6 +1184,36 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -1088256472335892465, guid: a423f9a6d44ce1742886a55687b0cd84, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &5691978101274758792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828219723591832206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e501d18bb52cf8c40b1853ca4904654f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CollideAgainst:
+    serializedVersion: 2
+    m_Bits: 1
+  m_IgnoreTag: 
+  m_TransparentLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_MinimumDistanceFromTarget: 0.1
+  m_AvoidObstacles: 1
+  m_DistanceLimit: 0
+  m_MinimumOcclusionTime: 0
+  m_CameraRadius: 0.1
+  m_Strategy: 0
+  m_MaximumEffort: 4
+  m_SmoothingTime: 0
+  m_Damping: 0
+  m_DampingWhenOccluded: 0
+  m_OptimalTargetDistance: 0
 --- !u!1001 &3268212211463914039
 PrefabInstance:
   m_ObjectHideFlags: 0

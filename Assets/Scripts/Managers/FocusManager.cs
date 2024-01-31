@@ -12,21 +12,23 @@ public class FocusManager : MonoBehaviour
 
     [SerializeField]
     private Transform bulletModelTransform;
-    private Transform mainCameraTransform;
-    private Transform currentAimTransform;
+
+    //private Transform mainCameraTransform;
+    //private Transform currentAimTransform;
     private AimLine focusAimLine;
     private InputManager inputManager;
 
     private void Start()
     {
-        mainCameraTransform = Camera.main.transform;
+        //mainCameraTransform = Camera.main.transform;
         inputManager = InputManager.Instance;
         CreateAimLine();
     }
 
     private void Update()
     {
-        focusAimLine.UpdateLineDirection(currentAimTransform.forward);
+        //focusAimLine.UpdateLineDirection(currentAimTransform.forward);
+        focusAimLine.UpdateLineDirection(bulletModelTransform.forward);
 
         if (!bCanFocus)
         {
@@ -46,7 +48,7 @@ public class FocusManager : MonoBehaviour
             bulletModelTransform.forward
         );
         //aimLineDirection = bulletModelTransform.forward;
-        SetCurrentAimTransform(bulletModelTransform);
+        //SetCurrentAimTransform(bulletModelTransform);
         focusAimLine.ToggleLine(true);
     }
 
@@ -74,33 +76,41 @@ public class FocusManager : MonoBehaviour
     {
         TimeManager.SetSlowedTime(false);
 
-        if (focusAimLine)
-        {
-            //aimLineDirection = bulletModelTransform.forward;
-            SetCurrentAimTransform(bulletModelTransform);
-        }
+        // if (focusAimLine)
+        // {
+        //     SetCurrentAimTransform(bulletModelTransform);
+        // }
     }
 
     private void Focus()
     {
         TimeManager.SetSlowedTime(true);
 
-        if (focusAimLine)
-        {
-            //aimLineDirection = mainCameraTransform.forward;
-            SetCurrentAimTransform(mainCameraTransform);
-        }
+        // if (focusAimLine)
+        // {
+        //     SetCurrentAimTransform(mainCameraTransform);
+        // }
     }
 
-    private void SetCurrentAimTransform(Transform newTransform)
-    {
-        currentAimTransform = newTransform;
-    }
+    // private void SetCurrentAimTransform(Transform newTransform)
+    // {
+    //     currentAimTransform = newTransform;
+    // }
 
     public bool IsFocusing()
     {
         return bFocusing;
     }
 
-    public Vector3 GetAimDirection() => focusAimLine.GetLineDirection();
+    public Vector3 GetAimDirection()
+    {
+        if (bFocusing)
+        {
+            return Camera.main.transform.forward;
+        }
+        else
+        {
+            return focusAimLine.GetLineDirection();
+        }
+    }
 }

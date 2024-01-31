@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private Vector2 mouseMovement;
     private bool bIsFocusing;
     private bool bIsRewinding;
+    private bool bIsResetting;
     public event Action OnShootAction;
     public event Action OnPossessAction;
 
@@ -42,6 +43,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public bool GetIsRewinding()
     {
         return bIsRewinding;
+    }
+
+    public bool GetIsResetting()
+    {
+        return bIsResetting;
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -95,6 +101,18 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else
         {
             OnPossessAction?.Invoke();
+        }
+    }
+
+    public void OnReset(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            bIsResetting = true;
+        }
+        else if (context.canceled)
+        {
+            bIsResetting = false;
         }
     }
 }

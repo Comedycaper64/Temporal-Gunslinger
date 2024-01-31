@@ -19,6 +19,7 @@ public class BulletStateMachine : StateMachine
         stateDictionary.Add(StateEnum.idle, new BulletInactiveState(this));
         stateDictionary.Add(StateEnum.inactive, new BulletInactiveState(this));
         stateDictionary.Add(StateEnum.active, new BulletActiveState(this));
+        stateDictionary.Add(StateEnum.dead, new BulletDeadState(this));
     }
 
     public void SwitchToActive()

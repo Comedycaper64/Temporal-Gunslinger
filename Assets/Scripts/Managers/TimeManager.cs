@@ -6,7 +6,7 @@ public class TimeManager
 {
     private static bool bTimeSlowed;
     private static float normalTimeScale = 1f;
-    private static float slowTimeScale = 0.5f;
+    private static float slowTimeScale = 0.3f;
     private static float pausedTimeScale = 0f;
 
     public static void SetNormalTime()
