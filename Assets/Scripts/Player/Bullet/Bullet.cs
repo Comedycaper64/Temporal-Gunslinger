@@ -69,7 +69,7 @@ public class Bullet : MonoBehaviour
         {
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.ChangeTravelDirection(aimDirection, GetAimRotation(aimDirection));
-            UnparentObject.ObjectUnparented(transform, transform.parent);
+            UnparentObject.ObjectUnparented(transform, transform.parent, transform.position);
         }
     }
 
