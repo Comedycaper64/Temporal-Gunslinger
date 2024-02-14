@@ -8,37 +8,23 @@ public class FocusManager : MonoBehaviour
     private bool bCanFocus = false;
     private bool bFocusing = false;
 
-    //private Vector3 aimLineDirection;
-
     [SerializeField]
     private Transform bulletModelTransform;
-
-    //private Transform mainCameraTransform;
-    //private Transform currentAimTransform;
     private AimLine focusAimLine;
-    private InputManager inputManager;
 
     private void Start()
     {
-        //mainCameraTransform = Camera.main.transform;
-        inputManager = InputManager.Instance;
         CreateAimLine();
     }
 
     private void Update()
     {
-        //focusAimLine.UpdateLineDirection(currentAimTransform.forward);
         focusAimLine.UpdateLineDirection(bulletModelTransform.forward);
 
         if (!bCanFocus)
         {
             return;
         }
-
-        // if (inputManager.GetIsFocusing() != bFocusing)
-        // {
-        //     ToggleFocusing(inputManager.GetIsFocusing());
-        // }
     }
 
     private void CreateAimLine()
@@ -47,8 +33,6 @@ public class FocusManager : MonoBehaviour
             bulletModelTransform,
             bulletModelTransform.forward
         );
-        //aimLineDirection = bulletModelTransform.forward;
-        //SetCurrentAimTransform(bulletModelTransform);
         focusAimLine.ToggleLine(true);
     }
 
@@ -75,27 +59,12 @@ public class FocusManager : MonoBehaviour
     private void UnFocus()
     {
         TimeManager.SetSlowedTime(false);
-
-        // if (focusAimLine)
-        // {
-        //     SetCurrentAimTransform(bulletModelTransform);
-        // }
     }
 
     private void Focus()
     {
         TimeManager.SetSlowedTime(true);
-
-        // if (focusAimLine)
-        // {
-        //     SetCurrentAimTransform(mainCameraTransform);
-        // }
     }
-
-    // private void SetCurrentAimTransform(Transform newTransform)
-    // {
-    //     currentAimTransform = newTransform;
-    // }
 
     public bool IsFocusing()
     {
