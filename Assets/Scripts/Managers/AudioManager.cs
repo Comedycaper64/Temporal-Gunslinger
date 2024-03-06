@@ -6,8 +6,8 @@ public class AudioManager
 {
     private const float SFX_VOLUME = 1f;
 
-    public void PlaySFX(AudioClip clip, Vector3 originPosition)
+    public static void PlaySFX(AudioClip clip, float volume, Vector3 originPosition)
     {
-        AudioSource.PlayClipAtPoint(clip, originPosition, 1f);
+        AudioSource.PlayClipAtPoint(clip, originPosition, volume * SFX_VOLUME);
     }
 }
