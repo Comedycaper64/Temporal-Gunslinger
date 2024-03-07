@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyActiveState : State
+public class EnemyRangedActiveState : State
 {
-    EnemyStateMachine enemyStateMachine;
+    EnemyRangedStateMachine enemyStateMachine;
     RewindState rewindState;
     private float timer;
     private float shootTime;
     private bool projectileFired;
 
-    public EnemyActiveState(StateMachine stateMachine)
+    public EnemyRangedActiveState(StateMachine stateMachine)
         : base(stateMachine)
     {
-        enemyStateMachine = stateMachine as EnemyStateMachine;
+        enemyStateMachine = stateMachine as EnemyRangedStateMachine;
         shootTime = enemyStateMachine.GetShootTimer();
         rewindState = enemyStateMachine.GetComponent<RewindState>();
     }
@@ -22,11 +22,13 @@ public class EnemyActiveState : State
     {
         timer = 0f;
         projectileFired = false;
+
         rewindState.ToggleMovement(true);
     }
 
     public override void Exit()
     {
+        stateMachine.stateMachineAnimator.SetBool("shot", false);
         rewindState.ToggleMovement(false);
     }
 
@@ -37,6 +39,7 @@ public class EnemyActiveState : State
         if (!projectileFired && timer >= shootTime)
         {
             enemyStateMachine.GetBulletStateMachine().SwitchToActive();
+            stateMachine.stateMachineAnimator.SetBool("shot", true);
             projectileFired = true;
         }
         else if (projectileFired && timer < shootTime)

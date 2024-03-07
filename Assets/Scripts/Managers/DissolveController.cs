@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DissolveController : MonoBehaviour
+public class DissolveController : RewindableMovement
 {
-    private float dissolveRate = 0.02f;
+    private float dissolveRate = 1f;
+    private float counter = 0;
 
     [SerializeField]
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
@@ -25,21 +26,52 @@ public class DissolveController : MonoBehaviour
         {
             materials.Add(meshRenderer.material);
         }
-        StartCoroutine(Dissolve());
     }
 
-    private IEnumerator Dissolve()
+    private void Update()
     {
-        float counter = 0;
-
-        while (counter < 1)
-        {
-            counter += dissolveRate;
-            foreach (Material material in materials)
-            {
-                material.SetFloat("_Dissolve_Amount", counter);
-            }
-            yield return new WaitForSeconds(0.025f);
-        }
+        Dissolve();
     }
+
+    public void StartDissolve()
+    {
+        ToggleMovement(true);
+    }
+
+    public void StopDissolve()
+    {
+        ToggleMovement(false);
+    }
+
+    private void Dissolve()
+    {
+        if (GetUnscaledSpeed() == 0f)
+        {
+            return;
+        }
+
+        float newCounter = counter + (dissolveRate * GetSpeed());
+        counter = Mathf.Clamp01(newCounter);
+
+        foreach (Material material in materials)
+        {
+            material.SetFloat("_Dissolve_Amount", counter);
+        }
+        //yield return new WaitForSeconds(0.025f);
+    }
+
+    // private IEnumerator UnDissolve()
+    // {
+    //     float counter = 1;
+
+    //     while (counter > 0)
+    //     {
+    //         counter -= dissolveRate;
+    //         foreach (Material material in materials)
+    //         {
+    //             material.SetFloat("_Dissolve_Amount", counter);
+    //         }
+    //         yield return new WaitForSeconds(0.025f);
+    //     }
+    // }
 }

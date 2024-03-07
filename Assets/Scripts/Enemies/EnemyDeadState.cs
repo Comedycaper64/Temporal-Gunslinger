@@ -5,17 +5,25 @@ using UnityEngine;
 public class EnemyDeadState : State
 {
     public static int enemyNumber;
+    Animator animator;
 
     public EnemyDeadState(StateMachine stateMachine)
         : base(stateMachine)
     {
         enemyNumber++;
+        animator = stateMachine.stateMachineAnimator;
     }
 
     public override void Enter()
     {
         //Temp debug death
-        stateMachine.transform.position += new Vector3(0, -10, 0);
+        //stateMachine.transform.position += new Vector3(0, -10, 0);
+        if (animator)
+        {
+            animator.SetTrigger("death");
+        }
+
+        //enemyStateMachine.Die();
         enemyNumber--;
         if (enemyNumber <= 0)
         {
@@ -25,7 +33,7 @@ public class EnemyDeadState : State
 
     public override void Exit()
     {
-        stateMachine.transform.position += new Vector3(0, 10, 0);
+        //stateMachine.transform.position += new Vector3(0, 10, 0);
         enemyNumber++;
     }
 

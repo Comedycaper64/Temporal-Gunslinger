@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class PlayerBulletState : State
 {
+    Animator animator;
     private PlayerController playerController;
 
     public PlayerBulletState(PlayerStateMachine stateMachine)
         : base(stateMachine)
     {
+        animator = stateMachine.stateMachineAnimator;
         playerController = stateMachine.GetComponent<PlayerController>();
     }
 
@@ -18,6 +20,7 @@ public class PlayerBulletState : State
         //When controlling bullet, ensures mouse is captured
         Cursor.lockState = CursorLockMode.Locked;
         playerController.ToggleBulletFired(true);
+        animator.SetBool("shot", true);
         BulletVelocityUI.Instance.ToggleUIActive(true);
     }
 
@@ -27,6 +30,7 @@ public class PlayerBulletState : State
     {
         Cursor.lockState = CursorLockMode.None;
         playerController.ToggleBulletFired(false);
+        animator.SetBool("shot", false);
         BulletVelocityUI.Instance.ToggleUIActive(false);
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine : StateMachine
+public class EnemyRangedStateMachine : StateMachine
 {
     [SerializeField]
     private float shootTimer;
@@ -12,14 +12,14 @@ public class EnemyStateMachine : StateMachine
 
     private void Start()
     {
-        SwitchState(stateDictionary[StateEnum.idle]);
+        SwitchState(stateDictionary[StateEnum.inactive]);
     }
 
     protected override void SetupDictionary()
     {
-        stateDictionary.Add(StateEnum.idle, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyActiveState(this));
+        stateDictionary.Add(StateEnum.idle, new EnemyIdleState(this));
+        stateDictionary.Add(StateEnum.active, new EnemyRangedActiveState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 

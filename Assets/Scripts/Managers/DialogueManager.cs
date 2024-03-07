@@ -100,7 +100,10 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        actorAnimator.CrossFadeInFixedTime(currentAnimations.Dequeue().name, crossFadeTime);
+        if (currentAnimations.TryDequeue(out AnimationClip animation) && (animation != null))
+        {
+            actorAnimator.CrossFadeInFixedTime(animation.name, crossFadeTime);
+        }
 
         dialogueCameraDirector.ChangeCameraMode(
             currentCameraModes.Dequeue(),
