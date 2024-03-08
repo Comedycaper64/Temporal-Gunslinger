@@ -821,6 +821,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletModelTransform: {fileID: 5493667388143854021}
+  bulletCamera: {fileID: 7828219723591832207}
 --- !u!114 &7828219722662083371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,6 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cee7fdcf4df9d478330d7b67cbb979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateMachineAnimator: {fileID: 0}
 --- !u!114 &7828219722662083374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -845,7 +847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd1545a5fe2124446a873a549c61bc3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetHighlight: {fileID: 2421366914319892326}
+  highlight: {fileID: 3085454811405739484}
 --- !u!135 &7828219722662083368
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1038,6 +1040,7 @@ GameObject:
   - component: {fileID: 7828219723591832207}
   - component: {fileID: 7828219723591832200}
   - component: {fileID: 5691978101274758792}
+  - component: {fileID: 1720726318641914468}
   m_Layer: 2
   m_Name: Bullet Camera
   m_TagString: Untagged
@@ -1214,6 +1217,21 @@ MonoBehaviour:
   m_Damping: 0
   m_DampingWhenOccluded: 0
   m_OptimalTargetDistance: 0
+--- !u!114 &1720726318641914468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828219723591832206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e145edf323f3a9f4ab0a486ea64684e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _layers:
+    serializedVersion: 2
+    m_Bits: 119
 --- !u!1001 &3268212211463914039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1325,12 +1343,6 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: e36d7be846d838a49a8f084fc48d3d67, type: 3}
---- !u!1 &2421366914319892326 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e36d7be846d838a49a8f084fc48d3d67,
-    type: 3}
-  m_PrefabInstance: {fileID: 3268212211463914039}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3085454811405739484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e36d7be846d838a49a8f084fc48d3d67,

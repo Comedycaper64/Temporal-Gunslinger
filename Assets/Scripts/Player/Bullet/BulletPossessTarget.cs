@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletPossessTarget : MonoBehaviour
+public class BulletPossessTarget : MonoBehaviour, IHighlightable
 {
     //private bool isHighlighted;
 
     private Bullet bullet;
 
     [SerializeField]
-    private GameObject targetHighlight;
+    private Transform highlight;
+    private List<IHighlightable> highlightables = new List<IHighlightable>();
     private List<BulletPossessTarget> possessables = new List<BulletPossessTarget>();
 
     private void Awake()
@@ -43,34 +44,45 @@ public class BulletPossessTarget : MonoBehaviour
         return possessables;
     }
 
-    public void AddPossessable(BulletPossessTarget possessable)
+    public void AddHighlightable(IHighlightable highlightable)
     {
-        possessables.Add(possessable);
+        highlightables.Add(highlightable);
+
+        if (highlightable.GetType() == typeof(BulletPossessTarget))
+        {
+            possessables.Add(highlightable as BulletPossessTarget);
+        }
+
         if (IsFocusing())
         {
-            possessable.ToggleTargetHighlight(true);
+            highlightable.ToggleHighlight(true);
         }
         //Make it remove if destroyed also
     }
 
-    public void RemovePossessable(BulletPossessTarget possessable)
+    public void RemoveHighlightable(IHighlightable highlightable)
     {
-        possessables.Remove(possessable);
-        possessable.ToggleTargetHighlight(false);
-    }
+        highlightables.Remove(highlightable);
 
-    public void ToggleTargetHighlight(bool toggle)
-    {
-        targetHighlight.SetActive(toggle);
-        //isHighlighted = toggle;
+        if (highlightable.GetType() == typeof(BulletPossessTarget))
+        {
+            possessables.Remove(highlightable as BulletPossessTarget);
+        }
+
+        highlightable.ToggleHighlight(false);
     }
 
     public void ToggleNearbyPossessableHighlight(bool toggle)
     {
-        foreach (BulletPossessTarget target in possessables)
+        foreach (IHighlightable highlightable in highlightables)
         {
-            target.ToggleTargetHighlight(toggle);
+            highlightable.ToggleHighlight(toggle);
         }
+    }
+
+    public void ToggleHighlight(bool toggle)
+    {
+        highlight.gameObject.SetActive(toggle);
     }
 
     //public bool IsHighlighted() => isHighlighted;

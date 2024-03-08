@@ -10,20 +10,20 @@ public class BulletTriggerTracker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<BulletPossessTarget>(out BulletPossessTarget possessTarget))
+        if (other.TryGetComponent<IHighlightable>(out IHighlightable target))
         {
-            if (possessTarget != thisPossessable)
+            if (target != (IHighlightable)thisPossessable)
             {
-                thisPossessable.AddPossessable(possessTarget);
+                thisPossessable.AddHighlightable(target);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<BulletPossessTarget>(out BulletPossessTarget possessTarget))
+        if (other.TryGetComponent<IHighlightable>(out IHighlightable target))
         {
-            thisPossessable.RemovePossessable(possessTarget);
+            thisPossessable.RemoveHighlightable(target);
         }
     }
 }

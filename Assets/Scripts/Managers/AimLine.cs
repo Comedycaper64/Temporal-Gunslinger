@@ -9,9 +9,16 @@ public class AimLine : MonoBehaviour
     private bool bShowLine = false;
     private Transform lineOrigin;
     private Vector3 lineDirection;
+    private Transform currentTarget;
 
     [SerializeField]
-    private Transform hitVisual;
+    private Sprite hitSprite;
+
+    [SerializeField]
+    private Sprite killSprite;
+
+    [SerializeField]
+    private SpriteRenderer hitVisual;
 
     [SerializeField]
     private LayerMask hitLayerMask;
@@ -47,9 +54,14 @@ public class AimLine : MonoBehaviour
         if (Physics.Raycast(originPosition, lineDirection, out hit, lineRange, hitLayerMask))
         {
             ToggleHitVisualVisibility(true);
-            hitVisual.position = hit.point + (hit.normal * hitVisualHoverDistance);
-            hitVisual.rotation = Quaternion.LookRotation(-hit.normal);
+            hitVisual.transform.position = hit.point + (hit.normal * hitVisualHoverDistance);
+            hitVisual.transform.rotation = Quaternion.LookRotation(-hit.normal);
             positionArray[1] = hit.point;
+            if (currentTarget != hit.transform)
+            {
+                currentTarget = hit.transform;
+                ShowDeathHit(currentTarget.GetComponent<WeakPoint>());
+            }
         }
         else
         {
@@ -62,6 +74,18 @@ public class AimLine : MonoBehaviour
     private void ToggleHitVisualVisibility(bool toggle)
     {
         hitVisual.gameObject.SetActive(toggle);
+    }
+
+    private void ShowDeathHit(bool toggle)
+    {
+        if (toggle)
+        {
+            hitVisual.sprite = killSprite;
+        }
+        else
+        {
+            hitVisual.sprite = hitSprite;
+        }
     }
 
     public void ToggleLine(bool toggle)
