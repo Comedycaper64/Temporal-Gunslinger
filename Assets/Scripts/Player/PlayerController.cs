@@ -124,6 +124,10 @@ public class PlayerController : MonoBehaviour
 
     private void InputManager_OnPossessAction()
     {
+        if (!GameManager.Instance.IsLevelActive())
+        {
+            return;
+        }
         bulletPossessor.TryPossess();
     }
 

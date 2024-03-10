@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class EnemyMeleeStateMachine : StateMachine
 {
-    // [SerializeField]
-    // private VFXPlayback deathVFX;
-    // public Animator animator;
+    [SerializeField]
+    private List<GameObject> bodyColliders = new List<GameObject>();
 
     private void Start()
     {
@@ -21,8 +20,11 @@ public class EnemyMeleeStateMachine : StateMachine
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 
-    public void Die()
+    public override void ToggleDie(bool toggle)
     {
-        //deathVFX.PlayEffect();
+        foreach (GameObject collider in bodyColliders)
+        {
+            collider.SetActive(!toggle);
+        }
     }
 }

@@ -16,24 +16,22 @@ public class EnemyDeadState : State
 
     public override void Enter()
     {
-        //Temp debug death
-        //stateMachine.transform.position += new Vector3(0, -10, 0);
         if (animator)
         {
             animator.SetTrigger("death");
         }
 
-        //enemyStateMachine.Die();
+        stateMachine.ToggleDie(true);
         enemyNumber--;
         if (enemyNumber <= 0)
         {
-            GameManager.Instance.EndLevel();
+            GameManager.Instance.EndLevel(stateMachine.transform);
         }
     }
 
     public override void Exit()
     {
-        //stateMachine.transform.position += new Vector3(0, 10, 0);
+        stateMachine.ToggleDie(false);
         enemyNumber++;
     }
 

@@ -40,7 +40,6 @@ public class DialogueCameraDirector : MonoBehaviour
         {
             return;
         }
-
         CinemachineVirtualCamera activeCamera = modeToCamera[cameraMode];
         activeCamera.enabled = true;
         activeCamera.Follow = actorTransform;
@@ -53,5 +52,16 @@ public class DialogueCameraDirector : MonoBehaviour
         fullBodyCamera.enabled = false;
         faceZoomCamera.enabled = false;
         wideAngleCamera.enabled = false;
+    }
+
+    private void ClearCurrentCamera()
+    {
+        currentCameraMode = CameraMode.none;
+    }
+
+    public void EndOfDialogueCleanup()
+    {
+        ChangeCameraMode(CameraMode.none, transform);
+        ClearCurrentCamera();
     }
 }

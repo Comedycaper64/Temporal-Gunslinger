@@ -10,6 +10,7 @@ public class FocusManager : MonoBehaviour
     private bool bFocusing = false;
     private const float NORMAL_FOV = 40f;
     private const float FOCUS_FOV = 25f;
+    private float focusZoomSpeed = 10f;
     private float targetFOV = 40f;
     private float nonTargetFOV = 25f;
 
@@ -40,13 +41,13 @@ public class FocusManager : MonoBehaviour
                     Mathf.Abs(bulletCamera.m_Lens.FieldOfView - targetFOV)
                     / Mathf.Abs(nonTargetFOV - targetFOV)
                 );
-            Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
-            Debug.Log("B: " + (nonTargetFOV - targetFOV));
+            //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
+            //Debug.Log("B: " + (nonTargetFOV - targetFOV));
             Debug.Log("Ratio: " + lerpRatio);
             bulletCamera.m_Lens.FieldOfView = Mathf.Lerp(
-                bulletCamera.m_Lens.FieldOfView,
+                nonTargetFOV,
                 targetFOV,
-                lerpRatio + (0.005f * Time.deltaTime)
+                lerpRatio + (focusZoomSpeed * Time.deltaTime)
             );
 
             //Debug.Log("Lens: " + bulletCamera.m_Lens.FieldOfView);

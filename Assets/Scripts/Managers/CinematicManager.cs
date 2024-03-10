@@ -11,6 +11,8 @@ public class CinematicManager : MonoBehaviour
 
     [SerializeField]
     private DialogueManager dialogueManager;
+    private ActorAnimatorMapper actorAnimatorMapper;
+    private ActorMover actorMover;
     public static CinematicManager Instance { get; private set; }
 
     private void Awake()
@@ -24,6 +26,7 @@ public class CinematicManager : MonoBehaviour
             return;
         }
         Instance = this;
+        actorAnimatorMapper = dialogueManager.GetComponent<ActorAnimatorMapper>();
     }
 
     public void PlayCinematic(CinematicSO cinematicSO, Action OnCinematicFinished)
@@ -46,6 +49,14 @@ public class CinematicManager : MonoBehaviour
         if (cinematicNode.GetType() == typeof(DialogueSO))
         {
             dialogueManager.PlayDialogue(cinematicNode as DialogueSO, TryPlayNextNode);
+        }
+        else if (cinematicNode.GetType() == typeof(ActorMovementSO))
+        {
+            ActorMovementSO actorMovement = cinematicNode as ActorMovementSO;
+            Animator animator = actorAnimatorMapper.GetAnimators(
+                actorMovement.actor.GetAnimatorController()
+            )[0];
+            actorMover.MoveActor(actorMovement, animator.GetComponent<IMover>(), TryPlayNextNode);
         }
         else
         {

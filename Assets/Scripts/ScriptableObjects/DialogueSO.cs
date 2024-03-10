@@ -15,8 +15,10 @@ public enum CameraMode
 public struct Dialogue
 {
     public ActorSO actor;
+    public int actorNo;
     public string[] dialogue;
     public AnimationClip[] animations;
+    public float[] animationTime;
     public CameraMode[] cameraModes;
 }
 

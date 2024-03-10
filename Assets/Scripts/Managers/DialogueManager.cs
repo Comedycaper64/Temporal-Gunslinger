@@ -24,14 +24,15 @@ public class DialogueManager : MonoBehaviour
     private bool bIsSentenceTyping;
     private float crossFadeTime = 0.1f;
     private ActorSO currentActor;
-    private Animator actorAnimator;
+    private int actorIndex;
+    private Animator[] actorAnimators;
     private string currentSentence;
     private DialogueCameraDirector dialogueCameraDirector;
+    private ActorAnimatorMapper actorAnimatorMapper;
     private Queue<string> currentDialogue;
     private Queue<AnimationClip> currentAnimations;
+    private Queue<float> currentAnimationTimes;
     private Queue<CameraMode> currentCameraModes;
-    private Dictionary<AnimatorController, Animator> actorAnimatorPair =
-        new Dictionary<AnimatorController, Animator>();
 
     private Action onDialogueComplete;
     private Queue<Dialogue> dialogues;
@@ -42,6 +43,7 @@ public class DialogueManager : MonoBehaviour
     private void Awake()
     {
         dialogueCameraDirector = GetComponent<DialogueCameraDirector>();
+        actorAnimatorMapper = GetComponent<ActorAnimatorMapper>();
     }
 
     public void PlayDialogue(DialogueSO dialogueSO, Action onDialogueComplete)
@@ -49,7 +51,7 @@ public class DialogueManager : MonoBehaviour
         this.onDialogueComplete = onDialogueComplete;
         dialogues = new Queue<Dialogue>(dialogueSO.GetDialogues());
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
-        OnToggleDialogueUI?.Invoke(this, true);
+        ToggleDialogueUI(true);
         TryPlayNextDialogue();
     }
 
@@ -63,26 +65,14 @@ public class DialogueManager : MonoBehaviour
         currentActor = dialogueNode.actor;
 
         AnimatorController actorController = currentActor.GetAnimatorController();
-        if (!actorAnimatorPair.TryGetValue(actorController, out Animator actorAnimator))
-        {
-            //Finds Gameobject with the animator controller, adds to dictionary
-            Animator[] animators = FindObjectsOfType<Animator>();
-            Animator desiredAnimator = animators.First(
-                animator => animator.runtimeAnimatorController == actorController
-            );
-            if (!desiredAnimator)
-            {
-                Debug.LogError("Animator not found");
-                return;
-            }
-            actorAnimator = desiredAnimator;
-            actorAnimatorPair.Add(actorController, actorAnimator);
-        }
 
-        this.actorAnimator = actorAnimator;
+        actorAnimators = actorAnimatorMapper.GetAnimators(actorController);
+
+        actorIndex = dialogueNode.actorNo;
         currentDialogue = new Queue<string>(dialogueNode.dialogue);
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
+        currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
         DisplayNextSentence();
     }
 
@@ -102,15 +92,26 @@ public class DialogueManager : MonoBehaviour
 
         if (currentAnimations.TryDequeue(out AnimationClip animation) && (animation != null))
         {
-            actorAnimator.CrossFadeInFixedTime(animation.name, crossFadeTime);
+            actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFadeTime);
         }
 
         dialogueCameraDirector.ChangeCameraMode(
             currentCameraModes.Dequeue(),
-            actorAnimator.transform
+            actorAnimators[actorIndex].transform
         );
 
-        StartTypingSentence();
+        float animationTimer = currentAnimationTimes.Dequeue();
+
+        if (currentSentence == "")
+        {
+            ToggleDialogueUI(false);
+            StartCoroutine(AnimationPause(animationTimer));
+        }
+        else
+        {
+            ToggleDialogueUI(true);
+            StartTypingSentence();
+        }
     }
 
     private void StartTypingSentence()
@@ -123,16 +124,29 @@ public class DialogueManager : MonoBehaviour
         );
     }
 
+    private IEnumerator AnimationPause(float pauseTime)
+    {
+        bIsSentenceTyping = true;
+        yield return new WaitForSeconds(pauseTime);
+        bIsSentenceTyping = false;
+        DisplayNextSentence();
+    }
+
     private void FinishTypingSentence()
     {
         bIsSentenceTyping = false;
     }
 
+    private void ToggleDialogueUI(bool toggle)
+    {
+        OnToggleDialogueUI?.Invoke(this, toggle);
+    }
+
     private void EndDialogue()
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
-        OnToggleDialogueUI?.Invoke(this, false);
-        dialogueCameraDirector.ChangeCameraMode(CameraMode.none, transform);
+        ToggleDialogueUI(false);
+        dialogueCameraDirector.EndOfDialogueCleanup();
         onDialogueComplete();
     }
 

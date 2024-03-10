@@ -26,4 +26,6 @@ public class BulletStateMachine : StateMachine
     {
         SwitchState(stateDictionary[StateEnum.active]);
     }
+
+    public override void ToggleDie(bool toggle) { }
 }

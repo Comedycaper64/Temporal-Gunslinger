@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerInactiveState : State
 {
+    //Animator animator;
     private PlayerController playerController;
 
     public PlayerInactiveState(PlayerStateMachine stateMachine)
         : base(stateMachine)
     {
         playerController = stateMachine.GetComponent<PlayerController>();
+        //animator = stateMachine.stateMachineAnimator;
     }
 
     public override void Enter()

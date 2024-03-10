@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -13,10 +14,16 @@ public class GameManager : MonoBehaviour
     public static EventHandler<StateEnum> OnGameStateChange;
 
     [SerializeField]
+    private CinemachineVirtualCamera endOfLevelCam;
+
+    [SerializeField]
     private RewindManager rewindManager;
 
     [SerializeField]
     private CinematicSO levelIntroCinematic;
+
+    [SerializeField]
+    private CinematicSO levelOutroCinematic;
 
     public event EventHandler<bool> OnLevelLost;
 
@@ -67,10 +74,29 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void EndLevel()
+    private void LoadNextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void EndLevel(Transform lastEnemy)
     {
         bLevelActive = false;
-        Debug.Log("Level Won");
+        OnGameStateChange?.Invoke(this, StateEnum.inactive);
+        endOfLevelCam.gameObject.SetActive(true);
+        endOfLevelCam.m_Follow = lastEnemy;
+        endOfLevelCam.m_LookAt = lastEnemy;
+        //switch on last enemy killed camera
+        // do a focus on it
+        StartCoroutine(EndOfLevelWindDown());
+    }
+
+    private IEnumerator EndOfLevelWindDown()
+    {
+        yield return new WaitForSeconds(2f);
+        //Set rewindable movement timescale to be normal
+        RewindableMovement.UpdateMovementTimescale(1f);
+        CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
     }
 
     public void LevelLost()
@@ -82,6 +108,11 @@ public class GameManager : MonoBehaviour
     public void UndoLevelLost()
     {
         OnLevelLost?.Invoke(this, false);
+    }
+
+    public bool IsLevelActive()
+    {
+        return bLevelActive;
     }
 
     private void RewindManager_OnResetLevel()

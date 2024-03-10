@@ -26,4 +26,6 @@ public class PlayerStateMachine : StateMachine
         stateDictionary.Add(StateEnum.active, new PlayerBulletState(this));
         stateDictionary.Add(StateEnum.dead, new PlayerDeadState(this));
     }
+
+    public override void ToggleDie(bool toggle) { }
 }

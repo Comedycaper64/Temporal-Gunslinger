@@ -10,6 +10,7 @@ public class DialogueUI : MonoBehaviour
 {
     private bool bIsDialogueActive;
     private bool bDialogueActiveChanged;
+    private bool isTyping = false;
     private float timeBetweenLetterTyping = 0.05f;
     private float textBoxFadeSpeed = 5f;
     private string typingSentence;
@@ -107,6 +108,8 @@ public class DialogueUI : MonoBehaviour
         ClearDialogueText();
         AudioClip[] actorClips = actorSO.GetDialogueNoises();
         int clipsLength = actorClips.Length;
+
+        isTyping = true;
         foreach (char letter in typingSentence.ToCharArray())
         {
             dialogueText.text += letter;
@@ -116,11 +119,17 @@ public class DialogueUI : MonoBehaviour
 
             yield return new WaitForSeconds(timeBetweenLetterTyping);
         }
+        isTyping = false;
         onTypingFinished();
     }
 
     private void DialogueManager_OnFinishTypingDialogue()
     {
+        if (!isTyping)
+        {
+            return;
+        }
+
         StopCoroutine(typingCoroutine);
         dialogueText.text = typingSentence;
         onTypingFinished();
@@ -133,6 +142,11 @@ public class DialogueUI : MonoBehaviour
 
     private void DialogueManager_OnToggleDialogueUI(object sender, bool e)
     {
+        if (e == bIsDialogueActive)
+        {
+            return;
+        }
+
         ClearDialogueText();
         SetActorName("");
         ToggleDialogueActive(e);

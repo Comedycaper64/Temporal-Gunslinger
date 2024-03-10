@@ -47,6 +47,7 @@ public abstract class StateMachine : MonoBehaviour
     }
 
     protected abstract void SetupDictionary();
+    public abstract void ToggleDie(bool toggle);
 
     private void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
     {

@@ -10,6 +10,9 @@ public class EnemyRangedStateMachine : StateMachine
     [SerializeField]
     private BulletStateMachine projectile;
 
+    [SerializeField]
+    private List<GameObject> bodyColliders = new List<GameObject>();
+
     private void Start()
     {
         SwitchState(stateDictionary[StateEnum.inactive]);
@@ -21,6 +24,14 @@ public class EnemyRangedStateMachine : StateMachine
         stateDictionary.Add(StateEnum.idle, new EnemyIdleState(this));
         stateDictionary.Add(StateEnum.active, new EnemyRangedActiveState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
+    }
+
+    public override void ToggleDie(bool toggle)
+    {
+        foreach (GameObject collider in bodyColliders)
+        {
+            collider.SetActive(!toggle);
+        }
     }
 
     public float GetShootTimer()
