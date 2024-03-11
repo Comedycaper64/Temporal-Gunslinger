@@ -23,7 +23,7 @@ public class AimLineManager : MonoBehaviour
     public AimLine CreateAimLine(Transform originTransform, Vector3 lineDirection)
     {
         AimLine aimLine = Factory
-            .InstantiateGameObject(aimLinePrefab, transform)
+            .InstantiateGameObject(aimLinePrefab, originTransform)
             .GetComponent<AimLine>();
         aimLine.SetupLine(originTransform, lineDirection);
         return aimLine;

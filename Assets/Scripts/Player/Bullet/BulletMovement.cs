@@ -72,15 +72,18 @@ public class BulletMovement : RewindableMovement
 
     public void RicochetBullet(Collision hitObject, float velocityAugment)
     {
-        Vector3 hitNormal = hitObject.GetContact(0).normal;
+        Vector3 hitNormal = hitObject.GetContact(0).normal.normalized;
 
         // Vector3 testNormal = (
         //     transform.position - hitObject.ClosestPoint(transform.position)
         // ).normalized;
         Vector3 flightNormalized = GetFlightDirection().normalized;
+        //float flightSpeed = GetFlightDirection().magnitude;
+        Debug.Log("Flight Direction: " + GetFlightDirection());
 
         Vector3 ricochetDirection =
             2 * Vector3.Dot(-flightNormalized, hitNormal) * (hitNormal + flightNormalized);
+        Debug.Log("Ricochet Direction: " + ricochetDirection);
 
         Redirect.BulletRedirected(
             transform.position,
@@ -133,6 +136,11 @@ public class BulletMovement : RewindableMovement
     public bool ShouldBulletDrop()
     {
         return Mathf.Abs(GetUnscaledSpeed()) < dropVelocity;
+    }
+
+    public void ToggleBulletModel(bool toggle)
+    {
+        bulletModel.gameObject.SetActive(toggle);
     }
 
     public void UndoRedirect(

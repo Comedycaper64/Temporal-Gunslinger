@@ -4,16 +4,12 @@ using UnityEngine;
 
 public class EnemyMeleeActiveState : State
 {
-    EnemyMovement enemyMovement;
-
-    //EnemyMeleeStateMachine enemyStateMachine;
+    private EnemyMovement enemyMovement;
 
     public EnemyMeleeActiveState(StateMachine stateMachine)
         : base(stateMachine)
     {
         enemyMovement = stateMachine.GetComponent<EnemyMovement>();
-
-        //enemyStateMachine = stateMachine as EnemyMeleeStateMachine;
     }
 
     public override void Enter()

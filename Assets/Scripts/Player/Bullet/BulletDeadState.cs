@@ -17,7 +17,7 @@ public class BulletDeadState : State
     public override void Enter()
     {
         bulletNumber--;
-        stateMachine.ToggleDie(true);
+        stateMachine.ToggleInactive(true);
         if (bulletNumber <= 0)
         {
             GameManager.Instance.LevelLost();
@@ -27,7 +27,7 @@ public class BulletDeadState : State
     public override void Exit()
     {
         bulletNumber++;
-        stateMachine.ToggleDie(false);
+        stateMachine.ToggleInactive(false);
         if (bulletNumber <= 1)
         {
             GameManager.Instance.UndoLevelLost();

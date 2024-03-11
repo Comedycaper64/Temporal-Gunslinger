@@ -20,7 +20,7 @@ public class EnemyMeleeStateMachine : StateMachine
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 
-    public override void ToggleDie(bool toggle)
+    public override void ToggleInactive(bool toggle)
     {
         foreach (GameObject collider in bodyColliders)
         {

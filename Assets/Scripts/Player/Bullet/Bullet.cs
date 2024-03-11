@@ -63,6 +63,7 @@ public class Bullet : MonoBehaviour
     public void ToggleBulletActive(bool toggle)
     {
         bulletMovement.ToggleMovement(toggle);
+        bulletMovement.ToggleBulletModel(toggle);
         bBulletActive = toggle;
 
         if (toggle)
@@ -100,10 +101,10 @@ public class Bullet : MonoBehaviour
     //     return bBulletActive;
     // }
 
-    public void BulletImpact()
-    {
-        bulletStateMachine.SwitchState(new BulletDeadState(bulletStateMachine));
-    }
+    // public void BulletImpact()
+    // {
+    //     bulletStateMachine.SwitchState(new BulletDeadState(bulletStateMachine));
+    // }
 
     private void OnCollisionEnter(Collision other)
     {

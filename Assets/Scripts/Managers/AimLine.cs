@@ -22,11 +22,12 @@ public class AimLine : MonoBehaviour
 
     [SerializeField]
     private LayerMask hitLayerMask;
+
+    [SerializeField]
     private LineRenderer lineRenderer;
 
     private void Awake()
     {
-        lineRenderer = GetComponent<LineRenderer>();
         ToggleHitVisualVisibility(false);
     }
 

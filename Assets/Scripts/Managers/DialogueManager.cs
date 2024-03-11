@@ -33,6 +33,7 @@ public class DialogueManager : MonoBehaviour
     private Queue<AnimationClip> currentAnimations;
     private Queue<float> currentAnimationTimes;
     private Queue<CameraMode> currentCameraModes;
+    private bool disableCameraOnEnd;
 
     private Action onDialogueComplete;
     private Queue<Dialogue> dialogues;
@@ -73,6 +74,7 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
+        disableCameraOnEnd = dialogueNode.disableCameraOnEnd;
         DisplayNextSentence();
     }
 
@@ -90,15 +92,9 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        if (currentAnimations.TryDequeue(out AnimationClip animation) && (animation != null))
-        {
-            actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFadeTime);
-        }
+        TryPlayAnimation();
 
-        dialogueCameraDirector.ChangeCameraMode(
-            currentCameraModes.Dequeue(),
-            actorAnimators[actorIndex].transform
-        );
+        TryChangeCameraMode();
 
         float animationTimer = currentAnimationTimes.Dequeue();
 
@@ -111,6 +107,25 @@ public class DialogueManager : MonoBehaviour
         {
             ToggleDialogueUI(true);
             StartTypingSentence();
+        }
+    }
+
+    private void TryChangeCameraMode()
+    {
+        if (currentCameraModes.TryDequeue(out CameraMode cameraMode))
+        {
+            dialogueCameraDirector.ChangeCameraMode(
+                cameraMode,
+                actorAnimators[actorIndex].transform
+            );
+        }
+    }
+
+    private void TryPlayAnimation()
+    {
+        if (currentAnimations.TryDequeue(out AnimationClip animation) && (animation != null))
+        {
+            actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFadeTime);
         }
     }
 
@@ -146,7 +161,11 @@ public class DialogueManager : MonoBehaviour
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
         ToggleDialogueUI(false);
-        dialogueCameraDirector.EndOfDialogueCleanup();
+        if (disableCameraOnEnd)
+        {
+            dialogueCameraDirector.EndOfDialogueCleanup();
+        }
+
         onDialogueComplete();
     }
 

@@ -100,6 +100,11 @@ public class PlayerController : MonoBehaviour
         // }
     }
 
+    // public void DisableGun()
+    // {
+    //     playerGun.DisableBullet();
+    // }
+
     private void InputManager_OnShootAction()
     {
         if (!bIsFocusing)

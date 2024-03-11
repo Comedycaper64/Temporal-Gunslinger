@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class BulletStateMachine : StateMachine
 {
-    public override void Awake()
-    {
-        SetupDictionary();
-    }
-
     private void Start()
     {
         SwitchState(stateDictionary[StateEnum.idle]);
@@ -27,5 +22,20 @@ public class BulletStateMachine : StateMachine
         SwitchState(stateDictionary[StateEnum.active]);
     }
 
-    public override void ToggleDie(bool toggle) { }
+    public void SwitchToInactive()
+    {
+        SwitchState(stateDictionary[StateEnum.inactive]);
+    }
+
+    public override void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
+    {
+        if (stateChange != StateEnum.inactive)
+        {
+            return;
+        }
+
+        base.GameManager_OnGameStateChange(sender, stateChange);
+    }
+
+    public override void ToggleInactive(bool toggle) { }
 }

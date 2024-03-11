@@ -43,7 +43,7 @@ public class FocusManager : MonoBehaviour
                 );
             //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
             //Debug.Log("B: " + (nonTargetFOV - targetFOV));
-            Debug.Log("Ratio: " + lerpRatio);
+            //Debug.Log("Ratio: " + lerpRatio);
             bulletCamera.m_Lens.FieldOfView = Mathf.Lerp(
                 nonTargetFOV,
                 targetFOV,
@@ -111,13 +111,14 @@ public class FocusManager : MonoBehaviour
 
     public Vector3 GetAimDirection()
     {
-        if (bFocusing)
-        {
-            return Camera.main.transform.forward;
-        }
-        else
-        {
-            return focusAimLine.GetLineDirection();
-        }
+        return Camera.main.transform.forward;
+        // if (bFocusing)
+        // {
+        //     return Camera.main.transform.forward;
+        // }
+        // else
+        // {
+        //     return focusAimLine.GetLineDirection();
+        // }
     }
 }

@@ -11,8 +11,13 @@ public class CinematicManager : MonoBehaviour
 
     [SerializeField]
     private DialogueManager dialogueManager;
+
+    [SerializeField]
+    private ScrollingHallway scrollingHallway;
     private ActorAnimatorMapper actorAnimatorMapper;
-    private ActorMover actorMover;
+
+    public static EventHandler<UIChangeSO> OnFadeToBlackToggle;
+
     public static CinematicManager Instance { get; private set; }
 
     private void Awake()
@@ -46,22 +51,44 @@ public class CinematicManager : MonoBehaviour
             return;
         }
 
-        if (cinematicNode.GetType() == typeof(DialogueSO))
+        Type nodeType = cinematicNode.GetType();
+
+        if (nodeType == typeof(DialogueSO))
         {
             dialogueManager.PlayDialogue(cinematicNode as DialogueSO, TryPlayNextNode);
         }
-        else if (cinematicNode.GetType() == typeof(ActorMovementSO))
+        else if (nodeType == typeof(ActorMovementSO))
         {
-            ActorMovementSO actorMovement = cinematicNode as ActorMovementSO;
-            Animator animator = actorAnimatorMapper.GetAnimators(
-                actorMovement.actor.GetAnimatorController()
-            )[0];
-            actorMover.MoveActor(actorMovement, animator.GetComponent<IMover>(), TryPlayNextNode);
+            HandleMovementNode(cinematicNode);
+        }
+        else if (nodeType == typeof(UIChangeSO))
+        {
+            UIChangeSO uIChange = cinematicNode as UIChangeSO;
+            uIChange.onFaded = TryPlayNextNode;
+            OnFadeToBlackToggle?.Invoke(this, uIChange);
+        }
+        else if (nodeType == typeof(SceneChangeSO))
+        {
+            SceneChangeSO sceneChangeSO = cinematicNode as SceneChangeSO;
+
+            scrollingHallway.ToggleScroll(sceneChangeSO.startScrollingWalk);
+            TryPlayNextNode();
         }
         else
         {
             Debug.Log("Error, undefined type");
         }
+    }
+
+    private void HandleMovementNode(CinematicNode cinematicNode)
+    {
+        ActorMovementSO actorMovement = cinematicNode as ActorMovementSO;
+        Animator animator = actorAnimatorMapper.GetAnimators(
+            actorMovement.actor.GetAnimatorController()
+        )[actorMovement.actorIndex];
+        ActorMover mover = animator.GetComponent<ActorMover>();
+
+        mover.MoveActor(actorMovement, TryPlayNextNode);
     }
 
     private void EndCinematic()

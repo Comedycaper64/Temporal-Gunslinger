@@ -47,9 +47,9 @@ public abstract class StateMachine : MonoBehaviour
     }
 
     protected abstract void SetupDictionary();
-    public abstract void ToggleDie(bool toggle);
+    public abstract void ToggleInactive(bool toggle);
 
-    private void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
+    public virtual void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
     {
         SwitchState(stateDictionary[stateChange]);
     }

@@ -64,4 +64,9 @@ public class PlayerGun : MonoBehaviour
         gunShotVFX.PlayEffect();
         bullet.SwitchToActive();
     }
+
+    // public void DisableBullet()
+    // {
+    //     bullet.SwitchToInactive();
+    // }
 }

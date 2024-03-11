@@ -21,7 +21,7 @@ public class EnemyDeadState : State
             animator.SetTrigger("death");
         }
 
-        stateMachine.ToggleDie(true);
+        stateMachine.ToggleInactive(true);
         enemyNumber--;
         if (enemyNumber <= 0)
         {
@@ -31,7 +31,7 @@ public class EnemyDeadState : State
 
     public override void Exit()
     {
-        stateMachine.ToggleDie(false);
+        stateMachine.ToggleInactive(false);
         enemyNumber++;
     }
 
