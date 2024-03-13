@@ -22,13 +22,16 @@ public class EnemyRangedActiveState : State
     {
         timer = 0f;
         projectileFired = false;
-
         rewindState.ToggleMovement(true);
+        if (rewindState.GetTimeSpeed() < 0f)
+        {
+            timer = shootTime;
+            projectileFired = true;
+        }
     }
 
     public override void Exit()
     {
-        stateMachine.stateMachineAnimator.SetBool("shot", false);
         rewindState.ToggleMovement(false);
     }
 
@@ -38,9 +41,9 @@ public class EnemyRangedActiveState : State
 
         if (!projectileFired && timer >= shootTime)
         {
-            enemyStateMachine.GetBulletStateMachine().SwitchToActive();
-            stateMachine.stateMachineAnimator.SetBool("shot", true);
             projectileFired = true;
+            stateMachine.SwitchState(new EnemyRangedShootState(stateMachine));
+            return;
         }
         else if (projectileFired && timer < shootTime)
         {

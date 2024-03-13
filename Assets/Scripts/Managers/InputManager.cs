@@ -9,6 +9,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public static InputManager Instance { get; private set; }
     private Controls controls;
     private Vector2 mouseMovement;
+    private Vector2 mousePosition;
     private bool bIsFocusing;
     private bool bIsRewinding;
     private bool bIsResetting;
@@ -35,6 +36,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         return mouseMovement;
     }
 
+    public Vector2 GetMousePosition()
+    {
+        return mousePosition;
+    }
+
     public bool GetIsFocusing()
     {
         return bIsFocusing;
@@ -54,6 +60,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     {
         //Debug.Log(context.ReadValue<Vector2>());
         mouseMovement = context.ReadValue<Vector2>();
+    }
+
+    public void OnMousePosition(InputAction.CallbackContext context)
+    {
+        mousePosition = context.ReadValue<Vector2>();
     }
 
     public void OnShoot(InputAction.CallbackContext context)

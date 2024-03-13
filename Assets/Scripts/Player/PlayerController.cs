@@ -11,6 +11,13 @@ public class PlayerController : MonoBehaviour
     private bool bBulletFired = false;
     private bool bIsPlayerActive = false;
     private bool bIsFocusing = false;
+
+    //Tutorial bools
+    private bool bCanRotate = true;
+    private bool bCanRedirect = true;
+    private bool bCanPossess = true;
+    private bool bCanFocus = true;
+
     private BulletPossessor bulletPossessor;
 
     [SerializeField]
@@ -24,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private PlayerGun playerGun;
+
+    public static EventHandler<int> OnPlayerStateChanged;
 
     private void Awake()
     {
@@ -54,6 +63,11 @@ public class PlayerController : MonoBehaviour
     //Rotates player view and player model based on mouse movement
     private void RotatePlayer()
     {
+        if (!bCanRotate)
+        {
+            return;
+        }
+
         Vector2 mouseMovement =
             InputManager.Instance.GetMouseMovement() * mouseSensitivity * Time.deltaTime;
 
@@ -72,10 +86,18 @@ public class PlayerController : MonoBehaviour
         if (bIsPlayerActive)
         {
             InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+            OnPlayerStateChanged?.Invoke(this, 1);
+
+            if (bCanRedirect)
+            {
+                RedirectManager.Instance.ToggleRedirectUI(true);
+            }
         }
         else
         {
             InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
+            OnPlayerStateChanged?.Invoke(this, 0);
+            RedirectManager.Instance.ToggleRedirectUI(false);
         }
     }
 
@@ -115,11 +137,18 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.LevelStart();
         playerGun.FireGun();
         bulletPossessor.PossessBullet(initialBullet);
+
+        if (!bCanFocus)
+        {
+            return;
+        }
+
+        OnPlayerStateChanged?.Invoke(this, 3);
     }
 
     private void InputManager_OnRedirectAction()
     {
-        if (!bIsFocusing)
+        if (!bIsFocusing || !bCanRedirect)
         {
             return;
         }
@@ -129,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     private void InputManager_OnPossessAction()
     {
-        if (!GameManager.Instance.IsLevelActive())
+        if (!GameManager.Instance.IsLevelActive() || !bCanPossess)
         {
             return;
         }
@@ -140,11 +169,60 @@ public class PlayerController : MonoBehaviour
     {
         if (bBulletFired)
         {
+            if (!bCanFocus)
+            {
+                return;
+            }
+
             bulletPossessor.SetIsFocusing(isFocusing);
+            if (isFocusing)
+            {
+                OnPlayerStateChanged?.Invoke(this, 4);
+            }
+            else
+            {
+                OnPlayerStateChanged?.Invoke(this, 3);
+            }
         }
         else
         {
             playerGun.ToggleAimGun(isFocusing);
+            if (isFocusing)
+            {
+                OnPlayerStateChanged?.Invoke(this, 2);
+            }
+            else
+            {
+                OnPlayerStateChanged?.Invoke(this, 1);
+            }
         }
+    }
+
+    public void ToggleTutorialStartMode()
+    {
+        ToggleCanRotate(false);
+        ToggleCanPossess(false);
+        ToggleCanRedirect(false);
+        ToggleCanFocus(false);
+    }
+
+    public void ToggleCanRotate(bool toggle)
+    {
+        bCanRotate = toggle;
+    }
+
+    public void ToggleCanPossess(bool toggle)
+    {
+        bCanPossess = toggle;
+    }
+
+    public void ToggleCanRedirect(bool toggle)
+    {
+        bCanRedirect = toggle;
+    }
+
+    public void ToggleCanFocus(bool toggle)
+    {
+        bCanFocus = toggle;
     }
 }

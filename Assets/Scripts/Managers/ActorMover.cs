@@ -45,6 +45,10 @@ public class ActorMover : MonoBehaviour
         destination = movingTransform.position + movement;
         //this.movement = movement.normalized * speed;
         movementSpeed = speed;
+        if (!movingAnimation)
+        {
+            return;
+        }
         actorAnimator.CrossFadeInFixedTime(movingAnimation.name, 0.1f);
         actorAnimator.SetBool("moving", true);
     }
@@ -52,13 +56,19 @@ public class ActorMover : MonoBehaviour
     private void FinishMovement()
     {
         movementRequired = false;
-        actorAnimator.CrossFadeInFixedTime(idleAnimation.name, 0.1f);
-        actorAnimator.SetBool("moving", false);
+
         if (onMovementComplete != null)
         {
             onMovementComplete();
         }
         onMovementComplete = null;
+
+        if (!idleAnimation)
+        {
+            return;
+        }
+        actorAnimator.CrossFadeInFixedTime(idleAnimation.name, 0.1f);
+        actorAnimator.SetBool("moving", false);
     }
 
     private void Update()

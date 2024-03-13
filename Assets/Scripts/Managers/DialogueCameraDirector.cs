@@ -19,11 +19,19 @@ public class DialogueCameraDirector : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera wideAngleCamera;
 
+    [SerializeField]
+    private CinemachineVirtualCamera customCamera1;
+
+    [SerializeField]
+    private CinemachineVirtualCamera customCamera2;
+
     private void Awake()
     {
         modeToCamera.Add(CameraMode.fullbody, fullBodyCamera);
         modeToCamera.Add(CameraMode.faceZoom, faceZoomCamera);
         modeToCamera.Add(CameraMode.wideAngle, wideAngleCamera);
+        modeToCamera.Add(CameraMode.customCam1, customCamera1);
+        modeToCamera.Add(CameraMode.customCam2, customCamera2);
 
         TurnOffAllCameras();
     }
@@ -52,6 +60,15 @@ public class DialogueCameraDirector : MonoBehaviour
         fullBodyCamera.enabled = false;
         faceZoomCamera.enabled = false;
         wideAngleCamera.enabled = false;
+        if (customCamera1)
+        {
+            customCamera1.enabled = false;
+        }
+
+        if (customCamera2)
+        {
+            customCamera2.enabled = false;
+        }
     }
 
     private void ClearCurrentCamera()

@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CinematicManagerUI : MonoBehaviour
 {
+    [SerializeField]
+    private bool initialFadeState = false;
+
     private bool fadeStatus = false;
     private bool fadeTarget = false;
     private float fadeSpeed = 2f;
@@ -14,6 +17,12 @@ public class CinematicManagerUI : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        if (initialFadeState)
+        {
+            canvasGroup.alpha = 1f;
+            fadeStatus = true;
+            fadeTarget = true;
+        }
         CinematicManager.OnFadeToBlackToggle += ToggleFade;
     }
 

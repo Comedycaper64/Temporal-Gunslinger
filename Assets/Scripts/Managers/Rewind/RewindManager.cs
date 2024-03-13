@@ -8,6 +8,8 @@ public class RewindManager : MonoBehaviour
     private float rewindTimer = 0f;
     private float resetTimer;
     private const float RESET_TIME = 1f;
+    private bool bCanReset = true;
+    private bool bCanRewind = true;
     private bool bTimerActive = false;
     private bool bRewindActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
@@ -45,6 +47,11 @@ public class RewindManager : MonoBehaviour
 
     private void CheckIsRewinding()
     {
+        if (!bCanRewind)
+        {
+            return;
+        }
+
         if (bRewindActive != input.GetIsRewinding())
         {
             ToggleRewind(input.GetIsRewinding());
@@ -66,6 +73,11 @@ public class RewindManager : MonoBehaviour
 
     private void CheckIsResetting()
     {
+        if (!bCanReset)
+        {
+            return;
+        }
+
         if (input.GetIsResetting())
         {
             resetTimer += Time.unscaledDeltaTime;
@@ -167,10 +179,12 @@ public class RewindManager : MonoBehaviour
         }
     }
 
-    private void ResetManager()
+    public void ResetManager()
     {
         ToggleTimer(false);
         ToggleRewind(false);
+        priorityActions = new Stack<RewindableAction>();
+        rewindableActions = new Stack<RewindableAction>();
         rewindTimer = 0f;
     }
 
@@ -187,6 +201,16 @@ public class RewindManager : MonoBehaviour
     public void StartTimer()
     {
         ToggleTimer(true);
+    }
+
+    public void ToggleCanRewind(bool toggle)
+    {
+        bCanRewind = toggle;
+    }
+
+    public void ToggleCanReset(bool toggle)
+    {
+        bCanReset = toggle;
     }
 
     private void RewindableActionCreated(object sender, RewindableAction newRewindable)

@@ -79,11 +79,11 @@ public class BulletMovement : RewindableMovement
         // ).normalized;
         Vector3 flightNormalized = GetFlightDirection().normalized;
         //float flightSpeed = GetFlightDirection().magnitude;
-        Debug.Log("Flight Direction: " + GetFlightDirection());
+        //Debug.Log("Flight Direction: " + GetFlightDirection());
 
         Vector3 ricochetDirection =
             2 * Vector3.Dot(-flightNormalized, hitNormal) * (hitNormal + flightNormalized);
-        Debug.Log("Ricochet Direction: " + ricochetDirection);
+        //Debug.Log("Ricochet Direction: " + ricochetDirection);
 
         Redirect.BulletRedirected(
             transform.position,

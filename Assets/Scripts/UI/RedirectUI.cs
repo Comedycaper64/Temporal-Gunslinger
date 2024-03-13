@@ -7,11 +7,20 @@ using UnityEngine;
 public class RedirectUI : MonoBehaviour
 {
     [SerializeField]
+    private GameObject redirectUI;
+
+    [SerializeField]
     private TextMeshProUGUI redirectText;
 
     private void Awake()
     {
         RedirectManager.OnRedirectsChanged += UpdateText;
+        RedirectManager.OnRedirectUIActive += ToggleUI;
+    }
+
+    private void ToggleUI(object sender, bool e)
+    {
+        redirectUI.SetActive(e);
     }
 
     private void UpdateText(object sender, int e)
@@ -22,5 +31,6 @@ public class RedirectUI : MonoBehaviour
     private void OnDisable()
     {
         RedirectManager.OnRedirectsChanged -= UpdateText;
+        RedirectManager.OnRedirectUIActive -= ToggleUI;
     }
 }

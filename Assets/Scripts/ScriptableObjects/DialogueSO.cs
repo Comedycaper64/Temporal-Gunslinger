@@ -8,6 +8,8 @@ public enum CameraMode
     fullbody,
     faceZoom,
     wideAngle,
+    customCam1,
+    customCam2,
     none,
 }
 

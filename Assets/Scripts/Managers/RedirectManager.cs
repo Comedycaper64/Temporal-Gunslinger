@@ -10,6 +10,7 @@ public class RedirectManager : MonoBehaviour
     private int redirects = 0;
 
     public static event EventHandler<int> OnRedirectsChanged;
+    public static event EventHandler<bool> OnRedirectUIActive;
 
     private void Awake()
     {
@@ -53,5 +54,10 @@ public class RedirectManager : MonoBehaviour
     public void IncrementRedirects()
     {
         SetRedirects(++redirects);
+    }
+
+    public void ToggleRedirectUI(bool toggle)
+    {
+        OnRedirectUIActive?.Invoke(this, toggle);
     }
 }

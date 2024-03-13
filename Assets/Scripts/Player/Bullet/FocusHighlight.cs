@@ -9,6 +9,12 @@ public class FocusHighlight : MonoBehaviour, IHighlightable
 
     public void ToggleHighlight(bool toggle)
     {
+        if (!targetHighlight)
+        {
+            Debug.Log("ERROR: highlight for " + gameObject.name + " not assigned");
+            return;
+        }
+
         targetHighlight.SetActive(toggle);
     }
 }

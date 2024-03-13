@@ -8,37 +8,39 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private bool bLevelActive;
+    protected bool bLevelActive;
 
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
 
     [SerializeField]
-    private CinemachineVirtualCamera endOfLevelCam;
+    protected CinemachineVirtualCamera endOfLevelCam;
 
     [SerializeField]
-    private RewindManager rewindManager;
+    protected RewindManager rewindManager;
 
     [SerializeField]
-    private CinematicSO levelIntroCinematic;
+    protected CinematicSO levelIntroCinematic;
 
     [SerializeField]
-    private CinematicSO levelOutroCinematic;
+    protected CinematicSO levelOutroCinematic;
 
     public event EventHandler<bool> OnLevelLost;
 
     private void Awake()
     {
+        Debug.Log("ayaya");
         if (Instance != null)
         {
             Debug.LogError("There's more than one GameManager! " + transform + " - " + Instance);
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
     }
 
-    private void Start()
+    public virtual void Start()
     {
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
@@ -51,13 +53,13 @@ public class GameManager : MonoBehaviour
         rewindManager.OnResetLevel -= RewindManager_OnResetLevel;
     }
 
-    private void SetupLevel()
+    public virtual void SetupLevel()
     {
         OnGameStateChange?.Invoke(this, StateEnum.idle);
         bLevelActive = true;
     }
 
-    public void LevelStart()
+    public virtual void LevelStart()
     {
         if (!bLevelActive)
         {
@@ -68,18 +70,18 @@ public class GameManager : MonoBehaviour
         OnGameStateChange?.Invoke(this, StateEnum.active);
     }
 
-    private void ResetLevel()
+    protected void ResetLevel()
     {
         //Temp reset, shouldn't reload Scene
         SceneManager.LoadScene(0);
     }
 
-    private void LoadNextLevel()
+    protected void LoadNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void EndLevel(Transform lastEnemy)
+    public virtual void EndLevel(Transform lastEnemy)
     {
         bLevelActive = false;
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
@@ -91,7 +93,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(EndOfLevelWindDown());
     }
 
-    private IEnumerator EndOfLevelWindDown()
+    public virtual IEnumerator EndOfLevelWindDown()
     {
         yield return new WaitForSeconds(2f);
         //Set rewindable movement timescale to be normal
@@ -99,13 +101,13 @@ public class GameManager : MonoBehaviour
         CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
     }
 
-    public void LevelLost()
+    public virtual void LevelLost()
     {
         TimeManager.SetPausedTime();
         OnLevelLost?.Invoke(this, true);
     }
 
-    public void UndoLevelLost()
+    public virtual void UndoLevelLost()
     {
         OnLevelLost?.Invoke(this, false);
     }

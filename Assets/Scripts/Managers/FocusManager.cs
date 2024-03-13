@@ -111,14 +111,13 @@ public class FocusManager : MonoBehaviour
 
     public Vector3 GetAimDirection()
     {
-        return Camera.main.transform.forward;
-        // if (bFocusing)
-        // {
-        //     return Camera.main.transform.forward;
-        // }
-        // else
-        // {
-        //     return focusAimLine.GetLineDirection();
-        // }
+        if (bFocusing)
+        {
+            return Camera.main.transform.forward;
+        }
+        else
+        {
+            return transform.forward;
+        }
     }
 }
