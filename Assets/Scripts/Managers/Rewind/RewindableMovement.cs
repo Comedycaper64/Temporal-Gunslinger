@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class RewindableMovement : MonoBehaviour
 {
     [SerializeField]
-    private float startSpeed = 1f;
+    protected float startSpeed = 1f;
     private float speed = 0f;
     private static float timeScale = 1f;
 

@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
         {
             InputManager.Instance.OnShootAction += InputManager_OnShootAction;
             OnPlayerStateChanged?.Invoke(this, 1);
-
+            playerGun.ResetBullet();
             if (bCanRedirect)
             {
                 RedirectManager.Instance.ToggleRedirectUI(true);
@@ -109,11 +109,16 @@ public class PlayerController : MonoBehaviour
         {
             InputManager.Instance.OnShootAction += InputManager_OnRedirectAction;
             InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
+            if (bCanRedirect)
+            {
+                RedirectManager.Instance.ToggleRedirectUI(true);
+            }
         }
         else
         {
             InputManager.Instance.OnShootAction -= InputManager_OnRedirectAction;
             InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
+            RedirectManager.Instance.ToggleRedirectUI(false);
         }
 
         // if (bBulletFired)

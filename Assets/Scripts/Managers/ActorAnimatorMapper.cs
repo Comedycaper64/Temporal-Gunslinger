@@ -26,7 +26,18 @@ public class ActorAnimatorMapper : MonoBehaviour
                 Debug.LogError("Animator not found");
                 return null;
             }
-            actorAnimators = desiredAnimators;
+            actorAnimators = new Animator[desiredAnimators.Length];
+            foreach (Animator animator in desiredAnimators)
+            {
+                if (animator.TryGetComponent<ActorIndexer>(out ActorIndexer indexer))
+                {
+                    actorAnimators[indexer.GetActorIndex()] = animator;
+                }
+                else
+                {
+                    actorAnimators[0] = animator;
+                }
+            }
             actorAnimatorPair.Add(actorController, actorAnimators);
         }
 

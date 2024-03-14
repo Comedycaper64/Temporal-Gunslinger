@@ -90,6 +90,13 @@ public class TutorialGameManager : GameManager
             playerController.ToggleCanRedirect(true);
             rewindManager.ToggleCanRewind(true);
         }
+        else if (tutorialState == TutorialState.Round2)
+        {
+            CinematicManager.Instance.PlayCinematic(endOfRound2Cinematic, SetupLevel);
+            EnemyDeadState.enemyNumber = 2;
+            playerController.ToggleCanPossess(true);
+        }
+        else if (tutorialState == TutorialState.Round3) { }
     }
 
     public void QuitGame()

@@ -20,10 +20,19 @@ public class PlayerGun : MonoBehaviour
     private Transform aimingPosition;
 
     [SerializeField]
+    private Transform bulletPosition;
+
+    [SerializeField]
     private VFXPlayback gunShotVFX;
 
     [SerializeField]
-    private BulletStateMachine bullet;
+    private BulletStateMachine bulletStateMachine;
+    private Bullet bullet;
+
+    private void Start()
+    {
+        bullet = bulletStateMachine.GetComponent<Bullet>();
+    }
 
     private void Update()
     {
@@ -62,7 +71,12 @@ public class PlayerGun : MonoBehaviour
     {
         //SFX
         gunShotVFX.PlayEffect();
-        bullet.SwitchToActive();
+        bulletStateMachine.SwitchToActive();
+    }
+
+    public void ResetBullet()
+    {
+        bullet.ResetBullet(bulletPosition);
     }
 
     // public void DisableBullet()

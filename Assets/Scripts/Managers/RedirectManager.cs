@@ -29,6 +29,7 @@ public class RedirectManager : MonoBehaviour
     private void Start()
     {
         SetRedirects(3);
+        ToggleRedirectUI(false);
     }
 
     public bool TryRedirect()

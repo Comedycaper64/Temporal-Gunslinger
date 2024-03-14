@@ -11,6 +11,7 @@ public class ActorMover : MonoBehaviour
     [SerializeField]
     private Transform movingTransform;
     private bool movementRequired = false;
+    private bool shouldGoIdle = false;
     private Action onMovementComplete;
 
     private Animator actorAnimator;
@@ -29,6 +30,7 @@ public class ActorMover : MonoBehaviour
     public void MoveActor(ActorMovementSO actorMovementSO, Action onMovementComplete)
     {
         SetMovementTarget(actorMovementSO.movement, actorMovementSO.movementSpeed);
+        shouldGoIdle = actorMovementSO.goIdleAtEnd;
         if (actorMovementSO.playMovementUnInterrupted)
         {
             this.onMovementComplete = onMovementComplete;
@@ -63,7 +65,7 @@ public class ActorMover : MonoBehaviour
         }
         onMovementComplete = null;
 
-        if (!idleAnimation)
+        if (!idleAnimation || !shouldGoIdle)
         {
             return;
         }

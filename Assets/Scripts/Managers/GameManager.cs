@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("ayaya");
         if (Instance != null)
         {
             Debug.LogError("There's more than one GameManager! " + transform + " - " + Instance);

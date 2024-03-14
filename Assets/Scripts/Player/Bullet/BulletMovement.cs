@@ -143,6 +143,12 @@ public class BulletMovement : RewindableMovement
         bulletModel.gameObject.SetActive(toggle);
     }
 
+    public void ResetMovement()
+    {
+        bulletModel.rotation = Quaternion.identity;
+        SetSpeed(startSpeed);
+    }
+
     public void UndoRedirect(
         Vector3 position,
         Vector3 direction,

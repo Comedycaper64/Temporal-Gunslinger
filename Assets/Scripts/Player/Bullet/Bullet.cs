@@ -8,6 +8,7 @@ public class Bullet : MonoBehaviour
 {
     private bool bBulletActive;
     private bool bBulletPossessed;
+    private Transform gunParent;
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
@@ -20,6 +21,7 @@ public class Bullet : MonoBehaviour
         bulletCameraController = GetComponent<BulletCameraController>();
         bulletStateMachine = GetComponent<BulletStateMachine>();
         focusManager = GetComponent<FocusManager>();
+        gunParent = transform.parent;
     }
 
     private void Update()
@@ -94,6 +96,12 @@ public class Bullet : MonoBehaviour
     public bool IsFocusing()
     {
         return focusManager.IsFocusing();
+    }
+
+    public void ResetBullet(Transform bulletPosition)
+    {
+        transform.parent = gunParent;
+        transform.position = bulletPosition.position;
     }
 
     // public bool IsBulletActive()

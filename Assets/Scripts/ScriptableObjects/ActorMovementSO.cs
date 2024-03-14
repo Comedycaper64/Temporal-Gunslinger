@@ -10,4 +10,5 @@ public class ActorMovementSO : CinematicNode
     public Vector3 movement;
     public float movementSpeed;
     public bool playMovementUnInterrupted;
+    public bool goIdleAtEnd;
 }
