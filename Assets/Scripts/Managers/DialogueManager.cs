@@ -39,6 +39,7 @@ public class DialogueManager : MonoBehaviour
     private Queue<Dialogue> dialogues;
     public static event Action OnFinishTypingDialogue;
     public static event EventHandler<bool> OnToggleDialogueUI;
+    public static event EventHandler<Sprite[]> OnChangeSprite;
     public static event EventHandler<DialogueUIEventArgs> OnDialogue;
 
     private void Awake()
@@ -66,6 +67,10 @@ public class DialogueManager : MonoBehaviour
         currentActor = dialogueNode.actor;
 
         AnimatorController actorController = currentActor.GetAnimatorController();
+
+        Sprite[] actorSprites = currentActor.GetActorSprites();
+
+        OnChangeSprite?.Invoke(this, actorSprites);
 
         actorAnimators = actorAnimatorMapper.GetAnimators(actorController);
 

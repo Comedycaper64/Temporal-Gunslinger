@@ -54,6 +54,11 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
+    public void SetGunStandbyPosition()
+    {
+        gunModel.position = standbyPosition.position;
+    }
+
     public void ToggleAimGun(bool toggle)
     {
         if (toggle)

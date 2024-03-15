@@ -26,6 +26,9 @@ public class AimLine : MonoBehaviour
     [SerializeField]
     private LineRenderer lineRenderer;
 
+    [SerializeField]
+    private LineRenderer highlightLineRenderer;
+
     private void Awake()
     {
         ToggleHitVisualVisibility(false);
@@ -70,6 +73,7 @@ public class AimLine : MonoBehaviour
             positionArray[1] = lineDirection * lineRange;
         }
         lineRenderer.SetPositions(positionArray);
+        highlightLineRenderer.SetPositions(positionArray);
     }
 
     private void ToggleHitVisualVisibility(bool toggle)
@@ -93,6 +97,7 @@ public class AimLine : MonoBehaviour
     {
         bShowLine = toggle;
         lineRenderer.enabled = toggle;
+        highlightLineRenderer.enabled = toggle;
         ToggleHitVisualVisibility(false);
     }
 

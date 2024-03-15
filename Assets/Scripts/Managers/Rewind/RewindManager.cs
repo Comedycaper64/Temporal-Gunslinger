@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class RewindManager : MonoBehaviour
 {
+    public static bool bRewinding;
+
     private float rewindTimer = 0f;
     private float resetTimer;
     private const float RESET_TIME = 1f;
@@ -159,7 +161,7 @@ public class RewindManager : MonoBehaviour
     private void ToggleRewind(bool toggle)
     {
         bRewindActive = toggle;
-
+        bRewinding = toggle;
         ToggleRewindableMovements(toggle);
         //OnRewindToggled?.Invoke(this, bRewindActive);
     }

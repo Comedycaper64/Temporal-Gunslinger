@@ -11,17 +11,16 @@ public class MaskStateMachine : EnemyRangedStateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyInactiveState(this));
-        if (fireProjectile)
-        {
-            stateDictionary.Add(StateEnum.active, new EnemyRangedShootState(this));
-        }
-        else
-        {
-            stateDictionary.Add(StateEnum.active, new EnemyInactiveState(this));
-        }
-
+        stateDictionary.Add(StateEnum.active, new EnemyIdleState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
+
+        //Debug.Log(stateDictionary.Count);
     }
 
-    public override void ToggleInactive(bool toggle) { }
+    public void EnableFireProjectile()
+    {
+        fireProjectile = true;
+        stateDictionary.Remove(StateEnum.active);
+        stateDictionary.Add(StateEnum.active, new EnemyRangedShootState(this));
+    }
 }

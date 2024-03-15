@@ -17,13 +17,13 @@ public class TutorialGameManager : GameManager
     private GameObject reaper;
 
     [SerializeField]
-    private GameObject round2Mask1;
-
-    [SerializeField]
-    private GameObject round2Mask2;
+    private LevelSelectorUI levelSelectUI;
 
     [SerializeField]
     private GameObject revPocketwatch;
+
+    [SerializeField]
+    private MaskStateMachine projectileMask;
 
     [SerializeField]
     private PlayerStateMachine playerStateMachine;
@@ -94,9 +94,18 @@ public class TutorialGameManager : GameManager
         {
             CinematicManager.Instance.PlayCinematic(endOfRound2Cinematic, SetupLevel);
             EnemyDeadState.enemyNumber = 2;
+            projectileMask.EnableFireProjectile();
             playerController.ToggleCanPossess(true);
         }
-        else if (tutorialState == TutorialState.Round3) { }
+        else if (tutorialState == TutorialState.Round3)
+        {
+            CinematicManager.Instance.PlayCinematic(endOfRound3Cinematic, ShowLevelSelect);
+        }
+    }
+
+    private void ShowLevelSelect()
+    {
+        levelSelectUI.ToggleLevelSelector(true);
     }
 
     public void QuitGame()

@@ -10,4 +10,7 @@ using UnityEngine;
 public class SceneChangeSO : CinematicNode
 {
     public bool startScrollingWalk;
+    public bool fadeOutMusic;
+    public bool fadeInMusic;
+    public AudioClip musicTrackChange;
 }

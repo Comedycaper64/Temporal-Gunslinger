@@ -23,7 +23,7 @@ public class EnemyDeadState : State
 
         stateMachine.ToggleInactive(true);
         enemyNumber--;
-        Debug.Log("Enemies remaining: " + enemyNumber);
+        //Debug.Log("Enemies remaining: " + enemyNumber);
         if (enemyNumber <= 0)
         {
             GameManager.Instance.EndLevel(stateMachine.transform);

@@ -137,6 +137,7 @@ public class Bullet : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
+            //Debug.Log("Hit: " + damageable);
             damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
 
             bulletMovement.SlowBullet(velocityConservation);

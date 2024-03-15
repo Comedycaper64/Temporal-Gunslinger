@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    protected bool bLevelActive;
+    public static bool bLevelActive;
 
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;

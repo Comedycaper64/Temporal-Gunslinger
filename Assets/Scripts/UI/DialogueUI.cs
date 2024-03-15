@@ -11,14 +11,23 @@ public class DialogueUI : MonoBehaviour
     private bool bIsDialogueActive;
     private bool bDialogueActiveChanged;
     private bool isTyping = false;
+    private int spriteArrayIndex = 0;
     private float timeBetweenLetterTyping = 0.05f;
-    private float textBoxFadeSpeed = 5f;
+    private float spriteChangeTimer = 0f;
+
+    [SerializeField]
+    private float spriteChangeTime = 0.5f;
+    private float textBoxFadeSpeed = 2.5f;
     private string typingSentence;
     private Coroutine typingCoroutine;
     private Action onTypingFinished;
 
+    private CanvasGroup dialogueCanvasGroup;
+
     [SerializeField]
-    private Image textBox;
+    private Image dialogueFaceSprite;
+
+    private Sprite[] currentSpriteSet = new Sprite[0];
 
     [SerializeField]
     private TextMeshProUGUI actorNameText;
@@ -31,10 +40,13 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnToggleDialogueUI += DialogueManager_OnToggleDialogueUI;
         DialogueManager.OnDialogue += DialogueManager_OnDialogue;
         DialogueManager.OnFinishTypingDialogue += DialogueManager_OnFinishTypingDialogue;
+        DialogueManager.OnChangeSprite += DialogueManager_OnChangeSprite;
 
         ClearDialogueText();
         SetActorName("");
-        textBox.color = new Color(textBox.color.r, textBox.color.g, textBox.color.b, 0f);
+        //textBox.color = new Color(textBox.color.r, textBox.color.g, textBox.color.b, 0f);
+        dialogueCanvasGroup = GetComponent<CanvasGroup>();
+        dialogueCanvasGroup.alpha = 0f;
     }
 
     private void OnDisable()
@@ -42,40 +54,49 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnToggleDialogueUI -= DialogueManager_OnToggleDialogueUI;
         DialogueManager.OnDialogue -= DialogueManager_OnDialogue;
         DialogueManager.OnFinishTypingDialogue -= DialogueManager_OnFinishTypingDialogue;
+        DialogueManager.OnChangeSprite -= DialogueManager_OnChangeSprite;
     }
 
     private void Update()
     {
+        if (currentSpriteSet.Length > 0)
+        {
+            spriteChangeTimer += Time.deltaTime;
+
+            if (spriteChangeTimer > spriteChangeTime)
+            {
+                spriteChangeTimer = 0f;
+                spriteArrayIndex++;
+                if (spriteArrayIndex >= currentSpriteSet.Length)
+                {
+                    spriteArrayIndex = 0;
+                }
+                dialogueFaceSprite.sprite = currentSpriteSet[spriteArrayIndex];
+            }
+        }
+
         if (bDialogueActiveChanged)
         {
-            FadeTextBox();
+            FadeUI();
         }
     }
 
-    private void FadeTextBox()
+    private void FadeUI()
     {
         if (bIsDialogueActive)
         {
-            textBox.color = new Color(
-                textBox.color.r,
-                textBox.color.g,
-                textBox.color.b,
-                textBox.color.a + Time.deltaTime * textBoxFadeSpeed
-            );
-            if (textBox.color.a > 0.99f)
+            dialogueCanvasGroup.alpha += textBoxFadeSpeed * Time.deltaTime;
+
+            if (dialogueCanvasGroup.alpha >= 1f)
             {
                 bDialogueActiveChanged = false;
             }
         }
         else
         {
-            textBox.color = new Color(
-                textBox.color.r,
-                textBox.color.g,
-                textBox.color.b,
-                textBox.color.a - Time.deltaTime * textBoxFadeSpeed
-            );
-            if (textBox.color.a < 0.01f)
+            dialogueCanvasGroup.alpha -= textBoxFadeSpeed * Time.deltaTime;
+
+            if (dialogueCanvasGroup.alpha <= 0f)
             {
                 bDialogueActiveChanged = false;
             }
@@ -140,6 +161,24 @@ public class DialogueUI : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeSentence(dialogueArgs));
     }
 
+    private void DialogueManager_OnChangeSprite(object sender, Sprite[] e)
+    {
+        if (e == null)
+        {
+            currentSpriteSet = new Sprite[0];
+        }
+        else
+        {
+            currentSpriteSet = e;
+        }
+
+        dialogueFaceSprite.gameObject.SetActive(true);
+        if (currentSpriteSet.Length <= 0)
+        {
+            dialogueFaceSprite.gameObject.SetActive(false);
+        }
+    }
+
     private void DialogueManager_OnToggleDialogueUI(object sender, bool e)
     {
         if (e == bIsDialogueActive)
@@ -149,6 +188,7 @@ public class DialogueUI : MonoBehaviour
 
         ClearDialogueText();
         SetActorName("");
+        dialogueFaceSprite.gameObject.SetActive(e);
         ToggleDialogueActive(e);
     }
 }

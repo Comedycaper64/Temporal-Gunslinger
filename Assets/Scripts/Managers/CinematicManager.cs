@@ -14,6 +14,9 @@ public class CinematicManager : MonoBehaviour
 
     [SerializeField]
     private ScrollingHallway scrollingHallway;
+
+    [SerializeField]
+    private AudioManager audioManager;
     private ActorAnimatorMapper actorAnimatorMapper;
 
     public static EventHandler<UIChangeSO> OnFadeToBlackToggle;
@@ -72,6 +75,24 @@ public class CinematicManager : MonoBehaviour
             SceneChangeSO sceneChangeSO = cinematicNode as SceneChangeSO;
 
             scrollingHallway.ToggleScroll(sceneChangeSO.startScrollingWalk);
+
+            if (audioManager)
+            {
+                if (sceneChangeSO.musicTrackChange)
+                {
+                    audioManager.SetMusicTrack(sceneChangeSO.musicTrackChange);
+                }
+                if (sceneChangeSO.fadeInMusic)
+                {
+                    audioManager.FadeInMusic();
+                }
+
+                if (sceneChangeSO.fadeOutMusic)
+                {
+                    audioManager.FadeOutMusic();
+                }
+            }
+
             TryPlayNextNode();
         }
         else

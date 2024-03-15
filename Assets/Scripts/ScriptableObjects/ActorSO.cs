@@ -15,6 +15,9 @@ public class ActorSO : ScriptableObject
     private AudioClip[] dialogueNoises;
 
     [SerializeField]
+    private Sprite[] actorSprites;
+
+    [SerializeField]
     private AnimatorController animatorController;
 
     public string GetActorName()
@@ -25,6 +28,11 @@ public class ActorSO : ScriptableObject
     public AudioClip[] GetDialogueNoises()
     {
         return dialogueNoises;
+    }
+
+    public Sprite[] GetActorSprites()
+    {
+        return actorSprites;
     }
 
     public AnimatorController GetAnimatorController()
