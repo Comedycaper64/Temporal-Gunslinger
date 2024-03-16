@@ -20,6 +20,7 @@ public class RewindManager : MonoBehaviour
     private InputManager input;
 
     public event Action OnResetLevel;
+    public static EventHandler<bool> OnRewindToggle;
 
     private void Start()
     {
@@ -163,7 +164,7 @@ public class RewindManager : MonoBehaviour
         bRewindActive = toggle;
         bRewinding = toggle;
         ToggleRewindableMovements(toggle);
-        //OnRewindToggled?.Invoke(this, bRewindActive);
+        OnRewindToggle?.Invoke(this, bRewindActive);
     }
 
     private void ToggleRewindableMovements(bool toggle)

@@ -609,7 +609,7 @@ Transform:
   m_Children:
   - {fileID: 1425880283262027984}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6583379612124411674
 MonoBehaviour:
@@ -640,6 +640,7 @@ MonoBehaviour:
   playerBody: {fileID: 1425880283262027984}
   playerCamera: {fileID: 6583379612466073138}
   playerGun: {fileID: 6583379612146522421}
+  readyGunSFX: {fileID: 8300000, guid: e1f48c39d1d6a0445abbd16312f6df29, type: 3}
 --- !u!114 &6583379612124411672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,6 +667,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weakPoints:
   - {fileID: 6583379613943304124}
+  deathSFX: {fileID: 8300000, guid: 48c56c2f1601e404bbde1799b73e4941, type: 3}
 --- !u!1 &6583379612146522423
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +859,7 @@ GameObject:
   - component: {fileID: 6583379612466073139}
   - component: {fileID: 6110059909012447539}
   m_Layer: 0
-  m_Name: CM vcam1
+  m_Name: Revenant POV
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3053,6 +3055,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Gunfire VFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495676419286412532, guid: 0b085ef8bff209d4db2098e12136fdd3,
+        type: 3}
+      propertyPath: startSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495676419286412532, guid: 0b085ef8bff209d4db2098e12136fdd3,
+        type: 3}
+      propertyPath: controlTimeVariable
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

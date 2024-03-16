@@ -6,15 +6,14 @@ using UnityEngine.VFX;
 public class AnimationVFXManager : MonoBehaviour
 {
     [SerializeField]
-    private List<VisualEffect> visualEffects = new List<VisualEffect>();
+    private List<VFXPlayback> visualEffects = new List<VFXPlayback>();
 
     // [SerializeField]
     // private List<VFXPlayback> rewindableVFX = new List<VFXPlayback>();
 
     public void PlayVFX(int vfxNum)
     {
-        visualEffects[vfxNum].Reinit();
-        visualEffects[vfxNum].Play();
+        visualEffects[vfxNum].PlayEffect();
     }
 
     //public void PlayRewindVFX(int vfxNum) { }

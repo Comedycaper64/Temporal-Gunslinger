@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MaskStateMachine : EnemyRangedStateMachine
 {
-    [SerializeField]
-    private bool fireProjectile;
+    // [SerializeField]
+    // private bool fireProjectile;
 
     protected override void SetupDictionary()
     {
@@ -19,7 +19,7 @@ public class MaskStateMachine : EnemyRangedStateMachine
 
     public void EnableFireProjectile()
     {
-        fireProjectile = true;
+        //fireProjectile = true;
         stateDictionary.Remove(StateEnum.active);
         stateDictionary.Add(StateEnum.active, new EnemyRangedShootState(this));
     }

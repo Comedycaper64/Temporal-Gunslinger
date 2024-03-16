@@ -12,6 +12,9 @@ public class VFXPlayback : RewindableMovement
     private const string TIME_VARIABLE = "Time";
 
     [SerializeField]
+    private bool controlTimeVariable = false;
+
+    [SerializeField]
     private bool bPlayOnStart;
 
     private void Start()
@@ -28,10 +31,19 @@ public class VFXPlayback : RewindableMovement
     {
         if (!effectPlaying)
         {
+            visualEffect.playRate = 1f;
             return;
         }
-        simulationTime += Time.deltaTime * GetSpeed();
-        visualEffect.SetFloat(TIME_VARIABLE, simulationTime);
+
+        if (controlTimeVariable)
+        {
+            simulationTime += Time.deltaTime * GetSpeed();
+            visualEffect.SetFloat(TIME_VARIABLE, simulationTime);
+        }
+        else
+        {
+            visualEffect.playRate = GetSpeed();
+        }
     }
 
     public void StopEffect()
@@ -46,9 +58,13 @@ public class VFXPlayback : RewindableMovement
     public void PlayEffect()
     {
         visualEffect.Play();
-        simulationTime = 0.0f;
-        effectPlaying = true;
         ToggleMovement(true);
-        VFXPlayed.VFXPlay(this);
+        effectPlaying = true;
+
+        if (controlTimeVariable)
+        {
+            simulationTime = 0.0f;
+            VFXPlayed.VFXPlay(this);
+        }
     }
 }

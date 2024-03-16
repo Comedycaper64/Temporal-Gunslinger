@@ -156,6 +156,9 @@ public class LevelSelectorUI : MonoBehaviour
 
     private void InputManager_OnShoot()
     {
-        ConfirmLevelSelection();
+        if (confirmation == false)
+        {
+            ConfirmLevelSelection();
+        }
     }
 }

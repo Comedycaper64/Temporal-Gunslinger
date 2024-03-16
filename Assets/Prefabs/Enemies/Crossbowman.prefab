@@ -684,6 +684,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weakPoints:
   - {fileID: 8530361156434384004}
+  deathSFX: {fileID: 0}
 --- !u!114 &3073106948682386307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1540,6 +1541,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0.00013663198
       objectReference: {fileID: 0}
+    - target: {fileID: 314790386935376720, guid: 21a1d91dd9497dc4fb67865236609542,
+        type: 3}
+      propertyPath: dissolveSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
     - target: {fileID: 345666884220976814, guid: 21a1d91dd9497dc4fb67865236609542,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3055,6 +3061,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -1.9715654e-14
       objectReference: {fileID: 0}
+    - target: {fileID: 6905079677757745731, guid: 21a1d91dd9497dc4fb67865236609542,
+        type: 3}
+      propertyPath: visualEffects.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 6937089307569914609, guid: 21a1d91dd9497dc4fb67865236609542,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3773,6 +3784,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1883684382410260416}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &261237101997265192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2642676411968209501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e76192d97e6e2e449dfa820399b936f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorIndex: 0
 --- !u!114 &700734520619461645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3788,19 +3812,6 @@ MonoBehaviour:
   startSpeed: 1
   animator: {fileID: 8721027481788138141}
   animationSpeedModifier: 10
---- !u!114 &261237101997265192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2642676411968209501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e76192d97e6e2e449dfa820399b936f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actorIndex: 0
 --- !u!4 &2750162694233543325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4327601425809010013, guid: 21a1d91dd9497dc4fb67865236609542,

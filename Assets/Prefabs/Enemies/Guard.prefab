@@ -247,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weakPoints:
   - {fileID: 5558723523944455679}
+  deathSFX: {fileID: 0}
 --- !u!1 &1739778706055220559
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,6 +546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSpeed: 1
+  controlTimeVariable: 0
   bPlayOnStart: 0
 --- !u!114 &8698613759246274173
 MonoBehaviour:
@@ -2993,6 +2995,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.0000013529641
       objectReference: {fileID: 0}
+    - target: {fileID: 8872536153491010074, guid: 3fec6bcd2410f524396030bc8fb85aef,
+        type: 3}
+      propertyPath: dissolveSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
     - target: {fileID: 8985254504796213468, guid: 3fec6bcd2410f524396030bc8fb85aef,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3131,6 +3138,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 150966460654219300}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1253783573005683865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1967500971663629479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e76192d97e6e2e449dfa820399b936f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  actorIndex: 0
 --- !u!114 &1761019859477123523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3161,19 +3181,6 @@ MonoBehaviour:
   startSpeed: 1
   animator: {fileID: 1696905314012635635}
   animationSpeedModifier: 15
---- !u!114 &1253783573005683865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967500971663629479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e76192d97e6e2e449dfa820399b936f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actorIndex: 0
 --- !u!4 &2586178989318167471 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2448730200031734667, guid: 3fec6bcd2410f524396030bc8fb85aef,

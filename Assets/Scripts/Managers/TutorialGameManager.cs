@@ -99,6 +99,7 @@ public class TutorialGameManager : GameManager
         }
         else if (tutorialState == TutorialState.Round3)
         {
+            EnemyDeadState.enemyNumber = 0;
             CinematicManager.Instance.PlayCinematic(endOfRound3Cinematic, ShowLevelSelect);
         }
     }

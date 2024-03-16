@@ -12,8 +12,10 @@ public class Bullet : MonoBehaviour
     private BulletMovement bulletMovement;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
-
     private FocusManager focusManager;
+
+    [SerializeField]
+    private AudioClip redirectSFX;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class Bullet : MonoBehaviour
         {
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.RedirectBullet(aimDirection, GetAimRotation(aimDirection));
+            AudioManager.PlaySFX(redirectSFX, 0.4f, transform.position);
         }
         else
         {

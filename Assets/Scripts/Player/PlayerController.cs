@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
 
     public static EventHandler<int> OnPlayerStateChanged;
 
+    [SerializeField]
+    private AudioClip readyGunSFX;
+
     private void Awake()
     {
         bulletPossessor = GetComponent<BulletPossessor>();
@@ -89,6 +92,7 @@ public class PlayerController : MonoBehaviour
             OnPlayerStateChanged?.Invoke(this, 1);
             playerGun.ResetBullet();
             playerGun.SetGunStandbyPosition();
+            AudioManager.PlaySFX(readyGunSFX, 0.5f, transform.position);
             if (bCanRedirect)
             {
                 RedirectManager.Instance.ToggleRedirectUI(true);

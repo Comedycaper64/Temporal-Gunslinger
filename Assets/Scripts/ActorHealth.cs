@@ -10,6 +10,9 @@ public class ActorHealth : MonoBehaviour
     [SerializeField]
     private List<WeakPoint> weakPoints = new List<WeakPoint>();
 
+    [SerializeField]
+    private AudioClip deathSFX;
+
     private void Awake()
     {
         stateMachine = GetComponent<StateMachine>();
@@ -30,5 +33,10 @@ public class ActorHealth : MonoBehaviour
     private void Die()
     {
         stateMachine.SwitchToDeadState();
+
+        if (deathSFX)
+        {
+            AudioManager.PlaySFX(deathSFX, 0.5f, transform.position);
+        }
     }
 }

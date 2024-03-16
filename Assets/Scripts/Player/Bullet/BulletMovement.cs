@@ -8,6 +8,7 @@ public class BulletMovement : RewindableMovement
     private bool bShouldRotate;
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
+    private float spinSpeed = 150f;
     private float dropVelocity = 50f;
     public float velocityLossRate = 5f;
     private Vector3 flightDirection;
@@ -30,6 +31,8 @@ public class BulletMovement : RewindableMovement
     {
         transform.position += flightDirection * GetSpeed() * Time.deltaTime;
 
+        SpinBullet();
+
         if (!bShouldRotate)
         {
             return;
@@ -46,6 +49,11 @@ public class BulletMovement : RewindableMovement
         {
             bShouldRotate = false;
         }
+    }
+
+    private void SpinBullet()
+    {
+        bulletModel.eulerAngles += new Vector3(0f, 0f, spinSpeed * Time.deltaTime);
     }
 
     public void RedirectBullet(Vector3 newDirection, Quaternion newRotation)
