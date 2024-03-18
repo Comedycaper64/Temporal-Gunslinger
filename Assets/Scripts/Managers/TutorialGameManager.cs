@@ -85,6 +85,7 @@ public class TutorialGameManager : GameManager
             //round2Mask1.SetActive(true);
             //round2Mask2.SetActive(true);
             EnemyDeadState.enemyNumber = 2;
+            BulletDeadState.bulletNumber = 1;
             playerController.ToggleCanRotate(true);
             playerController.ToggleCanFocus(true);
             playerController.ToggleCanRedirect(true);
@@ -94,12 +95,15 @@ public class TutorialGameManager : GameManager
         {
             CinematicManager.Instance.PlayCinematic(endOfRound2Cinematic, SetupLevel);
             EnemyDeadState.enemyNumber = 2;
+            BulletDeadState.bulletNumber = 2;
             projectileMask.EnableFireProjectile();
             playerController.ToggleCanPossess(true);
+            rewindManager.ToggleCanRewind(true);
         }
         else if (tutorialState == TutorialState.Round3)
         {
             EnemyDeadState.enemyNumber = 0;
+            BulletDeadState.bulletNumber = 0;
             CinematicManager.Instance.PlayCinematic(endOfRound3Cinematic, ShowLevelSelect);
         }
     }

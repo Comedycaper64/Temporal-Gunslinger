@@ -34,6 +34,12 @@ public class Bullet : MonoBehaviour
 
             if (bulletMovement.ShouldBulletDrop())
             {
+                //bulletStateMachine.SwitchToDeadState();
+                bulletMovement.ApplyGravity();
+            }
+
+            if (bulletMovement.ShouldBulletStop())
+            {
                 bulletStateMachine.SwitchToDeadState();
             }
         }
@@ -41,7 +47,6 @@ public class Bullet : MonoBehaviour
         if (bBulletPossessed)
         {
             BulletVelocityUI.Instance.VelocityChanged(bulletMovement.GetVelocity());
-            //TimeManager.UpdateTimeScale(1f / bulletMovement.GetVelocity());
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
         }
     }
@@ -103,6 +108,8 @@ public class Bullet : MonoBehaviour
 
     public void ResetBullet(Transform bulletPosition)
     {
+        bulletStateMachine.SwitchToInactive();
+        //bulletMovement.ResetMovement();
         transform.parent = gunParent;
         transform.position = bulletPosition.position;
     }

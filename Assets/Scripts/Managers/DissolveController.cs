@@ -29,6 +29,25 @@ public class DissolveController : RewindableMovement
         {
             materials.Add(meshRenderer.material);
         }
+
+        GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
+    }
+
+    private void GameManager_OnGameStateChange(object sender, StateEnum e)
+    {
+        if (e == StateEnum.idle)
+        {
+            foreach (Material material in materials)
+            {
+                material.SetFloat("_Dissolve_Amount", 0f);
+            }
+        }
     }
 
     private void Update()

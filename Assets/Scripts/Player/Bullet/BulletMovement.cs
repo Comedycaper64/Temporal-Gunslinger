@@ -141,20 +141,30 @@ public class BulletMovement : RewindableMovement
         SetSpeed(speed -= velocityLossRate * Time.deltaTime);
     }
 
+    public void ApplyGravity()
+    {
+        if (transform.position.y <= 0f)
+        {
+            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+            return;
+        }
+
+        transform.position += new Vector3(0f, -GetSpeed() * Time.deltaTime, 0f);
+    }
+
     public bool ShouldBulletDrop()
     {
         return Mathf.Abs(GetUnscaledSpeed()) < dropVelocity;
     }
 
+    public bool ShouldBulletStop()
+    {
+        return Mathf.Abs(GetUnscaledSpeed()) < 10f;
+    }
+
     public void ToggleBulletModel(bool toggle)
     {
         bulletModel.gameObject.SetActive(toggle);
-    }
-
-    public void ResetMovement()
-    {
-        bulletModel.rotation = Quaternion.identity;
-        SetSpeed(startSpeed);
     }
 
     public void UndoRedirect(

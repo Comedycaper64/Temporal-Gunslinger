@@ -69,10 +69,17 @@ public class GameManager : MonoBehaviour
         OnGameStateChange?.Invoke(this, StateEnum.active);
     }
 
-    protected void ResetLevel()
+    protected IEnumerator ResetLevel()
     {
         //Temp reset, shouldn't reload Scene
-        SceneManager.LoadScene(0);
+        //SceneManager.LoadScene(0);
+        rewindManager.ResetManager();
+        RedirectManager.Instance.ResetLevel();
+        OnGameStateChange?.Invoke(this, StateEnum.idle);
+        yield return null;
+
+        TimeManager.UnpauseTime();
+        RewindableMovement.UpdateMovementTimescale(1f);
     }
 
     protected void LoadNextLevel()
@@ -84,6 +91,7 @@ public class GameManager : MonoBehaviour
     {
         bLevelActive = false;
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
+        rewindManager.ToggleCanRewind(false);
         endOfLevelCam.gameObject.SetActive(true);
         endOfLevelCam.m_Follow = lastEnemy;
         endOfLevelCam.m_LookAt = lastEnemy;
@@ -124,6 +132,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        ResetLevel();
+        StartCoroutine(ResetLevel());
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public struct DialogueUIEventArgs
@@ -39,7 +38,8 @@ public class DialogueManager : MonoBehaviour
     private Queue<Dialogue> dialogues;
     public static event Action OnFinishTypingDialogue;
     public static event EventHandler<bool> OnToggleDialogueUI;
-    public static event EventHandler<Sprite[]> OnChangeSprite;
+
+    //public static event EventHandler<Sprite[]> OnChangeSprite;
     public static event EventHandler<DialogueUIEventArgs> OnDialogue;
 
     private void Awake()
@@ -66,11 +66,11 @@ public class DialogueManager : MonoBehaviour
         }
         currentActor = dialogueNode.actor;
 
-        AnimatorController actorController = currentActor.GetAnimatorController();
+        RuntimeAnimatorController actorController = currentActor.GetAnimatorController();
 
-        Sprite[] actorSprites = currentActor.GetActorSprites();
+        //Sprite[] actorSprites = currentActor.GetActorSprites();
 
-        OnChangeSprite?.Invoke(this, actorSprites);
+        //OnChangeSprite?.Invoke(this, actorSprites);
 
         actorAnimators = actorAnimatorMapper.GetAnimators(actorController);
 
@@ -101,7 +101,7 @@ public class DialogueManager : MonoBehaviour
 
         TryChangeCameraMode();
 
-        float animationTimer = currentAnimationTimes.Dequeue();
+        float animationTimer = TrySetAnimationTimer();
 
         if (currentSentence == "")
         {
@@ -119,6 +119,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentCameraModes.TryDequeue(out CameraMode cameraMode))
         {
+            if (actorAnimators.Length == 0)
+            {
+                return;
+            }
+
             dialogueCameraDirector.ChangeCameraMode(
                 cameraMode,
                 actorAnimators[actorIndex].transform
@@ -130,7 +135,24 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentAnimations.TryDequeue(out AnimationClip animation) && (animation != null))
         {
+            if (actorAnimators.Length == 0)
+            {
+                return;
+            }
+
             actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFadeTime);
+        }
+    }
+
+    private float TrySetAnimationTimer()
+    {
+        if (currentAnimationTimes.TryDequeue(out float animationTime))
+        {
+            return animationTime;
+        }
+        else
+        {
+            return 0f;
         }
     }
 

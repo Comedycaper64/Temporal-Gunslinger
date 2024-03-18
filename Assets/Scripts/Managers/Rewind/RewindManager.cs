@@ -189,6 +189,7 @@ public class RewindManager : MonoBehaviour
         priorityActions = new Stack<RewindableAction>();
         rewindableActions = new Stack<RewindableAction>();
         rewindTimer = 0f;
+        RewindableMovement.UpdateMovementTimescale(1f);
     }
 
     public bool GetRewindActive()

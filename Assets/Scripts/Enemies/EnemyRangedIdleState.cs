@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : State
+public class EnemyRangedIdleState : State
 {
     Animator animator;
+    private EnemyRangedStateMachine enemyRangedStateMachine;
 
-    public EnemyIdleState(StateMachine stateMachine)
+    public EnemyRangedIdleState(StateMachine stateMachine)
         : base(stateMachine)
     {
         animator = stateMachine.stateMachineAnimator;
+        enemyRangedStateMachine = stateMachine as EnemyRangedStateMachine;
     }
 
     public override void Enter()
@@ -18,6 +20,8 @@ public class EnemyIdleState : State
         {
             animator.SetTrigger("activate");
         }
+
+        enemyRangedStateMachine.ResetProjectile();
     }
 
     public override void Exit() { }

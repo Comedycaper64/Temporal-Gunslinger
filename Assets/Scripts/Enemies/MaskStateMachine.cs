@@ -11,7 +11,7 @@ public class MaskStateMachine : EnemyRangedStateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyIdleState(this));
+        stateDictionary.Add(StateEnum.active, new BlankState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
 
         //Debug.Log(stateDictionary.Count);

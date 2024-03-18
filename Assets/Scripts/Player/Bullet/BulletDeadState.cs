@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletDeadState : State
 {
-    private static int bulletNumber;
+    public static int bulletNumber;
     Bullet bullet;
 
     public BulletDeadState(BulletStateMachine stateMachine)
@@ -17,7 +17,7 @@ public class BulletDeadState : State
     public override void Enter()
     {
         bulletNumber--;
-        stateMachine.ToggleInactive(true);
+        //stateMachine.ToggleInactive(true);
         if (bulletNumber <= 0)
         {
             GameManager.Instance.LevelLost();
@@ -27,7 +27,7 @@ public class BulletDeadState : State
     public override void Exit()
     {
         bulletNumber++;
-        stateMachine.ToggleInactive(false);
+        //stateMachine.ToggleInactive(false);
         if (bulletNumber <= 1)
         {
             GameManager.Instance.UndoLevelLost();

@@ -18,6 +18,8 @@ public struct Dialogue
 {
     public ActorSO actor;
     public int actorNo;
+
+    [TextArea]
     public string[] dialogue;
     public AnimationClip[] animations;
     public float[] animationTime;

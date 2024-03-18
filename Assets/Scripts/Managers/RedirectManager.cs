@@ -7,6 +7,9 @@ public class RedirectManager : MonoBehaviour
 {
     public static RedirectManager Instance { get; private set; }
 
+    [SerializeField]
+    private int levelRedirects;
+
     private int redirects = 0;
 
     public static event EventHandler<int> OnRedirectsChanged;
@@ -28,7 +31,7 @@ public class RedirectManager : MonoBehaviour
     //Debug, redirects should be set in level/game manager
     private void Start()
     {
-        SetRedirects(3);
+        SetRedirects(levelRedirects);
         ToggleRedirectUI(false);
     }
 
@@ -60,5 +63,10 @@ public class RedirectManager : MonoBehaviour
     public void ToggleRedirectUI(bool toggle)
     {
         OnRedirectUIActive?.Invoke(this, toggle);
+    }
+
+    public void ResetLevel()
+    {
+        SetRedirects(levelRedirects);
     }
 }

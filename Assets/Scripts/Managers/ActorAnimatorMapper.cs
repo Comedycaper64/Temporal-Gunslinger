@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 using UnityEngine;
 
 public class ActorAnimatorMapper : MonoBehaviour
 {
-    private Dictionary<AnimatorController, Animator[]> actorAnimatorPair =
-        new Dictionary<AnimatorController, Animator[]>();
+    private Dictionary<RuntimeAnimatorController, Animator[]> actorAnimatorPair =
+        new Dictionary<RuntimeAnimatorController, Animator[]>();
 
-    public Animator[] GetAnimators(AnimatorController actorController)
+    public Animator[] GetAnimators(RuntimeAnimatorController actorController)
     {
         Animator[] actorAnimators;
         if (!actorAnimatorPair.TryGetValue(actorController, out actorAnimators))
@@ -23,8 +23,8 @@ public class ActorAnimatorMapper : MonoBehaviour
             );
             if (desiredAnimators.Length == 0)
             {
-                Debug.LogError("Animator not found");
-                return null;
+                Debug.Log("Animator not found");
+                return new Animator[0];
             }
             actorAnimators = new Animator[desiredAnimators.Length];
             foreach (Animator animator in desiredAnimators)

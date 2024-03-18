@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [Serializable]
@@ -18,7 +17,10 @@ public class ActorSO : ScriptableObject
     private Sprite[] actorSprites;
 
     [SerializeField]
-    private AnimatorController animatorController;
+    private float spriteSwitchTime = 1f;
+
+    [SerializeField]
+    private RuntimeAnimatorController animatorController;
 
     public string GetActorName()
     {
@@ -35,7 +37,12 @@ public class ActorSO : ScriptableObject
         return actorSprites;
     }
 
-    public AnimatorController GetAnimatorController()
+    public float GetSpriteSwitchTime()
+    {
+        return spriteSwitchTime;
+    }
+
+    public RuntimeAnimatorController GetAnimatorController()
     {
         return animatorController;
     }

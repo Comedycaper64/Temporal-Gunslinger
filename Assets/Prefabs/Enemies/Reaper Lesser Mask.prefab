@@ -203,6 +203,7 @@ Transform:
   m_Children:
   - {fileID: 5143672861968514598}
   - {fileID: 614669353265024251}
+  - {fileID: 122000419387597005}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -235,9 +236,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachineAnimator: {fileID: 5143672861968514592}
   shootTimer: 0
+  projectileStartPoint: {fileID: 122000419387597005}
   projectile: {fileID: 614669353265024247}
   bodyColliders:
   - {fileID: 5264403139370351985}
+--- !u!1 &5154123067272106573
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122000419387597005}
+  m_Layer: 0
+  m_Name: Flame Start Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &122000419387597005
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5154123067272106573}
+  m_LocalRotation: {x: -0, y: 0.00000049173826, z: -0, w: -1}
+  m_LocalPosition: {x: -0, y: -0.244, z: 0.232}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 5143672862029279505}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -360, z: 0}
 --- !u!1 &5264403139370351985
 GameObject:
   m_ObjectHideFlags: 0

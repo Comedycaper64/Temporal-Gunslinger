@@ -40,7 +40,7 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnToggleDialogueUI += DialogueManager_OnToggleDialogueUI;
         DialogueManager.OnDialogue += DialogueManager_OnDialogue;
         DialogueManager.OnFinishTypingDialogue += DialogueManager_OnFinishTypingDialogue;
-        DialogueManager.OnChangeSprite += DialogueManager_OnChangeSprite;
+        //DialogueManager.OnChangeSprite += DialogueManager_OnChangeSprite;
 
         ClearDialogueText();
         SetActorName("");
@@ -54,7 +54,7 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnToggleDialogueUI -= DialogueManager_OnToggleDialogueUI;
         DialogueManager.OnDialogue -= DialogueManager_OnDialogue;
         DialogueManager.OnFinishTypingDialogue -= DialogueManager_OnFinishTypingDialogue;
-        DialogueManager.OnChangeSprite -= DialogueManager_OnChangeSprite;
+        //DialogueManager.OnChangeSprite -= DialogueManager_OnChangeSprite;
     }
 
     private void Update()
@@ -129,6 +129,28 @@ public class DialogueUI : MonoBehaviour
         ClearDialogueText();
         AudioClip[] actorClips = actorSO.GetDialogueNoises();
         int clipsLength = actorClips.Length;
+        Sprite[] spriteSet = actorSO.GetActorSprites();
+
+        if ((spriteSet == null) || (spriteSet.Length == 0))
+        {
+            currentSpriteSet = new Sprite[0];
+        }
+        else
+        {
+            currentSpriteSet = spriteSet;
+            dialogueFaceSprite.sprite = currentSpriteSet[0];
+        }
+
+        if (currentSpriteSet.Length <= 0)
+        {
+            dialogueFaceSprite.gameObject.SetActive(false);
+        }
+        else
+        {
+            dialogueFaceSprite.gameObject.SetActive(true);
+        }
+
+        spriteChangeTime = actorSO.GetSpriteSwitchTime();
 
         isTyping = true;
         foreach (char letter in typingSentence.ToCharArray())
@@ -161,23 +183,23 @@ public class DialogueUI : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeSentence(dialogueArgs));
     }
 
-    private void DialogueManager_OnChangeSprite(object sender, Sprite[] e)
-    {
-        if (e == null)
-        {
-            currentSpriteSet = new Sprite[0];
-        }
-        else
-        {
-            currentSpriteSet = e;
-        }
+    // private void DialogueManager_OnChangeSprite(object sender, Sprite[] e)
+    // {
+    //     if (e == null)
+    //     {
+    //         currentSpriteSet = new Sprite[0];
+    //     }
+    //     else
+    //     {
+    //         currentSpriteSet = e;
+    //     }
 
-        dialogueFaceSprite.gameObject.SetActive(true);
-        if (currentSpriteSet.Length <= 0)
-        {
-            dialogueFaceSprite.gameObject.SetActive(false);
-        }
-    }
+    //     dialogueFaceSprite.gameObject.SetActive(true);
+    //     if (currentSpriteSet.Length <= 0)
+    //     {
+    //         dialogueFaceSprite.gameObject.SetActive(false);
+    //     }
+    // }
 
     private void DialogueManager_OnToggleDialogueUI(object sender, bool e)
     {

@@ -8,6 +8,10 @@ public class FocusManager : MonoBehaviour
 {
     private bool bCanFocus = false;
     private bool bFocusing = false;
+    private const float NORMAL_CAMERA_Y = 2f;
+    private const float NORMAL_CAMERA_X = 150f;
+    private const float FOCUS_CAMERA_Y = 1f;
+    private const float FOCUS_CAMERA_X = 75f;
     private const float NORMAL_FOV = 40f;
     private const float FOCUS_FOV = 25f;
     private float focusZoomSpeed = 10f;
@@ -93,6 +97,10 @@ public class FocusManager : MonoBehaviour
         TimeManager.SetSlowedTime(false);
         targetFOV = NORMAL_FOV;
         nonTargetFOV = FOCUS_FOV;
+
+        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X;
+        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y;
+
         OnFocusToggle?.Invoke(this, false);
     }
 
@@ -101,6 +109,10 @@ public class FocusManager : MonoBehaviour
         TimeManager.SetSlowedTime(true);
         targetFOV = FOCUS_FOV;
         nonTargetFOV = NORMAL_FOV;
+
+        bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X;
+        bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y;
+
         OnFocusToggle?.Invoke(this, true);
     }
 

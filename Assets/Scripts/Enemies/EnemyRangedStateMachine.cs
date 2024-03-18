@@ -8,6 +8,9 @@ public class EnemyRangedStateMachine : StateMachine
     private float shootTimer;
 
     [SerializeField]
+    private Transform projectileStartPoint;
+
+    [SerializeField]
     private BulletStateMachine projectile;
 
     [SerializeField]
@@ -21,7 +24,7 @@ public class EnemyRangedStateMachine : StateMachine
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.idle, new EnemyIdleState(this));
+        stateDictionary.Add(StateEnum.idle, new EnemyRangedIdleState(this));
         stateDictionary.Add(StateEnum.active, new EnemyRangedActiveState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
@@ -42,5 +45,11 @@ public class EnemyRangedStateMachine : StateMachine
     public BulletStateMachine GetBulletStateMachine()
     {
         return projectile;
+    }
+
+    public void ResetProjectile()
+    {
+        Bullet bullet = projectile.GetComponent<Bullet>();
+        bullet.ResetBullet(projectileStartPoint);
     }
 }
