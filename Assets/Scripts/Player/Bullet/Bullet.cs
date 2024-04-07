@@ -112,6 +112,7 @@ public class Bullet : MonoBehaviour
         //bulletMovement.ResetMovement();
         transform.parent = gunParent;
         transform.position = bulletPosition.position;
+        transform.rotation = bulletPosition.rotation;
     }
 
     // public bool IsBulletActive()

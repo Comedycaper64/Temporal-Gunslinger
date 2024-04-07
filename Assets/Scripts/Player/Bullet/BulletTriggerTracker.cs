@@ -5,25 +5,25 @@ using UnityEngine;
 
 public class BulletTriggerTracker : MonoBehaviour
 {
-    [SerializeField]
-    private BulletPossessTarget thisPossessable;
+    // [SerializeField]
+    // private BulletPossessTarget thisPossessable;
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<IHighlightable>(out IHighlightable target))
-        {
-            if (target != (IHighlightable)thisPossessable)
-            {
-                thisPossessable.AddHighlightable(target);
-            }
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.TryGetComponent<IHighlightable>(out IHighlightable target))
+    //     {
+    //         if (target != (IHighlightable)thisPossessable)
+    //         {
+    //             thisPossessable.AddHighlightable(target);
+    //         }
+    //     }
+    // }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<IHighlightable>(out IHighlightable target))
-        {
-            thisPossessable.RemoveHighlightable(target);
-        }
-    }
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     if (other.TryGetComponent<IHighlightable>(out IHighlightable target))
+    //     {
+    //         thisPossessable.RemoveHighlightable(target);
+    //     }
+    // }
 }

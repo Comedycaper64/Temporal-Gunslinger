@@ -5,11 +5,12 @@ using UnityEngine;
 public class BulletPossessor : MonoBehaviour
 {
     private BulletPossessTarget possessedBullet;
-    private bool bIsFocusing;
+
+    //private bool bIsFocusing;
 
     public void TryPossess()
     {
-        if (!possessedBullet || !bIsFocusing)
+        if (!possessedBullet)
         {
             return;
         }
@@ -89,7 +90,7 @@ public class BulletPossessor : MonoBehaviour
         {
             return;
         }
-        bIsFocusing = isFocusing;
+        //bIsFocusing = isFocusing;
         possessedBullet.SetIsFocusing(isFocusing);
     }
 }
