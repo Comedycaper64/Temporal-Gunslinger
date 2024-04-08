@@ -88,6 +88,7 @@ public class Bullet : MonoBehaviour
     {
         bulletCameraController.ToggleCamera(toggle);
         focusManager.ToggleCanFocus(toggle);
+        //Debug.Log(gameObject.name + " " + toggle);
         if (toggle)
         {
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());

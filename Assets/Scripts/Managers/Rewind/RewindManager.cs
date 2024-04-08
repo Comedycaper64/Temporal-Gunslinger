@@ -36,12 +36,11 @@ public class RewindManager : MonoBehaviour
 
     private void Update()
     {
-        CheckIsResetting();
-
         if (!bTimerActive)
         {
             return;
         }
+        CheckIsResetting();
 
         CheckIsRewinding();
 
@@ -151,7 +150,7 @@ public class RewindManager : MonoBehaviour
             rewindableActions.Push(rewindable);
         }
 
-        Debug.Log("Timestamp: " + rewindTimer + ", Object: " + rewindable.GetType());
+        // Debug.Log("Timestamp: " + rewindTimer + ", Object: " + rewindable.GetType());
     }
 
     private void ToggleTimer(bool toggle)

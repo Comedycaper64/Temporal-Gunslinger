@@ -30,9 +30,10 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         possessables.Remove(this);
     }
 
-    public void PossessBullet()
+    public void PossessBullet(bool isFocusing)
     {
         bullet.ToggleBulletPossessed(true);
+        SetIsFocusing(isFocusing);
     }
 
     public void UnpossessBullet()

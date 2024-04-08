@@ -16,7 +16,7 @@ public class ActorAnimatorMapper : MonoBehaviour
         {
             //Finds Gameobject with the animator controller, adds to dictionary
             Animator[] animators = FindObjectsOfType<Animator>();
-            Debug.Log("Animators found: " + animators.Length);
+            //Debug.Log("Animators found: " + animators.Length);
             Animator[] desiredAnimators = Array.FindAll(
                 animators,
                 animator => animator.runtimeAnimatorController == actorController

@@ -15,6 +15,9 @@ public class BulletMovement : RewindableMovement
     private Quaternion targetRotation;
 
     [SerializeField]
+    private LayerMask ricochetLayermask;
+
+    [SerializeField]
     private Transform bulletModel;
 
     [SerializeField]
@@ -80,18 +83,29 @@ public class BulletMovement : RewindableMovement
 
     public void RicochetBullet(Collision hitObject, float velocityAugment)
     {
-        Vector3 hitNormal = hitObject.GetContact(0).normal.normalized;
+        Vector3 hitNormal;
 
-        // Vector3 testNormal = (
-        //     transform.position - hitObject.ClosestPoint(transform.position)
-        // ).normalized;
+        if (
+            Physics.Raycast(
+                transform.position,
+                GetFlightDirection(),
+                out RaycastHit hit,
+                1f,
+                ricochetLayermask
+            )
+        )
+        {
+            hitNormal = hit.normal.normalized;
+            Debug.Log(hitNormal);
+        }
+        else
+        {
+            hitNormal = hitObject.GetContact(0).normal.normalized;
+        }
+
         Vector3 flightNormalized = GetFlightDirection().normalized;
-        //float flightSpeed = GetFlightDirection().magnitude;
-        //Debug.Log("Flight Direction: " + GetFlightDirection());
 
-        Vector3 ricochetDirection =
-            2 * Vector3.Dot(-flightNormalized, hitNormal) * (hitNormal + flightNormalized);
-        //Debug.Log("Ricochet Direction: " + ricochetDirection);
+        Vector3 ricochetDirection = Vector3.Reflect(flightNormalized, hitNormal);
 
         Redirect.BulletRedirected(
             transform.position,

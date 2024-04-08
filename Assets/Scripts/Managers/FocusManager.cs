@@ -8,15 +8,15 @@ public class FocusManager : MonoBehaviour
 {
     private bool bCanFocus = false;
     private bool bFocusing = false;
-    private const float NORMAL_CAMERA_Y = 1f;
-    private const float NORMAL_CAMERA_X = 75f;
-    private const float FOCUS_CAMERA_Y = 0.5f;
-    private const float FOCUS_CAMERA_X = 40f;
-    private const float NORMAL_FOV = 40f;
-    private const float FOCUS_FOV = 25f;
-    private float focusZoomSpeed = 10f;
-    private float targetFOV = 40f;
-    private float nonTargetFOV = 25f;
+    private const float NORMAL_CAMERA_Y = 3f;
+    private const float NORMAL_CAMERA_X = 225f;
+    private const float FOCUS_CAMERA_Y = 1.5f;
+    private const float FOCUS_CAMERA_X = 120f;
+    private const float NORMAL_FOV = 50f;
+    private const float FOCUS_FOV = 30f;
+    private float focusZoomSpeed = 2f;
+    private float targetFOV = NORMAL_FOV;
+    private float nonTargetFOV = FOCUS_FOV;
 
     [SerializeField]
     private Transform bulletModelTransform;
@@ -53,7 +53,7 @@ public class FocusManager : MonoBehaviour
             bulletCamera.m_Lens.FieldOfView = Mathf.Lerp(
                 nonTargetFOV,
                 targetFOV,
-                lerpRatio + (focusZoomSpeed * Time.deltaTime)
+                lerpRatio + (focusZoomSpeed * Time.unscaledDeltaTime)
             );
 
             //Debug.Log("Lens: " + bulletCamera.m_Lens.FieldOfView);
@@ -108,6 +108,7 @@ public class FocusManager : MonoBehaviour
 
     private void Focus()
     {
+        Debug.Log("ayaya");
         TimeManager.SetSlowedTime(true);
         targetFOV = FOCUS_FOV;
         nonTargetFOV = NORMAL_FOV;

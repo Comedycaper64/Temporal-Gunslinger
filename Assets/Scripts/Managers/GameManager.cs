@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
 
     private void RewindManager_OnResetLevel()
     {
-        Debug.Log("RESET!");
+        //Debug.Log("RESET!");
         if (!bLevelActive)
         {
             return;

@@ -6,7 +6,7 @@ public class BulletPossessor : MonoBehaviour
 {
     private BulletPossessTarget possessedBullet;
 
-    //private bool bIsFocusing;
+    private bool bIsFocusing;
 
     public void TryPossess()
     {
@@ -57,7 +57,7 @@ public class BulletPossessor : MonoBehaviour
             possessedBullet.UnpossessBullet();
         }
         BulletPossess.BulletPossessed(this, possessedBullet);
-        newBullet.PossessBullet();
+        newBullet.PossessBullet(bIsFocusing);
         possessedBullet = newBullet;
     }
 
@@ -70,7 +70,7 @@ public class BulletPossessor : MonoBehaviour
             return;
         }
 
-        newBullet.PossessBullet();
+        newBullet.PossessBullet(bIsFocusing);
         possessedBullet = newBullet;
     }
 
@@ -86,11 +86,11 @@ public class BulletPossessor : MonoBehaviour
 
     public void SetIsFocusing(bool isFocusing)
     {
+        bIsFocusing = isFocusing;
         if (!possessedBullet)
         {
             return;
         }
-        //bIsFocusing = isFocusing;
         possessedBullet.SetIsFocusing(isFocusing);
     }
 }

@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private bool bIsRewinding;
     private bool bIsResetting;
     public event Action OnShootAction;
+    public event Action OnFocusAction;
     public event Action OnPossessAction;
 
     private void Awake()
@@ -81,13 +82,22 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnFocus(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        // if (context.performed)
+        // {
+        //     bIsFocusing = true;
+        // }
+        // else if (context.canceled)
+        // {
+        //     bIsFocusing = false;
+        // }
+
+        if (!context.performed)
         {
-            bIsFocusing = true;
+            return;
         }
-        else if (context.canceled)
+        else
         {
-            bIsFocusing = false;
+            OnFocusAction?.Invoke();
         }
     }
 

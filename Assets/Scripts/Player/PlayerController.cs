@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     //private State currentState;
-    private float mouseSensitivity = 15f;
+    [SerializeField]
+    private float mouseSensitivity = 10f;
     private float xRotation = 0f;
     private bool bBulletFired = false;
     private bool bIsPlayerActive = false;
@@ -42,6 +43,16 @@ public class PlayerController : MonoBehaviour
         bulletPossessor = GetComponent<BulletPossessor>();
     }
 
+    private void Start()
+    {
+        InputManager.Instance.OnFocusAction += InputManager_OnFocus;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.OnFocusAction -= InputManager_OnFocus;
+    }
+
     void Update()
     {
         if (!bIsPlayerActive && !bBulletFired)
@@ -49,11 +60,11 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (InputManager.Instance.GetIsFocusing() != bIsFocusing)
-        {
-            bIsFocusing = !bIsFocusing;
-            IsFocusingChanged(bIsFocusing);
-        }
+        // if (InputManager.Instance.GetIsFocusing() != bIsFocusing)
+        // {
+        //     bIsFocusing = !bIsFocusing;
+        //     IsFocusingChanged(bIsFocusing);
+        // }
 
         if (bBulletFired)
         {
@@ -85,6 +96,7 @@ public class PlayerController : MonoBehaviour
     public void TogglePlayerController(bool toggle)
     {
         bIsPlayerActive = toggle;
+        bIsFocusing = false;
 
         if (bIsPlayerActive)
         {
@@ -92,6 +104,7 @@ public class PlayerController : MonoBehaviour
             OnPlayerStateChanged?.Invoke(this, 1);
             playerGun.ResetBullet();
             playerGun.SetGunStandbyPosition();
+            bulletPossessor.SetIsFocusing(false);
             AudioManager.PlaySFX(readyGunSFX, 0.5f, transform.position);
             if (bCanRedirect)
             {
@@ -155,6 +168,17 @@ public class PlayerController : MonoBehaviour
         }
 
         OnPlayerStateChanged?.Invoke(this, 3);
+    }
+
+    private void InputManager_OnFocus()
+    {
+        if (!bIsPlayerActive && !bBulletFired)
+        {
+            return;
+        }
+
+        bIsFocusing = !bIsFocusing;
+        IsFocusingChanged(bIsFocusing);
     }
 
     private void InputManager_OnRedirectAction()
