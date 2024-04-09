@@ -5,6 +5,8 @@ using UnityEngine;
 
 public abstract class RewindableMovement : MonoBehaviour
 {
+    protected bool movementActive = false;
+
     [SerializeField]
     protected float startSpeed = 1f;
     private float speed = 0f;
@@ -28,11 +30,13 @@ public abstract class RewindableMovement : MonoBehaviour
     private void StartMovement()
     {
         speed = startSpeed;
+        movementActive = true;
     }
 
     private void StopMovement()
     {
         speed = 0f;
+        movementActive = false;
     }
 
     public void ToggleMovement(bool toggle)
@@ -61,6 +65,11 @@ public abstract class RewindableMovement : MonoBehaviour
     protected void SetSpeed(float speed)
     {
         this.speed = speed;
+    }
+
+    protected bool IsActive()
+    {
+        return movementActive;
     }
 
     protected virtual void Awake()

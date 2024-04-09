@@ -5,13 +5,15 @@ using UnityEngine;
 public class EnemyDeadState : State
 {
     public static int enemyNumber;
-    Animator animator;
+    private Animator animator;
+    private DissolveController dissolveController;
 
     public EnemyDeadState(StateMachine stateMachine)
         : base(stateMachine)
     {
         enemyNumber++;
         animator = stateMachine.stateMachineAnimator;
+        dissolveController = stateMachine.dissolveController;
     }
 
     public override void Enter()
@@ -19,6 +21,11 @@ public class EnemyDeadState : State
         if (animator)
         {
             animator.SetTrigger("death");
+        }
+
+        if (dissolveController)
+        {
+            dissolveController.StartDissolve();
         }
 
         stateMachine.ToggleInactive(true);
@@ -32,6 +39,11 @@ public class EnemyDeadState : State
 
     public override void Exit()
     {
+        if (dissolveController)
+        {
+            dissolveController.StopDissolve();
+        }
+
         stateMachine.ToggleInactive(false);
         enemyNumber++;
     }

@@ -10,8 +10,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     [SerializeField]
     private Transform highlight;
-    public static List<IHighlightable> highlightables = new List<IHighlightable>();
-    private static List<BulletPossessTarget> possessables = new List<BulletPossessTarget>();
+    public static HashSet<IHighlightable> highlightables = new HashSet<IHighlightable>();
+    private static HashSet<BulletPossessTarget> possessables = new HashSet<BulletPossessTarget>();
 
     private void Awake()
     {
@@ -90,8 +90,20 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     public void ToggleNearbyPossessableHighlight(bool toggle)
     {
+        // for (int i = 0; i < highlightables.Count; i++)
+        // {
+        //     if ((object)highlightables[i] == this)
+        //     {
+        //         continue;
+        //     }
+
+        //     highlightables[i].ToggleHighlight(toggle);
+        // }
+
         foreach (IHighlightable highlightable in highlightables)
         {
+            //Debug.Log("Highlightable in list: " + highlightable);
+
             if ((object)highlightable == this)
             {
                 continue;

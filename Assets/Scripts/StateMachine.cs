@@ -9,6 +9,7 @@ public abstract class StateMachine : MonoBehaviour
     protected Dictionary<StateEnum, State> stateDictionary = new Dictionary<StateEnum, State>();
 
     public Animator stateMachineAnimator;
+    public DissolveController dissolveController;
 
     public virtual void Awake()
     {

@@ -52,7 +52,10 @@ public class DissolveController : RewindableMovement
 
     private void Update()
     {
-        Dissolve();
+        if (IsActive())
+        {
+            Dissolve();
+        }
     }
 
     public void StartDissolve()
@@ -71,17 +74,12 @@ public class DissolveController : RewindableMovement
 
     private void Dissolve()
     {
-        if (GetUnscaledSpeed() == 0f)
-        {
-            return;
-        }
-
-        float newCounter = counter + (dissolveRate * GetSpeed());
-        counter = Mathf.Clamp01(newCounter);
+        counter += dissolveRate * GetSpeed();
+        float newCounter = Mathf.Clamp01(counter);
 
         foreach (Material material in materials)
         {
-            material.SetFloat("_Dissolve_Amount", counter);
+            material.SetFloat("_Dissolve_Amount", newCounter);
         }
         //yield return new WaitForSeconds(0.025f);
     }

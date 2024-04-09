@@ -21,6 +21,7 @@ public class RewindManager : MonoBehaviour
 
     public event Action OnResetLevel;
     public static EventHandler<bool> OnRewindToggle;
+    public static EventHandler<float> OnRestartTimerChanged;
 
     private void Start()
     {
@@ -83,15 +84,19 @@ public class RewindManager : MonoBehaviour
         if (input.GetIsResetting())
         {
             resetTimer += Time.unscaledDeltaTime;
+
+            OnRestartTimerChanged?.Invoke(this, resetTimer);
+
             if (resetTimer > RESET_TIME)
             {
                 OnResetLevel?.Invoke();
                 resetTimer = 0f;
             }
         }
-        else
+        else if (resetTimer > 0f)
         {
             resetTimer = 0f;
+            OnRestartTimerChanged?.Invoke(this, resetTimer);
         }
     }
 

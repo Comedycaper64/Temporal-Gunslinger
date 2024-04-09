@@ -108,7 +108,6 @@ public class FocusManager : MonoBehaviour
 
     private void Focus()
     {
-        Debug.Log("ayaya");
         TimeManager.SetSlowedTime(true);
         targetFOV = FOCUS_FOV;
         nonTargetFOV = NORMAL_FOV;

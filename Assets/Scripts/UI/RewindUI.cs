@@ -31,11 +31,11 @@ public class RewindUI : MonoBehaviour
 
         if (!rewindUIActive && rewindCanvasGroup.alpha > 0f)
         {
-            rewindCanvasGroup.alpha -= fadeSpeed * Time.deltaTime;
+            rewindCanvasGroup.alpha -= fadeSpeed * Time.unscaledDeltaTime;
         }
         else if (rewindUIActive && rewindCanvasGroup.alpha < 1f)
         {
-            rewindCanvasGroup.alpha += fadeSpeed * Time.deltaTime;
+            rewindCanvasGroup.alpha += fadeSpeed * Time.unscaledDeltaTime;
         }
     }
 
