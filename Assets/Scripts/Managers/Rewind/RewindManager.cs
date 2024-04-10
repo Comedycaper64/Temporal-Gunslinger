@@ -6,8 +6,8 @@ using UnityEngine;
 public class RewindManager : MonoBehaviour
 {
     public static bool bRewinding;
+    private static float rewindTimer = 0f;
 
-    private float rewindTimer = 0f;
     private float resetTimer;
     private const float RESET_TIME = 1f;
     private bool bCanReset = true;
@@ -16,7 +16,8 @@ public class RewindManager : MonoBehaviour
     private bool bRewindActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
     private Stack<RewindableAction> priorityActions = new Stack<RewindableAction>();
-    private HashSet<RewindableMovement> rewindableMovements;
+
+    //private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
 
     public event Action OnResetLevel;
@@ -26,7 +27,7 @@ public class RewindManager : MonoBehaviour
     private void Start()
     {
         input = InputManager.Instance;
-        rewindableMovements = RewindableMovement.Instances;
+        //rewindableMovements = RewindableMovement.Instances;
         RewindableAction.OnRewindableActionCreated += RewindableActionCreated;
     }
 
@@ -167,24 +168,24 @@ public class RewindManager : MonoBehaviour
     {
         bRewindActive = toggle;
         bRewinding = toggle;
-        ToggleRewindableMovements(toggle);
+        //ToggleRewindableMovements(toggle);
         OnRewindToggle?.Invoke(this, bRewindActive);
     }
 
-    private void ToggleRewindableMovements(bool toggle)
-    {
-        foreach (RewindableMovement rewindableMovement in rewindableMovements)
-        {
-            if (toggle)
-            {
-                rewindableMovement.BeginRewind();
-            }
-            else
-            {
-                rewindableMovement.BeginPlay();
-            }
-        }
-    }
+    // private void ToggleRewindableMovements(bool toggle)
+    // {
+    //     foreach (RewindableMovement rewindableMovement in rewindableMovements)
+    //     {
+    //         if (toggle)
+    //         {
+    //             rewindableMovement.BeginRewind();
+    //         }
+    //         else
+    //         {
+    //             rewindableMovement.BeginPlay();
+    //         }
+    //     }
+    // }
 
     public void ResetManager()
     {
@@ -219,6 +220,11 @@ public class RewindManager : MonoBehaviour
     public void ToggleCanReset(bool toggle)
     {
         bCanReset = toggle;
+    }
+
+    public static float GetRewindTime()
+    {
+        return rewindTimer;
     }
 
     private void RewindableActionCreated(object sender, RewindableAction newRewindable)

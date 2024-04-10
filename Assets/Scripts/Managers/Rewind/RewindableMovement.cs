@@ -12,20 +12,19 @@ public abstract class RewindableMovement : MonoBehaviour
     private float speed = 0f;
     private static float timeScale = 1f;
 
-    //private const float timeScaleLowerLimit = 0.0001f;
-    public static HashSet<RewindableMovement> Instances = new HashSet<RewindableMovement>();
+    //public static HashSet<RewindableMovement> Instances = new HashSet<RewindableMovement>();
 
-    public virtual void BeginRewind()
-    {
-        speed = Mathf.Abs(speed) * -1;
-        startSpeed = Mathf.Abs(startSpeed) * -1;
-    }
+    // public virtual void BeginRewind()
+    // {
+    //     speed = Mathf.Abs(speed) * -1;
+    //     startSpeed = Mathf.Abs(startSpeed) * -1;
+    // }
 
-    public virtual void BeginPlay()
-    {
-        speed = Mathf.Abs(speed);
-        startSpeed = Mathf.Abs(startSpeed);
-    }
+    // public virtual void BeginPlay()
+    // {
+    //     speed = Mathf.Abs(speed);
+    //     startSpeed = Mathf.Abs(startSpeed);
+    // }
 
     private void StartMovement()
     {
@@ -72,15 +71,37 @@ public abstract class RewindableMovement : MonoBehaviour
         return movementActive;
     }
 
-    protected virtual void Awake()
+    protected bool IsRewinding()
     {
-        Instances.Add(this);
+        return RewindManager.bRewinding;
     }
 
-    protected virtual void OnDisable()
+    protected int GetRewindMultiplier()
     {
-        Instances.Remove(this);
+        if (IsRewinding())
+        {
+            return -1;
+        }
+        else
+        {
+            return 1;
+        }
     }
+
+    protected float GetRewindTime()
+    {
+        return RewindManager.GetRewindTime();
+    }
+
+    // protected virtual void Awake()
+    // {
+    //     Instances.Add(this);
+    // }
+
+    // protected virtual void OnDisable()
+    // {
+    //     Instances.Remove(this);
+    // }
 
     public static void UpdateMovementTimescale(float newTimeScale)
     {

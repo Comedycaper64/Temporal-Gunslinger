@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class DissolveController : RewindableMovement
 {
-    private float dissolveRate = 1f;
+    //private float dissolveRate = 1f;
     private float counter = 0;
+    private float dissolveStartTime = 0f;
 
     [SerializeField]
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
@@ -33,9 +34,8 @@ public class DissolveController : RewindableMovement
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
     }
 
-    protected override void OnDisable()
+    protected void OnDisable()
     {
-        base.OnDisable();
         GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
     }
 
@@ -61,6 +61,7 @@ public class DissolveController : RewindableMovement
     public void StartDissolve()
     {
         ToggleMovement(true);
+        dissolveStartTime = RewindManager.GetRewindTime();
         if (counter < 0.5f)
         {
             AudioManager.PlaySFX(dissolveSFX, 0.5f, transform.position);
@@ -74,7 +75,7 @@ public class DissolveController : RewindableMovement
 
     private void Dissolve()
     {
-        counter += dissolveRate * GetSpeed();
+        counter = (RewindManager.GetRewindTime() - dissolveStartTime) * GetSpeed();
         float newCounter = Mathf.Clamp01(counter);
 
         foreach (Material material in materials)

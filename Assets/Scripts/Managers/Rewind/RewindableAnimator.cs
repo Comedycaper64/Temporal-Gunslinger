@@ -17,7 +17,11 @@ public class RewindableAnimator : RewindableMovement
 
     private void Update()
     {
-        float animSpeed = Mathf.Clamp(GetSpeed() * animationSpeedModifier, -1f, 1f);
+        float animSpeed = Mathf.Clamp(
+            GetSpeed() * GetRewindMultiplier() * animationSpeedModifier,
+            -1f,
+            1f
+        );
         animator.SetFloat("animSpeed", animSpeed);
         //Debug.Log("Speed: " + GetSpeed());
     }

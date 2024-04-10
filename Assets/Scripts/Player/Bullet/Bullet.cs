@@ -79,6 +79,8 @@ public class Bullet : MonoBehaviour
         if (toggle)
         {
             Vector3 aimDirection = focusManager.GetAimDirection();
+            Redirect redirect = new Redirect(transform.position, aimDirection, 1f, 0f, true);
+            bulletMovement.BulletActivated(redirect);
             bulletMovement.ChangeTravelDirection(aimDirection, GetAimRotation(aimDirection));
             UnparentObject.ObjectUnparented(transform, transform.parent, transform.position);
         }

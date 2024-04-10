@@ -13,6 +13,7 @@ public class BulletMovement : RewindableMovement
     public float velocityLossRate = 5f;
     private Vector3 flightDirection;
     private Quaternion targetRotation;
+    private Vector3 savedPosition;
 
     [SerializeField]
     private LayerMask ricochetLayermask;
@@ -25,6 +26,8 @@ public class BulletMovement : RewindableMovement
 
     private RedirectManager redirectManager;
 
+    private Stack<Redirect> redirects = new Stack<Redirect>();
+
     private void Start()
     {
         redirectManager = RedirectManager.Instance;
@@ -32,7 +35,21 @@ public class BulletMovement : RewindableMovement
 
     private void Update()
     {
-        transform.position += flightDirection * GetSpeed() * Time.deltaTime;
+        transform.position += flightDirection * GetSpeed() * GetRewindMultiplier() * Time.deltaTime;
+
+        // if (!redirects.TryPeek(out Redirect redirect))
+        // {
+        //     //Debug.LogError("No redirects to undo!");
+        //     return;
+        // }
+
+        // transform.position =
+        //     savedPosition
+        //     + (
+        //         flightDirection
+        //         * GetSpeed()
+        //         * (RewindManager.GetRewindTime() - redirect.GetTimestamp())
+        //     );
 
         SpinBullet();
 
@@ -63,7 +80,20 @@ public class BulletMovement : RewindableMovement
     {
         if (redirectManager.TryRedirect())
         {
-            Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
+            //Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
+
+            //Add a redirect to the stack
+            redirects.Push(
+                new Redirect(
+                    transform.position,
+                    GetFlightDirection(),
+                    1f,
+                    RewindManager.GetRewindTime(),
+                    false
+                )
+            );
+            RedirectRAction.BulletRedirected(this);
+
             Factory.InstantiateGameObject(
                 redirectVFXPrefab,
                 transform.position,
@@ -75,6 +105,7 @@ public class BulletMovement : RewindableMovement
 
     public void ChangeTravelDirection(Vector3 newDirection, Quaternion newRotation)
     {
+        savedPosition = transform.position;
         flightDirection = newDirection;
         targetRotation = newRotation;
         rotationTimer = 0f;
@@ -107,13 +138,25 @@ public class BulletMovement : RewindableMovement
 
         Vector3 ricochetDirection = Vector3.Reflect(flightNormalized, hitNormal);
 
-        Redirect.BulletRedirected(
-            transform.position,
-            GetFlightDirection(),
-            this,
-            velocityAugment,
-            true
+        // Redirect.BulletRedirected(
+        //     transform.position,
+        //     GetFlightDirection(),
+        //     this,
+        //     velocityAugment,
+        //     true
+        // );
+
+        //Add to redirect stack
+        redirects.Push(
+            new Redirect(
+                transform.position,
+                GetFlightDirection(),
+                velocityAugment,
+                RewindManager.GetRewindTime(),
+                true
+            )
         );
+        RedirectRAction.BulletRedirected(this);
 
         AugmentVelocity(velocityAugment);
         ChangeTravelDirection(ricochetDirection, Quaternion.LookRotation(ricochetDirection));
@@ -121,14 +164,26 @@ public class BulletMovement : RewindableMovement
 
     public void SlowBullet(float velocityAugment)
     {
-        Redirect.BulletRedirected(
-            transform.position,
-            GetFlightDirection(),
-            this,
-            velocityAugment,
-            true
-        );
+        // Redirect.BulletRedirected(
+        //     transform.position,
+        //     GetFlightDirection(),
+        //     this,
+        //     velocityAugment,
+        //     true
+        // );
 
+        //Add to redirect stack
+        redirects.Push(
+            new Redirect(
+                transform.position,
+                GetFlightDirection(),
+                velocityAugment,
+                RewindManager.GetRewindTime(),
+                true
+            )
+        );
+        RedirectRAction.BulletRedirected(this);
+        savedPosition = transform.position;
         AugmentVelocity(velocityAugment);
     }
 
@@ -151,7 +206,7 @@ public class BulletMovement : RewindableMovement
 
     public void LoseVelocity()
     {
-        float speed = GetUnscaledSpeed();
+        float speed = GetUnscaledSpeed() * GetRewindMultiplier();
         SetSpeed(speed -= velocityLossRate * Time.deltaTime);
     }
 
@@ -181,19 +236,51 @@ public class BulletMovement : RewindableMovement
         bulletModel.gameObject.SetActive(toggle);
     }
 
-    public void UndoRedirect(
-        Vector3 position,
-        Vector3 direction,
-        float velocityAugment,
-        bool bIsRicochet
-    )
+    public void BulletActivated(Redirect startRedirect)
     {
-        Quaternion undoRotation = Quaternion.LookRotation(direction);
-        ChangeTravelDirection(direction, undoRotation);
-        transform.position = position;
+        redirects.Push(startRedirect);
+    }
+
+    // public void UndoRedirect(
+    //     Vector3 position,
+    //     Vector3 direction,
+    //     float velocityAugment,
+    //     bool bIsRicochet
+    // )
+    // {
+    //     Quaternion undoRotation = Quaternion.LookRotation(direction);
+    //     ChangeTravelDirection(direction, undoRotation);
+    //     transform.position = position;
+    //     float speed = GetUnscaledSpeed();
+    //     SetSpeed(speed /= velocityAugment);
+    //     if (!bIsRicochet)
+    //     {
+    //         redirectManager.IncrementRedirects();
+    //     }
+    // }
+
+    public void UndoRedirect()
+    {
+        //pop from the Stack
+        if (!redirects.TryPop(out Redirect undoRedirect))
+        {
+            Debug.LogError("No redirects to undo!");
+            return;
+        }
+        Quaternion undoRotation = Quaternion.LookRotation(undoRedirect.GetInitialDirection());
+        ChangeTravelDirection(undoRedirect.GetInitialDirection(), undoRotation);
+
+        if (!redirects.TryPeek(out Redirect currentRedirect))
+        {
+            Debug.Log("Stack Empty");
+            return;
+        }
+
+        savedPosition = currentRedirect.GetRedirectPosition();
         float speed = GetUnscaledSpeed();
-        SetSpeed(speed /= velocityAugment);
-        if (!bIsRicochet)
+        SetSpeed(speed /= undoRedirect.GetVelocityAugment());
+
+        if (!undoRedirect.IsRicochet())
         {
             redirectManager.IncrementRedirects();
         }
