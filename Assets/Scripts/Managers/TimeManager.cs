@@ -5,7 +5,9 @@ using UnityEngine;
 public class TimeManager
 {
     private static bool bTimeSlowed;
+    private static bool bTimeTurbo;
     private static float normalTimeScale = 1f;
+    private static float turboTimeScale = 2f;
     private static float slowTimeScale = 0.05f;
     private static float pausedTimeScale = 0f;
 
@@ -25,6 +27,12 @@ public class TimeManager
         UpdateTimeScale();
     }
 
+    public static void SetTurboTime(bool toggle)
+    {
+        bTimeTurbo = toggle;
+        UpdateTimeScale();
+    }
+
     public static void UpdateTimeScale()
     {
         if (Time.timeScale == pausedTimeScale)
@@ -36,6 +44,10 @@ public class TimeManager
         if (bTimeSlowed)
         {
             timeScale *= slowTimeScale;
+        }
+        if (bTimeTurbo)
+        {
+            timeScale *= turboTimeScale;
         }
         Time.timeScale = timeScale;
     }

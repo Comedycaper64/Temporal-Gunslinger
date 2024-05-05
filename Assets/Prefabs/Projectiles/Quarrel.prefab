@@ -53,7 +53,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab565fc94338ea243b133a42dc2e4cbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -196,7 +196,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab565fc94338ea243b133a42dc2e4cbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -329,6 +329,11 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4961095737950803220}
     m_Modifications:
+    - target: {fileID: 823616551923122133, guid: d0e93d62d614623418c1aff1b6f00f59,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1bf7a2e227488ef4c80bfef7f2d51144, type: 2}
     - target: {fileID: 1882700617506617526, guid: d0e93d62d614623418c1aff1b6f00f59,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -374,6 +379,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6440208710081676744, guid: d0e93d62d614623418c1aff1b6f00f59,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1bf7a2e227488ef4c80bfef7f2d51144, type: 2}
     - target: {fileID: 6944033038257838578, guid: d0e93d62d614623418c1aff1b6f00f59,
         type: 3}
       propertyPath: m_Name
@@ -437,9 +447,21 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d0e93d62d614623418c1aff1b6f00f59, type: 3}
+--- !u!23 &449658184187906170 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6440208710081676744, guid: d0e93d62d614623418c1aff1b6f00f59,
+    type: 3}
+  m_PrefabInstance: {fileID: 6871848783204158898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3767348920549281530 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7716348334002078536, guid: d0e93d62d614623418c1aff1b6f00f59,
+    type: 3}
+  m_PrefabInstance: {fileID: 6871848783204158898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6067374459228516967 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 823616551923122133, guid: d0e93d62d614623418c1aff1b6f00f59,
     type: 3}
   m_PrefabInstance: {fileID: 6871848783204158898}
   m_PrefabAsset: {fileID: 0}
@@ -583,9 +605,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
+      propertyPath: modelRenderer
+      value: 
+      objectReference: {fileID: 6067374459228516967}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
       propertyPath: bulletModelTransform
       value: 
       objectReference: {fileID: 4961095737950803220}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: modelRenderer.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: modelRenderer.Array.data[0]
+      value: 
+      objectReference: {fileID: 449658184187906170}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: modelRenderer.Array.data[1]
+      value: 
+      objectReference: {fileID: 6067374459228516967}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: modelRenderer.Array.data[2]
+      value: 
+      objectReference: {fileID: 1400501277555473566}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: modelRenderer.Array.data[3]
+      value: 
+      objectReference: {fileID: 5242153181253632110}
     - target: {fileID: 7828219722662083374, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
       propertyPath: highlight

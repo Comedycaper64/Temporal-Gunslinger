@@ -14,12 +14,14 @@ public class RewindManager : MonoBehaviour
     private bool bCanRewind = true;
     private bool bTimerActive = false;
     private bool bRewindActive = false;
+    private bool bTurboActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
     private Stack<RewindableAction> priorityActions = new Stack<RewindableAction>();
     private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
 
     public event Action OnResetLevel;
+    public static event Action OnRewindToStart;
     public static EventHandler<bool> OnRewindToggle;
     public static EventHandler<float> OnRestartTimerChanged;
 
@@ -45,6 +47,8 @@ public class RewindManager : MonoBehaviour
 
         CheckIsRewinding();
 
+        CheckIsTurbo();
+
         IncrementRewindTimer();
     }
 
@@ -58,6 +62,19 @@ public class RewindManager : MonoBehaviour
         if (bRewindActive != input.GetIsRewinding())
         {
             ToggleRewind(input.GetIsRewinding());
+        }
+    }
+
+    private void CheckIsTurbo()
+    {
+        if (!bCanRewind)
+        {
+            return;
+        }
+
+        if (bTurboActive != input.GetIsTurbo())
+        {
+            ToggleTurbo(input.GetIsTurbo());
         }
     }
 
@@ -118,6 +135,7 @@ public class RewindManager : MonoBehaviour
             if (!rewindableActions.TryPeek(out RewindableAction rewindable))
             {
                 bNoOutstandingRewindables = true;
+                OnRewindToStart?.Invoke();
                 ResetManager();
             }
             else
@@ -167,8 +185,15 @@ public class RewindManager : MonoBehaviour
     {
         bRewindActive = toggle;
         bRewinding = toggle;
+        ToggleTurbo(false);
         ToggleRewindableMovements(toggle);
         OnRewindToggle?.Invoke(this, bRewindActive);
+    }
+
+    private void ToggleTurbo(bool toggle)
+    {
+        bTurboActive = toggle;
+        TimeManager.SetTurboTime(toggle);
     }
 
     private void ToggleRewindableMovements(bool toggle)

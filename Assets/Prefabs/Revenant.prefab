@@ -609,7 +609,7 @@ Transform:
   m_Children:
   - {fileID: 1425880283262027984}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6583379612124411674
 MonoBehaviour:
@@ -624,6 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachineAnimator: {fileID: 4983675286192968362}
+  dissolveController: {fileID: 0}
 --- !u!114 &6583379612124411675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f16f42df873b2f41bf12b073af560a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mouseSensitivity: 10
   initialBullet: {fileID: 6676780603082220250}
   playerBody: {fileID: 1425880283262027984}
   playerCamera: {fileID: 6583379612466073138}
@@ -1565,6 +1567,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8245538723097934568, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 020cbe374d9382f41a667f33a55dc679, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 82610fddb3cb9a14baa714b8df409ef6, type: 3}

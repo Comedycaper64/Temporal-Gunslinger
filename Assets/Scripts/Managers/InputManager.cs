@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private Vector2 mousePosition;
     private bool bIsFocusing;
     private bool bIsRewinding;
+    private bool bIsTurbo;
     private bool bIsResetting;
     public event Action OnShootAction;
     public event Action OnFocusAction;
@@ -50,6 +51,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public bool GetIsRewinding()
     {
         return bIsRewinding;
+    }
+
+    public bool GetIsTurbo()
+    {
+        return bIsTurbo;
     }
 
     public bool GetIsResetting()
@@ -134,6 +140,18 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else if (context.canceled)
         {
             bIsResetting = false;
+        }
+    }
+
+    public void OnTurbo(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            bIsTurbo = true;
+        }
+        else if (context.canceled)
+        {
+            bIsTurbo = false;
         }
     }
 }

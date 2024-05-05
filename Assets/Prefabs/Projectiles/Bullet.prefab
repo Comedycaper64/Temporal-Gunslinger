@@ -90,7 +90,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab565fc94338ea243b133a42dc2e4cbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -233,7 +233,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab565fc94338ea243b133a42dc2e4cbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1038,6 +1038,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletModelTransform: {fileID: 5493667388143854021}
+  modelRenderer:
+  - {fileID: 8245538723097934568}
+  - {fileID: 7982402265256995028}
+  - {fileID: 5251371870816650300}
+  - {fileID: 7405847844759926734}
+  - {fileID: 6276116388218178839}
   bulletCamera: {fileID: 7828219723591832207}
 --- !u!114 &7828219722662083371
 MonoBehaviour:
@@ -1052,6 +1058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stateMachineAnimator: {fileID: 0}
+  dissolveController: {fileID: 0}
 --- !u!114 &7828219722662083374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1502,7 +1509,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab565fc94338ea243b133a42dc2e4cbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1645,7 +1652,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: ab565fc94338ea243b133a42dc2e4cbb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1935,6 +1942,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: e36d7be846d838a49a8f084fc48d3d67,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 020cbe374d9382f41a667f33a55dc679, type: 2}
     - target: {fileID: 919132149155446097, guid: e36d7be846d838a49a8f084fc48d3d67,
         type: 3}
       propertyPath: m_Name
@@ -1956,6 +1968,12 @@ PrefabInstance:
 --- !u!4 &7200315205538469486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e36d7be846d838a49a8f084fc48d3d67,
+    type: 3}
+  m_PrefabInstance: {fileID: 7234489619780972933}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8245538723097934568 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7635826562936255635, guid: e36d7be846d838a49a8f084fc48d3d67,
     type: 3}
   m_PrefabInstance: {fileID: 7234489619780972933}
   m_PrefabAsset: {fileID: 0}

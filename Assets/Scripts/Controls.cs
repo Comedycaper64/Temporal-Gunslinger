@@ -89,6 +89,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Turbo"",
+                    ""type"": ""Button"",
+                    ""id"": ""58d890b8-8ea2-42d5-befb-ce901f0f9db3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -168,6 +177,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Mouse Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb37a6aa-82c1-446c-a069-7329900ffb71"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Turbo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -189,6 +209,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Possess = m_Player.FindAction("Possess", throwIfNotFound: true);
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
+        m_Player_Turbo = m_Player.FindAction("Turbo", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -255,6 +276,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Possess;
     private readonly InputAction m_Player_Reset;
     private readonly InputAction m_Player_MousePosition;
+    private readonly InputAction m_Player_Turbo;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -266,6 +288,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Possess => m_Wrapper.m_Player_Possess;
         public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
+        public InputAction @Turbo => m_Wrapper.m_Player_Turbo;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -296,6 +319,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @MousePosition.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMousePosition;
+                @Turbo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurbo;
+                @Turbo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurbo;
+                @Turbo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurbo;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -321,6 +347,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
+                @Turbo.started += instance.OnTurbo;
+                @Turbo.performed += instance.OnTurbo;
+                @Turbo.canceled += instance.OnTurbo;
             }
         }
     }
@@ -343,5 +372,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnPossess(InputAction.CallbackContext context);
         void OnReset(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
+        void OnTurbo(InputAction.CallbackContext context);
     }
 }
