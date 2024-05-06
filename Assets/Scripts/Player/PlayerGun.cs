@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,17 @@ public class PlayerGun : MonoBehaviour
     private float distanceAllowance = 0.001f;
     private Vector3 gunVelocity = Vector3.zero;
     private Transform target;
+    private List<Material> gunModelMaterials = new List<Material>();
+
+    private const float focusAlpha = 0.1f;
+    private float alphaNonTarget = focusAlpha;
+    private float alphaTarget = 1f;
 
     [SerializeField]
     private Transform gunModel;
+
+    [SerializeField]
+    private Renderer[] gunModelRenderers;
 
     [SerializeField]
     private Transform standbyPosition;
@@ -28,10 +37,15 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private BulletStateMachine bulletStateMachine;
     private Bullet bullet;
+    public static EventHandler<bool> OnAimGun;
 
     private void Start()
     {
         bullet = bulletStateMachine.GetComponent<Bullet>();
+        foreach (Renderer renderer in gunModelRenderers)
+        {
+            gunModelMaterials.Add(renderer.material);
+        }
     }
 
     private void Update()
@@ -48,6 +62,29 @@ public class PlayerGun : MonoBehaviour
             gunMoveTime
         );
 
+        float lerpRatio = Mathf.InverseLerp(
+            alphaNonTarget,
+            alphaTarget,
+            gunModelMaterials[0].color.a
+        );
+
+        //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
+        //Debug.Log("B: " + (nonTargetFOV - targetFOV));
+        //Debug.Log("Ratio: " + lerpRatio);
+        float newLerp = lerpRatio + (10f * Time.unscaledDeltaTime);
+
+        float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, newLerp);
+
+        foreach (Material material in gunModelMaterials)
+        {
+            material.color = new Color(
+                material.color.r,
+                material.color.g,
+                material.color.b,
+                newAlpha
+            );
+        }
+
         if (Vector3.Distance(gunModel.position, target.position) < distanceAllowance)
         {
             shouldGunMove = false;
@@ -57,6 +94,10 @@ public class PlayerGun : MonoBehaviour
     public void SetGunStandbyPosition()
     {
         gunModel.position = standbyPosition.position;
+        foreach (Material material in gunModelMaterials)
+        {
+            material.color = new Color(material.color.r, material.color.g, material.color.b, 1f);
+        }
     }
 
     public void ToggleAimGun(bool toggle)
@@ -64,10 +105,16 @@ public class PlayerGun : MonoBehaviour
         if (toggle)
         {
             target = aimingPosition;
+            alphaTarget = focusAlpha;
+            alphaNonTarget = 1f;
+            OnAimGun?.Invoke(this, true);
         }
         else
         {
             target = standbyPosition;
+            alphaTarget = 1f;
+            alphaNonTarget = focusAlpha;
+            OnAimGun?.Invoke(this, false);
         }
         shouldGunMove = true;
     }

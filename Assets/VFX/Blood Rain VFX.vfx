@@ -245,8 +245,8 @@ VisualEffectResource:
       lightProbeUsage: 0
     m_CullingFlags: 3
     m_UpdateMode: 0
-    m_PreWarmDeltaTime: 0.05
-    m_PreWarmStepCount: 0
+    m_PreWarmDeltaTime: 1
+    m_PreWarmStepCount: 10
     m_InitialEventName: OnPlay
 --- !u!114 &8926484042661614555
 MonoBehaviour:
@@ -703,7 +703,6 @@ MonoBehaviour:
   m_Owners:
   - {fileID: 8926484042661614558}
   - {fileID: 8926484042661614583}
-  - {fileID: 8926484042661614585}
   dataType: 0
   capacity: 10000
   stripCapacity: 16
@@ -1145,9 +1144,7 @@ MonoBehaviour:
     - context: {fileID: 8926484042661614558}
       slotIndex: 0
   m_OutputFlowSlot:
-  - link:
-    - context: {fileID: 8926484042661614585}
-      slotIndex: 0
+  - link: []
   integration: 0
   angularIntegration: 0
   ageParticles: 1
@@ -1170,21 +1167,19 @@ MonoBehaviour:
   m_Children:
   - {fileID: 8926484042661614589}
   - {fileID: 8926484042661614692}
-  m_UIPosition: {x: 928, y: 2036}
+  m_UIPosition: {x: 928, y: 2162}
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
   - {fileID: 8926484042661614586}
   m_OutputSlots: []
   m_Label: 
-  m_Data: {fileID: 8926484042661614568}
+  m_Data: {fileID: 8926484042661614787}
   m_InputFlowSlot:
-  - link:
-    - context: {fileID: 8926484042661614583}
-      slotIndex: 0
+  - link: []
   m_OutputFlowSlot:
   - link: []
-  blendMode: 1
+  blendMode: 2
   useAlphaClipping: 0
   generateMotionVector: 0
   excludeFromTAA: 0
@@ -4871,7 +4866,7 @@ MonoBehaviour:
       slotIndex: 0
   m_OutputFlowSlot:
   - link: []
-  blendMode: 0
+  blendMode: 2
   useAlphaClipping: 0
   generateMotionVector: 0
   excludeFromTAA: 0
@@ -5012,7 +5007,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":0.02913644351065159,"value":0.5218453407287598,"inTangent":-0.16542282700538636,"outTangent":-0.16542282700538636,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.6750830411911011,"value":0.41499102115631106,"inTangent":-0.8562052845954895,"outTangent":-0.8562052845954895,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.9942626953125,"value":-0.003326416015625,"inTangent":-1.310601830482483,"outTangent":-1.310601830482483,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":-0.0033066868782043459,"value":0.007700443267822266,"inTangent":7.248424530029297,"outTangent":7.248424530029297,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.19102264940738679,"value":0.4996013045310974,"inTangent":-0.05309058353304863,"outTangent":-0.05309058353304863,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.7762182950973511,"value":0.27113115787506106,"inTangent":-0.8562052845954895,"outTangent":-0.8562052845954895,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.9942626953125,"value":-0.003326416015625,"inTangent":-1.2587233781814576,"outTangent":-1.2587233781814576,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Size
@@ -6852,3 +6847,31 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
   m_Direction: 0
   m_LinkedSlots: []
+--- !u!114 &8926484042661614787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d78581a96eae8bf4398c282eb0b098bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UIIgnoredErrors: []
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  title: 
+  m_Owners:
+  - {fileID: 8926484042661614585}
+  dataType: 0
+  capacity: 128
+  stripCapacity: 1
+  particlePerStripCount: 128
+  needsComputeBounds: 0
+  boundsMode: 0
+  m_Space: 0

@@ -11,11 +11,13 @@ public class CrosshairUI : MonoBehaviour
     private void Start()
     {
         FocusManager.OnFocusToggle += ToggleUI;
+        PlayerGun.OnAimGun += ToggleUI;
     }
 
     private void OnDisable()
     {
         FocusManager.OnFocusToggle -= ToggleUI;
+        PlayerGun.OnAimGun -= ToggleUI;
     }
 
     private void ToggleUI(object sender, bool toggle)
