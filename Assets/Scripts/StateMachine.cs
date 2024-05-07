@@ -29,6 +29,11 @@ public abstract class StateMachine : MonoBehaviour
 
     public virtual void SwitchState(State newState)
     {
+        if (currentState?.GetType() == newState.GetType())
+        {
+            return;
+        }
+
         StateChange.StateChanged(currentState, this);
         currentState?.Exit();
         currentState = newState;
@@ -48,6 +53,12 @@ public abstract class StateMachine : MonoBehaviour
     }
 
     protected abstract void SetupDictionary();
+
+    protected State GetCurrentState()
+    {
+        return currentState;
+    }
+
     public abstract void ToggleInactive(bool toggle);
 
     public virtual void GameManager_OnGameStateChange(object sender, StateEnum stateChange)

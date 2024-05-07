@@ -96,7 +96,6 @@ public class BulletMovement : RewindableMovement
         )
         {
             hitNormal = hit.normal.normalized;
-            Debug.Log(hitNormal);
         }
         else
         {
@@ -139,7 +138,16 @@ public class BulletMovement : RewindableMovement
 
     public float GetVelocity()
     {
-        return Mathf.Abs(GetUnscaledSpeed());
+        //return Mathf.Abs(GetUnscaledSpeed());
+        float velocity = GetUnscaledSpeed();
+        if (velocity == 0f)
+        {
+            return Mathf.Abs(GetStartSpeed());
+        }
+        else
+        {
+            return Mathf.Abs(GetUnscaledSpeed());
+        }
     }
 
     public void AugmentVelocity(float velocityMultiplier)
@@ -179,6 +187,11 @@ public class BulletMovement : RewindableMovement
     public void ToggleBulletModel(bool toggle)
     {
         bulletModel.gameObject.SetActive(toggle);
+    }
+
+    public bool IsBulletReversing()
+    {
+        return GetUnscaledSpeed() < 0f;
     }
 
     public void UndoRedirect(

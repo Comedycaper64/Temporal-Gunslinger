@@ -61,15 +61,20 @@ public class DissolveController : RewindableMovement
     public void StartDissolve()
     {
         ToggleMovement(true);
-        if (counter < 0.5f)
-        {
-            AudioManager.PlaySFX(dissolveSFX, 0.5f, transform.position);
-        }
+        counter = 0;
+
+        AudioManager.PlaySFX(dissolveSFX, 0.5f, transform.position);
     }
 
     public void StopDissolve()
     {
         ToggleMovement(false);
+        counter = 0;
+
+        foreach (Material material in materials)
+        {
+            material.SetFloat("_Dissolve_Amount", counter);
+        }
     }
 
     private void Dissolve()

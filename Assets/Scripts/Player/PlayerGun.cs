@@ -10,7 +10,14 @@ public class PlayerGun : MonoBehaviour
     private float distanceAllowance = 0.001f;
     private Vector3 gunVelocity = Vector3.zero;
     private Transform target;
-    private List<Material> gunModelMaterials = new List<Material>();
+
+    //private List<Material> gunModelMaterials = new List<Material>();
+
+    [SerializeField]
+    private Material opaqueGunMaterial;
+
+    [SerializeField]
+    private Material transGunMaterial;
 
     private const float focusAlpha = 0.1f;
     private float alphaNonTarget = focusAlpha;
@@ -44,7 +51,7 @@ public class PlayerGun : MonoBehaviour
         bullet = bulletStateMachine.GetComponent<Bullet>();
         foreach (Renderer renderer in gunModelRenderers)
         {
-            gunModelMaterials.Add(renderer.material);
+            renderer.material = opaqueGunMaterial;
         }
     }
 
@@ -65,7 +72,7 @@ public class PlayerGun : MonoBehaviour
         float lerpRatio = Mathf.InverseLerp(
             alphaNonTarget,
             alphaTarget,
-            gunModelMaterials[0].color.a
+            gunModelRenderers[0].material.color.a
         );
 
         //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
@@ -75,8 +82,9 @@ public class PlayerGun : MonoBehaviour
 
         float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, newLerp);
 
-        foreach (Material material in gunModelMaterials)
+        foreach (Renderer renderer in gunModelRenderers)
         {
+            Material material = renderer.material;
             material.color = new Color(
                 material.color.r,
                 material.color.g,
@@ -94,8 +102,10 @@ public class PlayerGun : MonoBehaviour
     public void SetGunStandbyPosition()
     {
         gunModel.position = standbyPosition.position;
-        foreach (Material material in gunModelMaterials)
+
+        foreach (Renderer renderer in gunModelRenderers)
         {
+            Material material = renderer.material;
             material.color = new Color(material.color.r, material.color.g, material.color.b, 1f);
         }
     }
@@ -107,6 +117,12 @@ public class PlayerGun : MonoBehaviour
             target = aimingPosition;
             alphaTarget = focusAlpha;
             alphaNonTarget = 1f;
+
+            foreach (Renderer renderer in gunModelRenderers)
+            {
+                renderer.material = transGunMaterial;
+            }
+
             OnAimGun?.Invoke(this, true);
         }
         else
@@ -114,6 +130,12 @@ public class PlayerGun : MonoBehaviour
             target = standbyPosition;
             alphaTarget = 1f;
             alphaNonTarget = focusAlpha;
+
+            foreach (Renderer renderer in gunModelRenderers)
+            {
+                renderer.material = opaqueGunMaterial;
+            }
+
             OnAimGun?.Invoke(this, false);
         }
         shouldGunMove = true;

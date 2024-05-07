@@ -18,10 +18,10 @@ public class EnemyDeadState : State
 
     public override void Enter()
     {
-        if (animator)
-        {
-            animator.SetTrigger("death");
-        }
+        // if (animator)
+        // {
+        //     animator.SetTrigger("death");
+        // }
 
         if (dissolveController)
         {

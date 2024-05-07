@@ -15,7 +15,7 @@ public class BulletInactiveState : State
     public override void Enter()
     {
         bullet.ToggleBulletActive(false);
-        bullet.ToggleBulletPossessed(false);
+        //bullet.ToggleBulletPossessed(false);
     }
 
     public override void Exit() { }

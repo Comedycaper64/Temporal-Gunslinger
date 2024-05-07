@@ -110,6 +110,7 @@ public class Bullet : MonoBehaviour
     public void ResetBullet(Transform bulletPosition)
     {
         bulletStateMachine.SwitchToInactive();
+        ToggleBulletPossessed(false);
         //bulletMovement.ResetMovement();
         transform.parent = gunParent;
         transform.position = bulletPosition.position;
@@ -133,6 +134,11 @@ public class Bullet : MonoBehaviour
             return;
         }
 
+        if (bulletMovement.IsBulletReversing())
+        {
+            return;
+        }
+
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
@@ -143,6 +149,11 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!bBulletActive)
+        {
+            return;
+        }
+
+        if (bulletMovement.IsBulletReversing())
         {
             return;
         }

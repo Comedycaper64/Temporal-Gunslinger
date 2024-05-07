@@ -19,6 +19,10 @@ public class BulletStateMachine : StateMachine
 
     public void SwitchToActive()
     {
+        // if (GetCurrentState().GetType() == typeof(BulletActiveState))
+        // {
+        //     return;
+        // }
         SwitchState(stateDictionary[StateEnum.active]);
     }
 
