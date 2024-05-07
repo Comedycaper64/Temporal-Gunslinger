@@ -5,7 +5,7 @@ using UnityEngine;
 
 public abstract class RewindableAction
 {
-    float timestamp;
+    double timestamp;
     public static event EventHandler<RewindableAction> OnRewindableActionCreated;
 
     public virtual void Execute()
@@ -16,12 +16,12 @@ public abstract class RewindableAction
 
     public abstract void Undo();
 
-    public virtual float GetTimestamp()
+    public virtual double GetTimestamp()
     {
         return timestamp;
     }
 
-    public virtual void SetTimestamp(float timestamp)
+    public virtual void SetTimestamp(double timestamp)
     {
         this.timestamp = timestamp;
     }

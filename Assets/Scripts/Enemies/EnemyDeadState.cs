@@ -39,7 +39,7 @@ public class EnemyDeadState : State
 
     public override void Exit()
     {
-        if (dissolveController)
+        if (dissolveController && (enemyNumber <= 0))
         {
             dissolveController.StopDissolve();
         }

@@ -14,6 +14,9 @@ public class DissolveController : RewindableMovement
     [SerializeField]
     private MeshRenderer[] meshRenderers;
 
+    [SerializeField]
+    private GameObject[] manualDisables;
+
     private List<Material> materials = new List<Material>();
 
     [SerializeField]
@@ -63,6 +66,11 @@ public class DissolveController : RewindableMovement
         ToggleMovement(true);
         counter = 0;
 
+        foreach (GameObject gameObject in manualDisables)
+        {
+            gameObject.SetActive(false);
+        }
+
         AudioManager.PlaySFX(dissolveSFX, 0.5f, transform.position);
     }
 
@@ -71,9 +79,9 @@ public class DissolveController : RewindableMovement
         ToggleMovement(false);
         counter = 0;
 
-        foreach (Material material in materials)
+        foreach (GameObject gameObject in manualDisables)
         {
-            material.SetFloat("_Dissolve_Amount", counter);
+            gameObject.SetActive(true);
         }
     }
 

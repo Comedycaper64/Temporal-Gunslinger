@@ -56,7 +56,7 @@ public class BulletPossessor : MonoBehaviour
         {
             possessedBullet.UnpossessBullet();
         }
-        BulletPossess.BulletPossessed(this, possessedBullet);
+        //BulletPossess.BulletPossessed(this, possessedBullet);
         newBullet.PossessBullet(bIsFocusing);
         possessedBullet = newBullet;
     }

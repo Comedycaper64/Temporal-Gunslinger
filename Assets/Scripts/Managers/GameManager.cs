@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
         bLevelActive = false;
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         rewindManager.ToggleCanRewind(false);
+        TimeManager.SetNormalTime();
         endOfLevelCam.gameObject.SetActive(true);
         endOfLevelCam.m_Follow = lastEnemy;
         endOfLevelCam.m_LookAt = lastEnemy;

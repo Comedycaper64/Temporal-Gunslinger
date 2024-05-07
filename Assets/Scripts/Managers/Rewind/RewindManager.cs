@@ -7,7 +7,9 @@ public class RewindManager : MonoBehaviour
 {
     public static bool bRewinding;
 
-    private float rewindTimer = 0f;
+    private double rewindTimer = 0f;
+
+    //private float timerAugment = 1f;
     private float resetTimer;
     private const float RESET_TIME = 1f;
     private bool bCanReset = true;
@@ -82,11 +84,11 @@ public class RewindManager : MonoBehaviour
     {
         if (!bRewindActive)
         {
-            rewindTimer += Time.deltaTime;
+            rewindTimer += Time.deltaTime * RewindableMovement.GetTimescale();
         }
         else
         {
-            rewindTimer -= Time.deltaTime;
+            rewindTimer -= Time.deltaTime * RewindableMovement.GetTimescale();
             TryUndoRewindables();
         }
     }
@@ -140,7 +142,7 @@ public class RewindManager : MonoBehaviour
             }
             else
             {
-                float timestamp = rewindable.GetTimestamp();
+                double timestamp = rewindable.GetTimestamp();
                 if (timestamp < rewindTimer)
                 {
                     bNoOutstandingRewindables = true;
@@ -218,6 +220,7 @@ public class RewindManager : MonoBehaviour
         priorityActions = new Stack<RewindableAction>();
         rewindableActions = new Stack<RewindableAction>();
         rewindTimer = 0f;
+        //timerAugment = 1f;
         RewindableMovement.UpdateMovementTimescale(1f);
     }
 

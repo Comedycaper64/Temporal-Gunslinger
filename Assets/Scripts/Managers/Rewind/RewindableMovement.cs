@@ -91,4 +91,9 @@ public abstract class RewindableMovement : MonoBehaviour
     {
         timeScale = Mathf.Clamp01(newTimeScale);
     }
+
+    public static float GetTimescale()
+    {
+        return timeScale;
+    }
 }

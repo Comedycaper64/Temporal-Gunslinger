@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,8 +25,14 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         possessables.Add(this);
     }
 
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+    }
+
     private void OnDisable()
     {
+        GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
         highlightables.Remove(this);
         possessables.Remove(this);
     }
@@ -116,6 +123,14 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     public void ToggleHighlight(bool toggle)
     {
         highlight.gameObject.SetActive(toggle);
+    }
+
+    private void GameManager_OnGameStateChange(object sender, StateEnum e)
+    {
+        if (e == StateEnum.inactive)
+        {
+            UnpossessBullet();
+        }
     }
 
     //public bool IsHighlighted() => isHighlighted;
