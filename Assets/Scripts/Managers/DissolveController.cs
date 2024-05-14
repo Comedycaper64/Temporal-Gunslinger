@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DissolveController : RewindableMovement
 {
-    private float dissolveRate = 1f;
+    private float dissolveRate = .01f;
     private float counter = 0;
 
     [SerializeField]
@@ -79,6 +79,11 @@ public class DissolveController : RewindableMovement
         ToggleMovement(false);
         counter = 0;
 
+        foreach (Material material in materials)
+        {
+            material.SetFloat("_Dissolve_Amount", counter);
+        }
+
         foreach (GameObject gameObject in manualDisables)
         {
             gameObject.SetActive(true);
@@ -87,7 +92,7 @@ public class DissolveController : RewindableMovement
 
     private void Dissolve()
     {
-        counter += dissolveRate * GetSpeed();
+        counter += dissolveRate * GetUnscaledSpeed();
         float newCounter = Mathf.Clamp01(counter);
 
         foreach (Material material in materials)

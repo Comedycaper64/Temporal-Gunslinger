@@ -19,15 +19,11 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         bullet = GetComponent<Bullet>();
     }
 
-    private void Start()
-    {
-        highlightables.Add(this);
-        possessables.Add(this);
-    }
-
     private void OnEnable()
     {
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+        highlightables.Add(this);
+        possessables.Add(this);
     }
 
     private void OnDisable()

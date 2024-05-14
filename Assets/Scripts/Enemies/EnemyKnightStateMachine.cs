@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class EnemyKnightStateMachine : StateMachine
 {
-    [SerializeField]
     private Transform enemyStartPosition;
 
     [SerializeField]
     private float shootTimer;
+
+    [SerializeField]
+    private float throwAnimTimer;
 
     [SerializeField]
     private Transform projectileStartPoint;
@@ -28,7 +30,7 @@ public class EnemyKnightStateMachine : StateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyKnightIdleState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyRangedActiveState(this));
+        stateDictionary.Add(StateEnum.active, new EnemyKnightThrowState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 
@@ -45,6 +47,11 @@ public class EnemyKnightStateMachine : StateMachine
         return shootTimer;
     }
 
+    public float GetThrowTimer()
+    {
+        return throwAnimTimer;
+    }
+
     public BulletStateMachine GetBulletStateMachine()
     {
         return projectile;
@@ -53,6 +60,16 @@ public class EnemyKnightStateMachine : StateMachine
     public void ResetPosition()
     {
         transform.position = enemyStartPosition.position;
+    }
+
+    public bool HasStartPosition()
+    {
+        return enemyStartPosition;
+    }
+
+    public void SetStartPosition(Transform newStart)
+    {
+        enemyStartPosition = newStart;
     }
 
     public void ResetProjectile()

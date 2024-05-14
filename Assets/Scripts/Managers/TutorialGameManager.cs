@@ -57,7 +57,7 @@ public class TutorialGameManager : GameManager
     {
         startOfLevelCam.gameObject.SetActive(false);
         CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
-        EnemyDeadState.enemyNumber = 1;
+        EnemyDeadState.enemiesAlive = 1;
     }
 
     public override void SetupLevel()
@@ -84,7 +84,7 @@ public class TutorialGameManager : GameManager
             CinematicManager.Instance.PlayCinematic(endOfRound1Cinematic, SetupLevel);
             //round2Mask1.SetActive(true);
             //round2Mask2.SetActive(true);
-            EnemyDeadState.enemyNumber = 2;
+            EnemyDeadState.enemiesAlive = 2;
             BulletDeadState.bulletNumber = 1;
             playerController.ToggleCanRotate(true);
             playerController.ToggleCanFocus(true);
@@ -94,7 +94,7 @@ public class TutorialGameManager : GameManager
         else if (tutorialState == TutorialState.Round2)
         {
             CinematicManager.Instance.PlayCinematic(endOfRound2Cinematic, SetupLevel);
-            EnemyDeadState.enemyNumber = 2;
+            EnemyDeadState.enemiesAlive = 2;
             BulletDeadState.bulletNumber = 2;
             projectileMask.EnableFireProjectile();
             playerController.ToggleCanPossess(true);
@@ -102,7 +102,7 @@ public class TutorialGameManager : GameManager
         }
         else if (tutorialState == TutorialState.Round3)
         {
-            EnemyDeadState.enemyNumber = 0;
+            EnemyDeadState.enemiesAlive = 0;
             BulletDeadState.bulletNumber = 0;
             CinematicManager.Instance.PlayCinematic(endOfRound3Cinematic, ShowLevelSelect);
         }

@@ -21,6 +21,13 @@ public class EnemyKnightIdleState : State
             animator.SetTrigger("activate");
         }
 
+        if (!enemyKnightStateMachine.HasStartPosition())
+        {
+            Transform newTransform = new GameObject().transform;
+            newTransform.position = enemyKnightStateMachine.transform.position;
+            enemyKnightStateMachine.SetStartPosition(newTransform);
+        }
+
         enemyKnightStateMachine.ResetPosition();
         enemyKnightStateMachine.ResetProjectile();
     }

@@ -8,7 +8,8 @@ public class BulletMovement : RewindableMovement
     private bool bShouldRotate;
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
-    private float spinSpeed = 150f;
+
+    //private float spinSpeed = 150f;
     private float dropVelocity = 50f;
     public float velocityLossRate = 5f;
     private Vector3 flightDirection;
@@ -22,11 +23,13 @@ public class BulletMovement : RewindableMovement
 
     [SerializeField]
     private GameObject redirectVFXPrefab;
+    private BulletDamager bulletDamager;
 
     private RedirectManager redirectManager;
 
     private void Start()
     {
+        bulletDamager = GetComponent<BulletDamager>();
         redirectManager = RedirectManager.Instance;
     }
 
@@ -56,7 +59,7 @@ public class BulletMovement : RewindableMovement
 
     private void SpinBullet()
     {
-        bulletModel.eulerAngles += new Vector3(0f, 0f, spinSpeed * Time.deltaTime);
+        bulletModel.eulerAngles += new Vector3(0f, 0f, GetUnscaledSpeed() * Time.deltaTime);
     }
 
     public void RedirectBullet(Vector3 newDirection, Quaternion newRotation)

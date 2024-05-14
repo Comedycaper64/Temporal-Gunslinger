@@ -10,6 +10,9 @@ public class Bullet : MonoBehaviour
     private bool bBulletPossessed;
     private Transform gunParent;
     private BulletMovement bulletMovement;
+
+    [SerializeField]
+    private BulletDamager bulletDamager;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
     private FocusManager focusManager;
@@ -74,6 +77,7 @@ public class Bullet : MonoBehaviour
     {
         bulletMovement.ToggleMovement(toggle);
         bulletMovement.ToggleBulletModel(toggle);
+        bulletDamager.SetBulletActive(toggle);
         bBulletActive = toggle;
 
         if (toggle)
@@ -126,44 +130,4 @@ public class Bullet : MonoBehaviour
     // {
     //     bulletStateMachine.SwitchState(new BulletDeadState(bulletStateMachine));
     // }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (!bBulletActive)
-        {
-            return;
-        }
-
-        if (bulletMovement.IsBulletReversing())
-        {
-            return;
-        }
-
-        if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
-        {
-            damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
-            bulletMovement.RicochetBullet(other, velocityConservation);
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!bBulletActive)
-        {
-            return;
-        }
-
-        if (bulletMovement.IsBulletReversing())
-        {
-            return;
-        }
-
-        if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
-        {
-            //Debug.Log("Hit: " + damageable);
-            damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
-
-            bulletMovement.SlowBullet(velocityConservation);
-        }
-    }
 }

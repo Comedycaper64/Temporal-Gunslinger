@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class EnemyDeadState : State
 {
-    public static int enemyNumber;
+    public static int enemiesAlive;
     private Animator animator;
     private DissolveController dissolveController;
 
     public EnemyDeadState(StateMachine stateMachine)
         : base(stateMachine)
     {
-        enemyNumber++;
+        enemiesAlive++;
         animator = stateMachine.stateMachineAnimator;
         dissolveController = stateMachine.dissolveController;
     }
@@ -29,9 +29,9 @@ public class EnemyDeadState : State
         }
 
         stateMachine.ToggleInactive(true);
-        enemyNumber--;
+        enemiesAlive--;
         //Debug.Log("Enemies remaining: " + enemyNumber);
-        if (enemyNumber <= 0)
+        if (enemiesAlive <= 0)
         {
             GameManager.Instance.EndLevel(stateMachine.transform);
         }
@@ -39,13 +39,19 @@ public class EnemyDeadState : State
 
     public override void Exit()
     {
-        if (dissolveController && (enemyNumber <= 0))
+        Debug.Log("Alive enemies: " + enemiesAlive);
+
+        if (enemiesAlive > 0)
+        {
+            enemiesAlive++;
+        }
+
+        if (dissolveController && (enemiesAlive > 0))
         {
             dissolveController.StopDissolve();
         }
 
         stateMachine.ToggleInactive(false);
-        enemyNumber++;
     }
 
     public override void Tick(float deltaTime) { }

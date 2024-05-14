@@ -39,7 +39,7 @@ public abstract class RewindableMovement : MonoBehaviour
         movementActive = false;
     }
 
-    public void ToggleMovement(bool toggle)
+    public virtual void ToggleMovement(bool toggle)
     {
         if (toggle)
         {
@@ -77,7 +77,7 @@ public abstract class RewindableMovement : MonoBehaviour
         return movementActive;
     }
 
-    protected virtual void Awake()
+    protected virtual void OnEnable()
     {
         Instances.Add(this);
     }

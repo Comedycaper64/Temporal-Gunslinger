@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyMeleeStateMachine : StateMachine
 {
-    [SerializeField]
     private Transform enemyStartPosition;
 
     [SerializeField]
@@ -34,5 +33,15 @@ public class EnemyMeleeStateMachine : StateMachine
     public void ResetPosition()
     {
         transform.position = enemyStartPosition.position;
+    }
+
+    public bool HasStartPosition()
+    {
+        return enemyStartPosition;
+    }
+
+    public void SetStartPosition(Transform newStart)
+    {
+        enemyStartPosition = newStart;
     }
 }

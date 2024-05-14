@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class RewindState : RewindableMovement
 {
-    public float GetTimeSpeed()
-    {
-        return GetUnscaledSpeed();
-    }
+    public float GetTimeSpeed() => GetUnscaledSpeed();
+
+    public float GetScaledSpeed() => GetSpeed();
 }

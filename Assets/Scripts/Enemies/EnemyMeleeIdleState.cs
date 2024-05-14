@@ -21,6 +21,13 @@ public class EnemyMeleeIdleState : State
             animator.SetTrigger("activate");
         }
 
+        if (!enemyMeleeStateMachine.HasStartPosition())
+        {
+            Transform newTransform = new GameObject("Enemy Start Pos").transform;
+            newTransform.position = enemyMeleeStateMachine.transform.position;
+            enemyMeleeStateMachine.SetStartPosition(newTransform);
+        }
+
         enemyMeleeStateMachine.ResetPosition();
     }
 
