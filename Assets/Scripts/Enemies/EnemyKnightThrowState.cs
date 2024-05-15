@@ -32,7 +32,7 @@ public class EnemyKnightThrowState : State
         float animationStartTime = 0f;
         if (rewindState.GetTimeSpeed() < 0f)
         {
-            timer = shootTime;
+            timer = throwTime;
             animationStartTime = 1f;
             projectileFired = true;
         }
@@ -49,7 +49,7 @@ public class EnemyKnightThrowState : State
     {
         timer += Time.deltaTime * rewindState.GetScaledSpeed() * animationSpeedMult;
 
-        //Debug.Log(timer);
+        Debug.Log(timer);
 
         if (!projectileFired && timer >= shootTime)
         {

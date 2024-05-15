@@ -84,6 +84,8 @@ public class PocketwatchUI : RewindableMovement
     {
         if (stateChange == StateEnum.active)
         {
+            pockewatchHand.eulerAngles = Vector3.zero;
+
             ToggleMovement(true);
             ToggleUI(true);
         }

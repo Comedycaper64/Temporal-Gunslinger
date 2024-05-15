@@ -1,7 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+using Random = UnityEngine.Random;
 
 // The player's bullet
 public class Bullet : MonoBehaviour
@@ -9,6 +12,7 @@ public class Bullet : MonoBehaviour
     private bool bBulletActive;
     private bool bBulletPossessed;
     private Transform gunParent;
+    private AudioSource bulletFlightSFX;
     private BulletMovement bulletMovement;
 
     [SerializeField]
@@ -20,12 +24,16 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private AudioClip redirectSFX;
 
+    [SerializeField]
+    private AudioClip[] possessSFX;
+
     private void Awake()
     {
         bulletMovement = GetComponent<BulletMovement>();
         bulletCameraController = GetComponent<BulletCameraController>();
         bulletStateMachine = GetComponent<BulletStateMachine>();
         focusManager = GetComponent<FocusManager>();
+        bulletFlightSFX = GetComponent<AudioSource>();
         gunParent = transform.parent;
     }
 
@@ -85,6 +93,11 @@ public class Bullet : MonoBehaviour
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.ChangeTravelDirection(aimDirection, GetAimRotation(aimDirection));
             UnparentObject.ObjectUnparented(transform, transform.parent, transform.position);
+            bulletFlightSFX.Play();
+        }
+        else
+        {
+            bulletFlightSFX.Stop();
         }
     }
 
@@ -96,6 +109,8 @@ public class Bullet : MonoBehaviour
         if (toggle)
         {
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
+            int randomInt = Random.Range(0, possessSFX.Length);
+            AudioManager.PlaySFX(possessSFX[randomInt], 1f, transform.position);
         }
 
         bBulletPossessed = toggle;

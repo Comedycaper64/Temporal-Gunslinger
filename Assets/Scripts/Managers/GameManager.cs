@@ -105,7 +105,11 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         //Set rewindable movement timescale to be normal
-        RewindableMovement.UpdateMovementTimescale(1f);
+        //RewindableMovement.UpdateMovementTimescale(1f);
+
+        //MIGHT BREAK THINGS HOPEFULLY NOT
+        rewindManager.ResetManager();
+
         CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
     }
 

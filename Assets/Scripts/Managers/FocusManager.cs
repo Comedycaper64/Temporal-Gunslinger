@@ -25,6 +25,9 @@ public class FocusManager : MonoBehaviour
     private Transform bulletModelTransform;
 
     [SerializeField]
+    private AudioClip focusSFX;
+
+    [SerializeField]
     private Renderer[] modelRenderer;
     private List<Material> modelMaterial = new List<Material>();
     private AimLine focusAimLine;
@@ -151,6 +154,8 @@ public class FocusManager : MonoBehaviour
 
         alphaTarget = focusAlpha;
         alphaNonTarget = 1f;
+
+        AudioManager.PlaySFX(focusSFX, 1f, transform.position);
 
         OnFocusToggle?.Invoke(this, true);
     }

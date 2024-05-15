@@ -22,6 +22,9 @@ public class RewindManager : MonoBehaviour
     private HashSet<RewindableMovement> rewindableMovements;
     private InputManager input;
 
+    [SerializeField]
+    private AudioClip turboSFX;
+
     public event Action OnResetLevel;
     public static event Action OnRewindToStart;
     public static EventHandler<bool> OnRewindToggle;
@@ -196,6 +199,11 @@ public class RewindManager : MonoBehaviour
     {
         bTurboActive = toggle;
         TimeManager.SetTurboTime(toggle);
+
+        if (toggle)
+        {
+            AudioManager.PlaySFX(turboSFX, 0.5f, Camera.main.transform.position);
+        }
     }
 
     private void ToggleRewindableMovements(bool toggle)
@@ -217,6 +225,7 @@ public class RewindManager : MonoBehaviour
     {
         ToggleTimer(false);
         ToggleRewind(false);
+        ToggleTurbo(false);
         priorityActions = new Stack<RewindableAction>();
         rewindableActions = new Stack<RewindableAction>();
         rewindTimer = 0f;

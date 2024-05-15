@@ -9,6 +9,9 @@ public class BulletDamager : MonoBehaviour
     [SerializeField]
     private BulletMovement bulletMovement;
 
+    [SerializeField]
+    private GameObject ricochetVFX;
+
     private void OnCollisionEnter(Collision other)
     {
         if (!bBulletActive)
@@ -23,6 +26,8 @@ public class BulletDamager : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
+            Factory.InstantiateGameObject(ricochetVFX, transform.position, transform.rotation);
+
             damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
             bulletMovement.RicochetBullet(other, velocityConservation);
         }

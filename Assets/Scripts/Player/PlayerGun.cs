@@ -39,6 +39,9 @@ public class PlayerGun : MonoBehaviour
     private Transform bulletPosition;
 
     [SerializeField]
+    private AudioClip aimGunSFX;
+
+    [SerializeField]
     private VFXPlayback gunShotVFX;
 
     [SerializeField]
@@ -117,6 +120,8 @@ public class PlayerGun : MonoBehaviour
             target = aimingPosition;
             alphaTarget = focusAlpha;
             alphaNonTarget = 1f;
+
+            AudioManager.PlaySFX(aimGunSFX, 1f, transform.position);
 
             foreach (Renderer renderer in gunModelRenderers)
             {
