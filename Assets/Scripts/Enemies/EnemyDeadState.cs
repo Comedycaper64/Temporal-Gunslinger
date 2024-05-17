@@ -18,10 +18,10 @@ public class EnemyDeadState : State
 
     public override void Enter()
     {
-        // if (animator)
-        // {
-        //     animator.SetTrigger("death");
-        // }
+        if (animator)
+        {
+            animator.SetBool("death", true);
+        }
 
         if (dissolveController)
         {
@@ -44,6 +44,11 @@ public class EnemyDeadState : State
         if (enemiesAlive > 0)
         {
             enemiesAlive++;
+
+            if (animator)
+            {
+                animator.SetBool("death", false);
+            }
         }
 
         if (dissolveController && (enemiesAlive > 0))

@@ -49,8 +49,6 @@ public class EnemyKnightThrowState : State
     {
         timer += Time.deltaTime * rewindState.GetScaledSpeed() * animationSpeedMult;
 
-        Debug.Log(timer);
-
         if (!projectileFired && timer >= shootTime)
         {
             projectileFired = true;
