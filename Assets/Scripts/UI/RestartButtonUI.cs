@@ -13,6 +13,7 @@ public class RestartButtonUI : MonoBehaviour
     private void Awake()
     {
         progressBar = progressUI.material;
+        progressBar.SetFloat("_Progress", 0f);
     }
 
     private void OnEnable()

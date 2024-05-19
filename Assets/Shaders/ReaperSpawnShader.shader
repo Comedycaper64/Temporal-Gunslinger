@@ -59,22 +59,22 @@ v2f vert(appdata v)
 
 fixed4 frag(v2f i) : SV_Target
 {
-                //Gives rounded edges to the square UV
+    //Gives rounded edges to the square UV
     float sdf = distance(i.uv, float2(0.5, 0.5)) * 2 - 1;
     clip(-sdf);
     
     float2 uvsCentered = i.uv * 2 - 1;
     
     
-    float radial = atan2(uvsCentered.y, uvsCentered.x) / pi;
-    
     float uvDistance = distance(uvsCentered, float2(0, 0));
     //float uvDistance = distance(uvsCentered, float2(0, 0)) + cos(radial + _Time.y * TAU) * 0.1;
   
-    
+    float radial = atan2(uvsCentered.y, uvsCentered.x) / pi;
                 //Gives a border
     //float borderWidth = 0.1;
-    float borderSDF = _Size - _BorderSize;
+    
+    //float borderSDF = _Size - _BorderSize;
+    float borderSDF = (_Size - _BorderSize) + sin(((radial + uvDistance) + (_Time.y * -0.2)) * 10 * TAU) * 0.1 - 0.1;
     
     //return borderSDF;
     

@@ -22,6 +22,9 @@ public class DissolveController : RewindableMovement
     [SerializeField]
     private AudioClip dissolveSFX;
 
+    [SerializeField]
+    private VFXPlayback dissolveVFX;
+
     private void Start()
     {
         foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
@@ -72,6 +75,7 @@ public class DissolveController : RewindableMovement
         }
 
         AudioManager.PlaySFX(dissolveSFX, 0.5f, transform.position);
+        dissolveVFX.PlayEffect();
     }
 
     public void StopDissolve()
