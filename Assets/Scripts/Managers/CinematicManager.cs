@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CinematicManager : MonoBehaviour
 {
@@ -17,6 +18,10 @@ public class CinematicManager : MonoBehaviour
 
     [SerializeField]
     private AudioManager audioManager;
+
+    [SerializeField]
+    private PlayableDirector[] timelineDirectors;
+
     private ActorAnimatorMapper actorAnimatorMapper;
 
     public static EventHandler<UIChangeSO> OnFadeToBlackToggle;
@@ -63,6 +68,12 @@ public class CinematicManager : MonoBehaviour
         else if (nodeType == typeof(ActorMovementSO))
         {
             HandleMovementNode(cinematicNode);
+        }
+        else if (nodeType == typeof(TimelineSO))
+        {
+            int timelineIndex = (cinematicNode as TimelineSO).directorIndex;
+            timelineDirectors[timelineIndex].Play();
+            timelineDirectors[timelineIndex].stopped += TimelineFinished;
         }
         else if (nodeType == typeof(UIChangeSO))
         {
@@ -115,5 +126,10 @@ public class CinematicManager : MonoBehaviour
     private void EndCinematic()
     {
         OnCinematicFinished?.Invoke();
+    }
+
+    private void TimelineFinished(PlayableDirector director)
+    {
+        TryPlayNextNode();
     }
 }

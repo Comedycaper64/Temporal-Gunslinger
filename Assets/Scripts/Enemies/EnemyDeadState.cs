@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class EnemyDeadState : State
     public static int enemiesAlive;
     private Animator animator;
     private DissolveController dissolveController;
+    public static Action OnEnemyDeadChange;
 
     public EnemyDeadState(StateMachine stateMachine)
         : base(stateMachine)
@@ -30,6 +32,9 @@ public class EnemyDeadState : State
 
         stateMachine.ToggleInactive(true);
         enemiesAlive--;
+
+        OnEnemyDeadChange?.Invoke();
+
         //Debug.Log("Enemies remaining: " + enemyNumber);
         if (enemiesAlive <= 0)
         {
@@ -44,6 +49,8 @@ public class EnemyDeadState : State
         if (enemiesAlive > 0)
         {
             enemiesAlive++;
+
+            OnEnemyDeadChange?.Invoke();
 
             if (animator)
             {

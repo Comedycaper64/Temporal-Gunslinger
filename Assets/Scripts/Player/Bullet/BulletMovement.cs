@@ -22,15 +22,24 @@ public class BulletMovement : RewindableMovement
     private Transform bulletModel;
 
     [SerializeField]
+    private Transform damagePoint;
+
+    [SerializeField]
+    private Transform movementTarget;
+
+    [SerializeField]
     private GameObject redirectVFXPrefab;
     private BulletDamager bulletDamager;
 
     private RedirectManager redirectManager;
 
+    public static Action OnRedirect;
+
     private void Start()
     {
-        bulletDamager = GetComponent<BulletDamager>();
         redirectManager = RedirectManager.Instance;
+        bulletDamager = GetComponent<BulletDamager>();
+        DangerTracker.dangers.Add(this);
     }
 
     private void Update()
@@ -72,6 +81,7 @@ public class BulletMovement : RewindableMovement
                 transform.position,
                 Quaternion.LookRotation(GetFlightDirection())
             );
+            OnRedirect?.Invoke();
             ChangeTravelDirection(newDirection, newRotation);
         }
     }
@@ -195,6 +205,25 @@ public class BulletMovement : RewindableMovement
     public bool IsBulletReversing()
     {
         return GetUnscaledSpeed() < 0f;
+    }
+
+    public bool WillKillRevenant(out float deathTime)
+    {
+        if (GetUnscaledSpeed() > 0f)
+        {
+            float distanceToTarget = Vector3.Distance(
+                damagePoint.position,
+                movementTarget.position
+            );
+            float timeToTarget = distanceToTarget / GetStartSpeed();
+            deathTime = timeToTarget;
+            return true;
+        }
+        else
+        {
+            deathTime = -1f;
+            return false;
+        }
     }
 
     public void UndoRedirect(
