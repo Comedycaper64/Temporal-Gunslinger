@@ -8,11 +8,11 @@ public class EnemyMovement : RewindableMovement
     [SerializeField]
     private Transform damagePoint;
 
-    [SerializeField]
     private Transform movementTarget;
 
     private void Start()
     {
+        movementTarget = GameManager.GetRevenant();
         DangerTracker.dangers.Add(this);
     }
 

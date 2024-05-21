@@ -26,6 +26,8 @@ public class PocketwatchUI : RewindableMovement
     [SerializeField]
     private CanvasGroup pocketwatchUI;
 
+    public Action OnShowUI;
+
     private void Start()
     {
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
@@ -48,9 +50,9 @@ public class PocketwatchUI : RewindableMovement
 
         if (uiActive)
         {
-            pockewatchHand.eulerAngles =
-                pockewatchHand.eulerAngles + new Vector3(0, 0, -GetSpeed() * Time.deltaTime);
-            currentPocketwatchTime += GetSpeed() * Time.deltaTime;
+            float newZDegree = pockewatchHand.eulerAngles.z + (-GetSpeed() * Time.deltaTime);
+            pockewatchHand.eulerAngles = new Vector3(0, 0, newZDegree);
+            currentPocketwatchTime = Mathf.Abs(360f - newZDegree) / Mathf.Abs(GetStartSpeed());
         }
     }
 
@@ -93,16 +95,20 @@ public class PocketwatchUI : RewindableMovement
 
     public void SetDeathTime(float newDeathTime)
     {
-        Debug.Log(newDeathTime);
+        if (!uiActive)
+        {
+            return;
+        }
 
-        deathTime = newDeathTime;
+        //Debug.Log(newDeathTime);
 
-        if (deathTime < 0f)
+        if (newDeathTime < 0f)
         {
             deathMarker.gameObject.SetActive(false);
         }
         else
         {
+            deathTime = currentPocketwatchTime + newDeathTime;
             deathMarker.gameObject.SetActive(true);
             markerPlacerHand.eulerAngles = new Vector3(0, 0, -GetStartSpeed() * deathTime);
             //Debug.Log(GetUnscaledSpeed() * deathTime);
@@ -118,6 +124,7 @@ public class PocketwatchUI : RewindableMovement
 
             ToggleMovement(true);
             ToggleUI(true);
+            OnShowUI?.Invoke();
         }
         else
         {

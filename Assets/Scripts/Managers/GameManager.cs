@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
 
+    private static Transform revenantTransform;
+
     [SerializeField]
     protected CinemachineVirtualCamera endOfLevelCam;
 
@@ -35,8 +37,9 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
+
+        revenantTransform = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     public virtual void Start()
@@ -127,6 +130,11 @@ public class GameManager : MonoBehaviour
     public bool IsLevelActive()
     {
         return bLevelActive;
+    }
+
+    public static Transform GetRevenant()
+    {
+        return revenantTransform;
     }
 
     private void RewindManager_OnResetLevel()

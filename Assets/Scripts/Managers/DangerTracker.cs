@@ -12,6 +12,7 @@ public class DangerTracker : MonoBehaviour
         pocketwatchUI = GetComponent<PocketwatchUI>();
         EnemyDeadState.OnEnemyDeadChange += SetNewDeathTime;
         BulletMovement.OnRedirect += SetNewDeathTime;
+        pocketwatchUI.OnShowUI += SetNewDeathTime;
     }
 
     private void SetNewDeathTime()
@@ -36,15 +37,22 @@ public class DangerTracker : MonoBehaviour
                 }
             }
 
+            //Debug.Log("New Time: " + newTime + " from " + rewindableMovement.gameObject.name);
+
             if (newTime < lowestDeathTime)
             {
                 lowestDeathTime = newTime;
             }
         }
 
-        if (lowestDeathTime > 0f)
+        if (lowestDeathTime < 9999f)
         {
+            //Debug.Log("Closest object time: " + lowestDeathTime);
             pocketwatchUI.SetDeathTime(lowestDeathTime);
+        }
+        else
+        {
+            pocketwatchUI.SetDeathTime(-1f);
         }
     }
 }

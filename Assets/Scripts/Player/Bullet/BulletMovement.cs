@@ -19,12 +19,16 @@ public class BulletMovement : RewindableMovement
     private LayerMask ricochetLayermask;
 
     [SerializeField]
+    private LayerMask revenantLayermask;
+
+    [SerializeField]
     private Transform bulletModel;
+
+    // [SerializeField]
+    // private TrailRenderer[] activeTrails;
 
     [SerializeField]
     private Transform damagePoint;
-
-    [SerializeField]
     private Transform movementTarget;
 
     [SerializeField]
@@ -38,6 +42,7 @@ public class BulletMovement : RewindableMovement
     private void Start()
     {
         redirectManager = RedirectManager.Instance;
+        movementTarget = GameManager.GetRevenant();
         bulletDamager = GetComponent<BulletDamager>();
         DangerTracker.dangers.Add(this);
     }
@@ -81,7 +86,7 @@ public class BulletMovement : RewindableMovement
                 transform.position,
                 Quaternion.LookRotation(GetFlightDirection())
             );
-            OnRedirect?.Invoke();
+
             ChangeTravelDirection(newDirection, newRotation);
         }
     }
@@ -92,6 +97,8 @@ public class BulletMovement : RewindableMovement
         targetRotation = newRotation;
         rotationTimer = 0f;
         bShouldRotate = true;
+
+        OnRedirect?.Invoke();
     }
 
     public void RicochetBullet(Collision hitObject, float velocityAugment)
@@ -173,7 +180,7 @@ public class BulletMovement : RewindableMovement
     public void LoseVelocity()
     {
         float speed = GetUnscaledSpeed();
-        SetSpeed(speed -= velocityLossRate * Time.deltaTime);
+        SetSpeed(speed -= velocityLossRate * GetTimescale() * Time.deltaTime);
     }
 
     public void ApplyGravity()
@@ -209,22 +216,71 @@ public class BulletMovement : RewindableMovement
 
     public bool WillKillRevenant(out float deathTime)
     {
-        if (GetUnscaledSpeed() > 0f)
+        // if (GetUnscaledSpeed() > 0f)
+        // {
+        //     float distanceToTarget = Vector3.Distance(
+        //         damagePoint.position,
+        //         movementTarget.position
+        //     );
+        //     float timeToTarget = distanceToTarget / GetStartSpeed();
+        //     deathTime = timeToTarget;
+        //     return true;
+        // }
+        // else
+        // {
+
+        // }
+
+        if (
+            Physics.Raycast(
+                transform.position,
+                GetFlightDirection(),
+                out RaycastHit hit,
+                500f,
+                revenantLayermask
+            )
+        )
         {
-            float distanceToTarget = Vector3.Distance(
-                damagePoint.position,
-                movementTarget.position
-            );
-            float timeToTarget = distanceToTarget / GetStartSpeed();
-            deathTime = timeToTarget;
-            return true;
+            if (hit.transform.CompareTag("Player"))
+            {
+                //Debug.Log("ayaya");
+                deathTime = GetTimeToRevenant();
+                return true;
+            }
         }
-        else
-        {
-            deathTime = -1f;
-            return false;
-        }
+
+        deathTime = -1f;
+        return false;
     }
+
+    private float GetTimeToRevenant()
+    {
+        float distanceToTarget = Vector3.Distance(damagePoint.position, movementTarget.position);
+        float timeToRevenant =
+            (
+                -Mathf.Abs(GetUnscaledSpeed())
+                + Mathf.Sqrt(
+                    Mathf.Pow(Mathf.Abs(GetUnscaledSpeed()), 2f)
+                        - 4f * (-0.5f * velocityLossRate * -distanceToTarget)
+                )
+            ) / (-velocityLossRate);
+
+        return timeToRevenant;
+    }
+
+    // public override void BeginPlay()
+    // {
+    //     base.BeginPlay();
+
+    //     foreach (TrailRenderer trail in activeTrails) { }
+    // }
+
+    // public override void BeginRewind()
+    // {
+    //     base.BeginRewind();
+
+    //     foreach (TrailRenderer trail in activeTrails) { }
+    // }
 
     public void UndoRedirect(
         Vector3 position,

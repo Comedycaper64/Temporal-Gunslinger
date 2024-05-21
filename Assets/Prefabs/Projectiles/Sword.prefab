@@ -163,6 +163,11 @@ PrefabInstance:
     - target: {fileID: 7828219722662083361, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
       propertyPath: velocityLossRate
+      value: 75
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828219722662083361, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: activeTrails.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7828219722662083364, guid: 82610fddb3cb9a14baa714b8df409ef6,
@@ -227,6 +232,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
+      propertyPath: roughMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 62cd65fa4489ce14a90918c34219922e, type: 2}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: transparentMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 1bf7a2e227488ef4c80bfef7f2d51144, type: 2}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
       propertyPath: modelRenderer.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -258,6 +273,18 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7087802039231436165}
   m_SourcePrefab: {fileID: 100100000, guid: 82610fddb3cb9a14baa714b8df409ef6, type: 3}
+--- !u!114 &681516094977780291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7828219722662083361, guid: 82610fddb3cb9a14baa714b8df409ef6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7338148419495940450}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6f594a620de714784f14bb6bc06fc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &919118086512841838 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7572532414092297484, guid: 82610fddb3cb9a14baa714b8df409ef6,
@@ -383,7 +410,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b85ccd859431f47b8f1dd37a84cb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletMovement: {fileID: 0}
+  bulletMovement: {fileID: 681516094977780291}
+  ricochetVFX: {fileID: 6896051754062612965, guid: 60ccafae8a9ef0d49aa2f2aca1bf539e,
+    type: 3}
 --- !u!23 &8221253749304964939 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 5fe9c80d5ab54cb47b41db706b031f28,

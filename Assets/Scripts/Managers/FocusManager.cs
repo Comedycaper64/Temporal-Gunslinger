@@ -29,7 +29,14 @@ public class FocusManager : MonoBehaviour
 
     [SerializeField]
     private Renderer[] modelRenderer;
-    private List<Material> modelMaterial = new List<Material>();
+
+    //private List<Material> modelMaterial = new List<Material>();
+
+    [SerializeField]
+    private Material roughMaterial;
+
+    [SerializeField]
+    private Material transparentMaterial;
     private AimLine focusAimLine;
 
     [SerializeField]
@@ -42,13 +49,13 @@ public class FocusManager : MonoBehaviour
     {
         CreateAimLine();
 
-        if (modelRenderer.Length > 0)
-        {
-            foreach (Renderer renderer in modelRenderer)
-            {
-                modelMaterial.Add(renderer.material);
-            }
-        }
+        // if (modelRenderer.Length > 0)
+        // {
+        //     foreach (Renderer renderer in modelRenderer)
+        //     {
+        //         modelMaterial.Add(renderer.material);
+        //     }
+        // }
 
         //modelMaterial.Add()
 
@@ -77,10 +84,11 @@ public class FocusManager : MonoBehaviour
 
             float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, newLerp);
 
-            if (modelMaterial.Count > 0)
+            if (modelRenderer.Length > 0)
             {
-                foreach (Material material in modelMaterial)
+                foreach (Renderer renderer in modelRenderer)
                 {
+                    Material material = renderer.material;
                     material.color = new Color(
                         material.color.r,
                         material.color.g,
@@ -140,6 +148,11 @@ public class FocusManager : MonoBehaviour
         alphaTarget = 1f;
         alphaNonTarget = focusAlpha;
 
+        foreach (Renderer renderer in modelRenderer)
+        {
+            renderer.material = roughMaterial;
+        }
+
         OnFocusToggle?.Invoke(this, false);
     }
 
@@ -154,6 +167,11 @@ public class FocusManager : MonoBehaviour
 
         alphaTarget = focusAlpha;
         alphaNonTarget = 1f;
+
+        foreach (Renderer renderer in modelRenderer)
+        {
+            renderer.material = transparentMaterial;
+        }
 
         AudioManager.PlaySFX(focusSFX, 1f, transform.position);
 
