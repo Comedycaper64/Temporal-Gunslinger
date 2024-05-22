@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
             playerGun.ResetBullet();
             playerGun.SetGunStandbyPosition();
             bulletPossessor.SetIsFocusing(false);
-            AudioManager.PlaySFX(readyGunSFX, 0.5f, transform.position);
+            AudioManager.PlaySFX(readyGunSFX, 0.5f, 0, transform.position);
             if (bCanRedirect)
             {
                 RedirectManager.Instance.ToggleRedirectUI(true);

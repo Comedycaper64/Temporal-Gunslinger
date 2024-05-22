@@ -23,8 +23,31 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioClip clockTick2;
 
+    private enum PitchEnum
+    {
+        normal,
+        twentyFive,
+        fifty,
+        seventyFive,
+        onetwentyfive,
+        onefifty,
+        oneSeventyFive,
+        twohundred
+    }
+
+    private static Dictionary<PitchEnum, float> enumToPitch = new Dictionary<PitchEnum, float>();
+
     private void Start()
     {
+        enumToPitch.Add(PitchEnum.normal, 1f);
+        enumToPitch.Add(PitchEnum.twentyFive, 0.25f);
+        enumToPitch.Add(PitchEnum.fifty, 0.5f);
+        enumToPitch.Add(PitchEnum.seventyFive, 0.75f);
+        enumToPitch.Add(PitchEnum.onetwentyfive, 1.25f);
+        enumToPitch.Add(PitchEnum.onefifty, 1.5f);
+        enumToPitch.Add(PitchEnum.oneSeventyFive, 1.75f);
+        enumToPitch.Add(PitchEnum.twohundred, 2f);
+
         musicAudioSource = GetComponent<AudioSource>();
         if (fadeInAtStart)
         {
@@ -67,7 +90,7 @@ public class AudioManager : MonoBehaviour
         Destroy(tempGameObject, clip.length);
     }
 
-    public static void PlaySFX(AudioClip clip, float volume, Vector3 originPosition)
+    public static void PlaySFX(AudioClip clip, float volume, int pitchEnum, Vector3 originPosition)
     {
         if (RewindManager.bRewinding)
         {
@@ -76,11 +99,21 @@ public class AudioManager : MonoBehaviour
 
         if (GameManager.bLevelActive)
         {
-            PlaySFXClip(clip, originPosition, volume, SLOW_PITCH);
+            PlaySFXClip(
+                clip,
+                originPosition,
+                volume * SFX_VOLUME,
+                enumToPitch[(PitchEnum)pitchEnum] * SLOW_PITCH
+            );
         }
         else
         {
-            AudioSource.PlayClipAtPoint(clip, originPosition, volume * SFX_VOLUME);
+            PlaySFXClip(
+                clip,
+                originPosition,
+                volume * SFX_VOLUME,
+                enumToPitch[(PitchEnum)pitchEnum]
+            );
         }
     }
 
@@ -95,7 +128,7 @@ public class AudioManager : MonoBehaviour
                 AudioSource.PlayClipAtPoint(
                     clockTick1,
                     Camera.main.transform.position,
-                    0.3f * SFX_VOLUME
+                    1f * SFX_VOLUME
                 );
             }
             else
@@ -103,7 +136,7 @@ public class AudioManager : MonoBehaviour
                 AudioSource.PlayClipAtPoint(
                     clockTick2,
                     Camera.main.transform.position,
-                    0.3f * SFX_VOLUME
+                    1f * SFX_VOLUME
                 );
             }
         }

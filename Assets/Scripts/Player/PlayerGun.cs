@@ -11,8 +11,6 @@ public class PlayerGun : MonoBehaviour
     private Vector3 gunVelocity = Vector3.zero;
     private Transform target;
 
-    //private List<Material> gunModelMaterials = new List<Material>();
-
     [SerializeField]
     private Material opaqueGunMaterial;
 
@@ -78,9 +76,6 @@ public class PlayerGun : MonoBehaviour
             gunModelRenderers[0].material.color.a
         );
 
-        //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
-        //Debug.Log("B: " + (nonTargetFOV - targetFOV));
-        //Debug.Log("Ratio: " + lerpRatio);
         float newLerp = lerpRatio + (10f * Time.unscaledDeltaTime);
 
         float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, newLerp);
@@ -121,7 +116,7 @@ public class PlayerGun : MonoBehaviour
             alphaTarget = focusAlpha;
             alphaNonTarget = 1f;
 
-            AudioManager.PlaySFX(aimGunSFX, 1f, transform.position);
+            AudioManager.PlaySFX(aimGunSFX, 0.5f, 5, transform.position);
 
             foreach (Renderer renderer in gunModelRenderers)
             {

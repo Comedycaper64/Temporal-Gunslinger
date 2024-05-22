@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class SpawnShaderController : MonoBehaviour
 {
     private bool bOnOpeningChange = false;
-    private float maskOpening = 0.25f;
+    private float maskOpening = 0.5f;
     private float reaperOpening = 1f;
     private float targetOpening = 0f;
     private float startOpening;
     private float openingSpeed = 0.5f;
+    private float tweenTimer = 0f;
 
     [SerializeField]
     private MeshRenderer spawnMesh;
@@ -25,26 +27,36 @@ public class SpawnShaderController : MonoBehaviour
     {
         if (bOnOpeningChange)
         {
-            float currentSize = spawnShader.GetFloat("_Size");
-            float lerpRatio =
-                1
-                - (
-                    Mathf.Abs(currentSize - targetOpening) / Mathf.Abs(startOpening - targetOpening)
-                );
-            //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
-            //Debug.Log("B: " + (nonTargetFOV - targetFOV));
-            //Debug.Log("Ratio: " + lerpRatio);
-            float newSize = Mathf.Lerp(
+            float newSize = MMTween.Tween(
+                tweenTimer,
+                0f,
+                1f,
                 startOpening,
                 targetOpening,
-                lerpRatio + (openingSpeed * Time.unscaledDeltaTime)
+                MMTween.MMTweenCurve.EaseInCubic
             );
             spawnShader.SetFloat("_Size", newSize);
 
-            if (Mathf.Abs(targetOpening - newSize) < 0.1f)
+            tweenTimer += openingSpeed * Time.unscaledDeltaTime;
+
+            if (Mathf.Abs(targetOpening - newSize) < 0.01f)
             {
                 bOnOpeningChange = false;
             }
+
+            // float currentSize = spawnShader.GetFloat("_Size");
+            // float lerpRatio =
+            //     1
+            //     - (
+            //         Mathf.Abs(currentSize - targetOpening) / Mathf.Abs(startOpening - targetOpening)
+            //     );
+
+            // float newSize = Mathf.Lerp(
+            //     startOpening,
+            //     targetOpening,
+            //     lerpRatio + (openingSpeed * Time.unscaledDeltaTime)
+            // );
+            //
         }
     }
 
@@ -53,6 +65,7 @@ public class SpawnShaderController : MonoBehaviour
         startOpening = targetOpening;
         targetOpening = maskOpening;
         bOnOpeningChange = true;
+        tweenTimer = 0f;
     }
 
     public void ReaperOpen()
@@ -60,6 +73,7 @@ public class SpawnShaderController : MonoBehaviour
         startOpening = targetOpening;
         targetOpening = reaperOpening;
         bOnOpeningChange = true;
+        tweenTimer = 0f;
     }
 
     public void CloseOpening()
@@ -67,5 +81,6 @@ public class SpawnShaderController : MonoBehaviour
         startOpening = targetOpening;
         targetOpening = 0f;
         bOnOpeningChange = true;
+        tweenTimer = 0f;
     }
 }

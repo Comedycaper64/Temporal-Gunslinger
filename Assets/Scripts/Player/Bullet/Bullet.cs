@@ -68,7 +68,7 @@ public class Bullet : MonoBehaviour
         {
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.RedirectBullet(aimDirection, GetAimRotation(aimDirection));
-            AudioManager.PlaySFX(redirectSFX, 0.4f, transform.position);
+            AudioManager.PlaySFX(redirectSFX, 0.4f, 3, transform.position);
         }
         else
         {
@@ -110,7 +110,7 @@ public class Bullet : MonoBehaviour
         {
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
             int randomInt = Random.Range(0, possessSFX.Length);
-            AudioManager.PlaySFX(possessSFX[randomInt], 1f, transform.position);
+            AudioManager.PlaySFX(possessSFX[randomInt], 0.5f, 4, transform.position);
         }
 
         bBulletPossessed = toggle;

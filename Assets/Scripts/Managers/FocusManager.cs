@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class FocusManager : MonoBehaviour
@@ -14,8 +15,9 @@ public class FocusManager : MonoBehaviour
     private const float FOCUS_CAMERA_X = 120f;
     private const float NORMAL_FOV = 50f;
     private const float FOCUS_FOV = 30f;
-    private const float focusZoomSpeed = 2f;
+    private const float focusZoomSpeed = 1.5f;
     private const float focusAlpha = 0.25f;
+    private float tweenTimer = 0f;
     private float alphaNonTarget = focusAlpha;
     private float alphaTarget = 1f;
     private float targetFOV = NORMAL_FOV;
@@ -30,8 +32,6 @@ public class FocusManager : MonoBehaviour
     [SerializeField]
     private Renderer[] modelRenderer;
 
-    //private List<Material> modelMaterial = new List<Material>();
-
     [SerializeField]
     private Material roughMaterial;
 
@@ -42,22 +42,11 @@ public class FocusManager : MonoBehaviour
     [SerializeField]
     private CinemachineFreeLook bulletCamera;
 
-    //private LensSettings cameraLensSettings;
     public static EventHandler<bool> OnFocusToggle;
 
     private void Start()
     {
         CreateAimLine();
-
-        // if (modelRenderer.Length > 0)
-        // {
-        //     foreach (Renderer renderer in modelRenderer)
-        //     {
-        //         modelMaterial.Add(renderer.material);
-        //     }
-        // }
-
-        //modelMaterial.Add()
 
         bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X;
         bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y;
@@ -69,20 +58,20 @@ public class FocusManager : MonoBehaviour
 
         if (bulletCamera.m_Lens.FieldOfView != targetFOV)
         {
-            float lerpRatio =
-                1
-                - (
-                    Mathf.Abs(bulletCamera.m_Lens.FieldOfView - targetFOV)
-                    / Mathf.Abs(nonTargetFOV - targetFOV)
-                );
-            //Debug.Log("A: " + (bulletCamera.m_Lens.FieldOfView - targetFOV));
-            //Debug.Log("B: " + (nonTargetFOV - targetFOV));
-            //Debug.Log("Ratio: " + lerpRatio);
-            float newLerp = lerpRatio + (focusZoomSpeed * Time.unscaledDeltaTime);
+            float lerp = MMTween.Tween(
+                tweenTimer,
+                0f,
+                1f,
+                nonTargetFOV,
+                targetFOV,
+                MMTween.MMTweenCurve.EaseOutExponential
+            );
 
-            bulletCamera.m_Lens.FieldOfView = Mathf.Lerp(nonTargetFOV, targetFOV, newLerp);
+            tweenTimer += focusZoomSpeed * Time.unscaledDeltaTime;
 
-            float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, newLerp);
+            bulletCamera.m_Lens.FieldOfView = lerp;
+
+            float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, lerp);
 
             if (modelRenderer.Length > 0)
             {
@@ -97,8 +86,6 @@ public class FocusManager : MonoBehaviour
                     );
                 }
             }
-
-            //Debug.Log("Lens: " + bulletCamera.m_Lens.FieldOfView);
         }
 
         if (!bCanFocus)
@@ -153,6 +140,8 @@ public class FocusManager : MonoBehaviour
             renderer.material = roughMaterial;
         }
 
+        tweenTimer = 0f;
+
         OnFocusToggle?.Invoke(this, false);
     }
 
@@ -173,7 +162,9 @@ public class FocusManager : MonoBehaviour
             renderer.material = transparentMaterial;
         }
 
-        AudioManager.PlaySFX(focusSFX, 1f, transform.position);
+        AudioManager.PlaySFX(focusSFX, 1f, 0, transform.position);
+
+        tweenTimer = 0f;
 
         OnFocusToggle?.Invoke(this, true);
     }

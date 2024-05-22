@@ -49,6 +49,7 @@ public class TutorialGameManager : GameManager
         playerStateMachine.stateMachineAnimator.CrossFadeInFixedTime("Revenant walk", 0.1f);
         playerController = playerStateMachine.GetComponent<PlayerController>();
         playerController.ToggleTutorialStartMode();
+        reaper.SetActive(false);
         rewindManager.ToggleCanReset(false);
         rewindManager.ToggleCanRewind(false);
     }

@@ -74,7 +74,7 @@ public class DissolveController : RewindableMovement
             gameObject.SetActive(false);
         }
 
-        AudioManager.PlaySFX(dissolveSFX, 0.5f, transform.position);
+        AudioManager.PlaySFX(dissolveSFX, 0.5f, 0, transform.position);
         dissolveVFX.PlayEffect();
     }
 

@@ -11,6 +11,11 @@ public class AnimationSFXManager : MonoBehaviour
     {
         AudioClip sfxClip = animationEvent.objectReferenceParameter as AudioClip;
         Vector3 outputPosition = transform.position + new Vector3(0f, audioOutputHeight, 0f);
-        AudioManager.PlaySFX(sfxClip, animationEvent.floatParameter, outputPosition);
+        AudioManager.PlaySFX(
+            sfxClip,
+            animationEvent.floatParameter,
+            animationEvent.intParameter,
+            outputPosition
+        );
     }
 }

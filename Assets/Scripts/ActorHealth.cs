@@ -36,7 +36,7 @@ public class ActorHealth : MonoBehaviour
 
         if (deathSFX)
         {
-            AudioManager.PlaySFX(deathSFX, 0.5f, transform.position);
+            AudioManager.PlaySFX(deathSFX, 0.5f, 0, transform.position);
         }
     }
 }
