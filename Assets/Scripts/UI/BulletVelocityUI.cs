@@ -2,14 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BulletVelocityUI : MonoBehaviour
 {
     private bool bActive;
-    private float velocity;
+    private float velocity = 0f;
+    private float targetVelocity = 0f;
+    private float displayVelocity = 0f;
 
     [SerializeField]
     private TextMeshProUGUI velocityText;
+
+    [SerializeField]
+    private Image velocityBar;
 
     public static BulletVelocityUI Instance;
 
@@ -25,6 +31,13 @@ public class BulletVelocityUI : MonoBehaviour
         }
         Instance = this;
         ClearText();
+        velocityBar.enabled = false;
+    }
+
+    private void Update()
+    {
+        velocity = Mathf.Lerp(velocity, targetVelocity, Time.unscaledDeltaTime);
+        velocityBar.material.SetFloat("_DeltaVelocity", velocity);
     }
 
     private void ClearText()
@@ -34,12 +47,17 @@ public class BulletVelocityUI : MonoBehaviour
 
     private void UpdateText()
     {
-        velocityText.text = "Velocity = " + velocity.ToString("0.0");
+        velocityText.text = "Speed: " + displayVelocity.ToString("0.0");
     }
 
-    public void VelocityChanged(float newVelocity)
+    public void VelocityChanged(float newVelocity, float maxVelocity)
     {
-        velocity = newVelocity;
+        //this.maxVelocity = maxVelocity;
+        displayVelocity = newVelocity;
+        velocityBar.material.SetFloat("_MaxVelocity", maxVelocity);
+        float invLerp = Mathf.InverseLerp(0f, maxVelocity, newVelocity);
+        targetVelocity = Mathf.Lerp(-maxVelocity, 0f, invLerp);
+        velocityBar.material.SetFloat("_Velocity", targetVelocity);
         if (!bActive)
         {
             return;
@@ -50,6 +68,7 @@ public class BulletVelocityUI : MonoBehaviour
     public void ToggleUIActive(bool toggle)
     {
         bActive = toggle;
+        velocityBar.enabled = toggle;
         if (!toggle)
         {
             ClearText();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-[CreateAssetMenu(fileName = "Actor", menuName = "Temporal Gunslinger/ActorSO", order = 0)]
+[CreateAssetMenu(fileName = "Actor", menuName = "Cinematic Node/ActorSO", order = 0)]
 public class ActorSO : ScriptableObject
 {
     [SerializeField]

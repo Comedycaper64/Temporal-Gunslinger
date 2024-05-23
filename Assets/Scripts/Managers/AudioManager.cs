@@ -39,14 +39,17 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        enumToPitch.Add(PitchEnum.normal, 1f);
-        enumToPitch.Add(PitchEnum.twentyFive, 0.25f);
-        enumToPitch.Add(PitchEnum.fifty, 0.5f);
-        enumToPitch.Add(PitchEnum.seventyFive, 0.75f);
-        enumToPitch.Add(PitchEnum.onetwentyfive, 1.25f);
-        enumToPitch.Add(PitchEnum.onefifty, 1.5f);
-        enumToPitch.Add(PitchEnum.oneSeventyFive, 1.75f);
-        enumToPitch.Add(PitchEnum.twohundred, 2f);
+        if (enumToPitch.Count == 0)
+        {
+            enumToPitch.Add(PitchEnum.normal, 1f);
+            enumToPitch.Add(PitchEnum.twentyFive, 0.25f);
+            enumToPitch.Add(PitchEnum.fifty, 0.5f);
+            enumToPitch.Add(PitchEnum.seventyFive, 0.75f);
+            enumToPitch.Add(PitchEnum.onetwentyfive, 1.25f);
+            enumToPitch.Add(PitchEnum.onefifty, 1.5f);
+            enumToPitch.Add(PitchEnum.oneSeventyFive, 1.75f);
+            enumToPitch.Add(PitchEnum.twohundred, 2f);
+        }
 
         musicAudioSource = GetComponent<AudioSource>();
         if (fadeInAtStart)

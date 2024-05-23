@@ -28,7 +28,7 @@ public struct Dialogue
 }
 
 [Serializable]
-[CreateAssetMenu(fileName = "Dialogue", menuName = "Temporal Gunslinger/DialogueSO", order = 0)]
+[CreateAssetMenu(fileName = "Dialogue", menuName = "Cinematic Node/DialogueSO", order = 0)]
 public class DialogueSO : CinematicNode
 {
     [SerializeField]

@@ -46,7 +46,7 @@ public class TutorialGameManager : GameManager
     public override void Start()
     {
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
-        playerStateMachine.stateMachineAnimator.CrossFadeInFixedTime("Revenant walk", 0.1f);
+        //playerStateMachine.stateMachineAnimator.CrossFadeInFixedTime("Revenant walk", 0.1f);
         playerController = playerStateMachine.GetComponent<PlayerController>();
         playerController.ToggleTutorialStartMode();
         reaper.SetActive(false);

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Random = UnityEngine.Random;
+
 public class BulletMovement : RewindableMovement
 {
     private bool bShouldRotate;
@@ -32,8 +34,16 @@ public class BulletMovement : RewindableMovement
     private Transform movementTarget;
 
     [SerializeField]
+    private AudioClip redirectSFX;
+
+    [SerializeField]
+    private AudioClip noCoinsSFX;
+
+    [SerializeField]
+    private AudioClip[] ricochetSFX;
+
+    [SerializeField]
     private GameObject redirectVFXPrefab;
-    private BulletDamager bulletDamager;
 
     private RedirectManager redirectManager;
 
@@ -43,7 +53,6 @@ public class BulletMovement : RewindableMovement
     {
         redirectManager = RedirectManager.Instance;
         movementTarget = GameManager.GetRevenant();
-        bulletDamager = GetComponent<BulletDamager>();
         DangerTracker.dangers.Add(this);
     }
 
@@ -81,6 +90,7 @@ public class BulletMovement : RewindableMovement
         if (redirectManager.TryRedirect())
         {
             Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
+            AudioManager.PlaySFX(redirectSFX, 0.4f, 3, transform.position);
             Factory.InstantiateGameObject(
                 redirectVFXPrefab,
                 transform.position,
@@ -88,6 +98,10 @@ public class BulletMovement : RewindableMovement
             );
 
             ChangeTravelDirection(newDirection, newRotation);
+        }
+        else
+        {
+            AudioManager.PlaySFX(noCoinsSFX, 0.4f, 5, transform.position);
         }
     }
 
@@ -125,6 +139,10 @@ public class BulletMovement : RewindableMovement
         Vector3 flightNormalized = GetFlightDirection().normalized;
 
         Vector3 ricochetDirection = Vector3.Reflect(flightNormalized, hitNormal);
+
+        int randomIndex = Random.Range(0, ricochetSFX.Length);
+
+        AudioManager.PlaySFX(ricochetSFX[randomIndex], 0.4f, 0, transform.position);
 
         Redirect.BulletRedirected(
             transform.position,
@@ -168,6 +186,11 @@ public class BulletMovement : RewindableMovement
         {
             return Mathf.Abs(GetUnscaledSpeed());
         }
+    }
+
+    public float GetMaxVelocity()
+    {
+        return Mathf.Abs(GetStartSpeed());
     }
 
     public void AugmentVelocity(float velocityMultiplier)

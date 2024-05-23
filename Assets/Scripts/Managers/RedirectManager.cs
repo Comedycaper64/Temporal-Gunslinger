@@ -12,6 +12,7 @@ public class RedirectManager : MonoBehaviour
 
     private int redirects = 0;
 
+    public static Action OnRedirectFailed;
     public static event EventHandler<int> OnRedirectsChanged;
     public static event EventHandler<bool> OnRedirectUIActive;
 
@@ -32,7 +33,6 @@ public class RedirectManager : MonoBehaviour
     private void Start()
     {
         SetRedirects(levelRedirects);
-        ToggleRedirectUI(false);
     }
 
     public bool TryRedirect()
@@ -45,6 +45,7 @@ public class RedirectManager : MonoBehaviour
         }
         else
         {
+            OnRedirectFailed?.Invoke();
             return false;
         }
     }

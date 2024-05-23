@@ -1038,7 +1038,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletDamager: {fileID: 3476025634718370784}
-  redirectSFX: {fileID: 8300000, guid: 44fd96cf134e7c54c95a1093acde21d3, type: 3}
   possessSFX:
   - {fileID: 8300000, guid: 5fd29c814ac2fa34e852ebe32da60ceb, type: 3}
   - {fileID: 8300000, guid: 5ef50eaee6260524983e7d62513aaffa, type: 3}
@@ -1066,6 +1065,12 @@ MonoBehaviour:
     m_Bits: 64
   bulletModel: {fileID: 5493667388143854021}
   damagePoint: {fileID: 5493667388143854021}
+  redirectSFX: {fileID: 8300000, guid: 44fd96cf134e7c54c95a1093acde21d3, type: 3}
+  noCoinsSFX: {fileID: 8300000, guid: 20da767beba027e49ac6a747ef9dc2e0, type: 3}
+  ricochetSFX:
+  - {fileID: 8300000, guid: cf7fa72edcb1b11438d506e8b6305b36, type: 3}
+  - {fileID: 8300000, guid: 009b8e4b4443f2b45affb856bbf84daa, type: 3}
+  - {fileID: 8300000, guid: c0e0c4bacd5115644bc1f4a663f6197f, type: 3}
   redirectVFXPrefab: {fileID: 3088319004803970211, guid: 36e7360dbcd21e84ea74d7180599ec8f,
     type: 3}
 --- !u!114 &7828219722662083366
@@ -1143,7 +1148,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f8a4c6df5eda7514aab891a88b5b9bad, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0.15
   m_Pitch: 0.25
   Loop: 1
   Mute: 0
@@ -1152,7 +1157,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 15
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

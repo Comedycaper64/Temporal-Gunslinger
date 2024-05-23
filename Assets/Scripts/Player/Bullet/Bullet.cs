@@ -22,9 +22,6 @@ public class Bullet : MonoBehaviour
     private FocusManager focusManager;
 
     [SerializeField]
-    private AudioClip redirectSFX;
-
-    [SerializeField]
     private AudioClip[] possessSFX;
 
     private void Awake()
@@ -57,7 +54,10 @@ public class Bullet : MonoBehaviour
 
         if (bBulletPossessed)
         {
-            BulletVelocityUI.Instance.VelocityChanged(bulletMovement.GetVelocity());
+            BulletVelocityUI.Instance.VelocityChanged(
+                bulletMovement.GetVelocity(),
+                bulletMovement.GetMaxVelocity()
+            );
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
         }
     }
@@ -68,11 +68,6 @@ public class Bullet : MonoBehaviour
         {
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.RedirectBullet(aimDirection, GetAimRotation(aimDirection));
-            AudioManager.PlaySFX(redirectSFX, 0.4f, 3, transform.position);
-        }
-        else
-        {
-            //Sound effect or other indicator
         }
     }
 
@@ -110,7 +105,7 @@ public class Bullet : MonoBehaviour
         {
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
             int randomInt = Random.Range(0, possessSFX.Length);
-            AudioManager.PlaySFX(possessSFX[randomInt], 0.5f, 4, transform.position);
+            AudioManager.PlaySFX(possessSFX[randomInt], 0.25f, 4, transform.position);
         }
 
         bBulletPossessed = toggle;

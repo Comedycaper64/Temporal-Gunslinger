@@ -65,6 +65,17 @@ public class CinematicManager : MonoBehaviour
         {
             dialogueManager.PlayDialogue(cinematicNode as DialogueSO, TryPlayNextNode);
         }
+        else if (nodeType == typeof(PlaySFXSO))
+        {
+            PlaySFXSO sfx = cinematicNode as PlaySFXSO;
+            AudioManager.PlaySFX(
+                sfx.soundEffect,
+                sfx.sfxVolume,
+                sfx.sfxPitch,
+                Camera.main.transform.position
+            );
+            TryPlayNextNode();
+        }
         else if (nodeType == typeof(ActorMovementSO))
         {
             HandleMovementNode(cinematicNode);

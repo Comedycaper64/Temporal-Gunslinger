@@ -116,7 +116,7 @@ public class PlayerGun : MonoBehaviour
             alphaTarget = focusAlpha;
             alphaNonTarget = 1f;
 
-            AudioManager.PlaySFX(aimGunSFX, 0.5f, 5, transform.position);
+            AudioManager.PlaySFX(aimGunSFX, 0.3f, 5, transform.position);
 
             foreach (Renderer renderer in gunModelRenderers)
             {

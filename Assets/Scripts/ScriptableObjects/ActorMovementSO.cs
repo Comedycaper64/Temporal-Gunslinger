@@ -2,7 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ActorMovement", menuName = "ActorMovementSO", order = 0)]
+[CreateAssetMenu(
+    fileName = "ActorMovement",
+    menuName = "Cinematic Node/ActorMovementSO",
+    order = 0
+)]
 public class ActorMovementSO : CinematicNode
 {
     public ActorSO actor;
