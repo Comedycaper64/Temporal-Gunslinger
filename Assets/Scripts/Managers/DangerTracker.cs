@@ -38,7 +38,7 @@ public class DangerTracker : MonoBehaviour
             }
 
             //Debug.Log("New Time: " + newTime + " from " + rewindableMovement.gameObject.name);
-
+            // Debug.Log("Time: " + newTime + " from " + rewindableMovement.gameObject.name);
             if (newTime < lowestDeathTime)
             {
                 lowestDeathTime = newTime;

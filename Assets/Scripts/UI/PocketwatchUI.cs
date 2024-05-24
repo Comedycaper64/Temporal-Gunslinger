@@ -110,7 +110,11 @@ public class PocketwatchUI : RewindableMovement
         {
             deathTime = currentPocketwatchTime + newDeathTime;
             deathMarker.gameObject.SetActive(true);
-            markerPlacerHand.eulerAngles = new Vector3(0, 0, -GetStartSpeed() * deathTime);
+            markerPlacerHand.eulerAngles = new Vector3(
+                0,
+                0,
+                -Mathf.Abs(GetStartSpeed()) * deathTime
+            );
             //Debug.Log(GetUnscaledSpeed() * deathTime);
             deathMarker.position = markerPlacerTip.position;
         }

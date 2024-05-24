@@ -3,8 +3,9 @@ Shader"Unlit/VelocityBarShader"
     Properties
     {
         _MaxVelocity ("Max Velocity", float) = 1
-        _Velocity ("Velocity", Range(-300, 0)) = 0
-        _DeltaVelocity ("Delta Velocity", Range(-300, 0)) = 0
+        _Velocity ("Velocity", float) = 0
+        _DeltaVelocity ("Delta Velocity", float) = 0
+        //_Offset ("Offset", float) = 0
         _FillColourStart ("Start Fill Colour", Color) = (1,1,1,1)
         _FillColourEnd ("End Fill Colour", Color) = (1,1,1,1)
         _EmptyColour ("Empty Colour", Color) = (0,0,0,0)
@@ -46,7 +47,8 @@ Shader"Unlit/VelocityBarShader"
             float _MaxVelocity;
             float _Velocity;
             float _DeltaVelocity;
-            float _InnerLoss;           
+            float _InnerLoss;   
+//float _Offset;
             float4 _FillColourStart;
             float4 _FillColourEnd;
             float4 _EmptyColour;
@@ -69,21 +71,24 @@ Shader"Unlit/VelocityBarShader"
             {
                 //float valueLerp = saturate(InverseLerp(_MaxVelocity / 5, _MaxVelocity - (_MaxVelocity / 5), _Velocity));
                 float2 uvsCentered = i.uv * 2 - 1;
-                float sdf = distance(i.uv, float2(0.5, 0.5)) * 2 - 1;
-    
-                clip(-sdf);
+                float sdf = distance(i.uv, float2(0.5, 0.5)) * 2 - 1;            
+                //clip(-sdf);
     
                 float innerSdf = distance(i.uv, float2(0.5, 0.5)) * 2 - _InnerLoss;
-                clip(innerSdf);
+                //clip(innerSdf);
+                float compoundSdf = -sdf * innerSdf;
+                clip(compoundSdf);
     
+   
                 
-                float radial = (atan2(uvsCentered.y, uvsCentered.x) / pi) * _MaxVelocity;
-                //radial = ((radial * 0.5 + 0.5) ) % _MaxVelocity;
+                float radial = (atan2(uvsCentered.y, uvsCentered.x) / pi) * _MaxVelocity + _MaxVelocity / 2.5;
+                //radial = ((radial * 0.5 + 0.5) + _Offset) % _MaxVelocity;
     
                 float reveal = step(radial, _Velocity);
                 float deltaReveal = step(radial, _DeltaVelocity);
     
-                float4 barColour = lerp(_FillColourStart, _FillColourEnd, i.uv.x);
+                float tBarColour = saturate(InverseLerp(0.075, 1, i.uv.x));
+                float4 barColour = lerp(_FillColourStart, _FillColourEnd, tBarColour);
                 //float barMask = _Velocity > i.uv.x * _MaxVelocity;
 
                 //return float4(barColour * reveal + _DeltaColour * deltaReveal, reveal);

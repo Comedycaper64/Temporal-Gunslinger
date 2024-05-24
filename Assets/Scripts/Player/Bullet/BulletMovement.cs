@@ -12,7 +12,7 @@ public class BulletMovement : RewindableMovement
     private float rotationSpeed = 2.5f;
 
     //private float spinSpeed = 150f;
-    private float dropVelocity = 50f;
+    private float dropVelocity = 0f;
     public float velocityLossRate = 5f;
     private Vector3 flightDirection;
     private Quaternion targetRotation;
@@ -53,6 +53,7 @@ public class BulletMovement : RewindableMovement
     {
         redirectManager = RedirectManager.Instance;
         movementTarget = GameManager.GetRevenant();
+        dropVelocity = startSpeed / 10f;
         DangerTracker.dangers.Add(this);
     }
 
@@ -239,21 +240,6 @@ public class BulletMovement : RewindableMovement
 
     public bool WillKillRevenant(out float deathTime)
     {
-        // if (GetUnscaledSpeed() > 0f)
-        // {
-        //     float distanceToTarget = Vector3.Distance(
-        //         damagePoint.position,
-        //         movementTarget.position
-        //     );
-        //     float timeToTarget = distanceToTarget / GetStartSpeed();
-        //     deathTime = timeToTarget;
-        //     return true;
-        // }
-        // else
-        // {
-
-        // }
-
         if (
             Physics.Raycast(
                 transform.position,

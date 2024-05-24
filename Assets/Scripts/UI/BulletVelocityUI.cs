@@ -7,9 +7,13 @@ using UnityEngine.UI;
 public class BulletVelocityUI : MonoBehaviour
 {
     private bool bActive;
+    private float dampRef = 0f;
+    private float smoothTime = 1f;
     private float velocity = 0f;
     private float targetVelocity = 0f;
     private float displayVelocity = 0f;
+
+    private CanvasGroup canvasGroup;
 
     [SerializeField]
     private TextMeshProUGUI velocityText;
@@ -31,12 +35,14 @@ public class BulletVelocityUI : MonoBehaviour
         }
         Instance = this;
         ClearText();
-        velocityBar.enabled = false;
+        canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0f;
     }
 
     private void Update()
     {
-        velocity = Mathf.Lerp(velocity, targetVelocity, Time.unscaledDeltaTime);
+        //velocity = Mathf.Lerp(velocity, targetVelocity, Time.unscaledDeltaTime);
+        velocity = Mathf.SmoothDamp(velocity, targetVelocity, ref dampRef, smoothTime);
         velocityBar.material.SetFloat("_DeltaVelocity", velocity);
     }
 
@@ -47,7 +53,7 @@ public class BulletVelocityUI : MonoBehaviour
 
     private void UpdateText()
     {
-        velocityText.text = "Speed: " + displayVelocity.ToString("0.0");
+        velocityText.text = displayVelocity.ToString("0.0");
     }
 
     public void VelocityChanged(float newVelocity, float maxVelocity)
@@ -56,7 +62,7 @@ public class BulletVelocityUI : MonoBehaviour
         displayVelocity = newVelocity;
         velocityBar.material.SetFloat("_MaxVelocity", maxVelocity);
         float invLerp = Mathf.InverseLerp(0f, maxVelocity, newVelocity);
-        targetVelocity = Mathf.Lerp(-maxVelocity, 0f, invLerp);
+        targetVelocity = Mathf.Lerp(-maxVelocity + maxVelocity * 0.25f, 0f, invLerp);
         velocityBar.material.SetFloat("_Velocity", targetVelocity);
         if (!bActive)
         {
@@ -68,9 +74,13 @@ public class BulletVelocityUI : MonoBehaviour
     public void ToggleUIActive(bool toggle)
     {
         bActive = toggle;
-        velocityBar.enabled = toggle;
-        if (!toggle)
+        if (toggle)
         {
+            canvasGroup.alpha = 1f;
+        }
+        else
+        {
+            canvasGroup.alpha = 0f;
             ClearText();
         }
     }

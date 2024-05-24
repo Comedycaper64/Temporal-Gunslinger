@@ -23,13 +23,13 @@ public class EnemyMovement : RewindableMovement
 
     public bool WillKillRevenant(out float deathTime)
     {
-        if (GetUnscaledSpeed() > 0f)
+        if (Mathf.Abs(GetUnscaledSpeed()) > 0f)
         {
             float distanceToTarget = Vector3.Distance(
                 damagePoint.position,
                 movementTarget.position
             );
-            float timeToTarget = distanceToTarget / GetStartSpeed();
+            float timeToTarget = distanceToTarget / Mathf.Abs(GetStartSpeed());
             deathTime = timeToTarget;
             return true;
         }
