@@ -13,6 +13,12 @@ public class ScrollingHallway : MonoBehaviour
     [SerializeField]
     private Transform[] hallways;
 
+    [SerializeField]
+    private Transform[] otherSceneObjects;
+
+    [SerializeField]
+    private Transform[] thingsToDisable;
+
     private void Start()
     {
         ToggleScroll(false);
@@ -46,6 +52,18 @@ public class ScrollingHallway : MonoBehaviour
         foreach (Transform hallway in hallways)
         {
             hallway.gameObject.SetActive(toggle);
+        }
+        foreach (Transform sceneObject in otherSceneObjects)
+        {
+            sceneObject.gameObject.SetActive(toggle);
+        }
+
+        if (toggle)
+        {
+            foreach (Transform disableObject in thingsToDisable)
+            {
+                disableObject.gameObject.SetActive(false);
+            }
         }
     }
 }
