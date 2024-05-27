@@ -74,8 +74,6 @@ public class GameManager : MonoBehaviour
 
     protected IEnumerator ResetLevel()
     {
-        //Temp reset, shouldn't reload Scene
-        //SceneManager.LoadScene(0);
         rewindManager.ResetManager();
         RedirectManager.Instance.ResetLevel();
         OnGameStateChange?.Invoke(this, StateEnum.idle);
@@ -119,11 +117,17 @@ public class GameManager : MonoBehaviour
     public virtual void LevelLost()
     {
         TimeManager.SetPausedTime();
+        endOfLevelCam.gameObject.SetActive(true);
+        endOfLevelCam.m_Follow = revenantTransform;
+        endOfLevelCam.m_LookAt = revenantTransform;
         OnLevelLost?.Invoke(this, true);
     }
 
     public virtual void UndoLevelLost()
     {
+        endOfLevelCam.gameObject.SetActive(false);
+        endOfLevelCam.m_Follow = null;
+        endOfLevelCam.m_LookAt = null;
         OnLevelLost?.Invoke(this, false);
     }
 

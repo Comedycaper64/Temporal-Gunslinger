@@ -157,7 +157,7 @@ public class DialogueUI : MonoBehaviour
         {
             dialogueText.text += letter;
 
-            AudioClip textSound = actorClips[Random.Range(0, clipsLength - 1)];
+            //AudioClip textSound = actorClips[Random.Range(0, clipsLength - 1)];
             //get random dialogue sound from actor and play it in audio source
 
             yield return new WaitForSeconds(timeBetweenLetterTyping);
