@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamageable
 {
-    void ProjectileHit(out float velocityConservation, out bool bIsPassable);
+    void ProjectileHit(out float velocityConservation);
 }

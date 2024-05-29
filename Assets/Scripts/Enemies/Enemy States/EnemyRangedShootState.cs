@@ -14,6 +14,7 @@ public class EnemyRangedShootState : State
 
     public override void Enter()
     {
+        enemyStateMachine.SetProjectileAtFirePoint();
         enemyStateMachine.GetBulletStateMachine().SwitchToActive();
         stateMachine.stateMachineAnimator.SetBool("shot", true);
     }

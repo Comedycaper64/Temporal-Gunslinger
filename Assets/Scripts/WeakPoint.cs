@@ -7,13 +7,12 @@ public class WeakPoint : MonoBehaviour, IDamageable
 {
     [SerializeField]
     private float velocityConservation = 0.6f;
-    public event Action OnHit;
+    public event EventHandler OnHit;
 
-    public void ProjectileHit(out float velocityConservation, out bool bIsPassable) //Bullet projectile)
+    public void ProjectileHit(out float velocityConservation)
     {
-        OnHit?.Invoke();
+        OnHit?.Invoke(this, null);
         velocityConservation = this.velocityConservation;
-        bIsPassable = true;
     }
 
     // public void ProjectileHit(MeleeWeapon weapon)

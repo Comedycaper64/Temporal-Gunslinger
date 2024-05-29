@@ -30,7 +30,7 @@ public class ActorHealth : MonoBehaviour
         }
     }
 
-    private void Die()
+    private void Die(object sender, EventArgs e)
     {
         stateMachine.SwitchToDeadState();
 

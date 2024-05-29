@@ -2,19 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyConquestStateMachine : StateMachine
+public class EnemyRangedStateMachine : StateMachine
 {
     [SerializeField]
-    private float shootTimer;
+    protected float shootTimer;
 
     [SerializeField]
-    private Transform projectileStartPoint;
+    protected Transform projectileRestPoint;
 
     [SerializeField]
-    private BulletStateMachine projectile;
+    protected Transform projectileFirePoint;
 
     [SerializeField]
-    private List<GameObject> bodyColliders = new List<GameObject>();
+    protected BulletStateMachine projectile;
+
+    [SerializeField]
+    protected List<GameObject> bodyColliders = new List<GameObject>();
 
     private void Start()
     {
@@ -26,7 +29,7 @@ public class EnemyConquestStateMachine : StateMachine
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyRangedIdleState(this));
         stateDictionary.Add(StateEnum.active, new EnemyRangedActiveState(this));
-        stateDictionary.Add(StateEnum.dead, new EnemyBossDeadState(this));
+        stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 
     public override void ToggleInactive(bool toggle)
@@ -47,9 +50,15 @@ public class EnemyConquestStateMachine : StateMachine
         return projectile;
     }
 
+    public void SetProjectileAtFirePoint()
+    {
+        Bullet bullet = projectile.GetComponent<Bullet>();
+        bullet.SetFiringPosition(projectileFirePoint);
+    }
+
     public void ResetProjectile()
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
-        bullet.ResetBullet(projectileStartPoint);
+        bullet.ResetBullet(projectileRestPoint);
     }
 }

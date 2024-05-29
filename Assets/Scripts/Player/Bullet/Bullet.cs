@@ -42,7 +42,6 @@ public class Bullet : MonoBehaviour
 
             if (bulletMovement.ShouldBulletDrop())
             {
-                //bulletStateMachine.SwitchToDeadState();
                 bulletMovement.ApplyGravity();
             }
 
@@ -78,6 +77,8 @@ public class Bullet : MonoBehaviour
 
     public void ToggleBulletActive(bool toggle)
     {
+        //Debug.Log("Projectile: " + gameObject.name + toggle);
+
         bulletMovement.ToggleMovement(toggle);
         bulletMovement.ToggleBulletModel(toggle);
         bulletDamager.SetBulletActive(toggle);
@@ -100,7 +101,7 @@ public class Bullet : MonoBehaviour
     {
         bulletCameraController.ToggleCamera(toggle);
         focusManager.ToggleCanFocus(toggle);
-        //Debug.Log(gameObject.name + " " + toggle);
+
         if (toggle)
         {
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
@@ -121,23 +122,19 @@ public class Bullet : MonoBehaviour
         return focusManager.IsFocusing();
     }
 
+    public void SetFiringPosition(Transform firingPosition)
+    {
+        transform.position = firingPosition.position;
+        transform.rotation = firingPosition.rotation;
+    }
+
     public void ResetBullet(Transform bulletPosition)
     {
         bulletStateMachine.SwitchToInactive();
         ToggleBulletPossessed(false);
-        //bulletMovement.ResetMovement();
+
         transform.parent = gunParent;
         transform.position = bulletPosition.position;
         transform.rotation = bulletPosition.rotation;
     }
-
-    // public bool IsBulletActive()
-    // {
-    //     return bBulletActive;
-    // }
-
-    // public void BulletImpact()
-    // {
-    //     bulletStateMachine.SwitchState(new BulletDeadState(bulletStateMachine));
-    // }
 }

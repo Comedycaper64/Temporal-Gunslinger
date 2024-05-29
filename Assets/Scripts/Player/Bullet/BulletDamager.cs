@@ -40,7 +40,7 @@ public class BulletDamager : MonoBehaviour
             impact.transform.position = impactPoint + 0.1f * impactNormal.normalized;
             impact.transform.rotation = Quaternion.LookRotation(-impactNormal);
 
-            damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
+            damageable.ProjectileHit(out float velocityConservation);
             bulletMovement.RicochetBullet(other, velocityConservation);
         }
     }
@@ -60,7 +60,7 @@ public class BulletDamager : MonoBehaviour
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             //Debug.Log("Hit: " + damageable);
-            damageable.ProjectileHit(out float velocityConservation, out bool bIsPassable);
+            damageable.ProjectileHit(out float velocityConservation);
 
             bulletMovement.SlowBullet(velocityConservation);
         }

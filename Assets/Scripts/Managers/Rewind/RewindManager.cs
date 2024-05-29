@@ -226,6 +226,7 @@ public class RewindManager : MonoBehaviour
         ToggleTimer(false);
         ToggleRewind(false);
         ToggleTurbo(false);
+
         priorityActions = new Stack<RewindableAction>();
         rewindableActions = new Stack<RewindableAction>();
         rewindTimer = 0f;
