@@ -52,6 +52,7 @@ public class EnemyKnightThrowState : State
         if (!projectileFired && timer >= shootTime)
         {
             projectileFired = true;
+            enemyStateMachine.SetProjectileAtFirePoint();
             enemyStateMachine.GetBulletStateMachine().SwitchToActive();
         }
         else if (projectileFired && timer >= throwTime)

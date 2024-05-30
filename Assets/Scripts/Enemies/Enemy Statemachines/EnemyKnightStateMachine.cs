@@ -13,7 +13,10 @@ public class EnemyKnightStateMachine : StateMachine
     private float throwAnimTimer;
 
     [SerializeField]
-    private Transform projectileStartPoint;
+    private Transform projectileRestPoint;
+
+    [SerializeField]
+    private Transform projectileFirePoint;
 
     [SerializeField]
     private BulletStateMachine projectile;
@@ -72,9 +75,15 @@ public class EnemyKnightStateMachine : StateMachine
         enemyStartPosition = newStart;
     }
 
+    public void SetProjectileAtFirePoint()
+    {
+        Bullet bullet = projectile.GetComponent<Bullet>();
+        bullet.SetFiringPosition(projectileFirePoint);
+    }
+
     public void ResetProjectile()
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
-        bullet.ResetBullet(projectileStartPoint);
+        bullet.ResetBullet(projectileRestPoint);
     }
 }
