@@ -233,6 +233,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ResetPlayerRotation()
+    {
+        playerCamera.localRotation = Quaternion.identity;
+        playerBody.rotation = Quaternion.identity;
+    }
+
     public void ToggleTutorialStartMode()
     {
         ToggleCanRotate(false);

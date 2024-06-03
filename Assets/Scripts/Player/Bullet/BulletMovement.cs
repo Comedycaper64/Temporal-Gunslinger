@@ -57,6 +57,12 @@ public class BulletMovement : RewindableMovement
         DangerTracker.dangers.Add(this);
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        DangerTracker.dangers.Remove(this);
+    }
+
     private void Update()
     {
         transform.position += flightDirection * GetSpeed() * Time.deltaTime;

@@ -11,11 +11,11 @@ public class PlayerInactiveState : State
         : base(stateMachine)
     {
         playerController = stateMachine.GetComponent<PlayerController>();
-        //animator = stateMachine.stateMachineAnimator;
     }
 
     public override void Enter()
     {
+        playerController.ResetPlayerRotation();
         //When aiming, ensures mouse is captured
         //Cursor.lockState = CursorLockMode.Locked;
         //playerController.DisableGun();

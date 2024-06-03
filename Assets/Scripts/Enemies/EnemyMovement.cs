@@ -16,6 +16,12 @@ public class EnemyMovement : RewindableMovement
         DangerTracker.dangers.Add(this);
     }
 
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        DangerTracker.dangers.Remove(this);
+    }
+
     private void Update()
     {
         transform.position += transform.forward * GetSpeed() * Time.deltaTime;
