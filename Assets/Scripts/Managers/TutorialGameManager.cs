@@ -41,15 +41,17 @@ public class TutorialGameManager : GameManager
     [SerializeField]
     private CinematicSO endOfRound3Cinematic;
 
-    private TutorialState tutorialState = TutorialState.MainMenu;
+    private TutorialState tutorialState;
 
     public override void Start()
     {
+        tutorialState = TutorialState.MainMenu;
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         //playerStateMachine.stateMachineAnimator.CrossFadeInFixedTime("Revenant walk", 0.1f);
         playerController = playerStateMachine.GetComponent<PlayerController>();
         playerController.ToggleTutorialStartMode();
         reaper.SetActive(false);
+        revPocketwatch.SetActive(false);
         rewindManager.ToggleCanReset(false);
         rewindManager.ToggleCanRewind(false);
     }

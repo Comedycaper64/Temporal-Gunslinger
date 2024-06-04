@@ -8,10 +8,13 @@ using Random = UnityEngine.Random;
 public class BulletMovement : RewindableMovement
 {
     private bool bShouldRotate;
+
+    [SerializeField]
+    private bool bShouldSpin = true;
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
 
-    //private float spinSpeed = 150f;
+    private float spinSpeedModifier = 200f;
     private float dropVelocity = 0f;
     public float velocityLossRate = 5f;
     private Vector3 flightDirection;
@@ -67,7 +70,10 @@ public class BulletMovement : RewindableMovement
     {
         transform.position += flightDirection * GetSpeed() * Time.deltaTime;
 
-        SpinBullet();
+        if (bShouldSpin)
+        {
+            SpinBullet();
+        }
 
         if (!bShouldRotate)
         {
@@ -89,7 +95,11 @@ public class BulletMovement : RewindableMovement
 
     private void SpinBullet()
     {
-        bulletModel.eulerAngles += new Vector3(0f, 0f, GetUnscaledSpeed() * Time.deltaTime);
+        bulletModel.eulerAngles += new Vector3(
+            0f,
+            0f,
+            GetStartSpeed() * GetTimescale() * spinSpeedModifier * Time.deltaTime
+        );
     }
 
     public void RedirectBullet(Vector3 newDirection, Quaternion newRotation)

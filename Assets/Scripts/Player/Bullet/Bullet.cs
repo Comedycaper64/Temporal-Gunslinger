@@ -130,7 +130,15 @@ public class Bullet : MonoBehaviour
 
     public void ResetBullet(Transform bulletPosition)
     {
+        // if (bulletStateMachine)
+        // {
         bulletStateMachine.SwitchToInactive();
+        // }
+        // else
+        // {
+        //     Debug.Log("Bullet State Machine not found for " + gameObject.name);
+        // }
+
         ToggleBulletPossessed(false);
 
         transform.parent = gunParent;

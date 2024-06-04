@@ -8,7 +8,7 @@ public class RewindableAnimator : RewindableMovement
     private Animator animator;
 
     [SerializeField]
-    private float animationSpeedModifier;
+    private float animationSpeedModifier = 1f;
 
     [SerializeField]
     private bool dirtySwordFix;
