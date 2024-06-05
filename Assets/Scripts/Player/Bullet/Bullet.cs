@@ -9,8 +9,12 @@ using Random = UnityEngine.Random;
 // The player's bullet
 public class Bullet : MonoBehaviour
 {
+    private bool bIsDead;
     private bool bBulletActive;
     private bool bBulletPossessed;
+
+    [SerializeField]
+    private bool moveToTarget = true;
     private Transform gunParent;
     private AudioSource bulletFlightSFX;
     private BulletMovement bulletMovement;
@@ -40,14 +44,16 @@ public class Bullet : MonoBehaviour
         {
             bulletMovement.LoseVelocity();
 
-            if (bulletMovement.ShouldBulletDrop())
-            {
-                bulletMovement.ApplyGravity();
-            }
-
             if (bulletMovement.ShouldBulletStop())
             {
                 bulletStateMachine.SwitchToDeadState();
+            }
+            else
+            {
+                if (bulletMovement.ShouldBulletDrop())
+                {
+                    bulletMovement.ApplyGravity();
+                }
             }
         }
 
@@ -57,7 +63,10 @@ public class Bullet : MonoBehaviour
                 bulletMovement.GetVelocity(),
                 bulletMovement.GetMaxVelocity()
             );
-            RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
+
+            float bulletMovementVelocity = Mathf.Clamp(bulletMovement.GetVelocity(), 1f, 999f);
+            float newMovementTimescale = Mathf.Clamp(1f / bulletMovementVelocity, 0f, 0.1f);
+            RewindableMovement.UpdateMovementTimescale(newMovementTimescale);
         }
     }
 
@@ -81,13 +90,26 @@ public class Bullet : MonoBehaviour
 
         bulletMovement.ToggleMovement(toggle);
         bulletMovement.ToggleBulletModel(toggle);
+        bulletMovement.RemoveDeadFlag();
         bulletDamager.SetBulletActive(toggle);
         bBulletActive = toggle;
 
         if (toggle)
         {
-            Vector3 aimDirection = focusManager.GetAimDirection();
-            bulletMovement.ChangeTravelDirection(aimDirection, GetAimRotation(aimDirection));
+            if (moveToTarget)
+            {
+                Vector3 travelDirection = bulletMovement.GetRevenantDirection();
+                bulletMovement.ChangeTravelDirection(
+                    travelDirection,
+                    GetAimRotation(travelDirection)
+                );
+            }
+            else
+            {
+                Vector3 aimDirection = focusManager.GetAimDirection();
+                bulletMovement.ChangeTravelDirection(aimDirection, GetAimRotation(aimDirection));
+            }
+
             UnparentObject.ObjectUnparented(transform, transform.parent, transform.position);
             bulletFlightSFX.Play();
         }
@@ -115,6 +137,12 @@ public class Bullet : MonoBehaviour
     public void SetIsFocusing(bool isFocusing)
     {
         focusManager.ToggleFocusing(isFocusing);
+    }
+
+    public void SetIsDead(bool isDead)
+    {
+        bIsDead = isDead;
+        bulletMovement.SetIsDead(bIsDead);
     }
 
     public bool IsFocusing()

@@ -19,7 +19,7 @@ public class BulletActiveState : State
 
     public override void Exit()
     {
-        bullet.ToggleBulletActive(false);
+        //bullet.ToggleBulletActive(false);
     }
 
     public override void Tick(float deltaTime) { }

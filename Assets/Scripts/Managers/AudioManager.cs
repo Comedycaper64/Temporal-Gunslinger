@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private const float MUSIC_VOLUME = 1f;
+    [SerializeField]
+    private float MUSIC_VOLUME = 1f;
     private const float SFX_VOLUME = 1f;
     private const float SLOW_PITCH = 0.4f;
     private const float FADE_SPEED = 0.5f;

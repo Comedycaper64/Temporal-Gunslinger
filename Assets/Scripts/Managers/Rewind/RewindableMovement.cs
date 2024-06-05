@@ -27,13 +27,13 @@ public abstract class RewindableMovement : MonoBehaviour
         startSpeed = Mathf.Abs(startSpeed);
     }
 
-    private void StartMovement()
+    protected virtual void StartMovement()
     {
         speed = startSpeed;
         movementActive = true;
     }
 
-    private void StopMovement()
+    protected virtual void StopMovement()
     {
         speed = 0f;
         movementActive = false;

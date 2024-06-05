@@ -17,6 +17,7 @@ public class BulletDeadState : State
     public override void Enter()
     {
         bulletNumber--;
+        bullet.SetIsDead(true);
         //stateMachine.ToggleInactive(true);
         if (bulletNumber <= 0)
         {
@@ -27,6 +28,7 @@ public class BulletDeadState : State
     public override void Exit()
     {
         bulletNumber++;
+        bullet.SetIsDead(false);
         //stateMachine.ToggleInactive(false);
         if (bulletNumber <= 1)
         {
