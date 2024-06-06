@@ -18,6 +18,8 @@ public class PlayerStateMachine : StateMachine
     //     base.SwitchState(newState);
     //     OnPlayerStateChanged?.Invoke(this, newState);
     // }
+    [SerializeField]
+    private Transform revenantChest;
 
     protected override void SetupDictionary()
     {
@@ -28,4 +30,9 @@ public class PlayerStateMachine : StateMachine
     }
 
     public override void ToggleInactive(bool toggle) { }
+
+    public Transform GetRevenantChest()
+    {
+        return revenantChest;
+    }
 }

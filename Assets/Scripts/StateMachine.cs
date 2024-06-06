@@ -5,6 +5,10 @@ using UnityEngine;
 
 public abstract class StateMachine : MonoBehaviour
 {
+    protected float activeAnimationExitTime;
+
+    [SerializeField]
+    protected string activeAnimationName;
     private State currentState;
     protected Dictionary<StateEnum, State> stateDictionary = new Dictionary<StateEnum, State>();
 
@@ -64,5 +68,20 @@ public abstract class StateMachine : MonoBehaviour
     public virtual void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
     {
         SwitchState(stateDictionary[stateChange]);
+    }
+
+    public void SetRunAnimationExitTime(float newTime)
+    {
+        activeAnimationExitTime = newTime;
+    }
+
+    public string GetActiveAnimationName()
+    {
+        return activeAnimationName;
+    }
+
+    public float GetActiveAnimationExitTime()
+    {
+        return activeAnimationExitTime;
     }
 }

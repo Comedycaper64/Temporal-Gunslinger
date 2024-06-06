@@ -82,7 +82,12 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private static void PlaySFXClip(AudioClip clip, Vector3 position, float volume, float pitch)
+    private static AudioSource PlaySFXClip(
+        AudioClip clip,
+        Vector3 position,
+        float volume,
+        float pitch
+    )
     {
         var tempGameObject = new GameObject("CustomsOneShotAudio");
         tempGameObject.transform.position = position;
@@ -92,18 +97,26 @@ public class AudioManager : MonoBehaviour
         tempAudioSource.pitch = pitch;
         tempAudioSource.Play();
         Destroy(tempGameObject, clip.length);
+
+        return tempAudioSource;
     }
 
-    public static void PlaySFX(AudioClip clip, float volume, int pitchEnum, Vector3 originPosition)
+    public static AudioSource PlaySFX(
+        AudioClip clip,
+        float volume,
+        int pitchEnum,
+        Vector3 originPosition,
+        bool useSlowdownSettings = true
+    )
     {
         if (RewindManager.bRewinding)
         {
-            return;
+            return null;
         }
 
-        if (GameManager.bLevelActive)
+        if (GameManager.bLevelActive && useSlowdownSettings)
         {
-            PlaySFXClip(
+            return PlaySFXClip(
                 clip,
                 originPosition,
                 volume * SFX_VOLUME,
@@ -112,7 +125,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            PlaySFXClip(
+            return PlaySFXClip(
                 clip,
                 originPosition,
                 volume * SFX_VOLUME,

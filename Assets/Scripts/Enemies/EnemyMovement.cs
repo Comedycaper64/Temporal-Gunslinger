@@ -8,7 +8,7 @@ public class EnemyMovement : RewindableMovement
     [SerializeField]
     private bool moveToTarget = true;
 
-    private Vector3 revenantOffset = new Vector3(0f, 1.4f, -0.25f);
+    //private Vector3 revenantOffset = new Vector3(0f, 1.4f, -0.25f);
 
     [SerializeField]
     private Transform damagePoint;
@@ -41,7 +41,7 @@ public class EnemyMovement : RewindableMovement
             return;
         }
 
-        transform.LookAt(movementTarget.position + revenantOffset);
+        transform.LookAt(movementTarget.position); //+ revenantOffset);
         transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
     }
 
@@ -56,7 +56,7 @@ public class EnemyMovement : RewindableMovement
         {
             float distanceToTarget = Vector3.Distance(
                 damagePoint.position,
-                movementTarget.position + revenantOffset
+                movementTarget.position //+ revenantOffset
             );
             float timeToTarget = distanceToTarget / Mathf.Abs(GetStartSpeed());
             deathTime = timeToTarget;

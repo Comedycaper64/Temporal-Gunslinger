@@ -42,6 +42,7 @@ public class EnemyRangedActiveState : State
         if (!projectileFired && timer >= shootTime)
         {
             projectileFired = true;
+
             stateMachine.SwitchState(new EnemyRangedShootState(stateMachine));
             return;
         }

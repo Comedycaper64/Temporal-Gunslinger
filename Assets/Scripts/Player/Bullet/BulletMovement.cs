@@ -23,7 +23,8 @@ public class BulletMovement : RewindableMovement
     public float velocityLossRate = 5f;
 
     private Vector3 flightDirection;
-    private Vector3 revenantOffset = new Vector3(0f, 1.4f, -0.25f);
+
+    private Vector3 revenantOffset;
     private Quaternion targetRotation;
 
     [SerializeField]
@@ -62,6 +63,11 @@ public class BulletMovement : RewindableMovement
     {
         redirectManager = RedirectManager.Instance;
         movementTarget = GameManager.GetRevenant();
+        revenantOffset = new Vector3(
+            Random.Range(-0.1f, 0.1f),
+            Random.Range(-0.1f, 0.1f),
+            Random.Range(-0.1f, 0.1f)
+        );
         dropVelocity = startSpeed / 10f;
     }
 
@@ -151,7 +157,9 @@ public class BulletMovement : RewindableMovement
         if (redirectManager.TryRedirect())
         {
             Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
-            AudioManager.PlaySFX(redirectSFX, 0.4f, 3, transform.position);
+            int randomPitch = Random.Range(2, 5);
+            AudioManager.PlaySFX(redirectSFX, 0.2f, randomPitch, transform.position);
+
             Factory.InstantiateGameObject(
                 redirectVFXPrefab,
                 transform.position,

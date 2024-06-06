@@ -118,8 +118,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbe209d6409d6d4e8cef1ba85330d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAnimationName: 
   stateMachineAnimator: {fileID: 5945013214660363520}
   dissolveController: {fileID: 0}
+  revenantChest: {fileID: 4766439125035560720}
 --- !u!114 &282173908676742486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,6 +473,7 @@ MonoBehaviour:
   aimingPosition: {fileID: 282173908866422009}
   bulletPosition: {fileID: 282173908916033126}
   aimGunSFX: {fileID: 8300000, guid: 7c1e225e5d154284fa758e7e4b78e8ab, type: 3}
+  shootSFX: {fileID: 8300000, guid: 813b10f08188d6c40a65e738a2ea21c6, type: 3}
   gunShotVFX: {fileID: 4434253767667778994}
   bulletStateMachine: {fileID: 8018966933097772305}
 --- !u!1 &844290536413396103
@@ -681,6 +684,37 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1 &3334785210957509956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4766439125035560720}
+  m_Layer: 6
+  m_Name: Rev Chest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4766439125035560720
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3334785210957509956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3453341659403989895}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3753782147513072949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3665,6 +3699,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 282173908678326073}
+    - targetCorrespondingSourceObject: {fileID: 7786290280210611731, guid: 1ec5e6e826a727f4a8574293b4b75427,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4766439125035560720}
     - targetCorrespondingSourceObject: {fileID: 564489315790933707, guid: 1ec5e6e826a727f4a8574293b4b75427,
         type: 3}
       insertIndex: -1
@@ -3765,6 +3803,12 @@ MonoBehaviour:
   animator: {fileID: 5945013214660363520}
   animationSpeedModifier: 1
   dirtySwordFix: 0
+--- !u!4 &3453341659403989895 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7786290280210611731, guid: 1ec5e6e826a727f4a8574293b4b75427,
+    type: 3}
+  m_PrefabInstance: {fileID: 4891698854301437332}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4915597880500831071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 564489315790933707, guid: 1ec5e6e826a727f4a8574293b4b75427,

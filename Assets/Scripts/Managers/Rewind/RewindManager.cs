@@ -24,6 +24,7 @@ public class RewindManager : MonoBehaviour
 
     [SerializeField]
     private AudioClip turboSFX;
+    private AudioSource activeTurboSFX;
 
     public event Action OnResetLevel;
     public static event Action OnRewindToStart;
@@ -200,9 +201,15 @@ public class RewindManager : MonoBehaviour
         bTurboActive = toggle;
         TimeManager.SetTurboTime(toggle);
 
-        if (toggle)
+        if (toggle && !activeTurboSFX)
         {
-            AudioManager.PlaySFX(turboSFX, 0.5f, 0, Camera.main.transform.position);
+            activeTurboSFX = AudioManager.PlaySFX(
+                turboSFX,
+                0.3f,
+                0,
+                Camera.main.transform.position,
+                false
+            );
         }
     }
 

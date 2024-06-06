@@ -33,6 +33,7 @@ public class EnemyMeleeStateMachine : StateMachine
     public void ResetPosition()
     {
         transform.position = enemyStartPosition.position;
+        SetRunAnimationExitTime(0f);
     }
 
     public bool HasStartPosition()

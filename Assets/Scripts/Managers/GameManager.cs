@@ -39,7 +39,10 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
 
-        revenantTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        revenantTransform = GameObject
+            .FindGameObjectWithTag("Player")
+            .GetComponent<PlayerStateMachine>()
+            .GetRevenantChest();
     }
 
     public virtual void Start()

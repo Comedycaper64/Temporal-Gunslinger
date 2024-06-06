@@ -27,6 +27,7 @@ public class EnemyKnightThrowState : State
         timer = 0f;
         projectileFired = false;
         //stateMachine.stateMachineAnimator.SetTrigger("throw");
+        enemyStateMachine.ToggleWeakPoints(false);
 
         rewindState.ToggleMovement(true);
         float animationStartTime = 0f;
@@ -57,6 +58,8 @@ public class EnemyKnightThrowState : State
         }
         else if (projectileFired && timer >= throwTime)
         {
+            stateMachine.SetRunAnimationExitTime(0f);
+            enemyStateMachine.ToggleWeakPoints(true);
             enemyStateMachine.SwitchState(new EnemyMeleeActiveState(stateMachine));
         }
         else if (projectileFired && timer < shootTime)

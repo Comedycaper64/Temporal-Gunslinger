@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startSpeed: 15
+  moveToTarget: 1
   damagePoint: {fileID: 8070614880087661137}
 --- !u!114 &2325106409603873550
 MonoBehaviour:
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8ec725e2bccfae4ea44f1734b0a050d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAnimationName: Knight Run
   stateMachineAnimator: {fileID: 6785972150033234493}
   dissolveController: {fileID: 2325106409680783779}
   shootTimer: 2.916
@@ -129,6 +131,9 @@ MonoBehaviour:
   projectileRestPoint: {fileID: 8230274189595259753}
   projectileFirePoint: {fileID: 2207842974388100096}
   projectile: {fileID: 8279134528665003538}
+  weakPoints:
+  - {fileID: 3095855008231891994}
+  - {fileID: 2149914778491978858}
   bodyColliders:
   - {fileID: 1919835993710354611}
   - {fileID: 8600956595870251120}
@@ -2999,7 +3004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a6d69dfafb6024eb4fc90f688790cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSpeed: 1
+  startSpeed: 0.5
   skinnedMeshRenderers:
   - {fileID: 3914272212365827461}
   - {fileID: 1323729792830299627}

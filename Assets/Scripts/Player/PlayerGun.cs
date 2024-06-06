@@ -40,6 +40,9 @@ public class PlayerGun : MonoBehaviour
     private AudioClip aimGunSFX;
 
     [SerializeField]
+    private AudioClip shootSFX;
+
+    [SerializeField]
     private VFXPlayback gunShotVFX;
 
     [SerializeField]
@@ -143,7 +146,7 @@ public class PlayerGun : MonoBehaviour
 
     public void FireGun()
     {
-        //SFX
+        AudioManager.PlaySFX(shootSFX, 0.6f, 0, transform.position);
         gunShotVFX.PlayEffect();
         bulletStateMachine.SwitchToActive();
     }

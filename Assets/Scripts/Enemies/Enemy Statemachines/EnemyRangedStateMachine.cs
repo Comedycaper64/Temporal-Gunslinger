@@ -60,5 +60,7 @@ public class EnemyRangedStateMachine : StateMachine
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
         bullet.ResetBullet(projectileRestPoint);
+        SetRunAnimationExitTime(0f);
+        //Debug.Log("Animation Time Reset");
     }
 }

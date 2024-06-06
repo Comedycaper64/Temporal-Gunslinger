@@ -22,6 +22,9 @@ public class EnemyKnightStateMachine : StateMachine
     private BulletStateMachine projectile;
 
     [SerializeField]
+    private WeakPoint[] weakPoints;
+
+    [SerializeField]
     private List<GameObject> bodyColliders = new List<GameObject>();
 
     private void Start()
@@ -85,5 +88,13 @@ public class EnemyKnightStateMachine : StateMachine
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
         bullet.ResetBullet(projectileRestPoint);
+    }
+
+    public void ToggleWeakPoints(bool toggle)
+    {
+        foreach (WeakPoint weakPoint in weakPoints)
+        {
+            weakPoint.gameObject.SetActive(toggle);
+        }
     }
 }
