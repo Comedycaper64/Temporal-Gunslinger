@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,17 @@ public class ObjectInstantiation : RewindableAction
     public ObjectInstantiation(GameObject gameObject)
     {
         createdGameObject = gameObject;
+        GameManager.OnGameStateChange += GameManager_OnGameStateChange;
         Execute();
+    }
+
+    private void GameManager_OnGameStateChange(object sender, StateEnum e)
+    {
+        if (e == StateEnum.idle)
+        {
+            GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
+            GameObject.Destroy(createdGameObject);
+        }
     }
 
     public override void Undo()

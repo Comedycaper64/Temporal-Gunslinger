@@ -36,6 +36,9 @@ public class BulletMovement : RewindableMovement
     [SerializeField]
     private Transform bulletModel;
 
+    [SerializeField]
+    private Transform bulletTip;
+
     // [SerializeField]
     // private TrailRenderer[] activeTrails;
 
@@ -51,6 +54,9 @@ public class BulletMovement : RewindableMovement
 
     [SerializeField]
     private AudioClip[] ricochetSFX;
+
+    [SerializeField]
+    private GameObject redirectCoinPrefab;
 
     [SerializeField]
     private GameObject redirectVFXPrefab;
@@ -156,6 +162,14 @@ public class BulletMovement : RewindableMovement
     {
         if (redirectManager.TryRedirect())
         {
+            GameObject coin = Factory.InstantiateGameObject(
+                redirectCoinPrefab,
+                bulletTip.position,
+                Quaternion.identity
+            );
+
+            coin.transform.eulerAngles = new Vector3(0f, coin.transform.eulerAngles.y, 0f);
+
             Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
             int randomPitch = Random.Range(2, 5);
             AudioManager.PlaySFX(redirectSFX, 0.2f, randomPitch, transform.position);

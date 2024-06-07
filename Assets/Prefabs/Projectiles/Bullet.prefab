@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2722387049143290379
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4644755964369156516}
+  m_Layer: 2
+  m_Name: Bullet Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4644755964369156516
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722387049143290379}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0297}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5493667388143854021}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7572532414092297484
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +68,7 @@ Transform:
   - {fileID: 298791900864794525}
   - {fileID: 1635035309710594796}
   - {fileID: 3800180920088688350}
+  - {fileID: 4644755964369156516}
   m_Father: {fileID: 7828219722662083367}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1068,6 +1100,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   bulletModel: {fileID: 5493667388143854021}
+  bulletTip: {fileID: 4644755964369156516}
   damagePoint: {fileID: 5493667388143854021}
   redirectSFX: {fileID: 8300000, guid: 44fd96cf134e7c54c95a1093acde21d3, type: 3}
   noCoinsSFX: {fileID: 8300000, guid: 20da767beba027e49ac6a747ef9dc2e0, type: 3}
@@ -1075,6 +1108,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cf7fa72edcb1b11438d506e8b6305b36, type: 3}
   - {fileID: 8300000, guid: 009b8e4b4443f2b45affb856bbf84daa, type: 3}
   - {fileID: 8300000, guid: c0e0c4bacd5115644bc1f4a663f6197f, type: 3}
+  redirectCoinPrefab: {fileID: 8106144594069131471, guid: 0bf1a4fd7f0b93146bc79f69e22f82c1,
+    type: 3}
   redirectVFXPrefab: {fileID: 3088319004803970211, guid: 36e7360dbcd21e84ea74d7180599ec8f,
     type: 3}
 --- !u!114 &7828219722662083366
@@ -1125,6 +1160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cee7fdcf4df9d478330d7b67cbb979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAnimationName: 
   stateMachineAnimator: {fileID: 0}
   dissolveController: {fileID: 0}
 --- !u!114 &7828219722662083374
