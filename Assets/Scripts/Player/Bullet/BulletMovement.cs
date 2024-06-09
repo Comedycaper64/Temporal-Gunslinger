@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -60,6 +61,7 @@ public class BulletMovement : RewindableMovement
 
     [SerializeField]
     private GameObject redirectVFXPrefab;
+    private CinemachineImpulseSource cinemachineImpulseSource;
 
     private RedirectManager redirectManager;
 
@@ -69,6 +71,7 @@ public class BulletMovement : RewindableMovement
     {
         redirectManager = RedirectManager.Instance;
         movementTarget = GameManager.GetRevenant();
+        cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
         revenantOffset = new Vector3(
             Random.Range(-0.1f, 0.1f),
             Random.Range(-0.1f, 0.1f),
@@ -167,6 +170,8 @@ public class BulletMovement : RewindableMovement
                 bulletTip.position,
                 Quaternion.identity
             );
+
+            cinemachineImpulseSource.GenerateImpulse();
 
             coin.transform.eulerAngles = new Vector3(0f, coin.transform.eulerAngles.y, 0f);
 

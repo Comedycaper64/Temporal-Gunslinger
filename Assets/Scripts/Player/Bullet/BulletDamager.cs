@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class BulletDamager : MonoBehaviour
 {
     private bool bBulletActive;
+    private CinemachineImpulseSource impulseSource;
 
     [SerializeField]
     private BulletMovement bulletMovement;
@@ -14,6 +16,11 @@ public class BulletDamager : MonoBehaviour
 
     [SerializeField]
     private GameObject ricochetVFX;
+
+    private void Awake()
+    {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+    }
 
     private void OnCollisionEnter(Collision other)
     {
@@ -30,6 +37,8 @@ public class BulletDamager : MonoBehaviour
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             Factory.InstantiateGameObject(ricochetVFX, transform.position, transform.rotation);
+            impulseSource.GenerateImpulse();
+
             Vector3 impactPoint = other.GetContact(0).point;
             Vector3 impactNormal = other.GetContact(0).normal;
 
@@ -60,6 +69,8 @@ public class BulletDamager : MonoBehaviour
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
             //Debug.Log("Hit: " + damageable);
+            impulseSource.GenerateImpulse();
+
             damageable.ProjectileHit(out float velocityConservation);
 
             bulletMovement.SlowBullet(velocityConservation);

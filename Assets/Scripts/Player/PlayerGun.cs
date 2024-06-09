@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using Cinemachine.Editor;
 using UnityEngine;
 
 public class PlayerGun : MonoBehaviour
@@ -48,11 +50,13 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private BulletStateMachine bulletStateMachine;
     private Bullet bullet;
+    private CinemachineImpulseSource impulseSource;
     public static EventHandler<bool> OnAimGun;
 
     private void Start()
     {
         bullet = bulletStateMachine.GetComponent<Bullet>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
         foreach (Renderer renderer in gunModelRenderers)
         {
             renderer.material = opaqueGunMaterial;
@@ -148,6 +152,7 @@ public class PlayerGun : MonoBehaviour
     {
         AudioManager.PlaySFX(shootSFX, 0.6f, 0, transform.position);
         gunShotVFX.PlayEffect();
+        impulseSource.GenerateImpulse();
         bulletStateMachine.SwitchToActive();
     }
 

@@ -65,6 +65,10 @@ public class CinematicManager : MonoBehaviour
         {
             dialogueManager.PlayDialogue(cinematicNode as DialogueSO, TryPlayNextNode);
         }
+        else if (nodeType == typeof(DialogueChoiceSO))
+        {
+            dialogueManager.DisplayChoices(cinematicNode as DialogueChoiceSO, TryPlayNextNode);
+        }
         else if (nodeType == typeof(PlaySFXSO))
         {
             PlaySFXSO sfx = cinematicNode as PlaySFXSO;

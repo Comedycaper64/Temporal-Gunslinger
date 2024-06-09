@@ -18,6 +18,21 @@ public struct DialogueUIEventArgs
     public Action onTypingFinished;
 }
 
+public struct DialogueChoiceUIEventArgs
+{
+    public DialogueChoiceUIEventArgs(
+        DialogueChoiceSO dialogueChoice,
+        EventHandler<Dialogue> onDialogueChosen
+    )
+    {
+        this.dialogueChoice = dialogueChoice;
+        this.onDialogueChosen = onDialogueChosen;
+    }
+
+    public DialogueChoiceSO dialogueChoice;
+    public EventHandler<Dialogue> onDialogueChosen;
+}
+
 public class DialogueManager : MonoBehaviour
 {
     private bool bIsSentenceTyping;
@@ -38,6 +53,7 @@ public class DialogueManager : MonoBehaviour
     private Queue<Dialogue> dialogues;
     public static event Action OnFinishTypingDialogue;
     public static event EventHandler<bool> OnToggleDialogueUI;
+    public static event EventHandler<DialogueChoiceUIEventArgs> OnDisplayChoices;
 
     //public static event EventHandler<Sprite[]> OnChangeSprite;
     public static event EventHandler<DialogueUIEventArgs> OnDialogue;
@@ -54,6 +70,26 @@ public class DialogueManager : MonoBehaviour
         dialogues = new Queue<Dialogue>(dialogueSO.GetDialogues());
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
         ToggleDialogueUI(true);
+        TryPlayNextDialogue();
+    }
+
+    public void DisplayChoices(DialogueChoiceSO dialogueChoiceSO, Action onDialogueComplete)
+    {
+        this.onDialogueComplete = onDialogueComplete;
+        ToggleDialogueUI(true);
+        DialogueChoiceUIEventArgs choiceUIEventArgs = new DialogueChoiceUIEventArgs(
+            dialogueChoiceSO,
+            PlayChoiceDialogue
+        );
+        OnDisplayChoices?.Invoke(this, choiceUIEventArgs);
+    }
+
+    private void PlayChoiceDialogue(object sender, Dialogue dialogue)
+    {
+        dialogues = new Queue<Dialogue>();
+        dialogues.Enqueue(dialogue);
+        InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+
         TryPlayNextDialogue();
     }
 

@@ -23,6 +23,9 @@ public class DialogueUI : MonoBehaviour
     private Action onTypingFinished;
 
     private CanvasGroup dialogueCanvasGroup;
+    private DialogueChoice[] dialogueChoices;
+    private Dialogue[] dialogueAnswers;
+    private EventHandler<Dialogue> onDialogueChosen;
 
     [SerializeField]
     private Image dialogueFaceSprite;
@@ -35,11 +38,16 @@ public class DialogueUI : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI dialogueText;
 
+    [SerializeField]
+    private DialogueChoiceUI[] dialogueChoiceUI;
+
     private void Awake()
     {
         DialogueManager.OnToggleDialogueUI += DialogueManager_OnToggleDialogueUI;
         DialogueManager.OnDialogue += DialogueManager_OnDialogue;
         DialogueManager.OnFinishTypingDialogue += DialogueManager_OnFinishTypingDialogue;
+        DialogueManager.OnDisplayChoices += DialogueManager_OnDisplayChoices;
+        DialogueChoiceUI.OnChoose += DialogueChoiceUI_OnChoose;
         //DialogueManager.OnChangeSprite += DialogueManager_OnChangeSprite;
 
         ClearDialogueText();
@@ -54,6 +62,8 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnToggleDialogueUI -= DialogueManager_OnToggleDialogueUI;
         DialogueManager.OnDialogue -= DialogueManager_OnDialogue;
         DialogueManager.OnFinishTypingDialogue -= DialogueManager_OnFinishTypingDialogue;
+        DialogueManager.OnDisplayChoices -= DialogueManager_OnDisplayChoices;
+        DialogueChoiceUI.OnChoose -= DialogueChoiceUI_OnChoose;
         //DialogueManager.OnChangeSprite -= DialogueManager_OnChangeSprite;
     }
 
@@ -119,14 +129,9 @@ public class DialogueUI : MonoBehaviour
         bDialogueActiveChanged = true;
     }
 
-    private IEnumerator TypeSentence(DialogueUIEventArgs dialogueUIEventArgs)
+    private void SetNewActor(ActorSO actorSO)
     {
-        ActorSO actorSO = dialogueUIEventArgs.actorSO;
-        typingSentence = dialogueUIEventArgs.sentence;
-        onTypingFinished = dialogueUIEventArgs.onTypingFinished;
-
         SetActorName(actorSO.GetActorName());
-        ClearDialogueText();
         AudioClip[] actorClips = actorSO.GetDialogueNoises();
         int clipsLength = actorClips.Length;
         Sprite[] spriteSet = actorSO.GetActorSprites();
@@ -151,6 +156,16 @@ public class DialogueUI : MonoBehaviour
         }
 
         spriteChangeTime = actorSO.GetSpriteSwitchTime();
+    }
+
+    private IEnumerator TypeSentence(DialogueUIEventArgs dialogueUIEventArgs)
+    {
+        SetNewActor(dialogueUIEventArgs.actorSO);
+
+        typingSentence = dialogueUIEventArgs.sentence;
+        onTypingFinished = dialogueUIEventArgs.onTypingFinished;
+
+        ClearDialogueText();
 
         isTyping = true;
         foreach (char letter in typingSentence.ToCharArray())
@@ -164,6 +179,24 @@ public class DialogueUI : MonoBehaviour
         }
         isTyping = false;
         onTypingFinished();
+    }
+
+    private void DisplayDialogueChoices()
+    {
+        for (int i = 0; i < dialogueChoiceUI.Length; i++)
+        {
+            dialogueChoiceUI[i].SetupDialogueChoice(dialogueChoices[i]);
+        }
+    }
+
+    public void ChooseDialogueOption(int answerIndex)
+    {
+        for (int i = 0; i < dialogueChoiceUI.Length; i++)
+        {
+            dialogueChoiceUI[i].CloseDialogueChoice();
+        }
+
+        onDialogueChosen?.Invoke(this, dialogueAnswers[answerIndex]);
     }
 
     private void DialogueManager_OnFinishTypingDialogue()
@@ -212,5 +245,23 @@ public class DialogueUI : MonoBehaviour
         SetActorName("");
         dialogueFaceSprite.gameObject.SetActive(e);
         ToggleDialogueActive(e);
+    }
+
+    private void DialogueManager_OnDisplayChoices(
+        object sender,
+        DialogueChoiceUIEventArgs dialogueChoiceUIArgs
+    )
+    {
+        dialogueChoices = dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices();
+        dialogueAnswers = dialogueChoiceUIArgs.dialogueChoice.GetDialogueAnswers();
+        onDialogueChosen = dialogueChoiceUIArgs.onDialogueChosen;
+
+        SetNewActor(dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices()[0].actor);
+        DisplayDialogueChoices();
+    }
+
+    private void DialogueChoiceUI_OnChoose(object sender, int choiceIndex)
+    {
+        ChooseDialogueOption(choiceIndex);
     }
 }
