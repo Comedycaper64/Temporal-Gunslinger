@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+public struct DialogueAnswer
+{
+    public Dialogue[] dialogueAnswers;
+}
+
+[Serializable]
 public struct DialogueChoice
 {
     public ActorSO actor;
@@ -25,14 +31,14 @@ public class DialogueChoiceSO : CinematicNode
     private DialogueChoice[] dialogueChoices;
 
     [SerializeField]
-    private Dialogue[] dialogueAnswers;
+    private DialogueAnswer[] dialogueAnswers;
 
     public DialogueChoice[] GetDialogueChoices()
     {
         return dialogueChoices;
     }
 
-    public Dialogue[] GetDialogueAnswers()
+    public DialogueAnswer[] GetDialogueAnswers()
     {
         return dialogueAnswers;
     }

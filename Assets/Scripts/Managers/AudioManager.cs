@@ -109,6 +109,11 @@ public class AudioManager : MonoBehaviour
         bool useSlowdownSettings = true
     )
     {
+        if (!Application.isPlaying)
+        {
+            return null;
+        }
+
         if (RewindManager.bRewinding)
         {
             return null;

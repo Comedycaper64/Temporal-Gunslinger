@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70cb7b51872659e42969faba3e4b62b0, type: 3}
+  m_Name: Tutorial 2 Choice
+  m_EditorClassIdentifier: 
+  dialogueChoices:
+  - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+    dialogueOption: What do you want, Reaper?
+    correspondingDialogue: 0
+  - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+    dialogueOption: "Again? We\u2019ve never met before."
+    correspondingDialogue: 1
+  - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+    dialogueOption: "No. Working for you wasn\u2019t the afterlife I expected."
+    correspondingDialogue: 2
+  dialogueAnswers:
+  - dialogueAnswers:
+    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+      actorNo: 0
+      dialogue:
+      - What do you want, Reaper?
+      animations: []
+      animationTime: []
+      cameraModes: 00000000
+      disableCameraOnEnd: 0
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+      actorNo: 0
+      dialogue:
+      - I shall not keep you any longer than I must. In short, I require your assistance.
+      animations: []
+      animationTime: []
+      cameraModes: 02000000
+      disableCameraOnEnd: 0
+  - dialogueAnswers:
+    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+      actorNo: 0
+      dialogue:
+      - "Again? We\u2019ve never met before."
+      animations: []
+      animationTime: []
+      cameraModes: 00000000
+      disableCameraOnEnd: 0
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+      actorNo: 0
+      dialogue:
+      - 'My apologies. I often forget time works a little differently here. '
+      - 'To me, we have already met. Clearly the same is not true for you.
+
+        Allow
+        me to introduce myself. I am the Reaper.'
+      animations: []
+      animationTime: []
+      cameraModes: 02000000
+      disableCameraOnEnd: 0
+  - dialogueAnswers:
+    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+      actorNo: 0
+      dialogue:
+      - "No. Working for you wasn\u2019t the afterlife I expected."
+      animations: []
+      animationTime: []
+      cameraModes: 00000000
+      disableCameraOnEnd: 0
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+      actorNo: 0
+      dialogue:
+      - I am sorry to hear that, Revenant. If there is anything I can do to make
+        your time here more comfortable, you need only ask.
+      - Until then, I shall not keep you any longer than I must. In short, I require
+        your assistance.
+      animations: []
+      animationTime: []
+      cameraModes: 02000000
+      disableCameraOnEnd: 0

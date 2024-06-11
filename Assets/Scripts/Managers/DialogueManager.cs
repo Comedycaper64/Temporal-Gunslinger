@@ -22,7 +22,7 @@ public struct DialogueChoiceUIEventArgs
 {
     public DialogueChoiceUIEventArgs(
         DialogueChoiceSO dialogueChoice,
-        EventHandler<Dialogue> onDialogueChosen
+        EventHandler<Dialogue[]> onDialogueChosen
     )
     {
         this.dialogueChoice = dialogueChoice;
@@ -30,7 +30,7 @@ public struct DialogueChoiceUIEventArgs
     }
 
     public DialogueChoiceSO dialogueChoice;
-    public EventHandler<Dialogue> onDialogueChosen;
+    public EventHandler<Dialogue[]> onDialogueChosen;
 }
 
 public class DialogueManager : MonoBehaviour
@@ -84,10 +84,9 @@ public class DialogueManager : MonoBehaviour
         OnDisplayChoices?.Invoke(this, choiceUIEventArgs);
     }
 
-    private void PlayChoiceDialogue(object sender, Dialogue dialogue)
+    private void PlayChoiceDialogue(object sender, Dialogue[] dialogue)
     {
-        dialogues = new Queue<Dialogue>();
-        dialogues.Enqueue(dialogue);
+        dialogues = new Queue<Dialogue>(dialogue);
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
 
         TryPlayNextDialogue();
