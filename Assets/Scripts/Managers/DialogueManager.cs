@@ -41,12 +41,14 @@ public class DialogueManager : MonoBehaviour
     private int actorIndex;
     private Animator[] actorAnimators;
     private string currentSentence;
+    private AudioSource dialogueAudioSource;
     private DialogueCameraDirector dialogueCameraDirector;
     private ActorAnimatorMapper actorAnimatorMapper;
     private Queue<string> currentDialogue;
     private Queue<AnimationClip> currentAnimations;
     private Queue<float> currentAnimationTimes;
     private Queue<CameraMode> currentCameraModes;
+    private Queue<AudioClip> currentVoiceClips;
     private bool disableCameraOnEnd;
 
     private Action onDialogueComplete;
@@ -62,6 +64,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueCameraDirector = GetComponent<DialogueCameraDirector>();
         actorAnimatorMapper = GetComponent<ActorAnimatorMapper>();
+        dialogueAudioSource = GetComponent<AudioSource>();
     }
 
     public void PlayDialogue(DialogueSO dialogueSO, Action onDialogueComplete)
@@ -114,6 +117,7 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
+        currentVoiceClips = new Queue<AudioClip>(dialogueNode.voiceClip);
         disableCameraOnEnd = dialogueNode.disableCameraOnEnd;
         DisplayNextSentence();
     }
@@ -135,6 +139,8 @@ public class DialogueManager : MonoBehaviour
         TryPlayAnimation();
 
         TryChangeCameraMode();
+
+        TryPlayVoiceClip();
 
         float animationTimer = TrySetAnimationTimer();
 
@@ -176,6 +182,15 @@ public class DialogueManager : MonoBehaviour
             }
 
             actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFadeTime);
+        }
+    }
+
+    private void TryPlayVoiceClip()
+    {
+        if (currentVoiceClips.TryDequeue(out AudioClip voiceClip) && (voiceClip != null))
+        {
+            dialogueAudioSource.clip = voiceClip;
+            dialogueAudioSource.Play();
         }
     }
 

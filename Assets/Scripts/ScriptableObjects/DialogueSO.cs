@@ -25,6 +25,7 @@ public struct Dialogue
     public float[] animationTime;
     public CameraMode[] cameraModes;
     public bool disableCameraOnEnd;
+    public AudioClip[] voiceClip;
 }
 
 [Serializable]
