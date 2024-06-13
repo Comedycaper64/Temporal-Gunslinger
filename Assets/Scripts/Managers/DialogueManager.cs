@@ -22,7 +22,7 @@ public struct DialogueChoiceUIEventArgs
 {
     public DialogueChoiceUIEventArgs(
         DialogueChoiceSO dialogueChoice,
-        EventHandler<Dialogue[]> onDialogueChosen
+        EventHandler<DialogueChoice> onDialogueChosen
     )
     {
         this.dialogueChoice = dialogueChoice;
@@ -30,14 +30,18 @@ public struct DialogueChoiceUIEventArgs
     }
 
     public DialogueChoiceSO dialogueChoice;
-    public EventHandler<Dialogue[]> onDialogueChosen;
+    public EventHandler<DialogueChoice> onDialogueChosen;
 }
 
 public class DialogueManager : MonoBehaviour
 {
     private bool bIsSentenceTyping;
+    private bool bLoopToChoice;
+    private bool bAutoPlay = true;
     private float crossFadeTime = 0.1f;
+    private Coroutine autoPlayCoroutine;
     private ActorSO currentActor;
+    private DialogueChoiceSO currentChoice;
     private int actorIndex;
     private Animator[] actorAnimators;
     private string currentSentence;
@@ -65,6 +69,13 @@ public class DialogueManager : MonoBehaviour
         dialogueCameraDirector = GetComponent<DialogueCameraDirector>();
         actorAnimatorMapper = GetComponent<ActorAnimatorMapper>();
         dialogueAudioSource = GetComponent<AudioSource>();
+
+        DialogueAutoPlayUI.OnAutoPlayToggle += ToggleAutoPlay;
+    }
+
+    private void OnDisable()
+    {
+        DialogueAutoPlayUI.OnAutoPlayToggle -= ToggleAutoPlay;
     }
 
     public void PlayDialogue(DialogueSO dialogueSO, Action onDialogueComplete)
@@ -79,6 +90,7 @@ public class DialogueManager : MonoBehaviour
     public void DisplayChoices(DialogueChoiceSO dialogueChoiceSO, Action onDialogueComplete)
     {
         this.onDialogueComplete = onDialogueComplete;
+        currentChoice = dialogueChoiceSO;
         ToggleDialogueUI(true);
         DialogueChoiceUIEventArgs choiceUIEventArgs = new DialogueChoiceUIEventArgs(
             dialogueChoiceSO,
@@ -87,9 +99,16 @@ public class DialogueManager : MonoBehaviour
         OnDisplayChoices?.Invoke(this, choiceUIEventArgs);
     }
 
-    private void PlayChoiceDialogue(object sender, Dialogue[] dialogue)
+    private void PlayChoiceDialogue(object sender, DialogueChoice dialogueChoice)
     {
-        dialogues = new Queue<Dialogue>(dialogue);
+        if (dialogueChoice.loopBackToChoice)
+        {
+            bLoopToChoice = true;
+        }
+
+        dialogues = new Queue<Dialogue>(
+            currentChoice.GetDialogueAnswers()[dialogueChoice.correspondingDialogue].dialogueAnswers
+        );
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
 
         TryPlayNextDialogue();
@@ -128,6 +147,11 @@ public class DialogueManager : MonoBehaviour
         {
             OnFinishTypingDialogue?.Invoke();
             return;
+        }
+
+        if (autoPlayCoroutine != null)
+        {
+            StopCoroutine(autoPlayCoroutine);
         }
 
         if (!currentDialogue.TryDequeue(out currentSentence))
@@ -191,6 +215,11 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueAudioSource.clip = voiceClip;
             dialogueAudioSource.Play();
+
+            if (bAutoPlay)
+            {
+                autoPlayCoroutine = StartCoroutine(DialogueAutoPlayTimer(voiceClip.length));
+            }
         }
     }
 
@@ -204,6 +233,12 @@ public class DialogueManager : MonoBehaviour
         {
             return 0f;
         }
+    }
+
+    private IEnumerator DialogueAutoPlayTimer(float dialogueTime)
+    {
+        yield return new WaitForSeconds(dialogueTime);
+        DisplayNextSentence();
     }
 
     private void StartTypingSentence()
@@ -243,11 +278,29 @@ public class DialogueManager : MonoBehaviour
             dialogueCameraDirector.EndOfDialogueCleanup();
         }
 
-        onDialogueComplete();
+        if (bLoopToChoice)
+        {
+            bLoopToChoice = false;
+            DisplayChoices(currentChoice, onDialogueComplete);
+        }
+        else
+        {
+            onDialogueComplete();
+        }
     }
 
     private void InputManager_OnShootAction()
     {
         DisplayNextSentence();
+    }
+
+    private void ToggleAutoPlay(object sender, bool e)
+    {
+        bAutoPlay = e;
+
+        if (autoPlayCoroutine != null)
+        {
+            StopCoroutine(autoPlayCoroutine);
+        }
     }
 }

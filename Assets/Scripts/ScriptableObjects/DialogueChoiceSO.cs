@@ -17,6 +17,7 @@ public struct DialogueChoice
     [TextArea]
     public string dialogueOption;
     public int correspondingDialogue;
+    public bool loopBackToChoice;
 }
 
 [Serializable]

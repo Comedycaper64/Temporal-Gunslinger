@@ -25,7 +25,7 @@ public class DialogueUI : MonoBehaviour
     private CanvasGroup dialogueCanvasGroup;
     private DialogueChoice[] dialogueChoices;
     private DialogueAnswer[] dialogueAnswers;
-    private EventHandler<Dialogue[]> onDialogueChosen;
+    private EventHandler<DialogueChoice> onDialogueChosen;
 
     [SerializeField]
     private Image dialogueFaceSprite;
@@ -189,14 +189,14 @@ public class DialogueUI : MonoBehaviour
         }
     }
 
-    public void ChooseDialogueOption(int answerIndex)
+    public void ChooseDialogueOption(DialogueChoice choice)
     {
         for (int i = 0; i < dialogueChoices.Length; i++)
         {
             dialogueChoiceUI[i].CloseDialogueChoice();
         }
 
-        onDialogueChosen?.Invoke(this, dialogueAnswers[answerIndex].dialogueAnswers);
+        onDialogueChosen?.Invoke(this, choice);
     }
 
     private void DialogueManager_OnFinishTypingDialogue()
@@ -260,8 +260,8 @@ public class DialogueUI : MonoBehaviour
         DisplayDialogueChoices();
     }
 
-    private void DialogueChoiceUI_OnChoose(object sender, int choiceIndex)
+    private void DialogueChoiceUI_OnChoose(object sender, DialogueChoice choice)
     {
-        ChooseDialogueOption(choiceIndex);
+        ChooseDialogueOption(choice);
     }
 }

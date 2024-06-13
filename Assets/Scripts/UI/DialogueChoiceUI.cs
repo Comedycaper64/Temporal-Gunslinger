@@ -8,7 +8,7 @@ public class DialogueChoiceUI : MonoBehaviour
 {
     private CanvasGroup choiceCanvasGroup;
     private DialogueChoice dialogueChoice;
-    public static event EventHandler<int> OnChoose;
+    public static event EventHandler<DialogueChoice> OnChoose;
 
     [SerializeField]
     private TextMeshProUGUI choiceText;
@@ -29,7 +29,7 @@ public class DialogueChoiceUI : MonoBehaviour
 
     public void ChooseDialogueOption()
     {
-        OnChoose?.Invoke(this, dialogueChoice.correspondingDialogue);
+        OnChoose?.Invoke(this, dialogueChoice);
     }
 
     public void CloseDialogueChoice()

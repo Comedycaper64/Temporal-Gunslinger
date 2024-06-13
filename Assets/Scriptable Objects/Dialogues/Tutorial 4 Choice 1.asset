@@ -16,18 +16,21 @@ MonoBehaviour:
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
     dialogueOption: "Hold on. What\u2019s in it for me?"
     correspondingDialogue: 0
+    loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
     dialogueOption: "I don\u2019t see why you need me for this. Can\u2019t you do
       it yourself?"
     correspondingDialogue: 1
-  - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: "Even in death I can\u2019t seem to escape this work. You\u2019d
-      better not be like my last employer."
-    correspondingDialogue: 2
+    loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
     dialogueOption: "You\u2019ve taken my soul so you can force me to work? Is this
       some sort of joke?"
+    correspondingDialogue: 2
+    loopBackToChoice: 1
+  - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
+    dialogueOption: ...
     correspondingDialogue: 3
+    loopBackToChoice: 0
   dialogueAnswers:
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
@@ -38,6 +41,8 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: b4c7ae5bd339b9e49848f6874daf40ac, type: 3}
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
@@ -57,6 +62,13 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: a2b9687c7be94f6418f4458a2ad89d70, type: 3}
+      - {fileID: 8300000, guid: 70c2c11ac8bde2840ad778698c332523, type: 3}
+      - {fileID: 8300000, guid: 58e53ed616da16b42ab84f4b166d860d, type: 3}
+      - {fileID: 8300000, guid: bf5b86c3d227cc44187c71c6b6db349b, type: 3}
+      - {fileID: 8300000, guid: 3085c1bf9e2d4c243989a89fa053751b, type: 3}
+      - {fileID: 8300000, guid: fbd68d4cd2549a540aec079c3c99c345, type: 3}
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
       actorNo: 0
@@ -66,6 +78,8 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: 2a872740f385a6b499562e89d86309c7, type: 3}
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
@@ -77,32 +91,9 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-  - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - "Even in death I can\u2019t seem to escape this work. You\u2019d better not
-        be like my last employer."
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
-      actorNo: 0
-      dialogue:
-      - 'We are friends, Revenant. I would not forgive myself if I treated you so
-        poorly.
-
-        I know of your suffering in life, old friend, and it pains
-        me to even consider asking you to do this.'
-      - However, understand that we have no other choice. For the sake of humanity,
-        we must push our own feelings on the matter to the side until the last Herald
-        is eradicated.
-      - Then, and only then, can we rest.
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: 89f001b5d8191f644bf73022a800055b, type: 3}
+      - {fileID: 8300000, guid: 07b016df30740ce41811fae5d5842369, type: 3}
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
       actorNo: 0
@@ -113,6 +104,8 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: 30927534c19fa7e41965e084dc5297a3, type: 3}
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
@@ -129,6 +122,10 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: 48e4eb3dae76ccb48b3d9b4d858a5547, type: 3}
+      - {fileID: 8300000, guid: 340db9c7ec0eb694991467422a5e00c4, type: 3}
+      - {fileID: 8300000, guid: 72d29c75062333046aaee95d3e6bce1c, type: 3}
     - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
       actorNo: 0
       dialogue:
@@ -137,6 +134,8 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: 5c2aa6f1af929c2408b06542c85d90ba, type: 3}
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
@@ -145,17 +144,10 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: 1c0c44e6dc8d07e45bb14765c7ce556d, type: 3}
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - "You\u2019ve plucked my soul so you can force me into work? Is this some
-        sort of joke?"
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
       - ...
@@ -163,3 +155,4 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
+      voiceClip: []
