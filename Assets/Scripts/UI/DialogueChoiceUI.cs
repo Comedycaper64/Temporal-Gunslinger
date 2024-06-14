@@ -7,6 +7,7 @@ using UnityEngine;
 public class DialogueChoiceUI : MonoBehaviour
 {
     private CanvasGroup choiceCanvasGroup;
+    private CanvasGroupFader canvasFader;
     private DialogueChoice dialogueChoice;
     public static event EventHandler<DialogueChoice> OnChoose;
 
@@ -16,6 +17,7 @@ public class DialogueChoiceUI : MonoBehaviour
     private void Awake()
     {
         choiceCanvasGroup = GetComponent<CanvasGroup>();
+        canvasFader = GetComponent<CanvasGroupFader>();
         CloseDialogueChoice();
     }
 
@@ -23,7 +25,13 @@ public class DialogueChoiceUI : MonoBehaviour
     {
         this.dialogueChoice = dialogueChoice;
         choiceText.text = dialogueChoice.dialogueOption;
-        choiceCanvasGroup.alpha = 1f;
+        canvasFader.ToggleFade(true);
+        StartCoroutine(InteractDelay());
+    }
+
+    private IEnumerator InteractDelay()
+    {
+        yield return new WaitForSeconds(0.5f);
         choiceCanvasGroup.interactable = true;
     }
 
@@ -34,7 +42,7 @@ public class DialogueChoiceUI : MonoBehaviour
 
     public void CloseDialogueChoice()
     {
-        choiceCanvasGroup.alpha = 0f;
+        canvasFader.ToggleFade(false);
         choiceCanvasGroup.interactable = false;
     }
 }

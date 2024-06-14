@@ -8,15 +8,16 @@ using UnityEngine;
 
 public class RedirectUI : MonoBehaviour
 {
-    private bool uiToggle = false;
-    private float currentAlpha = 0f;
-    private float targetAlpha = 0f;
-    private float tweenTimer = 0f;
+    // private bool uiToggle = false;
+    // private float currentAlpha = 0f;
+    // private float targetAlpha = 0f;
+    // private float tweenTimer = 0f;
 
     private MMF_Player flashPlayer;
+    private CanvasGroupFader canvasFader;
 
-    [SerializeField]
-    private CanvasGroup redirectUI;
+    // [SerializeField]
+    // private CanvasGroup redirectUI;
 
     [SerializeField]
     private TextMeshProUGUI redirectText;
@@ -28,30 +29,31 @@ public class RedirectUI : MonoBehaviour
         RedirectManager.OnRedirectFailed += FlashUI;
 
         flashPlayer = GetComponent<MMF_Player>();
-        redirectUI.alpha = 0f;
+        canvasFader = GetComponent<CanvasGroupFader>();
+        canvasFader.SetCanvasGroupAlpha(0f);
     }
 
-    private void Update()
-    {
-        if (uiToggle)
-        {
-            float newAlpha = MMTween.Tween(
-                tweenTimer,
-                0f,
-                1f,
-                currentAlpha,
-                targetAlpha,
-                MMTween.MMTweenCurve.EaseInOutExponential
-            );
-            redirectUI.alpha = newAlpha;
-            tweenTimer += Time.deltaTime;
+    // private void Update()
+    // {
+    //     if (uiToggle)
+    //     {
+    //         float newAlpha = MMTween.Tween(
+    //             tweenTimer,
+    //             0f,
+    //             1f,
+    //             currentAlpha,
+    //             targetAlpha,
+    //             MMTween.MMTweenCurve.EaseInOutExponential
+    //         );
+    //         redirectUI.alpha = newAlpha;
+    //         tweenTimer += Time.deltaTime;
 
-            if (newAlpha == targetAlpha)
-            {
-                uiToggle = false;
-            }
-        }
-    }
+    //         if (newAlpha == targetAlpha)
+    //         {
+    //             uiToggle = false;
+    //         }
+    //     }
+    // }
 
     private void FlashUI()
     {
@@ -60,18 +62,19 @@ public class RedirectUI : MonoBehaviour
 
     private void ToggleUI(object sender, bool e)
     {
-        uiToggle = true;
-        tweenTimer = 0f;
-        currentAlpha = redirectUI.alpha;
+        canvasFader.ToggleFade(e);
+        // uiToggle = true;
+        // tweenTimer = 0f;
+        // currentAlpha = redirectUI.alpha;
 
-        if (e)
-        {
-            targetAlpha = 1f;
-        }
-        else
-        {
-            targetAlpha = 0f;
-        }
+        // if (e)
+        // {
+        //     targetAlpha = 1f;
+        // }
+        // else
+        // {
+        //     targetAlpha = 0f;
+        // }
     }
 
     private void UpdateText(object sender, int e)

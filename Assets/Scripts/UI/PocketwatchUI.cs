@@ -6,8 +6,9 @@ using UnityEngine;
 public class PocketwatchUI : RewindableMovement
 {
     private bool uiActive = false;
-    private bool uiChange = false;
-    private float fadeSpeed = 5f;
+
+    // private bool uiChange = false;
+    // private float fadeSpeed = 5f;
     private float currentPocketwatchTime = 0f;
     private float deathTime = 0f;
 
@@ -23,13 +24,16 @@ public class PocketwatchUI : RewindableMovement
     [SerializeField]
     private Transform deathMarker;
 
-    [SerializeField]
-    private CanvasGroup pocketwatchUI;
+    // [SerializeField]
+    // private CanvasGroup pocketwatchUI;
+    private CanvasGroupFader canvasGroupFader;
 
     public Action OnShowUI;
 
-    private void Start()
+    protected override void OnEnable()
     {
+        base.OnEnable();
+        canvasGroupFader = GetComponent<CanvasGroupFader>();
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
         RewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
     }
@@ -43,10 +47,10 @@ public class PocketwatchUI : RewindableMovement
 
     private void Update()
     {
-        if (uiChange)
-        {
-            FadeUI();
-        }
+        // if (uiChange)
+        // {
+        //     FadeUI();
+        // }
 
         if (uiActive)
         {
@@ -56,40 +60,41 @@ public class PocketwatchUI : RewindableMovement
         }
     }
 
-    private void FadeUI()
-    {
-        int direction;
-        if (uiActive)
-        {
-            direction = 1;
-        }
-        else
-        {
-            direction = -1;
-        }
+    // private void FadeUI()
+    // {
+    //     int direction;
+    //     if (uiActive)
+    //     {
+    //         direction = 1;
+    //     }
+    //     else
+    //     {
+    //         direction = -1;
+    //     }
 
-        pocketwatchUI.alpha += fadeSpeed * Time.deltaTime * direction;
+    //     pocketwatchUI.alpha += fadeSpeed * Time.deltaTime * direction;
 
-        if (uiActive)
-        {
-            if (pocketwatchUI.alpha >= 1f)
-            {
-                uiChange = false;
-            }
-        }
-        else
-        {
-            if (pocketwatchUI.alpha <= 0f)
-            {
-                uiChange = false;
-            }
-        }
-    }
+    //     if (uiActive)
+    //     {
+    //         if (pocketwatchUI.alpha >= 1f)
+    //         {
+    //             uiChange = false;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (pocketwatchUI.alpha <= 0f)
+    //         {
+    //             uiChange = false;
+    //         }
+    //     }
+    // }
 
     private void ToggleUI(bool toggle)
     {
         uiActive = toggle;
-        uiChange = true;
+        // uiChange = true;
+        canvasGroupFader.ToggleFade(toggle);
         currentPocketwatchTime = 0f;
     }
 

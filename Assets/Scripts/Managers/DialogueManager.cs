@@ -6,15 +6,22 @@ using UnityEngine;
 
 public struct DialogueUIEventArgs
 {
-    public DialogueUIEventArgs(ActorSO actorSO, string sentence, Action onTypingFinished)
+    public DialogueUIEventArgs(
+        ActorSO actorSO,
+        string sentence,
+        bool playDialogueNoises,
+        Action onTypingFinished
+    )
     {
         this.actorSO = actorSO;
         this.sentence = sentence;
+        this.playDialogueNoises = playDialogueNoises;
         this.onTypingFinished = onTypingFinished;
     }
 
     public ActorSO actorSO;
     public string sentence;
+    public bool playDialogueNoises;
     public Action onTypingFinished;
 }
 
@@ -136,7 +143,15 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
-        currentVoiceClips = new Queue<AudioClip>(dialogueNode.voiceClip);
+        if (dialogueNode.voiceClip != null)
+        {
+            currentVoiceClips = new Queue<AudioClip>(dialogueNode.voiceClip);
+        }
+        else
+        {
+            currentVoiceClips = new Queue<AudioClip>();
+        }
+
         disableCameraOnEnd = dialogueNode.disableCameraOnEnd;
         DisplayNextSentence();
     }
@@ -245,9 +260,16 @@ public class DialogueManager : MonoBehaviour
     {
         bIsSentenceTyping = true;
 
+        bool playDialogueNoises = !dialogueAudioSource.isPlaying;
+
         OnDialogue?.Invoke(
             this,
-            new DialogueUIEventArgs(currentActor, currentSentence, FinishTypingSentence)
+            new DialogueUIEventArgs(
+                currentActor,
+                currentSentence,
+                playDialogueNoises,
+                FinishTypingSentence
+            )
         );
     }
 

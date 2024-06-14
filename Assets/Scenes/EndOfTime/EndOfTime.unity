@@ -233,8 +233,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35167438}
-  m_LocalRotation: {x: 1e-45, y: 1e-45, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: -26}
+  m_LocalRotation: {x: 0.1286414, y: 0.22773711, z: -0.030368116, w: 0.9647098}
+  m_LocalPosition: {x: -0.56, y: 1.84, z: -16.999977}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -791,6 +791,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 282173908676742482, guid: 392809296a4ff244c944e434d78c38e7,
     type: 3}
   m_PrefabInstance: {fileID: 787769640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &191210670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8727991900168558398, guid: 883bdd3df01aabe4d8915d28a98607be,
+    type: 3}
+  m_PrefabInstance: {fileID: 897996889}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &235648679
 GameObject:
@@ -7858,7 +7864,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 0.75
   Loop: 0
   Mute: 0
@@ -7869,7 +7875,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -8858,6 +8864,8 @@ MonoBehaviour:
   possessUI: {fileID: 844545492}
   levelSelectUI: {fileID: 1199069156}
   revPocketwatch: {fileID: 787769642}
+  revModelPocketwatch: {fileID: 1967332961}
+  pocketwatchUI: {fileID: 191210670}
   projectileMask: {fileID: 1167953053}
   playerStateMachine: {fileID: 1279627845}
   startOfLevelCam: {fileID: 1990125692}
@@ -14645,7 +14653,7 @@ PrefabInstance:
     - target: {fileID: 4247266266780900422, guid: 113579fde8eabfd498739e01ff0b36ac,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4247266266780900423, guid: 113579fde8eabfd498739e01ff0b36ac,
         type: 3}
@@ -15856,6 +15864,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950563039}
   m_CullTransparentMesh: 1
+--- !u!1 &1967332961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5276978629829341674, guid: 392809296a4ff244c944e434d78c38e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 787769640}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1979702503 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5945013214660363520, guid: 392809296a4ff244c944e434d78c38e7,

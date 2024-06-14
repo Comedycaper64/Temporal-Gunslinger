@@ -2034,13 +2034,15 @@ GameObject:
   - component: {fileID: 7810627067407916240}
   - component: {fileID: 8706607920116307673}
   - component: {fileID: 6796560763135847367}
+  - component: {fileID: 7688533953834270973}
+  - component: {fileID: 1252281501395472065}
   m_Layer: 5
   m_Name: Face Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7810627067407916240
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2099,6 +2101,32 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7688533953834270973
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141365121265927954}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &1252281501395472065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5141365121265927954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdca5948c3036543a00d97870248dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 0.4
+  canvasGroup: {fileID: 7688533953834270973}
 --- !u!1 &5170470382718233260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,6 +3577,7 @@ GameObject:
   - component: {fileID: 706705558024044103}
   - component: {fileID: 3065704958160280401}
   - component: {fileID: 2921852313484612294}
+  - component: {fileID: 8306805405070776974}
   m_Layer: 5
   m_Name: Pocketwatch UI
   m_TagString: Untagged
@@ -3594,7 +3623,6 @@ MonoBehaviour:
   markerPlacerHand: {fileID: 1046259187073695597}
   markerPlacerTip: {fileID: 1671645551287297412}
   deathMarker: {fileID: 860817752223245186}
-  pocketwatchUI: {fileID: 3851367158449495314}
 --- !u!114 &2921852313484612294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3607,6 +3635,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee3e03c65f4faa64fb5939989558c62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8306805405070776974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8727991900168558398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdca5948c3036543a00d97870248dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  canvasGroup: {fileID: 3851367158449495314}
 --- !u!1 &8893689626175522322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3620,6 +3662,7 @@ GameObject:
   - component: {fileID: 1276250761763045719}
   - component: {fileID: 7702850954338208766}
   - component: {fileID: 7171710838580491702}
+  - component: {fileID: 3709130251904247875}
   m_Layer: 5
   m_Name: Rewind UI
   m_TagString: Untagged
@@ -3711,6 +3754,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3709130251904247875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8893689626175522322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdca5948c3036543a00d97870248dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  canvasGroup: {fileID: 1276250761763045719}
 --- !u!1 &8905800962532303041
 GameObject:
   m_ObjectHideFlags: 0
@@ -4313,6 +4370,8 @@ GameObject:
   - component: {fileID: 9103459110645594323}
   - component: {fileID: 9103459110645594320}
   - component: {fileID: 5807631921245059589}
+  - component: {fileID: 7669346612426590398}
+  - component: {fileID: 7638043271007367755}
   m_Layer: 5
   m_Name: Dialogue UI
   m_TagString: Untagged
@@ -4355,6 +4414,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteChangeTime: 0.4
+  actorSpriteFader: {fileID: 1252281501395472065}
   dialogueFaceSprite: {fileID: 6796560763135847367}
   actorNameText: {fileID: 9103459111558152068}
   dialogueText: {fileID: 9103459111433106702}
@@ -4375,6 +4435,116 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7669346612426590398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103459110645594322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdca5948c3036543a00d97870248dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  canvasGroup: {fileID: 5807631921245059589}
+--- !u!82 &7638043271007367755
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103459110645594322}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.25
+  m_Pitch: 0.75
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 0
+  MaxDistance: 9999
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &9103459110667694259
 GameObject:
   m_ObjectHideFlags: 0
@@ -4775,6 +4945,7 @@ GameObject:
   - component: {fileID: 9103459111070595809}
   - component: {fileID: 9103459111070595822}
   - component: {fileID: 4125770714600174171}
+  - component: {fileID: 3445777508336044277}
   m_Layer: 5
   m_Name: Redirect UI
   m_TagString: Untagged
@@ -4815,7 +4986,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784a303c633b16b43b1a85e20dda4514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redirectUI: {fileID: 4947316786262675898}
   redirectText: {fileID: 9103459110667694257}
 --- !u!114 &4125770714600174171
 MonoBehaviour:
@@ -5276,6 +5446,20 @@ MonoBehaviour:
         RemapZero: 0
         RemapOne: 12
         InstantFontSize: 0
+--- !u!114 &3445777508336044277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103459111070595808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdca5948c3036543a00d97870248dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTime: 1
+  canvasGroup: {fileID: 4947316786262675898}
 --- !u!1 &9103459111331674122
 GameObject:
   m_ObjectHideFlags: 0

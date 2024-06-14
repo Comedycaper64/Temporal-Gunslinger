@@ -26,6 +26,12 @@ public class TutorialGameManager : GameManager
     private GameObject revPocketwatch;
 
     [SerializeField]
+    private GameObject revModelPocketwatch;
+
+    [SerializeField]
+    private GameObject pocketwatchUI;
+
+    [SerializeField]
     private MaskStateMachine projectileMask;
 
     [SerializeField]
@@ -56,6 +62,8 @@ public class TutorialGameManager : GameManager
         reaper.SetActive(false);
         possessUI.SetActive(false);
         revPocketwatch.SetActive(false);
+        revModelPocketwatch.SetActive(false);
+        pocketwatchUI.SetActive(false);
         rewindManager.ToggleCanReset(false);
         rewindManager.ToggleCanRewind(false);
     }
@@ -88,6 +96,8 @@ public class TutorialGameManager : GameManager
         {
             reaper.SetActive(true);
             revPocketwatch.SetActive(true);
+            revModelPocketwatch.SetActive(true);
+            pocketwatchUI.SetActive(true);
             CinematicManager.Instance.PlayCinematic(endOfRound1Cinematic, SetupLevel);
             //round2Mask1.SetActive(true);
             //round2Mask2.SetActive(true);

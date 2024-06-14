@@ -9,28 +9,39 @@ using Random = UnityEngine.Random;
 public class DialogueUI : MonoBehaviour
 {
     private bool bIsDialogueActive;
-    private bool bDialogueActiveChanged;
+
+    //private bool bDialogueActiveChanged;
     private bool isTyping = false;
+    private bool bPlayDialogueNoises;
     private int spriteArrayIndex = 0;
-    private float timeBetweenLetterTyping = 0.05f;
+    private int charsBetweenDialogueNoises = 3;
+    private float timeBetweenLetterTyping = 0.025f;
     private float spriteChangeTimer = 0f;
 
     [SerializeField]
     private float spriteChangeTime = 0.5f;
-    private float textBoxFadeSpeed = 2.5f;
+
+    //private float textBoxFadeSpeed = 2.5f;
+    private const float LOW_PITCH_RANGE = 0.75f;
+    private const float HIGH_PITCH_RANGE = 1.25f;
     private string typingSentence;
     private Coroutine typingCoroutine;
     private Action onTypingFinished;
 
-    private CanvasGroup dialogueCanvasGroup;
+    //private CanvasGroup dialogueCanvasGroup;
+    private CanvasGroupFader dialogueFader;
+
+    [SerializeField]
+    private CanvasGroupFader actorSpriteFader;
     private DialogueChoice[] dialogueChoices;
-    private DialogueAnswer[] dialogueAnswers;
     private EventHandler<DialogueChoice> onDialogueChosen;
 
     [SerializeField]
     private Image dialogueFaceSprite;
-
+    private ActorSO currentActor;
     private Sprite[] currentSpriteSet = new Sprite[0];
+    private AudioClip[] currentDialogueNoiseSet;
+    private AudioSource dialogueNoiseSource;
 
     [SerializeField]
     private TextMeshProUGUI actorNameText;
@@ -53,8 +64,11 @@ public class DialogueUI : MonoBehaviour
         ClearDialogueText();
         SetActorName("");
         //textBox.color = new Color(textBox.color.r, textBox.color.g, textBox.color.b, 0f);
-        dialogueCanvasGroup = GetComponent<CanvasGroup>();
-        dialogueCanvasGroup.alpha = 0f;
+        //dialogueCanvasGroup = GetComponent<CanvasGroup>();
+        dialogueFader = GetComponent<CanvasGroupFader>();
+        dialogueFader.SetCanvasGroupAlpha(0f);
+        actorSpriteFader.SetCanvasGroupAlpha(0f);
+        dialogueNoiseSource = GetComponent<AudioSource>();
     }
 
     private void OnDisable()
@@ -85,33 +99,33 @@ public class DialogueUI : MonoBehaviour
             }
         }
 
-        if (bDialogueActiveChanged)
-        {
-            FadeUI();
-        }
+        // if (bDialogueActiveChanged)
+        // {
+        //     FadeUI();
+        // }
     }
 
-    private void FadeUI()
-    {
-        if (bIsDialogueActive)
-        {
-            dialogueCanvasGroup.alpha += textBoxFadeSpeed * Time.deltaTime;
+    // private void FadeUI()
+    // {
+    //     if (bIsDialogueActive)
+    //     {
+    //         dialogueCanvasGroup.alpha += textBoxFadeSpeed * Time.deltaTime;
 
-            if (dialogueCanvasGroup.alpha >= 1f)
-            {
-                bDialogueActiveChanged = false;
-            }
-        }
-        else
-        {
-            dialogueCanvasGroup.alpha -= textBoxFadeSpeed * Time.deltaTime;
+    //         if (dialogueCanvasGroup.alpha >= 1f)
+    //         {
+    //             bDialogueActiveChanged = false;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         dialogueCanvasGroup.alpha -= textBoxFadeSpeed * Time.deltaTime;
 
-            if (dialogueCanvasGroup.alpha <= 0f)
-            {
-                bDialogueActiveChanged = false;
-            }
-        }
-    }
+    //         if (dialogueCanvasGroup.alpha <= 0f)
+    //         {
+    //             bDialogueActiveChanged = false;
+    //         }
+    //     }
+    // }
 
     private void SetActorName(string actorName)
     {
@@ -126,16 +140,36 @@ public class DialogueUI : MonoBehaviour
     private void ToggleDialogueActive(bool toggle)
     {
         bIsDialogueActive = toggle;
-        bDialogueActiveChanged = true;
+        dialogueFader.ToggleFade(toggle);
+        //bDialogueActiveChanged = true;
     }
 
     private void SetNewActor(ActorSO actorSO)
     {
         SetActorName(actorSO.GetActorName());
-        AudioClip[] actorClips = actorSO.GetDialogueNoises();
-        int clipsLength = actorClips.Length;
-        Sprite[] spriteSet = actorSO.GetActorSprites();
 
+        if (currentActor == actorSO)
+        {
+            return;
+        }
+
+        currentActor = actorSO;
+        actorSpriteFader.ToggleFade(false);
+
+        currentDialogueNoiseSet = actorSO.GetDialogueNoises();
+        if (currentSpriteSet.Length <= 0)
+        {
+            SetNewActorSprites();
+        }
+        else
+        {
+            StartCoroutine(ActorFadeInDelay());
+        }
+    }
+
+    private void SetNewActorSprites()
+    {
+        Sprite[] spriteSet = currentActor.GetActorSprites();
         if ((spriteSet == null) || (spriteSet.Length == 0))
         {
             currentSpriteSet = new Sprite[0];
@@ -148,14 +182,20 @@ public class DialogueUI : MonoBehaviour
 
         if (currentSpriteSet.Length <= 0)
         {
-            dialogueFaceSprite.gameObject.SetActive(false);
+            //dialogueFaceSprite.gameObject.SetActive(false);
         }
         else
         {
-            dialogueFaceSprite.gameObject.SetActive(true);
+            actorSpriteFader.ToggleFade(true);
         }
 
-        spriteChangeTime = actorSO.GetSpriteSwitchTime();
+        spriteChangeTime = currentActor.GetSpriteSwitchTime();
+    }
+
+    private IEnumerator ActorFadeInDelay()
+    {
+        yield return new WaitForSeconds(0.35f);
+        SetNewActorSprites();
     }
 
     private IEnumerator TypeSentence(DialogueUIEventArgs dialogueUIEventArgs)
@@ -163,17 +203,31 @@ public class DialogueUI : MonoBehaviour
         SetNewActor(dialogueUIEventArgs.actorSO);
 
         typingSentence = dialogueUIEventArgs.sentence;
+        bPlayDialogueNoises = dialogueUIEventArgs.playDialogueNoises;
         onTypingFinished = dialogueUIEventArgs.onTypingFinished;
 
         ClearDialogueText();
 
         isTyping = true;
+        int noiseTracker = 0;
+        dialogueNoiseSource.clip = currentDialogueNoiseSet[0];
         foreach (char letter in typingSentence.ToCharArray())
         {
             dialogueText.text += letter;
 
-            //AudioClip textSound = actorClips[Random.Range(0, clipsLength - 1)];
-            //get random dialogue sound from actor and play it in audio source
+            if (bPlayDialogueNoises)
+            {
+                noiseTracker++;
+                if (noiseTracker >= charsBetweenDialogueNoises)
+                {
+                    // dialogueNoiseSource.clip = currentDialogueNoiseSet[
+                    //     Random.Range(0, currentDialogueNoiseSet.Length)
+                    // ];
+                    dialogueNoiseSource.pitch = Random.Range(LOW_PITCH_RANGE, HIGH_PITCH_RANGE);
+                    dialogueNoiseSource.Play();
+                    noiseTracker = 0;
+                }
+            }
 
             yield return new WaitForSeconds(timeBetweenLetterTyping);
         }
@@ -243,7 +297,7 @@ public class DialogueUI : MonoBehaviour
 
         ClearDialogueText();
         SetActorName("");
-        dialogueFaceSprite.gameObject.SetActive(e);
+        actorSpriteFader.ToggleFade(true);
         ToggleDialogueActive(e);
     }
 
@@ -253,7 +307,6 @@ public class DialogueUI : MonoBehaviour
     )
     {
         dialogueChoices = dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices();
-        dialogueAnswers = dialogueChoiceUIArgs.dialogueChoice.GetDialogueAnswers();
         onDialogueChosen = dialogueChoiceUIArgs.onDialogueChosen;
 
         SetNewActor(dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices()[0].actor);
