@@ -7,6 +7,7 @@ public class DissolveController : RewindableMovement
 {
     private float dissolveRate = 100f;
     private float counter = 0;
+    private float dissolveTarget = 1f;
 
     [SerializeField]
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
@@ -64,10 +65,11 @@ public class DissolveController : RewindableMovement
         }
     }
 
-    public void StartDissolve()
+    public void StartDissolve(float targetDissolve = 1f)
     {
         ToggleMovement(true);
         counter = 0;
+        dissolveTarget = targetDissolve;
 
         foreach (GameObject gameObject in manualDisables)
         {
@@ -104,7 +106,7 @@ public class DissolveController : RewindableMovement
     private void Dissolve()
     {
         counter += dissolveRate * GetSpeed() * Time.deltaTime;
-        float newCounter = Mathf.Clamp01(counter);
+        float newCounter = Mathf.Clamp(counter, 0f, dissolveTarget);
 
         foreach (Material material in materials)
         {

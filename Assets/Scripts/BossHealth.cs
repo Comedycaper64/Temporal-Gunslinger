@@ -17,6 +17,9 @@ public class BossHealth : MonoBehaviour
     [SerializeField]
     private AudioClip deathSFX;
 
+    [SerializeField]
+    private Animator weakPointAnimator;
+
     private void OnEnable()
     {
         stateMachine = GetComponent<StateMachine>();
@@ -60,6 +63,7 @@ public class BossHealth : MonoBehaviour
         if (lesserWeakPoints <= 0)
         {
             finalWeakPoint.gameObject.SetActive(true);
+            weakPointAnimator.Play("Blood Active");
         }
     }
 

@@ -26,6 +26,9 @@ public class LevelSelectorUI : MonoBehaviour
 
     [SerializeField]
     private GameObject[] selectionConfirmation;
+
+    [SerializeField]
+    private CinematicSO endOfTutorialCinematic;
     private CanvasGroup activePreview;
 
     // private void Start()
@@ -129,9 +132,14 @@ public class LevelSelectorUI : MonoBehaviour
         confirmation = false;
     }
 
-    public void LoadLevel(int sceneNumber)
+    public void EndTutorial()
     {
-        SceneManager.LoadScene(sceneNumber);
+        CinematicManager.Instance.PlayCinematic(endOfTutorialCinematic, LoadNextLevel);
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(1);
     }
 
     // public void ShowPreview(int previewIndex)
