@@ -91,7 +91,7 @@ public class TutorialGameManager : GameManager
         yield return new WaitForSeconds(2f);
         RewindableMovement.UpdateMovementTimescale(1f);
         endOfLevelCam.gameObject.SetActive(false);
-        rewindManager.ResetManager();
+        rewindManager.ResetManager(true);
         if (tutorialState == TutorialState.Round1)
         {
             reaper.SetActive(true);

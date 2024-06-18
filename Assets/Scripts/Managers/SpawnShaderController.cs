@@ -7,7 +7,7 @@ public class SpawnShaderController : MonoBehaviour
 {
     private bool bOnOpeningChange = false;
     private float maskOpening = 0.5f;
-    private float reaperOpening = 1f;
+    private float reaperOpening = 0.95f;
     private float targetOpening = 0f;
     private float startOpening;
     private float openingSpeed = 0.5f;
@@ -43,6 +43,8 @@ public class SpawnShaderController : MonoBehaviour
             {
                 bOnOpeningChange = false;
             }
+
+            Debug.Log(newSize);
 
             // float currentSize = spawnShader.GetFloat("_Size");
             // float lerpRatio =

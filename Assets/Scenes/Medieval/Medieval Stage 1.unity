@@ -9518,7 +9518,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 250}
+  m_SizeDelta: {x: 1000, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1275388757
 Animator:
@@ -9572,11 +9572,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Inside, the Emperor stands alone in his war room, poring over invasion
-    plans. As he drums the fingers of his gauntleted hand upon the table, he considers
-    all he has achieved. His vast armies have conquered the Western Highlands and
-    the Eastern Glades, and he expects to receive an official surrender from the
-    Queen of the North by dawn. Soon, the entire continent would kneel before him.
+  m_text: Despite the late hour, a single window is illuminated with a pale glow.
+    Inside, the Emperor stands alone in his war room, poring over invasion plans.
+    As he drums the fingers of his gauntleted hand upon the table, he considers all
+    he has achieved. His vast armies have conquered the Western Highlands and the
+    Eastern Glades, and he expects to receive an official surrender from the Queen
+    of the North by dawn. Soon, the entire continent would kneel before him.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ecc4eef08bef7d4083406f284c093d8, type: 2}
   m_sharedMaterial: {fileID: -6159658335563363560, guid: 2ecc4eef08bef7d4083406f284c093d8,
@@ -12733,13 +12734,18 @@ PrefabInstance:
     - target: {fileID: 4560910432377797550, guid: 769cbea2e7664d142acc600c9fbc90e3,
         type: 3}
       propertyPath: thingsToDisable.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4560910432377797550, guid: 769cbea2e7664d142acc600c9fbc90e3,
         type: 3}
       propertyPath: thingsToDisable.Array.data[1]
       value: 
       objectReference: {fileID: 1210269636}
+    - target: {fileID: 4560910432377797550, guid: 769cbea2e7664d142acc600c9fbc90e3,
+        type: 3}
+      propertyPath: thingsToDisable.Array.data[2]
+      value: 
+      objectReference: {fileID: 1780427025}
     m_RemovedComponents: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3969984752589869462, guid: 769cbea2e7664d142acc600c9fbc90e3,
@@ -12782,6 +12788,12 @@ Transform:
 --- !u!4 &1780427024 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2754324654183318479, guid: 769cbea2e7664d142acc600c9fbc90e3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1780427021}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1780427025 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6677525886270746830, guid: 769cbea2e7664d142acc600c9fbc90e3,
     type: 3}
   m_PrefabInstance: {fileID: 1780427021}
   m_PrefabAsset: {fileID: 0}
@@ -13275,7 +13287,6 @@ MonoBehaviour:
     the castle grounds. A choking fog hangs low to the scorched earth, trampled and
     flattened by the boots of the Imperial Guard. A blackened stone castle stands
     tall and imposing, silhouetted against a night sky tinged red by a blood moon.
-    Despite the late hour, a single window is illuminated with a pale glow.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ecc4eef08bef7d4083406f284c093d8, type: 2}
   m_sharedMaterial: {fileID: -6159658335563363560, guid: 2ecc4eef08bef7d4083406f284c093d8,
@@ -13311,7 +13322,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

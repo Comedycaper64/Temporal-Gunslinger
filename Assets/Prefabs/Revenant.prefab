@@ -101,7 +101,7 @@ Transform:
   m_Children:
   - {fileID: 315466180203143034}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &282173908676742487
 MonoBehaviour:
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecbe209d6409d6d4e8cef1ba85330d33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeAnimationName: 
+  activeAnimationName: Revenant shoot
   stateMachineAnimator: {fileID: 5945013214660363520}
   dissolveController: {fileID: 0}
   revenantChest: {fileID: 4766439125035560720}
@@ -480,6 +480,7 @@ MonoBehaviour:
   shootSFX: {fileID: 8300000, guid: 813b10f08188d6c40a65e738a2ea21c6, type: 3}
   gunShotVFX: {fileID: 4434253767667778994}
   bulletStateMachine: {fileID: 8018966933097772305}
+  gunPOVCamera: {fileID: 282173908678326079}
 --- !u!114 &1833566829497186814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1782,6 +1783,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Revolver Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 83569461362861161, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 748500614612975315, guid: 491d22ae4b5e5624989e8be606d6bef2,
         type: 3}
       propertyPath: m_RootOrder
@@ -1836,6 +1842,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 969887224488917520, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176966879910479493, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730943454974101525, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3609410849738202960, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232692140702821310, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483874157871151271, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6510971420144988895, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395095361258580795, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072226062122148597, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -4257,6 +4308,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Revolver Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 83569461362861161, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 748500614612975315, guid: 491d22ae4b5e5624989e8be606d6bef2,
         type: 3}
       propertyPath: m_RootOrder
@@ -4331,6 +4387,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 969887224488917520, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1176966879910479493, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730943454974101525, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3609410849738202960, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5232692140702821310, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5483874157871151271, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6510971420144988895, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395095361258580795, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9072226062122148597, guid: 491d22ae4b5e5624989e8be606d6bef2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

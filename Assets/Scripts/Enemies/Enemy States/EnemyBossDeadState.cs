@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyBossDeadState : State
 {
+    private readonly int DeathAnimHash;
     private Animator animator;
     private DissolveController dissolveController;
 
@@ -13,12 +14,14 @@ public class EnemyBossDeadState : State
         EnemyDeadState.enemiesAlive++;
         animator = stateMachine.stateMachineAnimator;
         dissolveController = stateMachine.dissolveController;
+        DeathAnimHash = Animator.StringToHash(stateMachine.GetActiveAnimationName());
     }
 
     public override void Enter()
     {
         animator.SetBool("death", true);
-        dissolveController.StartDissolve(0.5f);
+        animator.CrossFade(DeathAnimHash, 0.02f);
+        dissolveController.StartDissolve(0.25f);
         EnemyDeadState.enemiesAlive = 0;
 
         //disable all enemies

@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
         CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         rewindManager.OnResetLevel -= RewindManager_OnResetLevel;
     }
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
 
     protected IEnumerator ResetLevel()
     {
-        rewindManager.ResetManager();
+        rewindManager.ResetManager(false);
         RedirectManager.Instance.ResetLevel();
         OnGameStateChange?.Invoke(this, StateEnum.idle);
         yield return null;
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
         RewindableMovement.UpdateMovementTimescale(1f);
     }
 
-    protected void LoadNextLevel()
+    protected virtual void LoadNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
         //RewindableMovement.UpdateMovementTimescale(1f);
 
         //MIGHT BREAK THINGS HOPEFULLY NOT
-        rewindManager.ResetManager();
+        rewindManager.ResetManager(true);
 
         CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
     }
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
         return revenantTransform;
     }
 
-    private void RewindManager_OnResetLevel()
+    protected void RewindManager_OnResetLevel()
     {
         //Debug.Log("RESET!");
         if (!bLevelActive)

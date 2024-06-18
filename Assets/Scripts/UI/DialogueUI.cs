@@ -154,7 +154,6 @@ public class DialogueUI : MonoBehaviour
         }
 
         currentActor = actorSO;
-        actorSpriteFader.ToggleFade(false);
 
         currentDialogueNoiseSet = actorSO.GetDialogueNoises();
         if (currentSpriteSet.Length <= 0)
@@ -163,6 +162,7 @@ public class DialogueUI : MonoBehaviour
         }
         else
         {
+            actorSpriteFader.ToggleFade(false);
             StartCoroutine(ActorFadeInDelay());
         }
     }
@@ -182,7 +182,7 @@ public class DialogueUI : MonoBehaviour
 
         if (currentSpriteSet.Length <= 0)
         {
-            //dialogueFaceSprite.gameObject.SetActive(false);
+            actorSpriteFader.SetCanvasGroupAlpha(0f);
         }
         else
         {
@@ -297,7 +297,7 @@ public class DialogueUI : MonoBehaviour
 
         ClearDialogueText();
         SetActorName("");
-        actorSpriteFader.ToggleFade(true);
+        //actorSpriteFader.ToggleFade(true);
         ToggleDialogueActive(e);
     }
 

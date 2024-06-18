@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerBulletState : State
 {
+    private readonly int ActiveAnimHash;
     Animator animator;
     private PlayerController playerController;
 
@@ -13,6 +14,7 @@ public class PlayerBulletState : State
     {
         animator = stateMachine.stateMachineAnimator;
         playerController = stateMachine.GetComponent<PlayerController>();
+        ActiveAnimHash = Animator.StringToHash(stateMachine.GetActiveAnimationName());
     }
 
     public override void Enter()
@@ -21,6 +23,12 @@ public class PlayerBulletState : State
         Cursor.lockState = CursorLockMode.Locked;
         playerController.ToggleBulletFired(true);
         animator.SetBool("shot", true);
+        stateMachine.stateMachineAnimator.CrossFade(
+            ActiveAnimHash,
+            0.02f,
+            0,
+            stateMachine.GetActiveAnimationExitTime()
+        );
         BulletVelocityUI.Instance.ToggleUIActive(true);
     }
 

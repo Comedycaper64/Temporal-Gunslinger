@@ -12,6 +12,7 @@ public class DestroyWeakPoint : RewindableAction
     public static void WeakPointDestroyed(BossHealth bossHealth, GameObject weakPoint)
     {
         DestroyWeakPoint destroyWeakPoint = new DestroyWeakPoint(bossHealth, weakPoint);
+        //Debug.Log("Weak Point destroyed" + weakPoint.name);
     }
 
     public DestroyWeakPoint(BossHealth bossHealth, GameObject weakPoint)
@@ -30,6 +31,7 @@ public class DestroyWeakPoint : RewindableAction
 
     public override void Undo()
     {
+        //Debug.Log("Weak Point undone" + weakPointCollider.name);
         bossHealth.UndoDamage();
         weakPointCollider.enabled = true;
         weakPointHighlight.enabled = true;

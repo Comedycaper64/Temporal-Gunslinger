@@ -142,7 +142,7 @@ public class RewindManager : MonoBehaviour
             {
                 bNoOutstandingRewindables = true;
                 OnRewindToStart?.Invoke();
-                ResetManager();
+                ResetManager(false);
             }
             else
             {
@@ -228,11 +228,27 @@ public class RewindManager : MonoBehaviour
         }
     }
 
-    public void ResetManager()
+    public void ResetManager(bool endOfLevel)
     {
         ToggleTimer(false);
         ToggleRewind(false);
         ToggleTurbo(false);
+
+        //hopefully won't break shit
+        if (!endOfLevel)
+        {
+            while (priorityActions.Count > 0)
+            {
+                RewindableAction priorityAction = priorityActions.Pop();
+                priorityAction.Undo();
+            }
+
+            while (rewindableActions.Count > 0)
+            {
+                RewindableAction rewindableAction = rewindableActions.Pop();
+                rewindableAction.Undo();
+            }
+        }
 
         priorityActions = new Stack<RewindableAction>();
         rewindableActions = new Stack<RewindableAction>();

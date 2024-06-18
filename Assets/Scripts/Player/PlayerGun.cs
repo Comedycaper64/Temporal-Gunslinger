@@ -9,7 +9,9 @@ public class PlayerGun : MonoBehaviour
 {
     private bool shouldGunMove;
     private float gunMoveTime = 0.1f;
-    private float distanceAllowance = 0.001f;
+
+    //private float distanceAllowance = 0.001f;
+    private const float lerpSpeed = 3f;
     private Vector3 gunVelocity = Vector3.zero;
     private Transform target;
 
@@ -19,9 +21,13 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private Material transGunMaterial;
 
-    private const float focusAlpha = 0.1f;
+    private const float focusAlpha = 0.2f;
     private float alphaNonTarget = focusAlpha;
     private float alphaTarget = 1f;
+    private const float gunRestFOV = 50f;
+    private const float gunAimFOV = 25f;
+    private float fovTarget = gunRestFOV;
+    private float fovNonTarget = gunAimFOV;
 
     [SerializeField]
     private Transform gunModel;
@@ -49,6 +55,9 @@ public class PlayerGun : MonoBehaviour
 
     [SerializeField]
     private BulletStateMachine bulletStateMachine;
+
+    [SerializeField]
+    private CinemachineVirtualCamera gunPOVCamera;
     private Bullet bullet;
     private CinemachineImpulseSource impulseSource;
     public static EventHandler<bool> OnAimGun;
@@ -77,15 +86,15 @@ public class PlayerGun : MonoBehaviour
             gunMoveTime
         );
 
-        float lerpRatio = Mathf.InverseLerp(
-            alphaNonTarget,
-            alphaTarget,
-            gunModelRenderers[0].material.color.a
+        float lerpRatio = Mathf.Abs(
+            Mathf.InverseLerp(fovNonTarget, fovTarget, gunPOVCamera.m_Lens.FieldOfView)
         );
 
-        float newLerp = lerpRatio + (10f * Time.unscaledDeltaTime);
+        float newLerp = lerpRatio + (lerpSpeed * Time.unscaledDeltaTime);
 
         float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, newLerp);
+
+        float newFOV = Mathf.Lerp(fovNonTarget, fovTarget, newLerp);
 
         foreach (Renderer renderer in gunModelRenderers)
         {
@@ -98,15 +107,23 @@ public class PlayerGun : MonoBehaviour
             );
         }
 
-        if (Vector3.Distance(gunModel.position, target.position) < distanceAllowance)
+        gunPOVCamera.m_Lens.FieldOfView = newFOV;
+
+        if (Math.Abs(gunModelRenderers[0].material.color.a - alphaTarget) < 0.01f)
         {
             shouldGunMove = false;
         }
+        // if (Vector3.Distance(gunModel.position, target.position) < distanceAllowance)
+        // {
+        //     shouldGunMove = false;
+        // }
     }
 
     public void SetGunStandbyPosition()
     {
         gunModel.position = standbyPosition.position;
+
+        gunPOVCamera.m_Lens.FieldOfView = gunRestFOV;
 
         foreach (Renderer renderer in gunModelRenderers)
         {
@@ -123,6 +140,9 @@ public class PlayerGun : MonoBehaviour
             alphaTarget = focusAlpha;
             alphaNonTarget = 1f;
 
+            fovTarget = gunAimFOV;
+            fovNonTarget = gunRestFOV;
+
             AudioManager.PlaySFX(aimGunSFX, 0.3f, 5, transform.position);
 
             foreach (Renderer renderer in gunModelRenderers)
@@ -137,6 +157,9 @@ public class PlayerGun : MonoBehaviour
             target = standbyPosition;
             alphaTarget = 1f;
             alphaNonTarget = focusAlpha;
+
+            fovTarget = gunRestFOV;
+            fovNonTarget = gunAimFOV;
 
             foreach (Renderer renderer in gunModelRenderers)
             {

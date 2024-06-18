@@ -45,8 +45,8 @@ public class BossHealth : MonoBehaviour
 
     private void Die(object sender, EventArgs e)
     {
+        finalWeakPoint.gameObject.SetActive(false);
         stateMachine.SwitchToDeadState();
-
         if (deathSFX)
         {
             AudioManager.PlaySFX(deathSFX, 0.5f, 0, transform.position);
@@ -76,6 +76,4 @@ public class BossHealth : MonoBehaviour
             finalWeakPoint.gameObject.SetActive(false);
         }
     }
-
-    //undo damage, adding lesser weakpoint, undoing final weak point spawn, stopping dissolve
 }
