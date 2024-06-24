@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BulletPossessTarget : MonoBehaviour, IHighlightable
 {
-    //private bool isHighlighted;
+    public static bool highlightActive;
 
     private Bullet bullet;
 
@@ -17,6 +17,7 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     private void Awake()
     {
         bullet = GetComponent<Bullet>();
+        highlightActive = false;
     }
 
     private void OnEnable()
@@ -113,6 +114,7 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
             }
 
             highlightable.ToggleHighlight(toggle);
+            highlightActive = toggle;
         }
     }
 

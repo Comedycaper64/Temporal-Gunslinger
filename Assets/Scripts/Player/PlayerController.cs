@@ -5,9 +5,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    //private State currentState;
+    private const float REST_MOUSE_SENSITIVITY = 10f;
+    private const float AIM_MOUSE_SENSITIVITY = 5f;
+
     [SerializeField]
-    private float mouseSensitivity = 10f;
+    private float mouseSensitivity = REST_MOUSE_SENSITIVITY;
     private float xRotation = 0f;
     private bool bBulletFired = false;
     private bool bIsPlayerActive = false;
@@ -178,6 +180,16 @@ public class PlayerController : MonoBehaviour
         }
 
         bIsFocusing = !bIsFocusing;
+
+        if (bIsFocusing)
+        {
+            mouseSensitivity = AIM_MOUSE_SENSITIVITY;
+        }
+        else
+        {
+            mouseSensitivity = REST_MOUSE_SENSITIVITY;
+        }
+
         IsFocusingChanged(bIsFocusing);
     }
 

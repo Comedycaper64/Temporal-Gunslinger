@@ -18,13 +18,13 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private Material transGunMaterial;
 
-    private const float focusAlpha = 0.2f;
-    private float alphaNonTarget = focusAlpha;
+    private const float FOCUS_ALPHA = 0.2f;
+    private float alphaNonTarget = FOCUS_ALPHA;
     private float alphaTarget = 1f;
-    private const float gunRestFOV = 50f;
-    private const float gunAimFOV = 25f;
-    private float fovTarget = gunRestFOV;
-    private float fovNonTarget = gunAimFOV;
+    private const float GUN_REST_FOV = 50f;
+    private const float GUN_AIM_FOV = 25f;
+    private float fovTarget = GUN_REST_FOV;
+    private float fovNonTarget = GUN_AIM_FOV;
 
     [SerializeField]
     private Transform gunModel;
@@ -120,7 +120,7 @@ public class PlayerGun : MonoBehaviour
     {
         gunModel.position = standbyPosition.position;
 
-        gunPOVCamera.m_Lens.FieldOfView = gunRestFOV;
+        gunPOVCamera.m_Lens.FieldOfView = GUN_REST_FOV;
 
         foreach (Renderer renderer in gunModelRenderers)
         {
@@ -134,11 +134,11 @@ public class PlayerGun : MonoBehaviour
         if (toggle)
         {
             target = aimingPosition;
-            alphaTarget = focusAlpha;
+            alphaTarget = FOCUS_ALPHA;
             alphaNonTarget = 1f;
 
-            fovTarget = gunAimFOV;
-            fovNonTarget = gunRestFOV;
+            fovTarget = GUN_AIM_FOV;
+            fovNonTarget = GUN_REST_FOV;
 
             AudioManager.PlaySFX(aimGunSFX, 0.3f, 5, transform.position);
 
@@ -153,10 +153,10 @@ public class PlayerGun : MonoBehaviour
         {
             target = standbyPosition;
             alphaTarget = 1f;
-            alphaNonTarget = focusAlpha;
+            alphaNonTarget = FOCUS_ALPHA;
 
-            fovTarget = gunRestFOV;
-            fovNonTarget = gunAimFOV;
+            fovTarget = GUN_REST_FOV;
+            fovNonTarget = GUN_AIM_FOV;
 
             foreach (Renderer renderer in gunModelRenderers)
             {

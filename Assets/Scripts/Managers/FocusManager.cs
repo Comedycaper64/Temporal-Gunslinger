@@ -41,15 +41,21 @@ public class FocusManager : MonoBehaviour
 
     [SerializeField]
     private CinemachineFreeLook bulletCamera;
+    private CinemachineImpulseListener cameraImpulseListener;
 
     public static EventHandler<bool> OnFocusToggle;
+
+    private void Awake()
+    {
+        cameraImpulseListener = bulletCamera.GetComponent<CinemachineImpulseListener>();
+
+        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X;
+        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y;
+    }
 
     private void Start()
     {
         CreateAimLine();
-
-        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X;
-        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y;
     }
 
     private void Update()
@@ -142,6 +148,8 @@ public class FocusManager : MonoBehaviour
 
         tweenTimer = 0f;
 
+        cameraImpulseListener.enabled = true;
+
         OnFocusToggle?.Invoke(this, false);
     }
 
@@ -165,6 +173,8 @@ public class FocusManager : MonoBehaviour
         AudioManager.PlaySFX(focusSFX, 1f, 0, transform.position);
 
         tweenTimer = 0f;
+
+        cameraImpulseListener.enabled = false;
 
         OnFocusToggle?.Invoke(this, true);
     }

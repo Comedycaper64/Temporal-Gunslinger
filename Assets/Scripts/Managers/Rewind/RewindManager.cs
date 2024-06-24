@@ -114,6 +114,7 @@ public class RewindManager : MonoBehaviour
             {
                 OnResetLevel?.Invoke();
                 resetTimer = 0f;
+                OnRestartTimerChanged?.Invoke(this, resetTimer);
             }
         }
         else if (resetTimer > 0f)

@@ -10,7 +10,7 @@ public class FocusHighlight : MonoBehaviour, IHighlightable
     private void OnEnable()
     {
         BulletPossessTarget.highlightables.Add(this);
-        ToggleHighlight(false);
+        ToggleHighlight(BulletPossessTarget.highlightActive);
     }
 
     private void OnDisable()

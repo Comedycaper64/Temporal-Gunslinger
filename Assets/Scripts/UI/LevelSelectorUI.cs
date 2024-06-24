@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO.Compression;
+using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +13,8 @@ public class LevelSelectorUI : MonoBehaviour
     private float fadeSpeed = 5f;
     private bool selectorActive = false;
     private bool confirmation = false;
+    private float targetArrowAngle;
+    private float velocityRef;
 
     [SerializeField]
     private RectTransform canvas;
@@ -63,10 +67,21 @@ public class LevelSelectorUI : MonoBehaviour
                 localPoint.y - selectorArrow.position.y,
                 localPoint.x - selectorArrow.position.x
             );
-            float angleDeg = (180f / Mathf.PI) * angleRad;
+            float angleDeg = 180f / Mathf.PI * angleRad;
 
             selectorArrow.eulerAngles = new Vector3(0f, 0f, angleDeg);
-            //Debug.Log(selectorArrow.eulerAngles.z);
+            // targetArrowAngle = angleDeg;
+
+            // Debug.Log("Target: " + targetArrowAngle);
+            // Debug.Log("Z Angle: " + selectorArrow.eulerAngles.z);
+            // float newZAngle = Mathf.SmoothDamp(
+            //     selectorArrow.eulerAngles.z,
+            //     targetArrowAngle,
+            //     ref velocityRef,
+            //     0.5f
+            // );
+
+            // selectorArrow.eulerAngles = new Vector3(0f, 0f, newZAngle);
 
             CanvasGroup desiredCanvas = GetMousedCanvasGroup(selectorArrow.eulerAngles.z);
 

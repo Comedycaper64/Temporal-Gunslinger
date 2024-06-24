@@ -26,6 +26,11 @@ public class DialogueAutoPlayUI : MonoBehaviour
 
     private void SetAutoPlay(bool toggle)
     {
+        if (GameManager.bLevelActive)
+        {
+            return;
+        }
+
         OnAutoPlayToggle?.Invoke(this, toggle);
         if (toggle)
         {
