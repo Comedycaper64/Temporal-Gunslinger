@@ -291,6 +291,15 @@ public class DialogueManager : MonoBehaviour
         OnToggleDialogueUI?.Invoke(this, toggle);
     }
 
+    private void ResetChoices()
+    {
+        DialogueChoiceUIEventArgs blankChoiceUIEventArgs = new DialogueChoiceUIEventArgs(
+            null,
+            null
+        );
+        OnDisplayChoices?.Invoke(this, blankChoiceUIEventArgs);
+    }
+
     private void EndDialogue()
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
@@ -307,6 +316,8 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            //reset colour on choices
+            ResetChoices();
             onDialogueComplete();
         }
     }

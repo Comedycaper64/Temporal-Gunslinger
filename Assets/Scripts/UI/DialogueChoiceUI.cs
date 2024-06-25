@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogueChoiceUI : MonoBehaviour
 {
@@ -13,6 +14,15 @@ public class DialogueChoiceUI : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI choiceText;
+
+    [SerializeField]
+    private Image choiceButton;
+
+    [SerializeField]
+    private Color unreadColour;
+
+    [SerializeField]
+    private Color readColour;
 
     private void Awake()
     {
@@ -37,6 +47,8 @@ public class DialogueChoiceUI : MonoBehaviour
 
     public void ChooseDialogueOption()
     {
+        choiceButton.color = readColour;
+
         OnChoose?.Invoke(this, dialogueChoice);
     }
 
@@ -44,5 +56,10 @@ public class DialogueChoiceUI : MonoBehaviour
     {
         canvasFader.ToggleFade(false);
         choiceCanvasGroup.interactable = false;
+    }
+
+    public void ResetChoiceColour()
+    {
+        choiceButton.color = unreadColour;
     }
 }

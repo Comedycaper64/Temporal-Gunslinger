@@ -243,6 +243,14 @@ public class DialogueUI : MonoBehaviour
         }
     }
 
+    private void ResetDialogueChoices()
+    {
+        for (int i = 0; i < dialogueChoiceUI.Length; i++)
+        {
+            dialogueChoiceUI[i].ResetChoiceColour();
+        }
+    }
+
     public void ChooseDialogueOption(DialogueChoice choice)
     {
         for (int i = 0; i < dialogueChoices.Length; i++)
@@ -306,11 +314,18 @@ public class DialogueUI : MonoBehaviour
         DialogueChoiceUIEventArgs dialogueChoiceUIArgs
     )
     {
-        dialogueChoices = dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices();
-        onDialogueChosen = dialogueChoiceUIArgs.onDialogueChosen;
+        if (dialogueChoiceUIArgs.dialogueChoice == null)
+        {
+            ResetDialogueChoices();
+        }
+        else
+        {
+            dialogueChoices = dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices();
+            onDialogueChosen = dialogueChoiceUIArgs.onDialogueChosen;
 
-        SetNewActor(dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices()[0].actor);
-        DisplayDialogueChoices();
+            SetNewActor(dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices()[0].actor);
+            DisplayDialogueChoices();
+        }
     }
 
     private void DialogueChoiceUI_OnChoose(object sender, DialogueChoice choice)
