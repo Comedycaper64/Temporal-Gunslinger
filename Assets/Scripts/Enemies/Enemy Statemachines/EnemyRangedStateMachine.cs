@@ -50,13 +50,13 @@ public class EnemyRangedStateMachine : StateMachine
         return projectile;
     }
 
-    public void SetProjectileAtFirePoint()
+    public virtual void SetProjectileAtFirePoint()
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
         bullet.SetFiringPosition(projectileFirePoint);
     }
 
-    public void ResetProjectile()
+    public virtual void ResetProjectile()
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
         bullet.ResetBullet(projectileRestPoint);
