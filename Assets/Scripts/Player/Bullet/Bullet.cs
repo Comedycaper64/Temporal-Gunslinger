@@ -72,7 +72,7 @@ public class Bullet : MonoBehaviour
 
     public void RedirectBullet()
     {
-        if (focusManager.IsFocusing())
+        if (focusManager.IsFocusing() && bBulletActive)
         {
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.RedirectBullet(aimDirection, GetAimRotation(aimDirection));
