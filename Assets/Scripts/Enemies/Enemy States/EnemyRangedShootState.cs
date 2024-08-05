@@ -28,8 +28,14 @@ public class EnemyRangedShootState : State
             0,
             stateMachine.GetActiveAnimationExitTime()
         );
-        enemyStateMachine.SetProjectileAtFirePoint();
-        enemyStateMachine.GetBulletStateMachine().SwitchToActive();
+
+        //Debug.Log(stateMachine.GetActiveAnimationExitTime());
+
+        if (stateMachine.GetActiveAnimationExitTime() < 0.01f)
+        {
+            enemyStateMachine.SetProjectileAtFirePoint();
+            enemyStateMachine.GetBulletStateMachine().SwitchToActive();
+        }
     }
 
     public override void Tick(float deltaTime)

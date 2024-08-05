@@ -98,6 +98,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Conquest Ability"",
+                    ""type"": ""Button"",
+                    ""id"": ""2aafb0e2-aa1f-46e9-9bb9-66ea9f0e42ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,6 +197,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Turbo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54e5fcd1-d8e4-4e00-bd49-24d24e3afac6"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Conquest Ability"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -210,6 +230,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Reset = m_Player.FindAction("Reset", throwIfNotFound: true);
         m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
         m_Player_Turbo = m_Player.FindAction("Turbo", throwIfNotFound: true);
+        m_Player_ConquestAbility = m_Player.FindAction("Conquest Ability", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -277,6 +298,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Reset;
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Turbo;
+    private readonly InputAction m_Player_ConquestAbility;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -289,6 +311,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Reset => m_Wrapper.m_Player_Reset;
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Turbo => m_Wrapper.m_Player_Turbo;
+        public InputAction @ConquestAbility => m_Wrapper.m_Player_ConquestAbility;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -322,6 +345,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Turbo.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurbo;
                 @Turbo.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurbo;
                 @Turbo.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTurbo;
+                @ConquestAbility.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
+                @ConquestAbility.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
+                @ConquestAbility.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -350,6 +376,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Turbo.started += instance.OnTurbo;
                 @Turbo.performed += instance.OnTurbo;
                 @Turbo.canceled += instance.OnTurbo;
+                @ConquestAbility.started += instance.OnConquestAbility;
+                @ConquestAbility.performed += instance.OnConquestAbility;
+                @ConquestAbility.canceled += instance.OnConquestAbility;
             }
         }
     }
@@ -373,5 +402,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnReset(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnTurbo(InputAction.CallbackContext context);
+        void OnConquestAbility(InputAction.CallbackContext context);
     }
 }

@@ -93,4 +93,9 @@ public class BulletPossessor : MonoBehaviour
         }
         possessedBullet.SetIsFocusing(isFocusing);
     }
+
+    public Transform GetPossessedBulletTransform()
+    {
+        return possessedBullet?.transform;
+    }
 }

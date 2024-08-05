@@ -6,6 +6,8 @@ Properties
     _BorderColour ("Border Colour", Color) = (1,1,1,1)
     _BorderSize("Border Size", Range(0, 0.5)) = 0.1
     _Size ("Size", Range(0,1)) = 1
+    _BreatheTime ("Breathe Time", float) = 0.1
+    _BreatheAmount ("Breathe Amount", float) = 0.1
 }
 SubShader
 {
@@ -48,6 +50,13 @@ float4 _BorderColour;
 float _Size;
 float _Offset;
 float _BorderSize;
+float _BreatheTime;
+float _BreatheAmount;
+
+float InverseLerp(float a, float b, float v)
+{
+    return (v - a) / (b - a);
+}
 
 v2f vert(appdata v)
 {
@@ -70,11 +79,17 @@ fixed4 frag(v2f i) : SV_Target
     //float uvDistance = distance(uvsCentered, float2(0, 0)) + cos(radial + _Time.y * TAU) * 0.1;
   
     float radial = atan2(uvsCentered.y, uvsCentered.x) / pi;
+    
+    float borderBreathe = cos(_Time.y * _BreatheTime) * _BreatheAmount - 0.5;
+    
+    //Makes it get bigger + smaller 
+    float sizeAlter = _Size + borderBreathe * 0.01;
+    //float sizeAlter = _Size;
                 //Gives a border
     //float borderWidth = 0.1;
     
     //float borderSDF = _Size - _BorderSize;
-    float borderSDF = (_Size - _BorderSize) + sin(((radial + uvDistance) + (_Time.y * -0.2)) * 10 * TAU) * 0.1 - 0.1;
+    float borderSDF = (sizeAlter - _BorderSize) + sin(((radial + uvDistance) + (_Time.y * -0.15)) * 10 * TAU) * 0.1 - 0.1;
     
     //return borderSDF;
     
@@ -85,6 +100,10 @@ fixed4 frag(v2f i) : SV_Target
     borderMask = step(borderSDF - _BorderSize, uvDistance);
     
     
+    
+    borderMask = borderMask + borderBreathe;
+    
+    
     //return borderMask;
     
                 //Turns the uvs radial
@@ -92,10 +111,15 @@ fixed4 frag(v2f i) : SV_Target
     //radial = ((radial * 0.5 + 0.5)) % 1.0;
     
                 //Shows frags based on progress
-    float reveal = step(uvDistance, _Size);
+    float reveal = step(uvDistance, sizeAlter);
+    
+    float uvDistanceLerp = saturate(InverseLerp(0.4, 0.6, uvDistance));
+    
+    float4 colorLerp = lerp(_Colour, _BorderColour, uvDistanceLerp);
   
     
-    return _Colour * reveal + _BorderColour * borderMask;
+    return colorLerp * reveal + _BorderColour * borderMask;
+    //return _Colour * reveal + _BorderColour * borderMask;
 }
             ENDCG
         }

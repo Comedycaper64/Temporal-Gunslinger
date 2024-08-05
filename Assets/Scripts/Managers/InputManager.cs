@@ -17,6 +17,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public event Action OnShootAction;
     public event Action OnFocusAction;
     public event Action OnPossessAction;
+    public event Action OnConquestAction;
 
     private void Awake()
     {
@@ -152,6 +153,18 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else if (context.canceled)
         {
             bIsTurbo = false;
+        }
+    }
+
+    public void OnConquestAbility(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            OnConquestAction?.Invoke();
         }
     }
 }
