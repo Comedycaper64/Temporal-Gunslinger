@@ -16,9 +16,6 @@ public class DialogueChoiceUI : MonoBehaviour
     private TextMeshProUGUI choiceText;
 
     [SerializeField]
-    private Image choiceButton;
-
-    [SerializeField]
     private Color unreadColour;
 
     [SerializeField]
@@ -47,7 +44,7 @@ public class DialogueChoiceUI : MonoBehaviour
 
     public void ChooseDialogueOption()
     {
-        choiceButton.color = readColour;
+        choiceText.color = readColour;
 
         OnChoose?.Invoke(this, dialogueChoice);
     }
@@ -60,6 +57,6 @@ public class DialogueChoiceUI : MonoBehaviour
 
     public void ResetChoiceColour()
     {
-        choiceButton.color = unreadColour;
+        choiceText.color = unreadColour;
     }
 }

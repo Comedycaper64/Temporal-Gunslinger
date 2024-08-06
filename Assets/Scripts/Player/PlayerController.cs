@@ -129,6 +129,8 @@ public class PlayerController : MonoBehaviour
         {
             InputManager.Instance.OnShootAction += InputManager_OnRedirectAction;
             InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
+            // InputManager.Instance.OnPossessNextAction += InputManager_OnPossessNextAction;
+            // InputManager.Instance.OnPossessPreviousAction += InputManager_OnPossessPreviousAction;
             if (bCanRedirect)
             {
                 RedirectManager.Instance.ToggleRedirectUI(true);
@@ -138,6 +140,8 @@ public class PlayerController : MonoBehaviour
         {
             InputManager.Instance.OnShootAction -= InputManager_OnRedirectAction;
             InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
+            // InputManager.Instance.OnPossessNextAction -= InputManager_OnPossessNextAction;
+            // InputManager.Instance.OnPossessPreviousAction -= InputManager_OnPossessPreviousAction;
             OnPlayerStateChanged?.Invoke(this, 0);
             RedirectManager.Instance.ToggleRedirectUI(false);
         }
@@ -211,6 +215,24 @@ public class PlayerController : MonoBehaviour
         }
         bulletPossessor.TryPossess();
     }
+
+    // private void InputManager_OnPossessPreviousAction()
+    // {
+    //     if (!GameManager.Instance.IsLevelActive() || !bCanPossess)
+    //     {
+    //         return;
+    //     }
+    //     bulletPossessor.TryPossessPrevious();
+    // }
+
+    // private void InputManager_OnPossessNextAction()
+    // {
+    //     if (!GameManager.Instance.IsLevelActive() || !bCanPossess)
+    //     {
+    //         return;
+    //     }
+    //     bulletPossessor.TryPossessNext();
+    // }
 
     private void IsFocusingChanged(bool isFocusing)
     {

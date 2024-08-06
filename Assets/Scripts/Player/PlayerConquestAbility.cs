@@ -11,7 +11,10 @@ public class PlayerConquestAbility : MonoBehaviour
     [SerializeField]
     private GameObject conquestDagger;
 
-    private void OnEnable()
+    [SerializeField]
+    private GameObject conquestPortal;
+
+    private void Start()
     {
         bAbilityUsed = false;
         bulletPossessor = GetComponent<BulletPossessor>();
@@ -31,13 +34,13 @@ public class PlayerConquestAbility : MonoBehaviour
             return;
         }
 
-        Transform activeBulletTransform = bulletPossessor.GetPossessedBulletTransform();
-        if (!activeBulletTransform)
+        BulletPossessTarget activeBullet = bulletPossessor.GetPossessedBullet();
+        if (!activeBullet)
         {
             return;
         }
 
-        SpawnDagger(activeBulletTransform);
+        SpawnDagger(activeBullet);
 
         // UI change
 
@@ -46,9 +49,32 @@ public class PlayerConquestAbility : MonoBehaviour
         bAbilityUsed = true;
     }
 
-    private void SpawnDagger(Transform activeBulletTransform)
+    private void SpawnDagger(BulletPossessTarget activeBullet)
     {
-        //Instantiate conquest dagger a bit in front of where the active bullet is in relation to the camera
-        //Should fly forward in relation to camera
+        Vector3 activeBulletPosition = activeBullet.transform.position;
+
+        Vector3 cameraDistance = Camera.main.transform.position - activeBulletPosition;
+
+        Vector3 daggerSpawnPoint = activeBulletPosition + (-cameraDistance / 2);
+
+        Quaternion daggerSpawnRotation = Quaternion.LookRotation(Camera.main.transform.forward);
+
+        //Spawn Portal object
+        Factory.InstantiateGameObject(conquestPortal, daggerSpawnPoint, daggerSpawnRotation);
+
+        //Make rewindable action for ability
+        ConquestAbility.ConquestAbilityUsed(
+            conquestDagger,
+            daggerSpawnPoint,
+            daggerSpawnRotation,
+            bulletPossessor,
+            activeBullet,
+            this
+        );
+    }
+
+    public void RefreshAbility()
+    {
+        bAbilityUsed = false;
     }
 }

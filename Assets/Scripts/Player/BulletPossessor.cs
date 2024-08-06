@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,20 +6,28 @@ using UnityEngine;
 public class BulletPossessor : MonoBehaviour
 {
     private BulletPossessTarget possessedBullet;
-
+    private BulletPossessTarget centreOfScreenPossessable;
     private bool bIsFocusing;
 
-    public void TryPossess()
+    public static EventHandler<BulletPossessTarget> OnNewCentralPossessable;
+
+    private void Update()
     {
         if (!possessedBullet)
         {
             return;
         }
 
+        FindCentreOfScreenPossessable();
+    }
+
+    private void FindCentreOfScreenPossessable()
+    {
         List<BulletPossessTarget> targets = possessedBullet.GetPossessables();
 
         if (targets.Count == 0)
         {
+            //Disable possess UI
             return;
         }
 
@@ -44,11 +53,69 @@ public class BulletPossessor : MonoBehaviour
 
         if (closestTarget == null)
         {
+            //Disable possess UI
             return;
         }
 
-        PossessBullet(closestTarget);
+        if (closestTarget != centreOfScreenPossessable)
+        {
+            centreOfScreenPossessable = closestTarget;
+            OnNewCentralPossessable?.Invoke(this, closestTarget);
+        }
     }
+
+    public void TryPossess()
+    {
+        if (!possessedBullet)
+        {
+            return;
+        }
+
+        if (!centreOfScreenPossessable)
+        {
+            return;
+        }
+
+        PossessBullet(centreOfScreenPossessable);
+    }
+
+    // public void TryPossessNext()
+    // {
+    //     if (!possessedBullet)
+    //     {
+    //         return;
+    //     }
+
+    //     List<BulletPossessTarget> possessables = possessedBullet.GetPossessables();
+
+    //     int currentPossessIndex = possessables.IndexOf(possessedBullet);
+    //     int nextIndex = currentPossessIndex + 1;
+    //     if (nextIndex >= possessables.Count)
+    //     {
+    //         nextIndex = 0;
+    //     }
+
+    //     PossessBullet(possessables[nextIndex]);
+    // }
+
+    // public void TryPossessPrevious()
+    // {
+    //     if (!possessedBullet)
+    //     {
+    //         return;
+    //     }
+
+    //     List<BulletPossessTarget> possessables = possessedBullet.GetPossessables();
+
+    //     int currentPossessIndex = possessables.IndexOf(possessedBullet);
+    //     int nextIndex = currentPossessIndex - 1;
+    //     if (nextIndex < 0)
+    //     {
+    //         nextIndex = possessables.Count - 1;
+    //     }
+
+    //     PossessBullet(possessables[nextIndex]);
+    // }
 
     public void PossessBullet(BulletPossessTarget newBullet)
     {
@@ -66,6 +133,7 @@ public class BulletPossessor : MonoBehaviour
         possessedBullet.UnpossessBullet();
         if (!newBullet)
         {
+            OnNewCentralPossessable?.Invoke(this, null);
             possessedBullet = null;
             return;
         }
@@ -94,8 +162,13 @@ public class BulletPossessor : MonoBehaviour
         possessedBullet.SetIsFocusing(isFocusing);
     }
 
-    public Transform GetPossessedBulletTransform()
+    public BulletPossessTarget GetPossessedBullet()
     {
-        return possessedBullet?.transform;
+        return possessedBullet;
+    }
+
+    public bool CheckPossessedBullet(BulletPossessTarget possessTarget)
+    {
+        return possessedBullet == possessTarget;
     }
 }

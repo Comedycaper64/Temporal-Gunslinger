@@ -17,9 +17,6 @@ public class TutorialGameManager : GameManager
     private GameObject reaper;
 
     [SerializeField]
-    private GameObject possessUI;
-
-    [SerializeField]
     private LevelSelectorUI levelSelectUI;
 
     [SerializeField]
@@ -60,7 +57,6 @@ public class TutorialGameManager : GameManager
         playerController = playerStateMachine.GetComponent<PlayerController>();
         playerController.ToggleTutorialStartMode();
         reaper.SetActive(false);
-        possessUI.SetActive(false);
         revPocketwatch.SetActive(false);
         revModelPocketwatch.SetActive(false);
         pocketwatchUI.SetActive(false);
@@ -116,7 +112,6 @@ public class TutorialGameManager : GameManager
             projectileMask.EnableFireProjectile();
             playerController.ToggleCanPossess(true);
             rewindManager.ToggleCanRewind(true);
-            possessUI.SetActive(true);
         }
         else if (tutorialState == TutorialState.Round3)
         {

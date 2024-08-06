@@ -28,6 +28,8 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private AudioClip[] possessSFX;
 
+    public EventHandler<bool> OnActiveToggled;
+
     private void Awake()
     {
         bulletMovement = GetComponent<BulletMovement>();
@@ -93,6 +95,8 @@ public class Bullet : MonoBehaviour
         bulletMovement.RemoveDeadFlag();
         bulletDamager.SetBulletActive(toggle);
         bBulletActive = toggle;
+
+        OnActiveToggled?.Invoke(this, bBulletActive);
 
         if (toggle)
         {

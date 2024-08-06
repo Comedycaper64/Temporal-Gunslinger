@@ -17,6 +17,9 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public event Action OnShootAction;
     public event Action OnFocusAction;
     public event Action OnPossessAction;
+
+    // public event Action OnPossessNextAction;
+    // public event Action OnPossessPreviousAction;
     public event Action OnConquestAction;
 
     private void Awake()
@@ -131,6 +134,30 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
             OnPossessAction?.Invoke();
         }
     }
+
+    // public void OnPossessNext(InputAction.CallbackContext context)
+    // {
+    //     if (!context.performed)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         OnPossessNextAction?.Invoke();
+    //     }
+    // }
+
+    // public void OnPossessPrevious(InputAction.CallbackContext context)
+    // {
+    //     if (!context.performed)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         OnPossessPreviousAction?.Invoke();
+    //     }
+    // }
 
     public void OnReset(InputAction.CallbackContext context)
     {
