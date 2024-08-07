@@ -28,13 +28,17 @@ public class EnemyEnforcerShootState : State
             0,
             stateMachine.GetActiveAnimationExitTime()
         );
-        enemyStateMachine.SetProjectileAtFirePoint();
 
-        BulletStateMachine[] bullets = enemyStateMachine.GetBulletStateMachines();
-
-        foreach (BulletStateMachine bullet in bullets)
+        if (stateMachine.GetActiveAnimationExitTime() < 0.01f)
         {
-            bullet.SwitchToActive();
+            enemyStateMachine.SetProjectileAtFirePoint();
+
+            BulletStateMachine[] bullets = enemyStateMachine.GetBulletStateMachines();
+
+            foreach (BulletStateMachine bullet in bullets)
+            {
+                bullet.SwitchToActive();
+            }
         }
     }
 

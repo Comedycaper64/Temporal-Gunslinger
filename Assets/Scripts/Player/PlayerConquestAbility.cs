@@ -6,19 +6,58 @@ using UnityEngine;
 public class PlayerConquestAbility : MonoBehaviour
 {
     private bool bAbilityUsed = true;
+    private bool spawned = false;
+    private float daggerSpawnDuration = 0.004f;
+    private float daggerSpawnTimer = 0;
+    private Vector3 currentPortalPoint;
+    private Vector3 currentPortalDirection;
     private BulletPossessor bulletPossessor;
+    private RewindState rewindState;
 
     [SerializeField]
     private GameObject conquestDagger;
 
     [SerializeField]
+    private MeshRenderer daggerRenderer;
+
+    [SerializeField]
     private GameObject conquestPortal;
+
+    [SerializeField]
+    private Material daggerSpawnMaterial;
+
+    [SerializeField]
+    private Material daggerFlyMaterial;
 
     private void Start()
     {
         bAbilityUsed = false;
         bulletPossessor = GetComponent<BulletPossessor>();
+        rewindState = GetComponent<RewindState>();
+        rewindState.ToggleMovement(true);
         InputManager.Instance.OnConquestAction += TryUseAbility;
+    }
+
+    private void Update()
+    {
+        if (bAbilityUsed)
+        {
+            daggerSpawnTimer += Time.deltaTime * rewindState.GetScaledSpeed();
+
+            //Debug.Log(daggerSpawnTimer);
+
+            if ((daggerSpawnTimer > daggerSpawnDuration) && (spawned == false))
+            {
+                spawned = true;
+                daggerRenderer.material = daggerFlyMaterial;
+            }
+            else if ((daggerSpawnTimer < daggerSpawnDuration) && (spawned == true))
+            {
+                spawned = false;
+                daggerRenderer.material = daggerSpawnMaterial;
+                SetDaggerMaterialPoints();
+            }
+        }
     }
 
     private void OnDisable()
@@ -46,7 +85,17 @@ public class PlayerConquestAbility : MonoBehaviour
 
         // Activate conquest flair
 
+        daggerSpawnTimer = 0f;
+        spawned = false;
+
         bAbilityUsed = true;
+    }
+
+    private void SetDaggerMaterialPoints()
+    {
+        Material daggerMaterial = daggerRenderer.material;
+        daggerMaterial.SetVector("_Portal_Point", currentPortalPoint);
+        daggerMaterial.SetVector("_Portal_Direction", currentPortalDirection);
     }
 
     private void SpawnDagger(BulletPossessTarget activeBullet)
@@ -58,6 +107,12 @@ public class PlayerConquestAbility : MonoBehaviour
         Vector3 daggerSpawnPoint = activeBulletPosition + (-cameraDistance / 2);
 
         Quaternion daggerSpawnRotation = Quaternion.LookRotation(Camera.main.transform.forward);
+
+        currentPortalPoint = daggerSpawnPoint;
+
+        currentPortalDirection = Camera.main.transform.forward;
+
+        SetDaggerMaterialPoints();
 
         //Spawn Portal object
         Factory.InstantiateGameObject(conquestPortal, daggerSpawnPoint, daggerSpawnRotation);

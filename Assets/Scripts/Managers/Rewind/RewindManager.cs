@@ -88,6 +88,7 @@ public class RewindManager : MonoBehaviour
     {
         if (!bRewindActive)
         {
+            //Debug.Log(rewindTimer);
             rewindTimer += Time.deltaTime * RewindableMovement.GetTimescale();
         }
         else

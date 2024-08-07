@@ -13,16 +13,16 @@ SubShader
 {
     Tags 
     {
-        "RenderType"="Opaque" 
-        //"RenderType"="Transparent" 
-        //"Queue"="Transparent"
+        //"RenderType"="Opaque" 
+        "RenderType"="Transparent" 
+        "Queue"="Transparent"
     }
 
     Pass
     {
-        //ZWrite Off
+        ZWrite Off
 
-        //Blend SrcAlpha OneMinusSrcAlpha
+        Blend SrcAlpha OneMinusSrcAlpha
         //Blend DstColor Zero
             
         CGPROGRAM
@@ -43,6 +43,7 @@ struct v2f
 {
     float2 uv : TEXCOORD0;
     float4 vertex : SV_POSITION;
+    float3 worldPos : TEXCOORD1;
 };
 
 float4 _Colour;
@@ -62,6 +63,7 @@ v2f vert(appdata v)
 {
     v2f o;
     o.vertex = UnityObjectToClipPos(v.vertex);
+    o.worldPos = mul(unity_ObjectToWorld, v.vertex);
     o.uv = v.uv;
     return o;
 }
@@ -99,10 +101,16 @@ fixed4 frag(v2f i) : SV_Target
     
     borderMask = step(borderSDF - _BorderSize, uvDistance);
     
-    
-    
     borderMask = borderMask + borderBreathe;
     
+    float3 cameraPosition = _WorldSpaceCameraPos;
+    
+    float clampMax = 3;
+    
+    float alphaMod = clamp(abs(distance(cameraPosition, i.worldPos)), 0.1, clampMax) / clampMax;
+    
+    alphaMod = saturate(InverseLerp(0.4, 1, alphaMod));
+ 
     
     //return borderMask;
     
@@ -115,10 +123,11 @@ fixed4 frag(v2f i) : SV_Target
     
     float uvDistanceLerp = saturate(InverseLerp(0.4, 0.6, uvDistance));
     
-    float4 colorLerp = lerp(_Colour, _BorderColour, uvDistanceLerp);
-  
+    float3 colorLerp = lerp(_Colour, _BorderColour, uvDistanceLerp);
     
-    return colorLerp * reveal + _BorderColour * borderMask;
+    float3 output = colorLerp * reveal + (float3)_BorderColour * borderMask;
+    
+    return float4(output.rgb, alphaMod);
     //return _Colour * reveal + _BorderColour * borderMask;
 }
             ENDCG

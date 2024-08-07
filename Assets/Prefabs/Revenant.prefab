@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 282173908676742481}
   - component: {fileID: 282173908676742480}
   - component: {fileID: 1112448997959496294}
+  - component: {fileID: 3450809094561063653}
   m_Layer: 6
   m_Name: Revenant
   m_TagString: Player
@@ -178,8 +179,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   conquestDagger: {fileID: 5295901601736239158}
+  daggerRenderer: {fileID: 8127987924602567102}
   conquestPortal: {fileID: 4953520897273820608, guid: 8b548bf5fbc520c4580b0bfe8a1e4120,
     type: 3}
+  daggerSpawnMaterial: {fileID: 2100000, guid: 4382a6b2d77a4614bacb77afe219ad37, type: 2}
+  daggerFlyMaterial: {fileID: 2100000, guid: 63da2b4b7a2418f44b9a52a646822475, type: 2}
+--- !u!114 &3450809094561063653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282173908676742482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225c8391757164040965a800187e9919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startSpeed: 1
 --- !u!1 &282173908678326072
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,6 +1541,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7828219722662083374, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: possessableWhileInactive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8245538723097934568, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -1993,6 +2015,12 @@ Transform:
 --- !u!1 &5295901601736239158 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5929777289824521393, guid: d97295638a0839c4c83237b6350737e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1960226328234058887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &8127987924602567102 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7780098655613869369, guid: d97295638a0839c4c83237b6350737e7,
     type: 3}
   m_PrefabInstance: {fileID: 1960226328234058887}
   m_PrefabAsset: {fileID: 0}

@@ -26,7 +26,6 @@ public class EnemyEnforcerActiveState : State
         if (rewindState.GetTimeSpeed() < 0f)
         {
             timer = shootTime;
-            projectileFired = true;
         }
     }
 
