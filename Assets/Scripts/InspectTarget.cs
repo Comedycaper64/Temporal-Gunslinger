@@ -4,15 +4,72 @@ using UnityEngine;
 
 public class InspectTarget : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private int initialLayer;
+    private Vector3 initialLocation;
+    private Quaternion initialRotation;
+    private Vector3 initialScale;
+
+    [SerializeField]
+    private string targetName;
+
+    [SerializeField]
+    [TextArea]
+    private string targetRevenantThoughts;
+
+    [SerializeField]
+    [TextArea]
+    private string targetDescription;
+
+    [SerializeField]
+    private float targetViewScale = 15f;
+
+    [SerializeField]
+    private List<GameObject> targetSubObjects = new List<GameObject>();
+
+    private void Start()
     {
-        
+        initialLayer = gameObject.layer;
+        initialLocation = transform.position;
+        initialRotation = transform.rotation;
+        initialScale = transform.localScale;
     }
 
-    // Update is called once per frame
-    void Update()
+    public string GetTargetName()
     {
-        
+        return targetName;
+    }
+
+    public string GetTargetThoughts()
+    {
+        return targetRevenantThoughts;
+    }
+
+    public string GetTargetDescription()
+    {
+        return targetDescription;
+    }
+
+    public float GetTargetViewScale()
+    {
+        return targetViewScale;
+    }
+
+    public List<GameObject> GetTargetSubObjects()
+    {
+        return targetSubObjects;
+    }
+
+    public void ResetTarget()
+    {
+        transform.position = initialLocation;
+        transform.rotation = initialRotation;
+        transform.localScale = initialScale;
+
+        gameObject.layer = initialLayer;
+
+        foreach (GameObject subObject in targetSubObjects)
+        {
+            subObject.layer = initialLayer;
+        }
     }
 }

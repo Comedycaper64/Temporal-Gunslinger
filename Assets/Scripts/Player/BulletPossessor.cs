@@ -27,7 +27,11 @@ public class BulletPossessor : MonoBehaviour
 
         if (targets.Count == 0)
         {
-            //Disable possess UI
+            if (centreOfScreenPossessable != null)
+            {
+                centreOfScreenPossessable = null;
+                OnNewCentralPossessable?.Invoke(this, null);
+            }
             return;
         }
 
@@ -53,7 +57,11 @@ public class BulletPossessor : MonoBehaviour
 
         if (closestTarget == null)
         {
-            //Disable possess UI
+            if (centreOfScreenPossessable != null)
+            {
+                centreOfScreenPossessable = null;
+                OnNewCentralPossessable?.Invoke(this, null);
+            }
             return;
         }
 
