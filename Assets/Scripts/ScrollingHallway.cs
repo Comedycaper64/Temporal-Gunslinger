@@ -8,7 +8,15 @@ public class ScrollingHallway : MonoBehaviour
 
     [SerializeField]
     private float scrollSpeed = 5f;
+
+    [SerializeField]
     private float teleportDistance = 40f;
+
+    [SerializeField]
+    private float hallwayLength = 20f;
+
+    [SerializeField]
+    private Vector3 hallwayMovementDirection = Vector3.back;
 
     [SerializeField]
     private Transform[] hallways;
@@ -38,10 +46,14 @@ public class ScrollingHallway : MonoBehaviour
     {
         foreach (Transform hallway in hallways)
         {
-            hallway.position += Vector3.back * scrollSpeed * Time.deltaTime;
-            if ((transform.position.z - hallway.position.z) > teleportDistance)
+            hallway.position += hallwayMovementDirection * scrollSpeed * Time.deltaTime;
+            if (
+                (transform.position - hallway.position).sqrMagnitude
+                > Mathf.Pow(teleportDistance, 2)
+            )
             {
-                hallway.position += new Vector3(0, 0, 20f * hallways.Length);
+                //hallway.position += new Vector3(0, 0, 20f * hallways.Length);
+                hallway.position += -hallwayMovementDirection * hallwayLength * hallways.Length;
             }
         }
     }
@@ -53,9 +65,15 @@ public class ScrollingHallway : MonoBehaviour
         {
             hallway.gameObject.SetActive(toggle);
         }
-        foreach (Transform sceneObject in otherSceneObjects)
+
+        // foreach (Transform sceneObject in otherSceneObjects)
+        // {
+        //     sceneObject.gameObject.SetActive(toggle);
+        // }
+
+        for (int i = 0; i < otherSceneObjects.Length; i++)
         {
-            sceneObject.gameObject.SetActive(toggle);
+            otherSceneObjects[i].gameObject.SetActive(toggle);
         }
 
         if (toggle)

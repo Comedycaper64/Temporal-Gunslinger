@@ -28,6 +28,9 @@ public class InspectUI : MonoBehaviour
     private TextMeshProUGUI revenantText;
 
     [SerializeField]
+    private TextMeshProUGUI descriptionText;
+
+    [SerializeField]
     private Transform cameraObjectPlacement;
 
     private InspectTarget spawnedObject;
@@ -74,6 +77,7 @@ public class InspectUI : MonoBehaviour
 
         titleText.text = target.GetTargetName();
         revenantText.text = target.GetTargetThoughts();
+        descriptionText.text = target.GetTargetDescription();
 
         spawnedObject.gameObject.layer = uiLayer;
 

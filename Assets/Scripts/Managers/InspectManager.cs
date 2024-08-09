@@ -21,10 +21,14 @@ public class InspectManager : MonoBehaviour
         GameManager.OnGameStateChange += ToggleCanInspect;
         InputManager.Instance.OnPossessAction += TryInspect;
 
-        InspectTarget[] sceneTargets = inspectablesObject.GetComponentsInChildren<InspectTarget>();
-        foreach (InspectTarget target in sceneTargets)
+        if (inspectablesObject)
         {
-            sceneInspectables.Add(target);
+            InspectTarget[] sceneTargets =
+                inspectablesObject.GetComponentsInChildren<InspectTarget>();
+            foreach (InspectTarget target in sceneTargets)
+            {
+                sceneInspectables.Add(target);
+            }
         }
     }
 

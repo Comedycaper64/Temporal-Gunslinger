@@ -7,6 +7,8 @@ public class ActorMover : MonoBehaviour
 {
     private Vector3 destination;
     private float movementSpeed;
+    private int currentMovementType = 0;
+    private int currentIdleType = 0;
 
     [SerializeField]
     private Transform movingTransform;
@@ -17,10 +19,10 @@ public class ActorMover : MonoBehaviour
     private Animator actorAnimator;
 
     [SerializeField]
-    private AnimationClip movingAnimation;
+    private AnimationClip[] movingAnimations;
 
     [SerializeField]
-    private AnimationClip idleAnimation;
+    private AnimationClip[] idleAnimations;
 
     private void Awake()
     {
@@ -29,6 +31,8 @@ public class ActorMover : MonoBehaviour
 
     public void MoveActor(ActorMovementSO actorMovementSO, Action onMovementComplete)
     {
+        currentMovementType = actorMovementSO.movementType;
+        currentIdleType = actorMovementSO.idleType;
         SetMovementTarget(actorMovementSO.movement, actorMovementSO.movementSpeed);
         shouldGoIdle = actorMovementSO.goIdleAtEnd;
         if (actorMovementSO.playMovementUnInterrupted)
@@ -47,11 +51,15 @@ public class ActorMover : MonoBehaviour
         destination = movingTransform.position + movement;
         //this.movement = movement.normalized * speed;
         movementSpeed = speed;
-        if (!movingAnimation)
+        if (movingAnimations == null)
         {
             return;
         }
-        actorAnimator.CrossFadeInFixedTime(movingAnimation.name, 0.1f);
+
+        Debug.Log(movingAnimations[currentMovementType].name);
+        Debug.Log(currentMovementType);
+
+        actorAnimator.CrossFadeInFixedTime(movingAnimations[currentMovementType].name, 0.1f);
         actorAnimator.SetBool("moving", true);
     }
 
@@ -65,11 +73,11 @@ public class ActorMover : MonoBehaviour
         }
         onMovementComplete = null;
 
-        if (!idleAnimation || !shouldGoIdle)
+        if ((idleAnimations == null) || !shouldGoIdle)
         {
             return;
         }
-        actorAnimator.CrossFadeInFixedTime(idleAnimation.name, 0.1f);
+        actorAnimator.CrossFadeInFixedTime(idleAnimations[currentIdleType].name, 0.1f);
         actorAnimator.SetBool("moving", false);
     }
 
