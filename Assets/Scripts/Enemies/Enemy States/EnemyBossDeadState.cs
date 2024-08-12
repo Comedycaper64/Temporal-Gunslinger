@@ -13,7 +13,7 @@ public class EnemyBossDeadState : State
     {
         EnemyDeadState.enemiesAlive++;
         animator = stateMachine.stateMachineAnimator;
-        dissolveController = stateMachine.dissolveController;
+        dissolveController = stateMachine.GetDissolveController();
         DeathAnimHash = Animator.StringToHash(stateMachine.GetActiveAnimationName());
     }
 

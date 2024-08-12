@@ -9,7 +9,7 @@ public class StateChange : RewindableAction
 
     public static void StateChanged(State previousState, StateMachine stateMachine)
     {
-        StateChange stateChange = new StateChange(previousState, stateMachine);
+        new StateChange(previousState, stateMachine);
     }
 
     public StateChange(State previousState, StateMachine stateMachine)

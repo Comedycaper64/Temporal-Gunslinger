@@ -8,7 +8,7 @@ public class VFXPlayed : RewindableAction
 
     public static void VFXPlay(VFXPlayback vFXPlayback)
     {
-        VFXPlayed vFXPlayed = new VFXPlayed(vFXPlayback);
+        new VFXPlayed(vFXPlayback);
     }
 
     public VFXPlayed(VFXPlayback vFXPlayback)

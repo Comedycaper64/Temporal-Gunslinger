@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class DestroyWeakPoint : RewindableAction
 {
-    private BossHealth bossHealth;
+    private MonoBehaviour sender;
     private Collider weakPointCollider;
     private DissolveController weakPointDissolve;
     private FocusHighlight weakPointHighlight;
 
-    public static void WeakPointDestroyed(BossHealth bossHealth, GameObject weakPoint)
+    public static void WeakPointDestroyed(MonoBehaviour sender, GameObject weakPoint)
     {
-        DestroyWeakPoint destroyWeakPoint = new DestroyWeakPoint(bossHealth, weakPoint);
+        new DestroyWeakPoint(sender, weakPoint);
         //Debug.Log("Weak Point destroyed" + weakPoint.name);
     }
 
-    public DestroyWeakPoint(BossHealth bossHealth, GameObject weakPoint)
+    private DestroyWeakPoint(MonoBehaviour sender, GameObject weakPoint)
     {
-        this.bossHealth = bossHealth;
+        this.sender = sender;
         weakPointCollider = weakPoint.GetComponent<Collider>();
         weakPointCollider.enabled = false;
         weakPointDissolve = weakPoint.GetComponent<DissolveController>();
@@ -32,7 +32,17 @@ public class DestroyWeakPoint : RewindableAction
     public override void Undo()
     {
         //Debug.Log("Weak Point undone" + weakPointCollider.name);
-        bossHealth.UndoDamage();
+        if (sender.GetType() == typeof(BossHealth))
+        {
+            BossHealth bossHealth = sender as BossHealth;
+            bossHealth.UndoDamage();
+        }
+        else if (sender.GetType() == typeof(FallingShelf))
+        {
+            FallingShelf fallingShelf = sender as FallingShelf;
+            fallingShelf.UndoFall();
+        }
+
         weakPointCollider.enabled = true;
         weakPointHighlight.enabled = true;
         weakPointDissolve.StopDissolve();

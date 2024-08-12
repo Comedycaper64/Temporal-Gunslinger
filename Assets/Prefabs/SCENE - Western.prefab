@@ -585,6 +585,7 @@ GameObject:
   - component: {fileID: 859275748038879014}
   - component: {fileID: 7278401055996942962}
   - component: {fileID: 5625661779240066406}
+  - component: {fileID: 3546602394735415398}
   m_Layer: 0
   m_Name: Western Volume VFX
   m_TagString: Untagged
@@ -600,7 +601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7592565928428830503}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -627,10 +628,25 @@ VisualEffect:
       - m_Value: 0.1
         m_Name: Turbulence Intensity
         m_Overridden: 1
+      - m_Value: 20
+        m_Name: Particle Spawn Rate
+        m_Overridden: 1
+      - m_Value: 0.25
+        m_Name: Particle Size
+        m_Overridden: 1
+      - m_Value: 0.05
+        m_Name: Particle Alpha
+        m_Overridden: 1
+      - m_Value: 0.1
+        m_Name: Upward Velocity
+        m_Overridden: 1
     m_Vector2f:
       m_Array: []
     m_Vector3f:
-      m_Array: []
+      m_Array:
+      - m_Value: {x: 15, y: 5, z: 15}
+        m_Name: Spawn Area_size
+        m_Overridden: 1
     m_Vector4f:
       m_Array: []
     m_Uint:
@@ -642,7 +658,38 @@ VisualEffect:
     m_AnimationCurve:
       m_Array: []
     m_Gradient:
-      m_Array: []
+      m_Array:
+      - m_Value:
+          serializedVersion: 2
+          key0: {r: 1.4980392, g: 1.2392157, b: 0, a: 1}
+          key1: {r: 1.4628803, g: 1.2109079, b: 0.004495005, a: 1}
+          key2: {r: 0.16981131, g: 0.16981131, b: 0.16981131, a: 0}
+          key3: {r: 0, g: 0, b: 0, a: 0}
+          key4: {r: 0, g: 0, b: 0, a: 0}
+          key5: {r: 0, g: 0, b: 0, a: 0}
+          key6: {r: 0, g: 0, b: 0, a: 0}
+          key7: {r: 0, g: 0, b: 0, a: 0}
+          ctime0: 0
+          ctime1: 34502
+          ctime2: 65535
+          ctime3: 0
+          ctime4: 0
+          ctime5: 0
+          ctime6: 0
+          ctime7: 0
+          atime0: 0
+          atime1: 29876
+          atime2: 65535
+          atime3: 65535
+          atime4: 0
+          atime5: 0
+          atime6: 0
+          atime7: 0
+          m_Mode: 0
+          m_NumColorKeys: 3
+          m_NumAlphaKeys: 3
+        m_Name: Volume Coloure
+        m_Overridden: 1
     m_NamedObject:
       m_Array: []
     m_Bool:
@@ -687,6 +734,21 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3546602394735415398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592565928428830503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01bb4c1fd8fd8547a60056feba2e488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startSpeed: 1
+  controlTimeVariable: 0
+  bPlayOnStart: 1
 --- !u!1 &7805048820120199951
 GameObject:
   m_ObjectHideFlags: 0

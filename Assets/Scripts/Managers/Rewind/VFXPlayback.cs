@@ -10,9 +10,13 @@ public class VFXPlayback : RewindableMovement
     private bool effectPlaying;
     private VisualEffect visualEffect;
     private const string TIME_VARIABLE = "Time";
+    private const string PLAYBACK_VARIABLE = "Playback";
 
     [SerializeField]
     private bool controlTimeVariable = false;
+
+    [SerializeField]
+    private bool controlPlaybackVariable = false;
 
     [SerializeField]
     private bool bPlayOnStart;
@@ -33,6 +37,11 @@ public class VFXPlayback : RewindableMovement
         {
             visualEffect.playRate = 1f;
             return;
+        }
+
+        if (controlPlaybackVariable)
+        {
+            visualEffect.SetFloat(PLAYBACK_VARIABLE, GetSpeed());
         }
 
         if (controlTimeVariable)

@@ -18,7 +18,7 @@ public class ConquestAbility : RewindableAction
         PlayerConquestAbility playerConquestAbility
     )
     {
-        ConquestAbility conquestAbility = new ConquestAbility(
+        new ConquestAbility(
             dagger,
             spawnPosition,
             spawnRotation,

@@ -12,7 +12,7 @@ public class BulletPossess : RewindableAction
         BulletPossessTarget previousTarget
     )
     {
-        BulletPossess bulletPossess = new BulletPossess(bulletPossessor, previousTarget);
+        new BulletPossess(bulletPossessor, previousTarget);
     }
 
     public BulletPossess(BulletPossessor bulletPossessor, BulletPossessTarget previousTarget)

@@ -18,7 +18,7 @@ public class Redirect : RewindableAction
         bool bIsRicochet
     )
     {
-        Redirect newRedirect = new Redirect(
+        new Redirect(
             redirectPosition,
             initialDirection,
             redirectedBullet,

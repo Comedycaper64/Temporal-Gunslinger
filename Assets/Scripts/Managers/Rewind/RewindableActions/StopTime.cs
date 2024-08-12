@@ -6,7 +6,7 @@ public class StopTime : RewindableAction
 {
     public static void TimeStopped()
     {
-        StopTime stopTime = new StopTime();
+        new StopTime();
     }
 
     public StopTime()

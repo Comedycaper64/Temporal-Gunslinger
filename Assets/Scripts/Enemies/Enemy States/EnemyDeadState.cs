@@ -15,7 +15,7 @@ public class EnemyDeadState : State
     {
         enemiesAlive++;
         animator = stateMachine.stateMachineAnimator;
-        dissolveController = stateMachine.dissolveController;
+        dissolveController = stateMachine.GetDissolveController();
     }
 
     public override void Enter()

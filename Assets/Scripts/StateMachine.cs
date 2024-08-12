@@ -13,7 +13,9 @@ public abstract class StateMachine : MonoBehaviour
     protected Dictionary<StateEnum, State> stateDictionary = new Dictionary<StateEnum, State>();
 
     public Animator stateMachineAnimator;
-    public DissolveController dissolveController;
+
+    [SerializeField]
+    private DissolveController dissolveController;
 
     public virtual void Awake()
     {
@@ -83,5 +85,10 @@ public abstract class StateMachine : MonoBehaviour
     public float GetActiveAnimationExitTime()
     {
         return activeAnimationExitTime;
+    }
+
+    public DissolveController GetDissolveController()
+    {
+        return dissolveController;
     }
 }

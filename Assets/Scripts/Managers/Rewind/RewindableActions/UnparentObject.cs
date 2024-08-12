@@ -15,11 +15,7 @@ public class UnparentObject : RewindableAction
         Vector3 initialPosition
     )
     {
-        UnparentObject unparentObject = new UnparentObject(
-            unparentedGameObject,
-            parentGameObject,
-            initialPosition
-        );
+        new UnparentObject(unparentedGameObject, parentGameObject, initialPosition);
     }
 
     public UnparentObject(

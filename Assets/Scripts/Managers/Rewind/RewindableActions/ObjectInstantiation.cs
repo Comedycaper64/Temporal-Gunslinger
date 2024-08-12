@@ -9,7 +9,7 @@ public class ObjectInstantiation : RewindableAction
 
     public static void ObjectCreated(GameObject gameObject)
     {
-        ObjectInstantiation objectInstantiation = new ObjectInstantiation(gameObject);
+        new ObjectInstantiation(gameObject);
     }
 
     public ObjectInstantiation(GameObject gameObject)

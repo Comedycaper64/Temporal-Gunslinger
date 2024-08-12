@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ActorResilientHealth : MonoBehaviour
 {
+    private bool damaged = false;
     private StateMachine stateMachine;
 
     [SerializeField]
@@ -18,7 +19,8 @@ public class ActorResilientHealth : MonoBehaviour
         stateMachine = GetComponent<StateMachine>();
         foreach (WeakPoint weakPoint in weakPoints)
         {
-            weakPoint.OnHit += Die;
+            weakPoint.OnHit += DamageTaken;
+            weakPoint.OnCrush += Die;
         }
     }
 
@@ -26,7 +28,21 @@ public class ActorResilientHealth : MonoBehaviour
     {
         foreach (WeakPoint weakPoint in weakPoints)
         {
-            weakPoint.OnHit -= Die;
+            weakPoint.OnHit -= DamageTaken;
+            weakPoint.OnCrush -= Die;
+        }
+    }
+
+    private void DamageTaken(object sender, EventArgs e)
+    {
+        if (!damaged)
+        {
+            damaged = true;
+            DamageEnemy.EnemyDamaged(this, stateMachine.GetDissolveController());
+        }
+        else
+        {
+            Die(this, null);
         }
     }
 
@@ -38,5 +54,10 @@ public class ActorResilientHealth : MonoBehaviour
         {
             AudioManager.PlaySFX(deathSFX, 0.5f, 0, transform.position);
         }
+    }
+
+    public void UndoDamage()
+    {
+        damaged = false;
     }
 }
