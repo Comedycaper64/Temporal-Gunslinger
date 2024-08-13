@@ -8,14 +8,14 @@ public class BulletPossessUI : MonoBehaviour
     private Transform possessTarget;
 
     [SerializeField]
-    private Transform possessUI;
+    private CanvasGroupFader possessUI;
 
     private Vector3 uiOffset = new Vector3(0, 0.1f, 0);
 
     private void OnEnable()
     {
         BulletPossessor.OnNewCentralPossessable += SetUITarget;
-        possessUI.gameObject.SetActive(false);
+        possessUI.SetCanvasGroupAlpha(0f);
     }
 
     private void OnDisable()
@@ -28,7 +28,7 @@ public class BulletPossessUI : MonoBehaviour
         if (possessTarget)
         {
             Vector3 viewPos = Camera.main.WorldToScreenPoint(possessTarget.position + uiOffset);
-            possessUI.position = viewPos;
+            possessUI.transform.position = viewPos;
         }
     }
 
@@ -36,11 +36,13 @@ public class BulletPossessUI : MonoBehaviour
     {
         if (!e)
         {
-            possessUI.gameObject.SetActive(false);
+            //possessUI.gameObject.SetActive(false);
+            possessUI.ToggleFade(false);
         }
         else
         {
-            possessUI.gameObject.SetActive(true);
+            //possessUI.gameObject.SetActive(true);
+            possessUI.ToggleFade(true);
             possessTarget = e.transform;
         }
     }

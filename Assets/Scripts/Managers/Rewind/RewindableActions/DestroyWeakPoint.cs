@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class DestroyWeakPoint : RewindableAction
 {
-    private MonoBehaviour sender;
+    private IReactable reactable;
     private Collider weakPointCollider;
     private DissolveController weakPointDissolve;
     private FocusHighlight weakPointHighlight;
 
-    public static void WeakPointDestroyed(MonoBehaviour sender, GameObject weakPoint)
+    public static void WeakPointDestroyed(IReactable reactable, GameObject weakPoint)
     {
-        new DestroyWeakPoint(sender, weakPoint);
+        new DestroyWeakPoint(reactable, weakPoint);
         //Debug.Log("Weak Point destroyed" + weakPoint.name);
     }
 
-    private DestroyWeakPoint(MonoBehaviour sender, GameObject weakPoint)
+    private DestroyWeakPoint(IReactable reactable, GameObject weakPoint)
     {
-        this.sender = sender;
+        this.reactable = reactable;
         weakPointCollider = weakPoint.GetComponent<Collider>();
         weakPointCollider.enabled = false;
         weakPointDissolve = weakPoint.GetComponent<DissolveController>();
@@ -32,16 +32,17 @@ public class DestroyWeakPoint : RewindableAction
     public override void Undo()
     {
         //Debug.Log("Weak Point undone" + weakPointCollider.name);
-        if (sender.GetType() == typeof(BossHealth))
-        {
-            BossHealth bossHealth = sender as BossHealth;
-            bossHealth.UndoDamage();
-        }
-        else if (sender.GetType() == typeof(FallingShelf))
-        {
-            FallingShelf fallingShelf = sender as FallingShelf;
-            fallingShelf.UndoFall();
-        }
+        // if (sender.GetType() == typeof(BossHealth))
+        // {
+        //     BossHealth bossHealth = sender as BossHealth;
+        //     bossHealth.UndoDamage();
+        // }
+        // else if (sender.GetType() == typeof(FallingShelf))
+        // {
+        //     FallingShelf fallingShelf = sender as FallingShelf;
+        //     fallingShelf.UndoFall();
+        // }
+        reactable.UndoReaction();
 
         weakPointCollider.enabled = true;
         weakPointHighlight.enabled = true;
