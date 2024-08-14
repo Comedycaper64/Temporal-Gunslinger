@@ -27,6 +27,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     private AudioClip[] possessSFX;
+    public Action OnShuntOut;
 
     public EventHandler<bool> OnActiveToggled;
 
@@ -38,24 +39,29 @@ public class Bullet : MonoBehaviour
         focusManager = GetComponent<FocusManager>();
         bulletFlightSFX = GetComponent<AudioSource>();
         gunParent = transform.parent;
+
+        bulletMovement.OnLowVelocity += SetLowVelocity;
+    }
+
+    private void OnDisable()
+    {
+        bulletMovement.OnLowVelocity -= SetLowVelocity;
     }
 
     private void Update()
     {
+        if (bIsDead)
+        {
+            return;
+        }
+
         if (bBulletActive)
         {
             bulletMovement.LoseVelocity();
 
-            if (bulletMovement.ShouldBulletStop())
+            if (bulletMovement.ShouldBulletStop() && !RewindManager.bRewinding)
             {
                 bulletStateMachine.SwitchToDeadState();
-            }
-            else
-            {
-                if (bulletMovement.ShouldBulletDrop())
-                {
-                    bulletMovement.ShowLowVelocityWarning();
-                }
             }
         }
 
@@ -86,13 +92,38 @@ public class Bullet : MonoBehaviour
         return Quaternion.LookRotation(aimDirection);
     }
 
+    private void SetLowVelocity(object sender, bool toggle)
+    {
+        //Debug.Log("Low Velocity " + toggle);
+        if (toggle)
+        {
+            bulletStateMachine.GetDissolveController().StartDissolve(0.33f);
+        }
+        else
+        {
+            bulletStateMachine.GetDissolveController().StopDissolve();
+        }
+
+        if (bBulletPossessed)
+        {
+            BulletVelocityUI.Instance.ToggleLowVelocity(toggle);
+        }
+
+        //Show warning on UI
+    }
+
     public void ToggleBulletActive(bool toggle)
     {
+        if (bBulletActive && toggle)
+        {
+            return;
+        }
+
         //Debug.Log("Projectile: " + gameObject.name + toggle);
 
         bulletMovement.ToggleMovement(toggle);
         bulletMovement.ToggleBulletModel(toggle);
-        bulletMovement.RemoveDeadFlag();
+        //bulletMovement.RemoveDeadFlag();
         bulletDamager.SetBulletActive(toggle);
         bBulletActive = toggle;
 
@@ -133,6 +164,8 @@ public class Bullet : MonoBehaviour
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
             int randomInt = Random.Range(0, possessSFX.Length);
             AudioManager.PlaySFX(possessSFX[randomInt], 0.25f, 4, transform.position);
+
+            BulletVelocityUI.Instance.ToggleLowVelocity(bulletMovement.GetIsLowVelocity());
         }
 
         bBulletPossessed = toggle;
@@ -143,10 +176,19 @@ public class Bullet : MonoBehaviour
         focusManager.ToggleFocusing(isFocusing);
     }
 
-    public void SetIsDead(bool isDead)
+    public void SetIsDead(bool isDead, bool shuntOut)
     {
+        if (shuntOut && bBulletPossessed)
+        {
+            //Debug.Log("Shunt!");
+            OnShuntOut?.Invoke();
+        }
+
+        OnActiveToggled?.Invoke(this, !isDead);
+
         bIsDead = isDead;
         bulletMovement.SetIsDead(bIsDead);
+        bulletDamager.SetBulletActive(!bIsDead);
     }
 
     public bool IsFocusing()

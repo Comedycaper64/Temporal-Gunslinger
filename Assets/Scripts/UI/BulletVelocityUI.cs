@@ -21,6 +21,9 @@ public class BulletVelocityUI : MonoBehaviour
     [SerializeField]
     private Image velocityBar;
 
+    [SerializeField]
+    private GameObject lowVelocityUI;
+
     public static BulletVelocityUI Instance;
 
     private void Awake()
@@ -69,6 +72,11 @@ public class BulletVelocityUI : MonoBehaviour
             return;
         }
         UpdateText();
+    }
+
+    public void ToggleLowVelocity(bool toggle)
+    {
+        lowVelocityUI.SetActive(toggle);
     }
 
     public void ToggleUIActive(bool toggle)

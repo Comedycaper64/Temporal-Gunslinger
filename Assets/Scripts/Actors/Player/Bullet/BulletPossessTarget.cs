@@ -14,6 +14,7 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     [SerializeField]
     private Transform highlight;
+    public static EventHandler<BulletPossessTarget> OnEmergencyRepossess;
     public static HashSet<IHighlightable> highlightables = new HashSet<IHighlightable>();
     private static HashSet<BulletPossessTarget> possessables = new HashSet<BulletPossessTarget>();
 
@@ -26,6 +27,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     private void OnEnable()
     {
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+
+        bullet.OnShuntOut += EmergencyRepossess;
 
         if (possessableWhileInactive)
         {
@@ -41,6 +44,9 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     private void OnDisable()
     {
         GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
+
+        bullet.OnShuntOut -= EmergencyRepossess;
+
         if (possessableWhileInactive)
         {
             highlightables.Remove(this);
@@ -50,6 +56,11 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         {
             bullet.OnActiveToggled -= ToggleBulletActive;
         }
+    }
+
+    private void EmergencyRepossess()
+    {
+        OnEmergencyRepossess?.Invoke(this, GetPossessables()[0]);
     }
 
     public void PossessBullet(bool isFocusing)

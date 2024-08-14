@@ -6,10 +6,12 @@ public class BulletActiveState : State
 {
     Bullet bullet;
 
+    //private BulletStateMachine bulletStateMachine;
     public BulletActiveState(BulletStateMachine stateMachine)
         : base(stateMachine)
     {
         bullet = stateMachine.GetComponent<Bullet>();
+        //bulletStateMachine = stateMachine;
     }
 
     public override void Enter()

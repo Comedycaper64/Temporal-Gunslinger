@@ -19,10 +19,12 @@ public class FocusManager : MonoBehaviour
     private const float NORMAL_FOV = 50f;
     private const float FOCUS_FOV = 30f;
     private const float focusZoomSpeed = 1.5f;
-    private const float focusAlpha = 0.25f;
+
+    // private const float focusAlpha = 0.25f;
     private float tweenTimer = 0f;
-    private float alphaNonTarget = focusAlpha;
-    private float alphaTarget = 1f;
+
+    // private float alphaNonTarget = focusAlpha;
+    // private float alphaTarget = 1f;
     private float targetFOV = NORMAL_FOV;
     private float nonTargetFOV = FOCUS_FOV;
 
@@ -32,14 +34,20 @@ public class FocusManager : MonoBehaviour
     [SerializeField]
     private AudioClip focusSFX;
 
+    // [SerializeField]
+    // private Renderer[] modelRenderer;
+
+    // [SerializeField]
+    // private Material roughMaterial;
+
+    // [SerializeField]
+    // private Material transparentMaterial;
     [SerializeField]
-    private Renderer[] modelRenderer;
+    private GameObject dissolveModel;
 
     [SerializeField]
-    private Material roughMaterial;
+    private GameObject transparentModel;
 
-    [SerializeField]
-    private Material transparentMaterial;
     private AimLine focusAimLine;
 
     [SerializeField]
@@ -80,21 +88,21 @@ public class FocusManager : MonoBehaviour
 
             bulletCamera.m_Lens.FieldOfView = lerp;
 
-            float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, lerp);
+            //float newAlpha = Mathf.Lerp(alphaNonTarget, alphaTarget, lerp);
 
-            if (modelRenderer.Length > 0)
-            {
-                foreach (Renderer renderer in modelRenderer)
-                {
-                    Material material = renderer.material;
-                    material.color = new Color(
-                        material.color.r,
-                        material.color.g,
-                        material.color.b,
-                        newAlpha
-                    );
-                }
-            }
+            // if (modelRenderer.Length > 0)
+            // {
+            //     foreach (Renderer renderer in modelRenderer)
+            //     {
+            //         Material material = renderer.material;
+            //         material.color = new Color(
+            //             material.color.r,
+            //             material.color.g,
+            //             material.color.b,
+            //             newAlpha
+            //         );
+            //     }
+            // }
         }
 
         if (!bCanFocus)
@@ -141,13 +149,16 @@ public class FocusManager : MonoBehaviour
         bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X;
         bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y;
 
-        alphaTarget = 1f;
-        alphaNonTarget = focusAlpha;
+        dissolveModel.SetActive(true);
+        transparentModel.SetActive(false);
 
-        foreach (Renderer renderer in modelRenderer)
-        {
-            renderer.material = roughMaterial;
-        }
+        // alphaTarget = 1f;
+        // alphaNonTarget = focusAlpha;
+
+        // foreach (Renderer renderer in modelRenderer)
+        // {
+        //     renderer.material = roughMaterial;
+        // }
 
         tweenTimer = 0f;
 
@@ -165,13 +176,16 @@ public class FocusManager : MonoBehaviour
         bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X;
         bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y;
 
-        alphaTarget = focusAlpha;
-        alphaNonTarget = 1f;
+        dissolveModel.SetActive(false);
+        transparentModel.SetActive(true);
 
-        foreach (Renderer renderer in modelRenderer)
-        {
-            renderer.material = transparentMaterial;
-        }
+        // alphaTarget = focusAlpha;
+        // alphaNonTarget = 1f;
+
+        // foreach (Renderer renderer in modelRenderer)
+        // {
+        //     renderer.material = transparentMaterial;
+        // }
 
         AudioManager.PlaySFX(focusSFX, 1f, 0, transform.position);
 

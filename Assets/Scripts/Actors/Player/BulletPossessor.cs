@@ -11,6 +11,16 @@ public class BulletPossessor : MonoBehaviour
 
     public static EventHandler<BulletPossessTarget> OnNewCentralPossessable;
 
+    private void Awake()
+    {
+        BulletPossessTarget.OnEmergencyRepossess += EmergencyPossess;
+    }
+
+    private void OnDisable()
+    {
+        BulletPossessTarget.OnEmergencyRepossess -= EmergencyPossess;
+    }
+
     private void Update()
     {
         if (!possessedBullet)
@@ -70,6 +80,11 @@ public class BulletPossessor : MonoBehaviour
             centreOfScreenPossessable = closestTarget;
             OnNewCentralPossessable?.Invoke(this, closestTarget);
         }
+    }
+
+    private void EmergencyPossess(object sender, BulletPossessTarget possessTarget)
+    {
+        PossessBullet(possessTarget);
     }
 
     public void TryPossess()

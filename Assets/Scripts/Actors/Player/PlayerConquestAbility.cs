@@ -117,6 +117,8 @@ public class PlayerConquestAbility : MonoBehaviour
         //Spawn Portal object
         Factory.InstantiateGameObject(conquestPortal, daggerSpawnPoint, daggerSpawnRotation);
 
+        BulletDeadState.bulletNumber++;
+
         //Make rewindable action for ability
         ConquestAbility.ConquestAbilityUsed(
             conquestDagger,
@@ -131,5 +133,6 @@ public class PlayerConquestAbility : MonoBehaviour
     public void RefreshAbility()
     {
         bAbilityUsed = false;
+        BulletDeadState.bulletNumber--;
     }
 }

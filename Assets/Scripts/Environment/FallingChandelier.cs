@@ -42,8 +42,8 @@ public class FallingChandelier : MonoBehaviour, IReactable
 
     private void KillBullet()
     {
-        //put bullet into death state
-        Debug.Log("Destroy chandelier");
+        chandelierBullet.SwitchToDeadState();
+        //Debug.Log("Destroy chandelier");
     }
 
     public void UndoReaction()

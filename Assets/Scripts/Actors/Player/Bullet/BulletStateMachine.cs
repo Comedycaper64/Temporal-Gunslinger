@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class BulletStateMachine : StateMachine
 {
+    [SerializeField]
+    public bool conquestDagger;
+
+    [SerializeField]
+    public bool bCountAsAvailableBullet = true;
+
     private void Start()
     {
         SwitchState(stateDictionary[StateEnum.idle]);
