@@ -15,6 +15,8 @@ public class DangerTracker : MonoBehaviour
         pocketwatchUI.OnShowUI += SetNewDeathTime;
     }
 
+    //MAY NEED OPTIMISING: Locked on Bullets redirect every frame. Potentially make it so that it stores death times and only recalculates those that change?
+
     private void SetNewDeathTime()
     {
         float lowestDeathTime = 9999f;

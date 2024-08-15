@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
     private Transform gunParent;
     private AudioSource bulletFlightSFX;
     private BulletMovement bulletMovement;
+    private BulletLockOn bulletLockOn;
 
     [SerializeField]
     private BulletDamager bulletDamager;
@@ -34,6 +35,7 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         bulletMovement = GetComponent<BulletMovement>();
+        bulletLockOn = GetComponent<BulletLockOn>();
         bulletCameraController = GetComponent<BulletCameraController>();
         bulletStateMachine = GetComponent<BulletStateMachine>();
         focusManager = GetComponent<FocusManager>();
@@ -85,6 +87,16 @@ public class Bullet : MonoBehaviour
             Vector3 aimDirection = focusManager.GetAimDirection();
             bulletMovement.RedirectBullet(aimDirection, GetAimRotation(aimDirection));
         }
+    }
+
+    public void ToggleLockOn(bool toggle)
+    {
+        bulletLockOn.ToggleLockOn(toggle);
+    }
+
+    public void LockOnBullet()
+    {
+        bulletLockOn.TryLockOn();
     }
 
     private Quaternion GetAimRotation(Vector3 aimDirection)

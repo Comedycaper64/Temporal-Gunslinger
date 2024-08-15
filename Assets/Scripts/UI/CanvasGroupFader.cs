@@ -37,9 +37,9 @@ public class CanvasGroupFader : MonoBehaviour
         }
     }
 
-    private void FadeIn()
+    private void FadeIn(float targetAlpha)
     {
-        targetAlpha = 1f;
+        this.targetAlpha = targetAlpha;
     }
 
     private void FadeOut()
@@ -50,18 +50,29 @@ public class CanvasGroupFader : MonoBehaviour
     public void SetCanvasGroupAlpha(float alpha)
     {
         canvasGroup.alpha = alpha;
+        bFade = false;
     }
 
-    public void ToggleFade(bool toggle)
+    public float GetCanvasGroupAlpha()
+    {
+        return canvasGroup.alpha;
+    }
+
+    public void ToggleFade(bool toggle, float targetAlpha = 1.0f)
     {
         if (toggle)
         {
-            FadeIn();
+            FadeIn(targetAlpha);
         }
         else
         {
             FadeOut();
         }
+
+        // if (targetAlpha == canvasGroup.alpha)
+        // {
+        //     return;
+        // }
 
         bFade = true;
         tweenTimer = 0f;

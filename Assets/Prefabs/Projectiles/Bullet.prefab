@@ -1225,6 +1225,7 @@ GameObject:
   - component: {fileID: 7828219722662083367}
   - component: {fileID: 7828219722662083360}
   - component: {fileID: 7828219722662083361}
+  - component: {fileID: 3244760908223142320}
   - component: {fileID: 7828219722662083366}
   - component: {fileID: 7828219722662083370}
   - component: {fileID: 7828219722662083371}
@@ -1300,7 +1301,6 @@ MonoBehaviour:
     m_Bits: 64
   bulletModel: {fileID: 5493667388143854021}
   bulletTip: {fileID: 4644755964369156516}
-  bulletDissolve: {fileID: 4224356582990142206}
   damagePoint: {fileID: 5493667388143854021}
   redirectSFX: {fileID: 8300000, guid: 44fd96cf134e7c54c95a1093acde21d3, type: 3}
   noCoinsSFX: {fileID: 8300000, guid: 20da767beba027e49ac6a747ef9dc2e0, type: 3}
@@ -1312,6 +1312,21 @@ MonoBehaviour:
     type: 3}
   redirectVFXPrefab: {fileID: 3088319004803970211, guid: 36e7360dbcd21e84ea74d7180599ec8f,
     type: 3}
+--- !u!114 &3244760908223142320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7828219722662083364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3202c3fd74d6e5b4aa9478bb89a583c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockOnLayermask:
+    serializedVersion: 2
+    m_Bits: 1536
 --- !u!114 &7828219722662083366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,6 +1372,8 @@ MonoBehaviour:
   activeAnimationName: 
   stateMachineAnimator: {fileID: 0}
   dissolveController: {fileID: 4224356582990142206}
+  conquestDagger: 0
+  bCountAsAvailableBullet: 1
 --- !u!114 &7828219722662083374
 MonoBehaviour:
   m_ObjectHideFlags: 0

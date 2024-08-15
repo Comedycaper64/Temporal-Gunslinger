@@ -13,6 +13,7 @@ public class WeakPoint : MonoBehaviour, IDamageable
     public void ProjectileHit(out float velocityConservation)
     {
         OnHit?.Invoke(this, null);
+
         velocityConservation = this.velocityConservation;
     }
 

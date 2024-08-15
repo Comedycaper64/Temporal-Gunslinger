@@ -8,8 +8,13 @@ public class BulletPossessor : MonoBehaviour
     private BulletPossessTarget possessedBullet;
     private BulletPossessTarget centreOfScreenPossessable;
     private bool bIsFocusing;
+    private bool bLockOnStarted = false;
+    private bool bLockedOn = false;
+    private float lockOnTimer = 0f;
+    private float lockOnTime = 1f;
 
     public static EventHandler<BulletPossessTarget> OnNewCentralPossessable;
+    public static EventHandler<BulletPossessTarget> OnNewBulletPossessed;
 
     private void Awake()
     {
@@ -29,6 +34,17 @@ public class BulletPossessor : MonoBehaviour
         }
 
         FindCentreOfScreenPossessable();
+
+        if (bLockOnStarted)
+        {
+            lockOnTimer += Time.unscaledDeltaTime;
+
+            if (lockOnTimer > lockOnTime)
+            {
+                bLockOnStarted = false;
+                bLockedOn = true;
+            }
+        }
     }
 
     private void FindCentreOfScreenPossessable()
@@ -149,6 +165,7 @@ public class BulletPossessor : MonoBehaviour
         //BulletPossess.BulletPossessed(this, possessedBullet);
         newBullet.PossessBullet(bIsFocusing);
         possessedBullet = newBullet;
+        OnNewBulletPossessed?.Invoke(this, possessedBullet);
     }
 
     public void UndoPossess(BulletPossessTarget newBullet)
@@ -169,6 +186,18 @@ public class BulletPossessor : MonoBehaviour
         possessedBullet = newBullet;
     }
 
+    public void LockOnBullet()
+    {
+        if (!possessedBullet)
+        {
+            return;
+        }
+        bLockOnStarted = true;
+        lockOnTimer = 0f;
+
+        possessedBullet.ToggleLockOn(true);
+    }
+
     public void RedirectBullet()
     {
         if (!possessedBullet)
@@ -176,7 +205,18 @@ public class BulletPossessor : MonoBehaviour
             return;
         }
 
-        possessedBullet.RedirectBullet();
+        bLockOnStarted = false;
+
+        if (bLockedOn)
+        {
+            bLockedOn = false;
+            possessedBullet.LockOnBullet();
+        }
+        else
+        {
+            possessedBullet.RedirectBullet();
+            possessedBullet.ToggleLockOn(false);
+        }
     }
 
     public void SetIsFocusing(bool isFocusing)

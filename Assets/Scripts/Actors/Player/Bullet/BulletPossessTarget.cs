@@ -77,6 +77,10 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     public void RedirectBullet() => bullet.RedirectBullet();
 
+    public void ToggleLockOn(bool toggle) => bullet.ToggleLockOn(toggle);
+
+    public void LockOnBullet() => bullet.LockOnBullet();
+
     public void SetIsFocusing(bool isFocusing)
     {
         bullet.SetIsFocusing(isFocusing);

@@ -39,6 +39,10 @@ public class InspectUI : MonoBehaviour
     {
         InspectManager.OnInspect += ToggleUI;
         InspectManager.OnCanInspect += ToggleControlUI;
+
+        inspectControlUI.SetCanvasGroupAlpha(0f);
+        inspectUI.SetCanvasGroupAlpha(0f);
+        inspectCrosshairUI.SetCanvasGroupAlpha(0f);
     }
 
     private void OnDisable()

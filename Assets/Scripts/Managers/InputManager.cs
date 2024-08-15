@@ -15,6 +15,9 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private bool bIsTurbo;
     private bool bIsResetting;
     public event Action OnShootAction;
+    public event Action OnShootReleaseAction;
+
+    //public event Action OnLockOnAction;
     public event Action OnFocusAction;
     public event Action OnPossessAction;
 
@@ -80,15 +83,27 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        if (!context.performed)
-        {
-            return;
-        }
-        else
+        if (context.performed)
         {
             OnShootAction?.Invoke();
         }
+        else if (context.canceled)
+        {
+            OnShootReleaseAction?.Invoke();
+        }
     }
+
+    // public void OnLockOn(InputAction.CallbackContext context)
+    // {
+    //     if (!context.performed)
+    //     {
+    //         return;
+    //     }
+    //     else
+    //     {
+    //         OnLockOnAction?.Invoke();
+    //     }
+    // }
 
     public void OnFocus(InputAction.CallbackContext context)
     {

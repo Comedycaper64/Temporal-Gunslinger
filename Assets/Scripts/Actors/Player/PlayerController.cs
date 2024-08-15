@@ -128,8 +128,10 @@ public class PlayerController : MonoBehaviour
 
         if (bBulletFired)
         {
-            InputManager.Instance.OnShootAction += InputManager_OnRedirectAction;
+            InputManager.Instance.OnShootAction += InputManager_OnStartLockOnAction;
+            InputManager.Instance.OnShootReleaseAction += InputManager_OnRedirect;
             InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
+            //InputManager.Instance.OnLockOnAction += InputManager_OnLockOnAction;
             // InputManager.Instance.OnPossessNextAction += InputManager_OnPossessNextAction;
             // InputManager.Instance.OnPossessPreviousAction += InputManager_OnPossessPreviousAction;
             if (bCanRedirect)
@@ -139,8 +141,10 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            InputManager.Instance.OnShootAction -= InputManager_OnRedirectAction;
+            InputManager.Instance.OnShootAction -= InputManager_OnStartLockOnAction;
+            InputManager.Instance.OnShootReleaseAction -= InputManager_OnRedirect;
             InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
+            //InputManager.Instance.OnLockOnAction -= InputManager_OnLockOnAction;
             // InputManager.Instance.OnPossessNextAction -= InputManager_OnPossessNextAction;
             // InputManager.Instance.OnPossessPreviousAction -= InputManager_OnPossessPreviousAction;
             OnPlayerStateChanged?.Invoke(this, 0);
@@ -198,7 +202,17 @@ public class PlayerController : MonoBehaviour
         IsFocusingChanged(bIsFocusing);
     }
 
-    private void InputManager_OnRedirectAction()
+    private void InputManager_OnStartLockOnAction()
+    {
+        if (!bIsFocusing || !bCanRedirect)
+        {
+            return;
+        }
+
+        bulletPossessor.LockOnBullet();
+    }
+
+    private void InputManager_OnRedirect()
     {
         if (!bIsFocusing || !bCanRedirect)
         {

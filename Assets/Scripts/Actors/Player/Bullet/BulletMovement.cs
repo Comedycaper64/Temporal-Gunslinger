@@ -9,8 +9,6 @@ using Random = UnityEngine.Random;
 public class BulletMovement : RewindableMovement
 {
     private bool bIsDead;
-
-    //private bool deadFlag = false;
     private bool bShouldRotate;
     private bool bLowVelocity = false;
 
@@ -19,10 +17,8 @@ public class BulletMovement : RewindableMovement
 
     [SerializeField]
     private bool bDisableModelWhenInactive = true;
-
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
-
     private float spinSpeedModifier = 200f;
 
     [SerializeField]
@@ -30,12 +26,8 @@ public class BulletMovement : RewindableMovement
 
     [SerializeField]
     private float dropVelocityThreshhold = 25f;
-
-    //private float dropLerpValue = 0f;
     public float velocityLossRate = 5f;
-
     private Vector3 flightDirection;
-
     private Vector3 revenantOffset;
     private Quaternion targetRotation;
 
@@ -50,9 +42,6 @@ public class BulletMovement : RewindableMovement
 
     [SerializeField]
     private Transform bulletTip;
-
-    // [SerializeField]
-    // private TrailRenderer[] activeTrails;
 
     [SerializeField]
     private Transform damagePoint;
@@ -73,11 +62,8 @@ public class BulletMovement : RewindableMovement
     [SerializeField]
     private GameObject redirectVFXPrefab;
     private CinemachineImpulseSource cinemachineImpulseSource;
-
     private RedirectManager redirectManager;
-
     public EventHandler<bool> OnLowVelocity;
-
     public static Action OnRedirect;
 
     private void Start()
@@ -90,7 +76,6 @@ public class BulletMovement : RewindableMovement
             Random.Range(-0.1f, 0.1f),
             Random.Range(-0.1f, 0.1f)
         );
-        //lowVelocityThreshhold = startSpeed / 10f;
     }
 
     protected override void OnEnable()
@@ -105,36 +90,9 @@ public class BulletMovement : RewindableMovement
         DangerTracker.dangers.Remove(this);
     }
 
-    // protected override void StartMovement()
-    // {
-    //     base.StartMovement();
-
-    //     Debug.Log("Bullet Movement Started: " + gameObject.name);
-
-    //     if (!moveToTarget)
-    //     {
-    //         Vector3 aimDirection = focusManager.GetAimDirection();
-    //         ChangeTravelDirection(aimDirection, Quaternion.LookRotation(aimDirection));
-    //     }
-    //     else
-    //     {
-    //         Vector3 target = movementTarget.position + revenantOffset;
-    //         Vector3 aimDirection = (target - transform.position).normalized;
-    //         ChangeTravelDirection(aimDirection, Quaternion.LookRotation(aimDirection));
-    //     }
-    // }
-
     protected override void StartMovement()
     {
-        // if (!deadFlag)
-        // {
         SetSpeed(startSpeed);
-        // }
-        // else
-        // {
-        //     SetSpeed(-1f);
-        // }
-
         movementActive = true;
     }
 
@@ -215,7 +173,11 @@ public class BulletMovement : RewindableMovement
     {
         flightDirection = newDirection;
         targetRotation = newRotation;
-        rotationTimer = 0f;
+        if (!bShouldRotate)
+        {
+            rotationTimer = 0f;
+        }
+
         bShouldRotate = true;
 
         OnRedirect?.Invoke();
@@ -289,15 +251,8 @@ public class BulletMovement : RewindableMovement
 
     public float GetVelocity()
     {
-        //return Mathf.Abs(GetUnscaledSpeed());
         float velocity = GetUnscaledSpeed();
 
-        // if (bIsDead)
-        // {
-        //     return 0f;
-        // }
-        // else
-        // {
         if (velocity == 0f)
         {
             return Mathf.Abs(GetStartSpeed());
@@ -306,7 +261,6 @@ public class BulletMovement : RewindableMovement
         {
             return Mathf.Abs(GetUnscaledSpeed());
         }
-        // }
     }
 
     public float GetMaxVelocity()
@@ -318,7 +272,6 @@ public class BulletMovement : RewindableMovement
     {
         float speed = GetUnscaledSpeed();
         SetSpeed(speed *= velocityMultiplier);
-        //rewindable action for undoing augmention
     }
 
     public void LoseVelocity()
@@ -328,33 +281,15 @@ public class BulletMovement : RewindableMovement
 
         if (!bLowVelocity && ShouldBulletDrop())
         {
-            //SetLowVelocity(true);
             bLowVelocity = true;
             OnLowVelocity?.Invoke(this, true);
         }
         else if (bLowVelocity && !ShouldBulletDrop())
         {
-            //SetLowVelocity(false);
             bLowVelocity = false;
             OnLowVelocity?.Invoke(this, false);
         }
     }
-
-    // public void SetLowVelocity(bool toggle)
-    // {
-    //     bLowVelocity = toggle;
-    //     Debug.Log("Low Velocity " + toggle);
-    //     if (toggle)
-    //     {
-    //         bulletDissolve.StartDissolve(0.33f);
-    //     }
-    //     else
-    //     {
-    //         bulletDissolve.StopDissolve();
-    //     }
-
-    //     //Show warning on UI
-    // }
 
     public bool ShouldBulletDrop()
     {
@@ -382,16 +317,7 @@ public class BulletMovement : RewindableMovement
     public void SetIsDead(bool isDead)
     {
         bIsDead = isDead;
-        // if (bIsDead)
-        // {
-        //     deadFlag = true;
-        // }
     }
-
-    // public void RemoveDeadFlag()
-    // {
-    //     deadFlag = false;
-    // }
 
     public bool WillKillRevenant(out float deathTime)
     {
@@ -407,7 +333,6 @@ public class BulletMovement : RewindableMovement
         {
             if (hit.transform.CompareTag("Player"))
             {
-                //Debug.Log("ayaya");
                 deathTime = GetTimeToRevenant();
                 return true;
             }
@@ -434,20 +359,6 @@ public class BulletMovement : RewindableMovement
 
         return timeToRevenant;
     }
-
-    // public override void BeginPlay()
-    // {
-    //     base.BeginPlay();
-
-    //     foreach (TrailRenderer trail in activeTrails) { }
-    // }
-
-    // public override void BeginRewind()
-    // {
-    //     base.BeginRewind();
-
-    //     foreach (TrailRenderer trail in activeTrails) { }
-    // }
 
     public bool GetIsLowVelocity()
     {

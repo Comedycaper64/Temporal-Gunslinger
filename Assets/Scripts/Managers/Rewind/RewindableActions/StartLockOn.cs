@@ -9,27 +9,22 @@ public class StartLockOn : RewindableAction
     private BulletLockOn bulletLockOn;
 
     public static void BulletLockedOn(
-        LockOnTarget target,
         BulletLockOn bulletLockOn,
         Vector3 initialPosition,
         Vector3 initialDirection
     )
     {
-        new StartLockOn(target, bulletLockOn, initialPosition, initialDirection);
+        new StartLockOn(bulletLockOn, initialPosition, initialDirection);
     }
 
-    public StartLockOn(
-        LockOnTarget target,
-        BulletLockOn bulletLockOn,
-        Vector3 initialPosition,
-        Vector3 initialDirection
-    )
+    public StartLockOn(BulletLockOn bulletLockOn, Vector3 initialPosition, Vector3 initialDirection)
     {
         this.bulletLockOn = bulletLockOn;
-        bulletLockOn.SetTarget(target);
 
         this.initialPosition = initialPosition;
         this.initialDirection = initialDirection;
+
+        Execute();
     }
 
     public override void Undo()

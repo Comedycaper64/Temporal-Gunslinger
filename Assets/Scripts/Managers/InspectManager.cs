@@ -19,6 +19,7 @@ public class InspectManager : MonoBehaviour
     private void Start()
     {
         GameManager.OnGameStateChange += ToggleCanInspect;
+        RewindManager.OnRewindToStart += TurnOnInspect;
         InputManager.Instance.OnPossessAction += TryInspect;
 
         if (inspectablesObject)
@@ -35,6 +36,7 @@ public class InspectManager : MonoBehaviour
     private void OnDisable()
     {
         GameManager.OnGameStateChange -= ToggleCanInspect;
+        RewindManager.OnRewindToStart -= TurnOnInspect;
         InputManager.Instance.OnPossessAction -= TryInspect;
     }
 
@@ -100,6 +102,11 @@ public class InspectManager : MonoBehaviour
             OnCanInspect?.Invoke(this, null);
             OnInspect?.Invoke(this, null);
         }
+    }
+
+    private void TurnOnInspect()
+    {
+        bCanInspect = true;
     }
 
     public void TryInspect()
