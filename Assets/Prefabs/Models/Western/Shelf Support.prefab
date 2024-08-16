@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1576196698357511385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1423798048725649733}
+  m_Layer: 10
+  m_Name: Shelf Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1423798048725649733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576196698357511385}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.087, y: 0.072, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7328572951824864060}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5961358547527477669
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,6 +203,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5547907845940716878}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: c632c084be3bd054186d51ed4e68599e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1423798048725649733}
   m_SourcePrefab: {fileID: 100100000, guid: c632c084be3bd054186d51ed4e68599e, type: 3}
 --- !u!4 &7328572951824864060 stripped
 Transform:
@@ -259,6 +294,20 @@ MonoBehaviour:
   manualDisables: []
   dissolveSFX: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
   dissolveVFX: {fileID: 0}
+--- !u!114 &2353316847519274066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7998255404410653062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 1423798048725649733}
+  targetWeakPoint: {fileID: 1630874564485867926}
 --- !u!23 &8502653820786010195 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: c632c084be3bd054186d51ed4e68599e,

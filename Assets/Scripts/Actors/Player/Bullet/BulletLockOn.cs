@@ -23,6 +23,18 @@ public class BulletLockOn : MonoBehaviour
         bulletMovement = GetComponent<BulletMovement>();
     }
 
+    private void OnEnable()
+    {
+        bulletMovement.OnRedirect += DisableLockOn;
+        bulletMovement.OnRicochet += DisableLockOn;
+    }
+
+    private void OnDisable()
+    {
+        bulletMovement.OnRedirect -= DisableLockOn;
+        bulletMovement.OnRicochet -= DisableLockOn;
+    }
+
     private void Update()
     {
         if (!bulletTarget)

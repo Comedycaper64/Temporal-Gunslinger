@@ -32,7 +32,7 @@ Transform:
   - {fileID: 6849172543824692090}
   - {fileID: 6944243589488076960}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3723995851776934830
 MonoBehaviour:
@@ -133,6 +133,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5684868230102512556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1608662670837624442}
+  m_Layer: 10
+  m_Name: Rope Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1608662670837624442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5684868230102512556}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.638, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6944243589488076960}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6369874943713476313
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,6 +261,7 @@ GameObject:
   - component: {fileID: 7216012596024490999}
   - component: {fileID: 7574927971129912156}
   - component: {fileID: 181146220984039177}
+  - component: {fileID: 1999469722881714793}
   m_Layer: 10
   m_Name: Severable Rope
   m_TagString: Untagged
@@ -253,6 +285,7 @@ Transform:
   - {fileID: 6675185897377318547}
   - {fileID: 3268764752900430112}
   - {fileID: 4839394573881043393}
+  - {fileID: 1608662670837624442}
   m_Father: {fileID: 3723995851776934829}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -333,6 +366,20 @@ MonoBehaviour:
   manualDisables: []
   dissolveSFX: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
   dissolveVFX: {fileID: 0}
+--- !u!114 &1999469722881714793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6587858473220634297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 1608662670837624442}
+  targetWeakPoint: {fileID: 7574927971129912156}
 --- !u!1 &7641599247114130731
 GameObject:
   m_ObjectHideFlags: 0

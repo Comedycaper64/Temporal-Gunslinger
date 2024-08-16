@@ -346,6 +346,7 @@ GameObject:
   - component: {fileID: 2039469542858126627}
   - component: {fileID: 2884765534294790708}
   - component: {fileID: 1599626877435528174}
+  - component: {fileID: 8876918716006908087}
   m_Layer: 9
   m_Name: Final Weak Point
   m_TagString: Untagged
@@ -425,6 +426,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHighlight: {fileID: 5942697254271271154}
+--- !u!114 &8876918716006908087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614472802667793327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 1887972907346313298}
+  targetWeakPoint: {fileID: 2884765534294790708}
 --- !u!1 &4747772002717203115
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +626,7 @@ MonoBehaviour:
   stateMachineAnimator: {fileID: 2592026117333817732}
   dissolveController: {fileID: 265104761340943734}
   shootTimer: 3
+  aimingAnimationName: 
   projectileRestPoint: {fileID: 4861901446374582982}
   projectileFirePoint: {fileID: 4861901446374582982}
   projectile: {fileID: 2512045105089726411}
@@ -634,6 +650,7 @@ MonoBehaviour:
   - {fileID: 5558653219944994131}
   - {fileID: 5245245360048915582}
   - {fileID: 5783839346048493307}
+  shootVFX: {fileID: 0}
   projectileBulletHolder: {fileID: 989997941370685763}
 --- !u!114 &1659629591229834041
 MonoBehaviour:
@@ -4328,6 +4345,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHighlight: {fileID: 3612604764635557669}
+--- !u!114 &2559907821760574142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880203089230466135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 1376854385779045777}
+  targetWeakPoint: {fileID: 3105327603292850192}
 --- !u!4 &1051763015573594203 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3269656102310850053, guid: b8f2deae8a871c04d971926e2ad7bab4,
@@ -4426,6 +4457,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityConservation: 0.6
+--- !u!114 &4402105816325566853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769106991441086786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 2487955174602875056}
+  targetWeakPoint: {fileID: 4772616845473901349}
 --- !u!4 &1904592498978153991 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4149718289703118937, guid: b8f2deae8a871c04d971926e2ad7bab4,
@@ -4646,6 +4691,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHighlight: {fileID: 1145878375163723745}
+--- !u!114 &4587134480795445465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4210640459733295632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 7927164167566815992}
+  targetWeakPoint: {fileID: 1676890453071468419}
 --- !u!4 &4310269470143890475 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1741095604444334709, guid: b8f2deae8a871c04d971926e2ad7bab4,
@@ -4780,6 +4839,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityConservation: 0.6
+--- !u!114 &5875694435821963510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7380782971111837096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 793370780456830423}
+  targetWeakPoint: {fileID: 1815194665330240311}
 --- !u!4 &7733290593096366330 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5236156771653236388, guid: b8f2deae8a871c04d971926e2ad7bab4,

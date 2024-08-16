@@ -11,7 +11,7 @@ public class DangerTracker : MonoBehaviour
     {
         pocketwatchUI = GetComponent<PocketwatchUI>();
         EnemyDeadState.OnEnemyDeadChange += SetNewDeathTime;
-        BulletMovement.OnRedirect += SetNewDeathTime;
+        BulletMovement.OnChangeDirection += SetNewDeathTime;
         pocketwatchUI.OnShowUI += SetNewDeathTime;
     }
 

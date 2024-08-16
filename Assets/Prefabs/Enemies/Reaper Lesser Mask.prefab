@@ -210,8 +210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingTransform: {fileID: 5143672862029279505}
-  movingAnimation: {fileID: 0}
-  idleAnimation: {fileID: 0}
+  movingAnimations: []
+  idleAnimations: []
 --- !u!114 &5143672861968514593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,7 +320,7 @@ Transform:
   - {fileID: 614669353265024251}
   - {fileID: 122000419387597005}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &5143672862029279518
 MonoBehaviour:
@@ -353,11 +353,13 @@ MonoBehaviour:
   stateMachineAnimator: {fileID: 5143672861968514592}
   dissolveController: {fileID: 5143672861968514593}
   shootTimer: 0
+  aimingAnimationName: 
   projectileRestPoint: {fileID: 122000419387597005}
   projectileFirePoint: {fileID: 122000419387597005}
   projectile: {fileID: 614669353265024247}
   bodyColliders:
   - {fileID: 5264403139370351985}
+  shootVFX: {fileID: 0}
 --- !u!1 &5154123067272106573
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +403,7 @@ GameObject:
   - component: {fileID: 9103873092778003223}
   - component: {fileID: 7920714435946980785}
   - component: {fileID: 8099003833869743428}
+  - component: {fileID: 4206447160112985211}
   m_Layer: 0
   m_Name: Weak Point
   m_TagString: Untagged
@@ -448,7 +451,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 21.48, y: 13.71, z: 29.9}
+  m_Size: {x: 21.48, y: 8.32, z: 29.9}
   m_Center: {x: 0, y: 2.8, z: -3.94}
 --- !u!114 &8099003833869743428
 MonoBehaviour:
@@ -463,6 +466,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetHighlight: {fileID: 190999570252462420}
+--- !u!114 &4206447160112985211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5264403139370351985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 6470125698525394712}
+  targetWeakPoint: {fileID: 9103873092778003223}
 --- !u!1001 &5143672862972410642
 PrefabInstance:
   m_ObjectHideFlags: 0

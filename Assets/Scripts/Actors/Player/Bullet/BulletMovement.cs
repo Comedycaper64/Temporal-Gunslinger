@@ -64,7 +64,9 @@ public class BulletMovement : RewindableMovement
     private CinemachineImpulseSource cinemachineImpulseSource;
     private RedirectManager redirectManager;
     public EventHandler<bool> OnLowVelocity;
-    public static Action OnRedirect;
+    public static Action OnChangeDirection;
+    public Action OnRedirect;
+    public Action OnRicochet;
 
     private void Start()
     {
@@ -162,6 +164,8 @@ public class BulletMovement : RewindableMovement
             );
 
             ChangeTravelDirection(newDirection, newRotation);
+
+            OnRedirect?.Invoke();
         }
         else
         {
@@ -180,7 +184,7 @@ public class BulletMovement : RewindableMovement
 
         bShouldRotate = true;
 
-        OnRedirect?.Invoke();
+        OnChangeDirection?.Invoke();
     }
 
     public Vector3 GetRevenantDirection()
@@ -229,6 +233,8 @@ public class BulletMovement : RewindableMovement
 
         AugmentVelocity(velocityAugment);
         ChangeTravelDirection(ricochetDirection, Quaternion.LookRotation(ricochetDirection));
+
+        OnRicochet?.Invoke();
     }
 
     public void SlowBullet(float velocityAugment)
