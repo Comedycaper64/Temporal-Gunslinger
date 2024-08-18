@@ -12,6 +12,8 @@ public class CanvasGroupFader : MonoBehaviour
     private float targetAlpha = 0f;
     private float tweenTimer;
 
+    private MMTween.MMTweenCurve tweenCurve;
+
     [SerializeField]
     private CanvasGroup canvasGroup;
 
@@ -25,7 +27,7 @@ public class CanvasGroupFader : MonoBehaviour
                 fadeTime,
                 currentAlpha,
                 targetAlpha,
-                MMTween.MMTweenCurve.EaseInOutExponential
+                tweenCurve
             );
             canvasGroup.alpha = newAlpha;
             tweenTimer += Time.unscaledDeltaTime;
@@ -58,7 +60,11 @@ public class CanvasGroupFader : MonoBehaviour
         return canvasGroup.alpha;
     }
 
-    public void ToggleFade(bool toggle, float targetAlpha = 1.0f)
+    public void ToggleFade(
+        bool toggle,
+        float targetAlpha = 1.0f,
+        MMTween.MMTweenCurve tweenCurve = MMTween.MMTweenCurve.EaseInOutExponential
+    )
     {
         if (toggle)
         {
@@ -73,7 +79,7 @@ public class CanvasGroupFader : MonoBehaviour
         // {
         //     return;
         // }
-
+        this.tweenCurve = tweenCurve;
         bFade = true;
         tweenTimer = 0f;
         currentAlpha = canvasGroup.alpha;

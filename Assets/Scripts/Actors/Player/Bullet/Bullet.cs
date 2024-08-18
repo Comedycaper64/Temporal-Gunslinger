@@ -166,13 +166,15 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void ToggleBulletPossessed(bool toggle)
+    public void ToggleBulletPossessed(bool toggle, Vector2 bulletCameraAxis)
     {
         bulletCameraController.ToggleCamera(toggle);
         focusManager.ToggleCanFocus(toggle);
 
         if (toggle)
         {
+            bulletCameraController.SetCameraAxisValues(bulletCameraAxis);
+
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
             int randomInt = Random.Range(0, possessSFX.Length);
             AudioManager.PlaySFX(possessSFX[randomInt], 0.25f, 4, transform.position);
@@ -208,6 +210,8 @@ public class Bullet : MonoBehaviour
         return focusManager.IsFocusing();
     }
 
+    public Vector2 GetCameraAxisValues() => bulletCameraController.GetCameraAxisValues();
+
     public void SetFiringPosition(Transform firingPosition)
     {
         transform.position = firingPosition.position;
@@ -225,7 +229,7 @@ public class Bullet : MonoBehaviour
         //     Debug.Log("Bullet State Machine not found for " + gameObject.name);
         // }
 
-        ToggleBulletPossessed(false);
+        ToggleBulletPossessed(false, Vector2.zero);
 
         transform.parent = gunParent;
         transform.position = bulletPosition.position;

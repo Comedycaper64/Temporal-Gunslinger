@@ -15,21 +15,11 @@ public class EnemyMovement : RewindableMovement
 
     private Transform movementTarget;
 
+    public static Action OnEnemyMovementChange;
+
     private void Start()
     {
         movementTarget = GameManager.GetRevenant();
-    }
-
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        DangerTracker.dangers.Add(this);
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        DangerTracker.dangers.Remove(this);
     }
 
     protected override void StartMovement()
@@ -41,8 +31,20 @@ public class EnemyMovement : RewindableMovement
             return;
         }
 
+        float deathTime;
+        WillKillRevenant(out deathTime);
+        DangerTracker.dangers.Add(this, deathTime);
+        OnEnemyMovementChange?.Invoke();
+
         transform.LookAt(movementTarget.position); //+ revenantOffset);
         transform.eulerAngles = new Vector3(0f, transform.eulerAngles.y, 0f);
+    }
+
+    protected override void StopMovement()
+    {
+        base.StopMovement();
+        DangerTracker.dangers.Remove(this);
+        OnEnemyMovementChange?.Invoke();
     }
 
     private void Update()

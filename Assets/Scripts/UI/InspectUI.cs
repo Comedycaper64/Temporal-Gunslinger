@@ -33,6 +33,9 @@ public class InspectUI : MonoBehaviour
     [SerializeField]
     private Transform cameraObjectPlacement;
 
+    [SerializeField]
+    private GameObject inspectCamera;
+
     private InspectTarget spawnedObject;
 
     private void Awake()
@@ -43,6 +46,8 @@ public class InspectUI : MonoBehaviour
         inspectControlUI.SetCanvasGroupAlpha(0f);
         inspectUI.SetCanvasGroupAlpha(0f);
         inspectCrosshairUI.SetCanvasGroupAlpha(0f);
+
+        inspectCamera.SetActive(false);
     }
 
     private void OnDisable()
@@ -69,6 +74,7 @@ public class InspectUI : MonoBehaviour
         if (target == null)
         {
             inspectUI.ToggleFade(false);
+            inspectCamera.SetActive(false);
             if (spawnedObject)
             {
                 spawnedObject.ResetTarget();
@@ -95,6 +101,8 @@ public class InspectUI : MonoBehaviour
 
         float viewScale = target.GetTargetViewScale();
         spawnedObject.transform.localScale = new Vector3(viewScale, viewScale, viewScale);
+
+        inspectCamera.SetActive(true);
 
         inspectUI.ToggleFade(true);
     }

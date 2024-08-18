@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerConquestAbility : MonoBehaviour
 {
     private bool bAbilityUsed = true;
     private bool spawned = false;
+    private int lastRandomVoiceline = 0;
     private float daggerSpawnDuration = 0.004f;
     private float daggerSpawnTimer = 0;
     private Vector3 currentPortalPoint;
@@ -28,6 +30,14 @@ public class PlayerConquestAbility : MonoBehaviour
 
     [SerializeField]
     private Material daggerFlyMaterial;
+
+    [SerializeField]
+    private AudioClip abilitySFX;
+
+    [SerializeField]
+    private AudioClip[] conquestVoicelines;
+
+    public static EventHandler<CutInType> OnConquestAbility;
 
     private void Start()
     {
@@ -83,7 +93,27 @@ public class PlayerConquestAbility : MonoBehaviour
 
         // UI change
 
+        AudioManager.PlaySFX(abilitySFX, 0.5f, 3, Camera.main.transform.position, false);
+
+        int randomInt = Random.Range(0, conquestVoicelines.Length);
+
+        while (randomInt == lastRandomVoiceline)
+        {
+            randomInt = Random.Range(0, conquestVoicelines.Length);
+        }
+
+        lastRandomVoiceline = randomInt;
+
+        AudioManager.PlaySFX(
+            conquestVoicelines[randomInt],
+            0.75f,
+            0,
+            Camera.main.transform.position,
+            false
+        );
+
         // Activate conquest flair
+        OnConquestAbility?.Invoke(this, CutInType.Conquest);
 
         daggerSpawnTimer = 0f;
         spawned = false;

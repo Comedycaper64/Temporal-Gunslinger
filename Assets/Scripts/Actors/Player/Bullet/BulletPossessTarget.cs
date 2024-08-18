@@ -14,6 +14,9 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     [SerializeField]
     private Transform highlight;
+
+    // [SerializeField]
+    // private Renderer mainBulletRenderer;
     public static EventHandler<BulletPossessTarget> OnEmergencyRepossess;
     public static HashSet<IHighlightable> highlightables = new HashSet<IHighlightable>();
     private static HashSet<BulletPossessTarget> possessables = new HashSet<BulletPossessTarget>();
@@ -63,15 +66,15 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         OnEmergencyRepossess?.Invoke(this, GetPossessables()[0]);
     }
 
-    public void PossessBullet(bool isFocusing)
+    public void PossessBullet(bool isFocusing, Vector2 newCameraAxis)
     {
-        bullet.ToggleBulletPossessed(true);
+        bullet.ToggleBulletPossessed(true, newCameraAxis);
         SetIsFocusing(isFocusing);
     }
 
     public void UnpossessBullet()
     {
-        bullet.ToggleBulletPossessed(false);
+        bullet.ToggleBulletPossessed(false, Vector2.zero);
         SetIsFocusing(false);
     }
 
@@ -88,6 +91,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     }
 
     public bool IsFocusing() => bullet.IsFocusing();
+
+    public Vector2 GetCameraAxisValues() => bullet.GetCameraAxisValues();
 
     public List<BulletPossessTarget> GetPossessables()
     {
@@ -117,6 +122,11 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     {
         highlight.gameObject.SetActive(toggle);
     }
+
+    // public Renderer GetBulletRenderer()
+    // {
+    //     return mainBulletRenderer;
+    // }
 
     public void ToggleBulletActive(object sender, bool toggle)
     {

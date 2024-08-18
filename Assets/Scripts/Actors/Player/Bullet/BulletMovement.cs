@@ -64,7 +64,7 @@ public class BulletMovement : RewindableMovement
     private CinemachineImpulseSource cinemachineImpulseSource;
     private RedirectManager redirectManager;
     public EventHandler<bool> OnLowVelocity;
-    public static Action OnChangeDirection;
+    public static EventHandler<float> OnChangeDirection;
     public Action OnRedirect;
     public Action OnRicochet;
 
@@ -83,7 +83,7 @@ public class BulletMovement : RewindableMovement
     protected override void OnEnable()
     {
         base.OnEnable();
-        DangerTracker.dangers.Add(this);
+        DangerTracker.dangers.Add(this, 9999f);
     }
 
     protected override void OnDisable()
@@ -184,7 +184,9 @@ public class BulletMovement : RewindableMovement
 
         bShouldRotate = true;
 
-        OnChangeDirection?.Invoke();
+        float deathTime;
+        WillKillRevenant(out deathTime);
+        OnChangeDirection?.Invoke(this, deathTime);
     }
 
     public Vector3 GetRevenantDirection()
@@ -325,7 +327,7 @@ public class BulletMovement : RewindableMovement
         bIsDead = isDead;
     }
 
-    public bool WillKillRevenant(out float deathTime)
+    private bool WillKillRevenant(out float deathTime)
     {
         if (
             Physics.Raycast(

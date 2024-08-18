@@ -8,7 +8,8 @@ public class EnemyDeadState : State
     public static int enemiesAlive;
     private Animator animator;
     private DissolveController dissolveController;
-    public static Action OnEnemyDeadChange;
+
+    //public static EventHandler<float> OnEnemyDeadChange;
 
     public EnemyDeadState(StateMachine stateMachine)
         : base(stateMachine)
@@ -33,7 +34,7 @@ public class EnemyDeadState : State
         stateMachine.ToggleInactive(true);
         enemiesAlive--;
 
-        OnEnemyDeadChange?.Invoke();
+        //OnEnemyDeadChange?.Invoke();
 
         //Debug.Log("Enemies remaining: " + enemyNumber);
         if (enemiesAlive <= 0)
@@ -50,7 +51,7 @@ public class EnemyDeadState : State
         {
             enemiesAlive++;
 
-            OnEnemyDeadChange?.Invoke();
+            //OnEnemyDeadChange?.Invoke();
 
             if (animator)
             {

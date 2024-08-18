@@ -66,14 +66,27 @@ public class BulletPossessor : MonoBehaviour
 
         foreach (BulletPossessTarget target in targets)
         {
-            Vector2 viewPos = Camera.main.WorldToViewportPoint(target.transform.position);
+            Vector3 viewPos = Camera.main.WorldToViewportPoint(target.transform.position);
 
-            if (viewPos.x < 0 || viewPos.x > 1 || viewPos.y < 0 || viewPos.y > 1)
+            // if (!target.GetBulletRenderer().isVisible)
+            // {
+            //     continue;
+            // }
+
+            if (
+                viewPos.x < 0f
+                || viewPos.x > 1f
+                || viewPos.y < 0f
+                || viewPos.y > 1f
+                || viewPos.z < 0f
+            )
             {
                 continue;
             }
 
-            Vector2 toCenter = viewPos - new Vector2(0.5f, 0.5f);
+            //Debug.Log("Bullet " + target.name + " is currently " + viewPos.z + " z coords");
+
+            Vector2 toCenter = viewPos - new Vector3(0.5f, 0.5f);
             if (toCenter.sqrMagnitude < closestTargetDistance)
             {
                 closestTarget = target;
@@ -158,20 +171,26 @@ public class BulletPossessor : MonoBehaviour
 
     public void PossessBullet(BulletPossessTarget newBullet)
     {
+        Vector2 newBulletCameraAxis = new Vector2(0f, 0.5f);
+
         if (possessedBullet)
         {
+            newBulletCameraAxis = possessedBullet.GetCameraAxisValues();
             possessedBullet.UnpossessBullet();
         }
         //BulletPossess.BulletPossessed(this, possessedBullet);
-        newBullet.PossessBullet(bIsFocusing);
+        newBullet.PossessBullet(bIsFocusing, newBulletCameraAxis);
         possessedBullet = newBullet;
         OnNewBulletPossessed?.Invoke(this, possessedBullet);
     }
 
     public void UndoPossess(BulletPossessTarget newBullet)
     {
+        Vector2 newBulletCameraAxis = new Vector2(0f, 0.5f);
+
         if (possessedBullet)
         {
+            newBulletCameraAxis = possessedBullet.GetCameraAxisValues();
             possessedBullet.UnpossessBullet();
         }
 
@@ -182,7 +201,7 @@ public class BulletPossessor : MonoBehaviour
             return;
         }
 
-        newBullet.PossessBullet(bIsFocusing);
+        newBullet.PossessBullet(bIsFocusing, newBulletCameraAxis);
         possessedBullet = newBullet;
     }
 

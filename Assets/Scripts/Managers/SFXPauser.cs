@@ -10,6 +10,10 @@ public class SFXPauser : MonoBehaviour
     private void Start()
     {
         sfxAudioSource = GetComponent<AudioSource>();
+    }
+
+    private void OnEnable()
+    {
         GameManager.OnGameStateChange += ToggleAudioSource;
     }
 
