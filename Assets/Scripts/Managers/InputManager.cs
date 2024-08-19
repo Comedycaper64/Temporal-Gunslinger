@@ -16,14 +16,10 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private bool bIsResetting;
     public event Action OnShootAction;
     public event Action OnShootReleaseAction;
-
-    //public event Action OnLockOnAction;
     public event Action OnFocusAction;
     public event Action OnPossessAction;
-
-    // public event Action OnPossessNextAction;
-    // public event Action OnPossessPreviousAction;
     public event Action OnConquestAction;
+    public event Action OnPauseAction;
 
     private void Awake()
     {
@@ -38,7 +34,26 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         controls = new Controls();
         controls.Player.SetCallbacks(this);
         controls.Player.Enable();
+
+        //PauseMenuUI.OnPauseToggled += ToggleLookInput;
     }
+
+    // private void OnDisable()
+    // {
+    //     PauseMenuUI.OnPauseToggled -= ToggleLookInput;
+    // }
+
+    // private void ToggleLookInput(object sender, bool toggle)
+    // {
+    //     if (toggle)
+    //     {
+    //         controls.Player.Look.Disable();
+    //     }
+    //     else
+    //     {
+    //         controls.Player.Look.Enable();
+    //     }
+    // }
 
     public Vector2 GetMouseMovement()
     {
@@ -72,7 +87,6 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        //Debug.Log(context.ReadValue<Vector2>());
         mouseMovement = context.ReadValue<Vector2>();
     }
 
@@ -83,6 +97,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnShoot(InputAction.CallbackContext context)
     {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
         if (context.performed)
         {
             OnShootAction?.Invoke();
@@ -93,28 +112,12 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
-    // public void OnLockOn(InputAction.CallbackContext context)
-    // {
-    //     if (!context.performed)
-    //     {
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         OnLockOnAction?.Invoke();
-    //     }
-    // }
-
     public void OnFocus(InputAction.CallbackContext context)
     {
-        // if (context.performed)
-        // {
-        //     bIsFocusing = true;
-        // }
-        // else if (context.canceled)
-        // {
-        //     bIsFocusing = false;
-        // }
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
 
         if (!context.performed)
         {
@@ -128,6 +131,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnRewind(InputAction.CallbackContext context)
     {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
         if (context.performed)
         {
             bIsRewinding = true;
@@ -140,6 +148,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnPossess(InputAction.CallbackContext context)
     {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
         if (!context.performed)
         {
             return;
@@ -150,32 +163,13 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
-    // public void OnPossessNext(InputAction.CallbackContext context)
-    // {
-    //     if (!context.performed)
-    //     {
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         OnPossessNextAction?.Invoke();
-    //     }
-    // }
-
-    // public void OnPossessPrevious(InputAction.CallbackContext context)
-    // {
-    //     if (!context.performed)
-    //     {
-    //         return;
-    //     }
-    //     else
-    //     {
-    //         OnPossessPreviousAction?.Invoke();
-    //     }
-    // }
-
     public void OnReset(InputAction.CallbackContext context)
     {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
         if (context.performed)
         {
             bIsResetting = true;
@@ -188,6 +182,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnTurbo(InputAction.CallbackContext context)
     {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
         if (context.performed)
         {
             bIsTurbo = true;
@@ -200,6 +199,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnConquestAbility(InputAction.CallbackContext context)
     {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
         if (!context.performed)
         {
             return;
@@ -207,6 +211,18 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else
         {
             OnConquestAction?.Invoke();
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            OnPauseAction?.Invoke();
         }
     }
 }

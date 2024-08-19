@@ -1,12 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField]
-    private float MUSIC_VOLUME = 1f;
-    private const float SFX_VOLUME = 1f;
+    // [SerializeField]
+    // private float MUSIC_VOLUME = 1f;
+    // private const float SFX_VOLUME = 1f;
     private const float SLOW_PITCH = 0.4f;
     private const float FADE_SPEED = 0.5f;
     private const float TICK_SFX_INTERVAL = 1f;
@@ -38,6 +39,18 @@ public class AudioManager : MonoBehaviour
 
     private static Dictionary<PitchEnum, float> enumToPitch = new Dictionary<PitchEnum, float>();
 
+    private void OnEnable()
+    {
+        OptionsManager.OnMasterVolumeUpdated += UpdateMasterVolume;
+        OptionsManager.OnMusicVolumeUpdated += UpdateMusicVolume;
+    }
+
+    private void OnDisable()
+    {
+        OptionsManager.OnMasterVolumeUpdated -= UpdateMasterVolume;
+        OptionsManager.OnMusicVolumeUpdated -= UpdateMusicVolume;
+    }
+
     private void Start()
     {
         if (enumToPitch.Count == 0)
@@ -57,6 +70,11 @@ public class AudioManager : MonoBehaviour
         {
             FadeInMusic();
         }
+        else
+        {
+            musicAudioSource.volume =
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume();
+        }
 
         StartCoroutine(ClockTickSFX());
     }
@@ -65,8 +83,11 @@ public class AudioManager : MonoBehaviour
     {
         if (fadeIn)
         {
-            musicAudioSource.volume += FADE_SPEED * Time.deltaTime;
-            if (musicAudioSource.volume >= MUSIC_VOLUME)
+            musicAudioSource.volume += FADE_SPEED * Time.unscaledDeltaTime;
+            if (
+                musicAudioSource.volume
+                >= PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume()
+            )
             {
                 fadeIn = false;
             }
@@ -74,7 +95,7 @@ public class AudioManager : MonoBehaviour
 
         if (fadeOut)
         {
-            musicAudioSource.volume -= FADE_SPEED * Time.deltaTime;
+            musicAudioSource.volume -= FADE_SPEED * Time.unscaledDeltaTime;
             if (musicAudioSource.volume <= 0f)
             {
                 fadeOut = false;
@@ -124,7 +145,7 @@ public class AudioManager : MonoBehaviour
             return PlaySFXClip(
                 clip,
                 originPosition,
-                volume * SFX_VOLUME,
+                volume * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume(),
                 enumToPitch[(PitchEnum)pitchEnum] * SLOW_PITCH
             );
         }
@@ -133,7 +154,7 @@ public class AudioManager : MonoBehaviour
             return PlaySFXClip(
                 clip,
                 originPosition,
-                volume * SFX_VOLUME,
+                volume * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume(),
                 enumToPitch[(PitchEnum)pitchEnum]
             );
         }
@@ -150,7 +171,7 @@ public class AudioManager : MonoBehaviour
                 AudioSource.PlayClipAtPoint(
                     clockTick1,
                     Camera.main.transform.position,
-                    1f * SFX_VOLUME
+                    1f * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume()
                 );
             }
             else
@@ -158,11 +179,16 @@ public class AudioManager : MonoBehaviour
                 AudioSource.PlayClipAtPoint(
                     clockTick2,
                     Camera.main.transform.position,
-                    1f * SFX_VOLUME
+                    1f * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume()
                 );
             }
         }
         StartCoroutine(ClockTickSFX());
+    }
+
+    private void SetMusicAudioSourceVolume(float newVolume)
+    {
+        musicAudioSource.volume = newVolume;
     }
 
     public void FadeOutMusic()
@@ -181,5 +207,15 @@ public class AudioManager : MonoBehaviour
     {
         musicAudioSource.clip = newTrack;
         musicAudioSource.Play();
+    }
+
+    private void UpdateMasterVolume(object sender, float newVolume)
+    {
+        SetMusicAudioSourceVolume(PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume());
+    }
+
+    private void UpdateMusicVolume(object sender, float newVolume)
+    {
+        SetMusicAudioSourceVolume(PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume());
     }
 }

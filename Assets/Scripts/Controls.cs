@@ -107,6 +107,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""f0eed051-ba98-48b3-a918-b1bda44c6bb6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -208,6 +217,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Conquest Ability"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de88d5c0-1194-48ed-9647-f8577384d5fb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -231,6 +251,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
         m_Player_Turbo = m_Player.FindAction("Turbo", throwIfNotFound: true);
         m_Player_ConquestAbility = m_Player.FindAction("Conquest Ability", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -299,6 +320,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Turbo;
     private readonly InputAction m_Player_ConquestAbility;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -312,6 +334,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Turbo => m_Wrapper.m_Player_Turbo;
         public InputAction @ConquestAbility => m_Wrapper.m_Player_ConquestAbility;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -348,6 +371,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @ConquestAbility.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
                 @ConquestAbility.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
                 @ConquestAbility.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
+                @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -379,6 +405,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @ConquestAbility.started += instance.OnConquestAbility;
                 @ConquestAbility.performed += instance.OnConquestAbility;
                 @ConquestAbility.canceled += instance.OnConquestAbility;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -403,5 +432,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnTurbo(InputAction.CallbackContext context);
         void OnConquestAbility(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

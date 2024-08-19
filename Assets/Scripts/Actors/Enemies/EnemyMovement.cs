@@ -52,10 +52,17 @@ public class EnemyMovement : RewindableMovement
         transform.position += transform.forward * GetSpeed() * Time.deltaTime;
     }
 
-    public bool WillKillRevenant(out float deathTime)
+    private bool WillKillRevenant(out float deathTime)
     {
         if (Mathf.Abs(GetUnscaledSpeed()) > 0f)
         {
+            Debug.Log(
+                "Damage Point Position: "
+                    + damagePoint.position
+                    + ", Target Position: "
+                    + movementTarget.position
+            );
+
             float distanceToTarget = Vector3.Distance(
                 damagePoint.position,
                 movementTarget.position //+ revenantOffset

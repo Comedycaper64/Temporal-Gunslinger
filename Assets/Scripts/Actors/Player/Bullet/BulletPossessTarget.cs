@@ -120,6 +120,11 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     public void ToggleHighlight(bool toggle)
     {
+        if (!highlight)
+        {
+            return;
+        }
+
         highlight.gameObject.SetActive(toggle);
     }
 

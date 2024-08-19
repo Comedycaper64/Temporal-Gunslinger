@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private const float REST_MOUSE_SENSITIVITY = 10f;
     private const float AIM_MOUSE_SENSITIVITY = 5f;
+    private Vector2 PLAYER_MOUSE_SENSITIVITY = Vector2.one;
 
     [SerializeField]
     private float mouseSensitivity = REST_MOUSE_SENSITIVITY;
@@ -43,16 +44,22 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         bulletPossessor = GetComponent<BulletPossessor>();
+        PLAYER_MOUSE_SENSITIVITY = new Vector2(
+            PlayerOptions.GetGunXSensitivity(),
+            PlayerOptions.GetGunYSensitivity()
+        );
     }
 
     private void Start()
     {
         InputManager.Instance.OnFocusAction += InputManager_OnFocus;
+        OptionsManager.OnGunSensitivityUpdated += OnSensitivityUpdated;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnFocusAction -= InputManager_OnFocus;
+        OptionsManager.OnGunSensitivityUpdated -= OnSensitivityUpdated;
     }
 
     void Update()
@@ -86,6 +93,9 @@ public class PlayerController : MonoBehaviour
 
         Vector2 mouseMovement =
             InputManager.Instance.GetMouseMovement() * mouseSensitivity * Time.deltaTime;
+
+        mouseMovement.x *= PLAYER_MOUSE_SENSITIVITY.x;
+        mouseMovement.y *= PLAYER_MOUSE_SENSITIVITY.y;
 
         xRotation -= mouseMovement.y;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -231,23 +241,10 @@ public class PlayerController : MonoBehaviour
         bulletPossessor.TryPossess();
     }
 
-    // private void InputManager_OnPossessPreviousAction()
-    // {
-    //     if (!GameManager.Instance.IsLevelActive() || !bCanPossess)
-    //     {
-    //         return;
-    //     }
-    //     bulletPossessor.TryPossessPrevious();
-    // }
-
-    // private void InputManager_OnPossessNextAction()
-    // {
-    //     if (!GameManager.Instance.IsLevelActive() || !bCanPossess)
-    //     {
-    //         return;
-    //     }
-    //     bulletPossessor.TryPossessNext();
-    // }
+    private void OnSensitivityUpdated(object sender, Vector2 newSensitivity)
+    {
+        PLAYER_MOUSE_SENSITIVITY = newSensitivity;
+    }
 
     private void IsFocusingChanged(bool isFocusing)
     {

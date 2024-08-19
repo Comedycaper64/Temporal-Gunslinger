@@ -17,53 +17,13 @@ public class DangerTracker : MonoBehaviour
         pocketwatchUI.OnShowUI += GetDeathTime;
     }
 
-    //MAY NEED OPTIMISING: Locked on Bullets redirect every frame. Potentially make it so that it stores death times and only recalculates those that change?
-
     private void SetNewDeathTime(object sender, float newDeathTime)
     {
         RewindableMovement movement = sender as RewindableMovement;
 
-        dangers[movement] = newDeathTime;
+        dangers[movement] = pocketwatchUI.GetCurrentPocketwatchTime() + newDeathTime;
 
         GetDeathTime();
-
-        // float lowestDeathTime = 9999f;
-
-        // foreach (RewindableMovement rewindableMovement in dangers)
-        // {
-        //     float newTime = 9999f;
-        //     if (rewindableMovement.GetType() == typeof(EnemyMovement))
-        //     {
-        //         if (!(rewindableMovement as EnemyMovement).WillKillRevenant(out newTime))
-        //         {
-        //             continue;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         if (!(rewindableMovement as BulletMovement).WillKillRevenant(out newTime))
-        //         {
-        //             continue;
-        //         }
-        //     }
-
-        //     //Debug.Log("New Time: " + newTime + " from " + rewindableMovement.gameObject.name);
-        //     // Debug.Log("Time: " + newTime + " from " + rewindableMovement.gameObject.name);
-        //     if (newTime < lowestDeathTime)
-        //     {
-        //         lowestDeathTime = newTime;
-        //     }
-        // }
-
-        // if (lowestDeathTime < 9999f)
-        // {
-        //     //Debug.Log("Closest object time: " + lowestDeathTime);
-        //     pocketwatchUI.SetDeathTime(lowestDeathTime);
-        // }
-        // else
-        // {
-        //     pocketwatchUI.SetDeathTime(-1f);
-        // }
     }
 
     private void GetDeathTime()

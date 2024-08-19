@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,18 @@ public class TimeManager
     private static float turboTimeScale = 2f;
     private static float slowTimeScale = 0.05f;
     private static float pausedTimeScale = 0f;
+
+    public static void ToggleMenuTimePause(bool toggle)
+    {
+        if (toggle)
+        {
+            Time.timeScale = pausedTimeScale;
+        }
+        else
+        {
+            UnpauseTime();
+        }
+    }
 
     public static void SetNormalTime()
     {

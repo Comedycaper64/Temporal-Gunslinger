@@ -10,7 +10,8 @@ public class PocketwatchUI : RewindableMovement
     // private bool uiChange = false;
     // private float fadeSpeed = 5f;
     private float currentPocketwatchTime = 0f;
-    private float deathTime = 0f;
+
+    // private float deathTime = 0f;
 
     [SerializeField]
     private Transform pockewatchHand;
@@ -29,6 +30,7 @@ public class PocketwatchUI : RewindableMovement
     private CanvasGroupFader canvasGroupFader;
 
     public Action OnShowUI;
+    public Action OnPocketwatchReset;
 
     protected override void OnEnable()
     {
@@ -48,11 +50,6 @@ public class PocketwatchUI : RewindableMovement
 
     private void Update()
     {
-        // if (uiChange)
-        // {
-        //     FadeUI();
-        // }
-
         if (uiActive)
         {
             float newZDegree = pockewatchHand.eulerAngles.z + (-GetSpeed() * Time.deltaTime);
@@ -61,41 +58,11 @@ public class PocketwatchUI : RewindableMovement
         }
     }
 
-    // private void FadeUI()
-    // {
-    //     int direction;
-    //     if (uiActive)
-    //     {
-    //         direction = 1;
-    //     }
-    //     else
-    //     {
-    //         direction = -1;
-    //     }
-
-    //     pocketwatchUI.alpha += fadeSpeed * Time.deltaTime * direction;
-
-    //     if (uiActive)
-    //     {
-    //         if (pocketwatchUI.alpha >= 1f)
-    //         {
-    //             uiChange = false;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         if (pocketwatchUI.alpha <= 0f)
-    //         {
-    //             uiChange = false;
-    //         }
-    //     }
-    // }
-
     private void ToggleUI(bool toggle)
     {
         uiActive = toggle;
-        // uiChange = true;
         canvasGroupFader.ToggleFade(toggle);
+
         currentPocketwatchTime = 0f;
     }
 
@@ -106,24 +73,28 @@ public class PocketwatchUI : RewindableMovement
             return;
         }
 
-        //Debug.Log(newDeathTime);
-
         if (newDeathTime < 0f)
         {
             deathMarker.gameObject.SetActive(false);
         }
         else
         {
-            deathTime = currentPocketwatchTime + newDeathTime;
+            //Debug.Log("Death Time: " + newDeathTime)
+            //deathTime = currentPocketwatchTime + newDeathTime;
             deathMarker.gameObject.SetActive(true);
             markerPlacerHand.eulerAngles = new Vector3(
                 0,
                 0,
-                -Mathf.Abs(GetStartSpeed()) * deathTime
+                -Mathf.Abs(GetStartSpeed()) * newDeathTime
             );
-            //Debug.Log(GetUnscaledSpeed() * deathTime);
+
             deathMarker.position = markerPlacerTip.position;
         }
+    }
+
+    public float GetCurrentPocketwatchTime()
+    {
+        return currentPocketwatchTime;
     }
 
     private void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
