@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class AudioManager : MonoBehaviour
     // private float MUSIC_VOLUME = 1f;
     // private const float SFX_VOLUME = 1f;
     private const float SLOW_PITCH = 0.4f;
+    private const float MIN_PITCH_VARIATION = 0.8f;
+    private const float MAX_PITCH_VARIATION = 1.2f;
     private const float FADE_SPEED = 0.5f;
     private const float TICK_SFX_INTERVAL = 1f;
     private bool tick;
@@ -127,7 +130,8 @@ public class AudioManager : MonoBehaviour
         float volume,
         int pitchEnum,
         Vector3 originPosition,
-        bool useSlowdownSettings = true
+        bool useSlowdownSettings = true,
+        bool varyPitch = true
     )
     {
         if (!Application.isPlaying)
@@ -140,13 +144,20 @@ public class AudioManager : MonoBehaviour
             return null;
         }
 
+        float pitchVariance = 1f;
+
+        if (varyPitch)
+        {
+            pitchVariance = Random.Range(MIN_PITCH_VARIATION, MAX_PITCH_VARIATION);
+        }
+
         if (GameManager.bLevelActive && useSlowdownSettings)
         {
             return PlaySFXClip(
                 clip,
                 originPosition,
                 volume * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume(),
-                enumToPitch[(PitchEnum)pitchEnum] * SLOW_PITCH
+                enumToPitch[(PitchEnum)pitchEnum] * SLOW_PITCH * pitchVariance
             );
         }
         else
@@ -155,7 +166,7 @@ public class AudioManager : MonoBehaviour
                 clip,
                 originPosition,
                 volume * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume(),
-                enumToPitch[(PitchEnum)pitchEnum]
+                enumToPitch[(PitchEnum)pitchEnum] * pitchVariance
             );
         }
     }

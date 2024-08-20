@@ -50,7 +50,8 @@ MonoBehaviour:
   hallwayMovementDirection: {x: 0, y: 0, z: -1}
   hallways: []
   otherSceneObjects: []
-  thingsToDisable: []
+  thingsToDisable:
+  - {fileID: 6497180638156971238}
 --- !u!1 &1234386206664618617
 GameObject:
   m_ObjectHideFlags: 0
@@ -1413,7 +1414,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a768eeb0c47725e438219cd590ebcaf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MUSIC_VOLUME: 1
   fadeInAtStart: 0
   clockTick1: {fileID: 8300000, guid: 7e06689f8f7e5a74c9e6f4c49912dacb, type: 3}
   clockTick2: {fileID: 8300000, guid: 9c792ec5a4a30fd43af1660e3947c37e, type: 3}
@@ -1603,7 +1603,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6497180638156971238}
   m_Father: {fileID: 1234386207133162786}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1619,4 +1620,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e9bbc3bded4f84e9b2b6ad3257540f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inspectablesObject: {fileID: 0}
+  inspectablesObject: {fileID: 8617568321630309167}
+--- !u!1 &8617568321630309167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6497180638156971238}
+  m_Layer: 0
+  m_Name: Inspectables
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6497180638156971238
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8617568321630309167}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5348217831298729292}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -46,7 +46,7 @@ public class AbilityCutInUI : MonoBehaviour
 
         cutInCamera.SetActive(true);
         currentCutIn.SetActive(true);
-        canvasGroupFader.ToggleFade(true, 0.33f, MMTween.MMTweenCurve.EaseOutCubic);
+        canvasGroupFader.ToggleFade(true, 0.5f, MMTween.MMTweenCurve.EaseOutCubic);
 
         if (cutInCoroutine != null)
         {
