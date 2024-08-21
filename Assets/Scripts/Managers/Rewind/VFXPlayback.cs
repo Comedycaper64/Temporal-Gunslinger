@@ -5,7 +5,8 @@ using UnityEngine.VFX;
 
 public class VFXPlayback : RewindableMovement
 {
-    private float vfxPlayRate;
+    // [SerializeField]
+    // private float activePlayRateModifier;
     private float simulationTime = 0.0f;
     private bool effectPlaying;
     private VisualEffect visualEffect;

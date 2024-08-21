@@ -17,6 +17,8 @@ public class AudioManager : MonoBehaviour
     private bool tick;
     private bool fadeIn;
     private bool fadeOut;
+
+    [SerializeField]
     private AudioSource musicAudioSource;
 
     [SerializeField]
@@ -68,7 +70,7 @@ public class AudioManager : MonoBehaviour
             enumToPitch.Add(PitchEnum.twohundred, 2f);
         }
 
-        musicAudioSource = GetComponent<AudioSource>();
+        //musicAudioSource = GetComponent<AudioSource>();
         if (fadeInAtStart)
         {
             FadeInMusic();

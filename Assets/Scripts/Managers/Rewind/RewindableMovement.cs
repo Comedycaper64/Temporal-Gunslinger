@@ -67,7 +67,7 @@ public abstract class RewindableMovement : MonoBehaviour
         return startSpeed;
     }
 
-    protected void SetSpeed(float speed)
+    public void SetSpeed(float speed)
     {
         this.speed = speed;
     }
