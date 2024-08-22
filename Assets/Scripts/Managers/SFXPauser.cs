@@ -7,7 +7,7 @@ public class SFXPauser : MonoBehaviour
 {
     private AudioSource sfxAudioSource;
 
-    private void Start()
+    private void Awake()
     {
         sfxAudioSource = GetComponent<AudioSource>();
     }

@@ -111,6 +111,11 @@ public class InspectManager : MonoBehaviour
 
     public void TryInspect()
     {
+        if (!bCanInspect)
+        {
+            return;
+        }
+
         if (bInspecting)
         {
             bInspecting = false;

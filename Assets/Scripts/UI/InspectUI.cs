@@ -9,8 +9,8 @@ public class InspectUI : MonoBehaviour
     private bool bCrosshairActive = false;
     private Transform crosshairTarget;
 
-    [SerializeField]
-    private int uiLayer;
+    // [SerializeField]
+    // private int uiLayer;
 
     [SerializeField]
     private CanvasGroupFader inspectControlUI;
@@ -89,12 +89,12 @@ public class InspectUI : MonoBehaviour
         revenantText.text = target.GetTargetThoughts();
         descriptionText.text = target.GetTargetDescription();
 
-        spawnedObject.gameObject.layer = uiLayer;
+        //spawnedObject.gameObject.layer = uiLayer;
 
-        foreach (GameObject subObject in spawnedObject.GetTargetSubObjects())
-        {
-            subObject.layer = uiLayer;
-        }
+        // foreach (GameObject subObject in spawnedObject.GetTargetSubObjects())
+        // {
+        //     subObject.layer = uiLayer;
+        // }
 
         spawnedObject.transform.position = cameraObjectPlacement.position;
         spawnedObject.transform.rotation = cameraObjectPlacement.rotation;

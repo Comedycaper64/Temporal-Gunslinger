@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InspectTarget : MonoBehaviour
 {
-    private int initialLayer;
+    //private int initialLayer;
     private Vector3 initialLocation;
     private Quaternion initialRotation;
     private Vector3 initialScale;
@@ -13,7 +13,7 @@ public class InspectTarget : MonoBehaviour
     private string targetName;
 
     [SerializeField]
-    [TextArea]
+    [TextArea(1, 10)]
     private string targetRevenantThoughts;
 
     [SerializeField]
@@ -23,12 +23,12 @@ public class InspectTarget : MonoBehaviour
     [SerializeField]
     private float targetViewScale = 15f;
 
-    [SerializeField]
-    private List<GameObject> targetSubObjects = new List<GameObject>();
+    // [SerializeField]
+    // private List<GameObject> targetSubObjects = new List<GameObject>();
 
     private void Start()
     {
-        initialLayer = gameObject.layer;
+        //initialLayer = gameObject.layer;
         initialLocation = transform.position;
         initialRotation = transform.rotation;
         initialScale = transform.localScale;
@@ -54,10 +54,10 @@ public class InspectTarget : MonoBehaviour
         return targetViewScale;
     }
 
-    public List<GameObject> GetTargetSubObjects()
-    {
-        return targetSubObjects;
-    }
+    // public List<GameObject> GetTargetSubObjects()
+    // {
+    //     return targetSubObjects;
+    // }
 
     public void ResetTarget()
     {
@@ -65,11 +65,11 @@ public class InspectTarget : MonoBehaviour
         transform.rotation = initialRotation;
         transform.localScale = initialScale;
 
-        gameObject.layer = initialLayer;
+        //gameObject.layer = initialLayer;
 
-        foreach (GameObject subObject in targetSubObjects)
-        {
-            subObject.layer = initialLayer;
-        }
+        // foreach (GameObject subObject in targetSubObjects)
+        // {
+        //     subObject.layer = initialLayer;
+        // }
     }
 }
