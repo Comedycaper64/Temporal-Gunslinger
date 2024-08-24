@@ -35,6 +35,7 @@ public class PlayerConquestAbility : MonoBehaviour
     [SerializeField]
     private AudioClip[] conquestVoicelines;
 
+    public static EventHandler<bool> OnAbilityUIUsed;
     public static EventHandler<CutInType> OnConquestAbility;
 
     private void Start()
@@ -90,6 +91,7 @@ public class PlayerConquestAbility : MonoBehaviour
         SpawnDagger(activeBullet);
 
         // UI change
+        OnAbilityUIUsed?.Invoke(this, true);
 
         AudioManager.PlaySFX(abilitySFX, 0.5f, 3, Camera.main.transform.position, false);
 
@@ -107,6 +109,7 @@ public class PlayerConquestAbility : MonoBehaviour
             0.75f,
             0,
             Camera.main.transform.position,
+            false,
             false
         );
 
@@ -162,5 +165,6 @@ public class PlayerConquestAbility : MonoBehaviour
     {
         bAbilityUsed = false;
         BulletDeadState.bulletNumber--;
+        OnAbilityUIUsed?.Invoke(this, false);
     }
 }

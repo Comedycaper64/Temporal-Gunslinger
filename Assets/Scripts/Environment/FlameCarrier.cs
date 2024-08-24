@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class FlameCarrier : MonoBehaviour, IReactable
 {
+    private static int flammableObjects = 0;
+
     private DissolveController dissolver;
 
     [SerializeField]
@@ -19,6 +21,14 @@ public class FlameCarrier : MonoBehaviour, IReactable
         dissolver = GetComponent<DissolveController>();
         fireStarter = fallingFireObject.GetComponent<IFireStarter>();
         thisFireStarter = GetComponent<IFireStarter>();
+
+        flammableObjects = 0;
+    }
+
+    private void Start()
+    {
+        flammableObjects++;
+        Debug.Log("Flammable objects: " + flammableObjects);
     }
 
     private void OnEnable()
@@ -49,6 +59,13 @@ public class FlameCarrier : MonoBehaviour, IReactable
             thisFireStarter.SetIsAflame(true);
         }
 
+        flammableObjects--;
+
+        if (flammableObjects <= 0)
+        {
+            GameManager.Instance.EndLevel(transform);
+        }
+
         StartReaction.ReactionStarted(this);
     }
 
@@ -61,5 +78,7 @@ public class FlameCarrier : MonoBehaviour, IReactable
         {
             thisFireStarter.SetIsAflame(false);
         }
+
+        flammableObjects++;
     }
 }

@@ -54,6 +54,11 @@ public class VFXPlayback : RewindableMovement
         }
     }
 
+    public void SetIsEffectPlaying(bool effectPlaying)
+    {
+        this.effectPlaying = effectPlaying;
+    }
+
     public void StopEffect()
     {
         visualEffect.Reinit();

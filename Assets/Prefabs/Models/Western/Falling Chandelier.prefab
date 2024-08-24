@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3723995851776934829}
   - component: {fileID: 3723995851776934830}
+  - component: {fileID: 2950365757230837784}
   m_Layer: 0
   m_Name: Falling Chandelier
   m_TagString: Untagged
@@ -32,7 +33,7 @@ Transform:
   - {fileID: 6849172543824692090}
   - {fileID: 6944243589488076960}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3723995851776934830
 MonoBehaviour:
@@ -50,6 +51,19 @@ MonoBehaviour:
   chandelierDamager: {fileID: 1875059804421826944}
   chandelierAirResistFX: {fileID: 8505834901859108907}
   chandelierRope: {fileID: 7574927971129912156}
+--- !u!114 &2950365757230837784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723995851776934828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225c8391757164040965a800187e9919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startSpeed: 1
 --- !u!1 &4251745183556794482
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,7 +327,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6587858473220634297}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.05
   m_Height: 1
@@ -558,7 +572,6 @@ GameObject:
   - component: {fileID: 1875059804421826944}
   - component: {fileID: 2967891169648465436}
   - component: {fileID: 7223240060979728062}
-  - component: {fileID: 343851479515147539}
   m_Layer: 8
   m_Name: Shelf Damager
   m_TagString: Untagged
@@ -594,7 +607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bIsFragile: 1
-  rewindState: {fileID: 343851479515147539}
+  rewindState: {fileID: 2950365757230837784}
 --- !u!65 &2967891169648465436
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -624,19 +637,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!114 &343851479515147539
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8838885532937065238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 225c8391757164040965a800187e9919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startSpeed: 1
 --- !u!1001 &9174879723248858050
 PrefabInstance:
   m_ObjectHideFlags: 0

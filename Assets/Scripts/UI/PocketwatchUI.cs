@@ -29,14 +29,14 @@ public class PocketwatchUI : RewindableMovement
         canvasGroupFader = GetComponent<CanvasGroupFader>();
         canvasGroupFader.SetCanvasGroupAlpha(0f);
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
-        RewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
+        //RewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
         GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
-        RewindManager.OnRewindToStart -= RewindManager_OnRewindToStart;
+        //RewindManager.OnRewindToStart -= RewindManager_OnRewindToStart;
     }
 
     private void Update()

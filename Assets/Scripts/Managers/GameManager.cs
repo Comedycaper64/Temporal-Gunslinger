@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     {
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
+        rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
 
         CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
     }
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
     protected virtual void OnDisable()
     {
         rewindManager.OnResetLevel -= RewindManager_OnResetLevel;
+        rewindManager.OnRewindToStart -= RewindManager_OnRewindToStart;
     }
 
     public virtual void SetupLevel()
@@ -151,5 +153,10 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(ResetLevel());
+    }
+
+    private void RewindManager_OnRewindToStart()
+    {
+        OnGameStateChange?.Invoke(this, StateEnum.idle);
     }
 }

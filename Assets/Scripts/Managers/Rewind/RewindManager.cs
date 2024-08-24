@@ -26,7 +26,7 @@ public class RewindManager : MonoBehaviour
     private AudioSource activeTurboSFX;
 
     public event Action OnResetLevel;
-    public static event Action OnRewindToStart;
+    public event Action OnRewindToStart;
     public static EventHandler<bool> OnRewindToggle;
     public static EventHandler<float> OnRestartTimerChanged;
 

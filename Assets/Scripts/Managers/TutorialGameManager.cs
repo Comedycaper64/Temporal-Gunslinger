@@ -56,9 +56,22 @@ public class TutorialGameManager : GameManager
         playerController = playerStateMachine.GetComponent<PlayerController>();
         playerController.ToggleTutorialStartMode();
         reaper.SetActive(false);
-        revPocketwatch.SetActive(false);
-        revModelPocketwatch.SetActive(false);
-        pocketwatchUI.SetActive(false);
+
+        if (revPocketwatch)
+        {
+            revPocketwatch.SetActive(false);
+        }
+
+        if (revModelPocketwatch)
+        {
+            revModelPocketwatch.SetActive(false);
+        }
+
+        if (pocketwatchUI)
+        {
+            pocketwatchUI.SetActive(false);
+        }
+
         rewindManager.ToggleCanReset(false);
         rewindManager.ToggleCanRewind(false);
     }
