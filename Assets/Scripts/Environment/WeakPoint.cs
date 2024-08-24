@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeakPoint : MonoBehaviour, IDamageable
@@ -19,12 +17,7 @@ public class WeakPoint : MonoBehaviour, IDamageable
 
     public void EnvironmentCrush()
     {
+        Debug.Log("Crush");
         OnCrush?.Invoke(this, null);
     }
-
-    // public void ProjectileHit(MeleeWeapon weapon)
-    // {
-    //     weapon.WeaponImpact();
-    //     OnHit?.Invoke();
-    // }
 }

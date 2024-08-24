@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EnemyFamineActiveState : State
 {
     private FamineMovement famineMovement;
+    private FamineLocustSpawner famineLocustSpawner;
 
     public EnemyFamineActiveState(StateMachine stateMachine)
         : base(stateMachine)
     {
         famineMovement = stateMachine.GetComponent<FamineMovement>();
+        famineLocustSpawner = stateMachine.GetComponent<FamineLocustSpawner>();
     }
 
     public override void Enter()
@@ -17,6 +15,9 @@ public class EnemyFamineActiveState : State
         // toggle famine movement
         famineMovement.ResetMovement();
         famineMovement.ToggleMovement(true);
+
+        famineLocustSpawner.ResetSpawner();
+        famineLocustSpawner.ToggleMovement(true);
         // toggle famine attacker
     }
 
@@ -25,6 +26,9 @@ public class EnemyFamineActiveState : State
         // toggle famine movement
         famineMovement.ResetMovement();
         famineMovement.ToggleMovement(false);
+
+        famineLocustSpawner.ResetSpawner();
+        famineLocustSpawner.ToggleMovement(false);
         // toggle famine attacker
     }
 

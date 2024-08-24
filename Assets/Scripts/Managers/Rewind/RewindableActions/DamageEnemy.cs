@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEngine;
-
 public class DamageEnemy : RewindableAction
 {
     private float halfDissolve = 0.25f;

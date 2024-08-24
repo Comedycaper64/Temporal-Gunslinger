@@ -1,20 +1,65 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class FlameCarrier : RewindableMovement
+public class FlameCarrier : MonoBehaviour, IReactable
 {
-    [SerializeField]
-    private Renderer flameShaderRenderer;
+    private DissolveController dissolver;
 
     [SerializeField]
-    private FlameCarrier adjacentCarrier;
+    private GameObject fallingFireObject;
+    private IFireStarter fireStarter;
 
-    //subscribe to a falling object and start flame when it finishes
+    private IFireStarter thisFireStarter;
 
-    // in update increase flame shader. when fully aflame start flame in adjacent carrier
+    [SerializeField]
+    private VFXPlayback flameVFX;
 
-    //use a rewindable action to stop flame
+    private void Awake()
+    {
+        dissolver = GetComponent<DissolveController>();
+        fireStarter = fallingFireObject.GetComponent<IFireStarter>();
+        thisFireStarter = GetComponent<IFireStarter>();
+    }
 
-    public void StartFlame() { }
+    private void OnEnable()
+    {
+        if (fireStarter != null)
+        {
+            fireStarter.OnFireStarted += StartFlame;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (fireStarter != null)
+        {
+            fireStarter.OnFireStarted -= StartFlame;
+        }
+    }
+
+    public void StartFlame(object sender, EventArgs e)
+    {
+        Debug.Log("Flame started");
+
+        flameVFX.PlayEffect();
+        dissolver.StartDissolve(0.25f);
+
+        if (thisFireStarter != null)
+        {
+            thisFireStarter.SetIsAflame(true);
+        }
+
+        StartReaction.ReactionStarted(this);
+    }
+
+    public void UndoReaction()
+    {
+        flameVFX.StopEffect();
+        dissolver.StopDissolve();
+
+        if (thisFireStarter != null)
+        {
+            thisFireStarter.SetIsAflame(false);
+        }
+    }
 }

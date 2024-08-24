@@ -1,23 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyWeakPoint : RewindableAction
 {
-    private IReactable reactable;
+    private BossHealth bossHealth;
+
     private Collider weakPointCollider;
     private DissolveController weakPointDissolve;
     private FocusHighlight weakPointHighlight;
 
-    public static void WeakPointDestroyed(IReactable reactable, GameObject weakPoint)
+    public static void WeakPointDestroyed(BossHealth bossHealth, GameObject weakPoint)
     {
-        new DestroyWeakPoint(reactable, weakPoint);
+        new DestroyWeakPoint(bossHealth, weakPoint);
         //Debug.Log("Weak Point destroyed" + weakPoint.name);
     }
 
-    private DestroyWeakPoint(IReactable reactable, GameObject weakPoint)
+    private DestroyWeakPoint(BossHealth bossHealth, GameObject weakPoint)
     {
-        this.reactable = reactable;
+        this.bossHealth = bossHealth;
         weakPointCollider = weakPoint.GetComponent<Collider>();
         weakPointCollider.enabled = false;
         weakPointDissolve = weakPoint.GetComponent<DissolveController>();
@@ -42,7 +41,7 @@ public class DestroyWeakPoint : RewindableAction
         //     FallingShelf fallingShelf = sender as FallingShelf;
         //     fallingShelf.UndoFall();
         // }
-        reactable.UndoReaction();
+        bossHealth.UndoReaction();
 
         weakPointCollider.enabled = true;
         weakPointHighlight.enabled = true;

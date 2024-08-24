@@ -1,23 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerStateMachine : StateMachine
 {
-    //public static event EventHandler<State> OnPlayerStateChanged;
-
-    // private void Start()
-    // {
-    //     SwitchState(stateDictionary[StateEnum.idle]);
-    // }
-
-    // public override void SwitchState(State newState)
-    // {
-    //     base.SwitchState(newState);
-    //     OnPlayerStateChanged?.Invoke(this, newState);
-    // }
     [SerializeField]
     private Transform revenantChest;
 

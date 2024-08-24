@@ -1,9 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO.Compression;
-using MoreMountains.Feedbacks;
-using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,8 +8,6 @@ public class LevelSelectorUI : MonoBehaviour
     private float fadeSpeed = 5f;
     private bool selectorActive = false;
     private bool confirmation = false;
-    private float targetArrowAngle;
-    private float velocityRef;
 
     [SerializeField]
     private RectTransform canvas;
@@ -34,11 +27,6 @@ public class LevelSelectorUI : MonoBehaviour
     [SerializeField]
     private CinematicSO endOfTutorialCinematic;
     private CanvasGroup activePreview;
-
-    // private void Start()
-    // {
-    //     ToggleLevelSelector(true);
-    // }
 
     private void Update()
     {
@@ -70,18 +58,6 @@ public class LevelSelectorUI : MonoBehaviour
             float angleDeg = 180f / Mathf.PI * angleRad;
 
             selectorArrow.eulerAngles = new Vector3(0f, 0f, angleDeg);
-            // targetArrowAngle = angleDeg;
-
-            // Debug.Log("Target: " + targetArrowAngle);
-            // Debug.Log("Z Angle: " + selectorArrow.eulerAngles.z);
-            // float newZAngle = Mathf.SmoothDamp(
-            //     selectorArrow.eulerAngles.z,
-            //     targetArrowAngle,
-            //     ref velocityRef,
-            //     0.5f
-            // );
-
-            // selectorArrow.eulerAngles = new Vector3(0f, 0f, newZAngle);
 
             CanvasGroup desiredCanvas = GetMousedCanvasGroup(selectorArrow.eulerAngles.z);
 
@@ -156,13 +132,6 @@ public class LevelSelectorUI : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-
-    // public void ShowPreview(int previewIndex)
-    // {
-    //     activePreview = previews[previewIndex];
-
-    //     previewChange = true;
-    // }
 
     public void ToggleLevelSelector(bool toggle)
     {

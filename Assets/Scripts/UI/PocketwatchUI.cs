@@ -1,17 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PocketwatchUI : RewindableMovement
 {
     private bool uiActive = false;
-
-    // private bool uiChange = false;
-    // private float fadeSpeed = 5f;
     private float currentPocketwatchTime = 0f;
-
-    // private float deathTime = 0f;
 
     [SerializeField]
     private Transform pockewatchHand;
@@ -25,8 +18,6 @@ public class PocketwatchUI : RewindableMovement
     [SerializeField]
     private Transform deathMarker;
 
-    // [SerializeField]
-    // private CanvasGroup pocketwatchUI;
     private CanvasGroupFader canvasGroupFader;
 
     public Action OnShowUI;

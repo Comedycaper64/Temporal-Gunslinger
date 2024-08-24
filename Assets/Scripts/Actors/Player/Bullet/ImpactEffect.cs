@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ImpactEffect : RewindableMovement
@@ -20,7 +18,6 @@ public class ImpactEffect : RewindableMovement
 
         if (newAlpha <= 0f)
         {
-            //gameObject.SetActive(false);
             Destroy(this);
         }
     }

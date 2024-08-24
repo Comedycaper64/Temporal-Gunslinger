@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,8 +8,6 @@ using Random = UnityEngine.Random;
 public class DialogueUI : MonoBehaviour
 {
     private bool bIsDialogueActive;
-
-    //private bool bDialogueActiveChanged;
     private bool isTyping = false;
     private bool bPlayDialogueNoises;
     private int spriteArrayIndex = 0;
@@ -21,14 +18,12 @@ public class DialogueUI : MonoBehaviour
     [SerializeField]
     private float spriteChangeTime = 0.5f;
 
-    //private float textBoxFadeSpeed = 2.5f;
     private const float LOW_PITCH_RANGE = 0.75f;
     private const float HIGH_PITCH_RANGE = 1.25f;
     private string typingSentence;
     private Coroutine typingCoroutine;
     private Action onTypingFinished;
 
-    //private CanvasGroup dialogueCanvasGroup;
     private CanvasGroupFader dialogueFader;
 
     [SerializeField]
@@ -59,12 +54,9 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnFinishTypingDialogue += DialogueManager_OnFinishTypingDialogue;
         DialogueManager.OnDisplayChoices += DialogueManager_OnDisplayChoices;
         DialogueChoiceUI.OnChoose += DialogueChoiceUI_OnChoose;
-        //DialogueManager.OnChangeSprite += DialogueManager_OnChangeSprite;
 
         ClearDialogueText();
         SetActorName("");
-        //textBox.color = new Color(textBox.color.r, textBox.color.g, textBox.color.b, 0f);
-        //dialogueCanvasGroup = GetComponent<CanvasGroup>();
         dialogueFader = GetComponent<CanvasGroupFader>();
         dialogueFader.SetCanvasGroupAlpha(0f);
         actorSpriteFader.SetCanvasGroupAlpha(0f);
@@ -78,7 +70,6 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnFinishTypingDialogue -= DialogueManager_OnFinishTypingDialogue;
         DialogueManager.OnDisplayChoices -= DialogueManager_OnDisplayChoices;
         DialogueChoiceUI.OnChoose -= DialogueChoiceUI_OnChoose;
-        //DialogueManager.OnChangeSprite -= DialogueManager_OnChangeSprite;
     }
 
     private void Update()
@@ -98,34 +89,7 @@ public class DialogueUI : MonoBehaviour
                 dialogueFaceSprite.sprite = currentSpriteSet[spriteArrayIndex];
             }
         }
-
-        // if (bDialogueActiveChanged)
-        // {
-        //     FadeUI();
-        // }
     }
-
-    // private void FadeUI()
-    // {
-    //     if (bIsDialogueActive)
-    //     {
-    //         dialogueCanvasGroup.alpha += textBoxFadeSpeed * Time.deltaTime;
-
-    //         if (dialogueCanvasGroup.alpha >= 1f)
-    //         {
-    //             bDialogueActiveChanged = false;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         dialogueCanvasGroup.alpha -= textBoxFadeSpeed * Time.deltaTime;
-
-    //         if (dialogueCanvasGroup.alpha <= 0f)
-    //         {
-    //             bDialogueActiveChanged = false;
-    //         }
-    //     }
-    // }
 
     private void SetActorName(string actorName)
     {
@@ -141,7 +105,6 @@ public class DialogueUI : MonoBehaviour
     {
         bIsDialogueActive = toggle;
         dialogueFader.ToggleFade(toggle);
-        //bDialogueActiveChanged = true;
     }
 
     private void SetNewActor(ActorSO actorSO)
@@ -278,24 +241,6 @@ public class DialogueUI : MonoBehaviour
         typingCoroutine = StartCoroutine(TypeSentence(dialogueArgs));
     }
 
-    // private void DialogueManager_OnChangeSprite(object sender, Sprite[] e)
-    // {
-    //     if (e == null)
-    //     {
-    //         currentSpriteSet = new Sprite[0];
-    //     }
-    //     else
-    //     {
-    //         currentSpriteSet = e;
-    //     }
-
-    //     dialogueFaceSprite.gameObject.SetActive(true);
-    //     if (currentSpriteSet.Length <= 0)
-    //     {
-    //         dialogueFaceSprite.gameObject.SetActive(false);
-    //     }
-    // }
-
     private void DialogueManager_OnToggleDialogueUI(object sender, bool e)
     {
         if (e == bIsDialogueActive)
@@ -305,7 +250,6 @@ public class DialogueUI : MonoBehaviour
 
         ClearDialogueText();
         SetActorName("");
-        //actorSpriteFader.ToggleFade(true);
         ToggleDialogueActive(e);
     }
 

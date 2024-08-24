@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -44,7 +42,7 @@ public class SpawnShaderController : MonoBehaviour
                 bOnOpeningChange = false;
             }
 
-            Debug.Log(newSize);
+            //Debug.Log(newSize);
 
             // float currentSize = spawnShader.GetFloat("_Size");
             // float lerpRatio =

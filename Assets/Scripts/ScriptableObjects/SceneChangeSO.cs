@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SceneChange", menuName = "Cinematic Node/SceneChangeSO", order = 0)]

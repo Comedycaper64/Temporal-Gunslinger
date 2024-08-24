@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossHealth : MonoBehaviour, IReactable
+public class BossHealth : MonoBehaviour
 {
     private int lesserWeakPoints;
     private StateMachine stateMachine;
@@ -58,6 +57,7 @@ public class BossHealth : MonoBehaviour, IReactable
         lesserWeakPoints--;
 
         GameObject weakPoint = (sender as WeakPoint).gameObject;
+
         DestroyWeakPoint.WeakPointDestroyed(this, weakPoint);
 
         if (lesserWeakPoints <= 0)

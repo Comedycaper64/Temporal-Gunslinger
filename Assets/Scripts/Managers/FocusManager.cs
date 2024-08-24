@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
-using Cinemachine.PostFX;
 using MoreMountains.Tools;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 public class FocusManager : MonoBehaviour
 {

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CinematicSO", menuName = "Cinematic Node/CinematicSO", order = 0)]

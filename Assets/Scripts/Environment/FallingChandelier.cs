@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FallingChandelier : MonoBehaviour, IReactable
@@ -34,7 +32,17 @@ public class FallingChandelier : MonoBehaviour, IReactable
     private void StartFalling(object sender, EventArgs e)
     {
         GameObject weakPoint = (sender as WeakPoint).gameObject;
-        DestroyWeakPoint.WeakPointDestroyed(this, weakPoint);
+
+        Collider weakPointCollider = weakPoint.GetComponent<Collider>();
+        weakPointCollider.enabled = false;
+        DissolveController weakPointDissolve = weakPoint.GetComponent<DissolveController>();
+        weakPointDissolve.StartDissolve();
+        FocusHighlight weakPointHighlight = weakPoint.GetComponent<FocusHighlight>();
+        weakPointHighlight.ToggleHighlight(false);
+        weakPointHighlight.enabled = false;
+
+        StartReaction.ReactionStarted(this);
+
         chandelierBullet.SwitchToActive();
         chandelierDamager.gameObject.SetActive(true);
         chandelierAirResistFX.SetActive(true);
@@ -48,6 +56,10 @@ public class FallingChandelier : MonoBehaviour, IReactable
 
     public void UndoReaction()
     {
+        chandelierRope.GetComponent<Collider>().enabled = true;
+        chandelierRope.GetComponent<FocusHighlight>().enabled = true;
+        chandelierRope.GetComponent<DissolveController>().StopDissolve();
+
         chandelierDamager.gameObject.SetActive(false);
         chandelierAirResistFX.SetActive(false);
     }

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerOptions
 {
     private static float MASTER_VOLUME = 0.5f;

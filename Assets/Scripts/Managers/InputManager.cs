@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,26 +32,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         controls = new Controls();
         controls.Player.SetCallbacks(this);
         controls.Player.Enable();
-
-        //PauseMenuUI.OnPauseToggled += ToggleLookInput;
     }
-
-    // private void OnDisable()
-    // {
-    //     PauseMenuUI.OnPauseToggled -= ToggleLookInput;
-    // }
-
-    // private void ToggleLookInput(object sender, bool toggle)
-    // {
-    //     if (toggle)
-    //     {
-    //         controls.Player.Look.Disable();
-    //     }
-    //     else
-    //     {
-    //         controls.Player.Look.Enable();
-    //     }
-    // }
 
     public Vector2 GetMouseMovement()
     {

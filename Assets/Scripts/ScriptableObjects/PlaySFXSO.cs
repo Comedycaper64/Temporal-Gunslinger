@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlaySFX", menuName = "Cinematic Node/PlaySFXSO", order = 7)]
