@@ -9,8 +9,8 @@ public class AudioManager : MonoBehaviour
     // private float MUSIC_VOLUME = 1f;
     // private const float SFX_VOLUME = 1f;
     private const float SLOW_PITCH = 0.4f;
-    private const float MIN_PITCH_VARIATION = 0.8f;
-    private const float MAX_PITCH_VARIATION = 1.2f;
+    private const float MIN_PITCH_VARIATION = 0.9f;
+    private const float MAX_PITCH_VARIATION = 1.1f;
     private const float FADE_SPEED = 0.5f;
     private const float TICK_SFX_INTERVAL = 1f;
     private bool tick;

@@ -5,6 +5,7 @@ using Cursor = UnityEngine.Cursor;
 
 public class PauseMenuUI : MonoBehaviour
 {
+    private bool listeningToInput = false;
     public static bool pauseActive = false;
     private CursorLockMode lastLockMode;
 
@@ -41,12 +42,26 @@ public class PauseMenuUI : MonoBehaviour
         pauseMenuGroup.blocksRaycasts = false;
         pauseMenuFader.SetCanvasGroupAlpha(0f);
 
-        InputManager.Instance.OnPauseAction += TogglePauseMenu;
+        if (!listeningToInput)
+        {
+            InputManager.Instance.OnPauseAction += TogglePauseMenu;
+            listeningToInput = true;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (!listeningToInput && InputManager.Instance)
+        {
+            InputManager.Instance.OnPauseAction += TogglePauseMenu;
+            listeningToInput = true;
+        }
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnPauseAction -= TogglePauseMenu;
+        listeningToInput = false;
     }
 
     public void QuitGame()

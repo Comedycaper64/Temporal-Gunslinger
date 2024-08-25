@@ -49,7 +49,7 @@ public class ActorMover : MonoBehaviour
         destination = movingTransform.position + movement;
         //this.movement = movement.normalized * speed;
         movementSpeed = speed;
-        if (movingAnimations == null)
+        if ((movingAnimations == null) || (movingAnimations.Length <= 0))
         {
             return;
         }

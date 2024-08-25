@@ -20,6 +20,7 @@ public struct Dialogue
     [TextArea]
     public string[] dialogue;
     public AnimationClip[] animations;
+    public float[] animationCrossFadeTime;
     public float[] animationTime;
     public CameraMode[] cameraModes;
     public bool disableCameraOnEnd;

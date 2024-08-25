@@ -56,6 +56,7 @@ public class DialogueManager : MonoBehaviour
     private ActorAnimatorMapper actorAnimatorMapper;
     private Queue<string> currentDialogue;
     private Queue<AnimationClip> currentAnimations;
+    private Queue<float> currentAnimationCrossFadeTimes;
     private Queue<float> currentAnimationTimes;
     private Queue<CameraMode> currentCameraModes;
     private Queue<AudioClip> currentVoiceClips;
@@ -142,6 +143,7 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
+        currentAnimationCrossFadeTimes = new Queue<float>(dialogueNode.animationCrossFadeTime);
         if (dialogueNode.voiceClip != null)
         {
             currentVoiceClips = new Queue<AudioClip>(dialogueNode.voiceClip);
@@ -219,7 +221,14 @@ public class DialogueManager : MonoBehaviour
                 return;
             }
 
-            actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFadeTime);
+            float crossFade = crossFadeTime;
+
+            if (currentAnimationCrossFadeTimes.TryDequeue(out float fadeTime))
+            {
+                crossFade = fadeTime;
+            }
+
+            actorAnimators[actorIndex].CrossFadeInFixedTime(animation.name, crossFade);
         }
     }
 
@@ -320,6 +329,19 @@ public class DialogueManager : MonoBehaviour
             onDialogueComplete();
         }
     }
+
+    // public void SetDialogueCamera(CameraMode cameraMode, ActorSO cameraTarget)
+    // {
+    //     if (cameraMode == CameraMode.none)
+    //     {
+    //         return;
+    //     }
+
+    //     dialogueCameraDirector.ChangeCameraMode(
+    //         cameraMode,
+    //         actorAnimatorMapper.GetAnimators(cameraTarget.GetAnimatorController())[0].transform
+    //     );
+    // }
 
     private void InputManager_OnShootAction()
     {

@@ -8,6 +8,8 @@ public class CinematicManagerUI : MonoBehaviour
 
     private bool fadeStatus = false;
     private bool fadeTarget = false;
+
+    [SerializeField]
     private float fadeSpeed = 2f;
     private CanvasGroup canvasGroup;
     private Action onFade;

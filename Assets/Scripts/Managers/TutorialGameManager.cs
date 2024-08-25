@@ -1,6 +1,7 @@
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 enum TutorialState
 {
@@ -26,6 +27,9 @@ public class TutorialGameManager : GameManager
 
     [SerializeField]
     private GameObject pocketwatchUI;
+
+    [SerializeField]
+    private GameObject pauseMenuUI;
 
     [SerializeField]
     private MaskStateMachine projectileMask;
@@ -79,8 +83,14 @@ public class TutorialGameManager : GameManager
     public void StartGame()
     {
         startOfLevelCam.gameObject.SetActive(false);
+        pauseMenuUI.SetActive(true);
         CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
         EnemyDeadState.enemiesAlive = 1;
+    }
+
+    public void LoadGame(int buildIndex)
+    {
+        SceneManager.LoadScene(buildIndex);
     }
 
     public override void SetupLevel()

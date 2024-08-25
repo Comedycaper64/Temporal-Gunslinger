@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class BulletPossessUI : MonoBehaviour
 {
+    private bool bCanPossess;
     private Transform possessTarget;
 
     [SerializeField]
@@ -12,12 +13,14 @@ public class BulletPossessUI : MonoBehaviour
     private void OnEnable()
     {
         BulletPossessor.OnNewCentralPossessable += SetUITarget;
+        GameManager.OnGameStateChange += DisableUI;
         possessUI.SetCanvasGroupAlpha(0f);
     }
 
     private void OnDisable()
     {
         BulletPossessor.OnNewCentralPossessable -= SetUITarget;
+        GameManager.OnGameStateChange -= DisableUI;
     }
 
     private void Update()
@@ -31,6 +34,11 @@ public class BulletPossessUI : MonoBehaviour
 
     private void SetUITarget(object sender, BulletPossessTarget e)
     {
+        if (!bCanPossess)
+        {
+            return;
+        }
+
         if (!e)
         {
             //possessUI.gameObject.SetActive(false);
@@ -41,6 +49,19 @@ public class BulletPossessUI : MonoBehaviour
             //possessUI.gameObject.SetActive(true);
             possessUI.ToggleFade(true);
             possessTarget = e.transform;
+        }
+    }
+
+    private void DisableUI(object sender, StateEnum state)
+    {
+        if (state == StateEnum.inactive)
+        {
+            bCanPossess = false;
+            possessUI.ToggleFade(false);
+        }
+        else
+        {
+            bCanPossess = true;
         }
     }
 }

@@ -10,6 +10,9 @@ public class LevelSelectorUI : MonoBehaviour
     private bool confirmation = false;
 
     [SerializeField]
+    private int nextLevelBuildIndex;
+
+    [SerializeField]
     private RectTransform canvas;
 
     [SerializeField]
@@ -130,7 +133,7 @@ public class LevelSelectorUI : MonoBehaviour
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(nextLevelBuildIndex);
     }
 
     public void ToggleLevelSelector(bool toggle)

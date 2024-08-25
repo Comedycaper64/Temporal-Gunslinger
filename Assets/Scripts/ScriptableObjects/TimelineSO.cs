@@ -4,4 +4,6 @@ using UnityEngine;
 public class TimelineSO : CinematicNode
 {
     public int directorIndex;
+    // public ActorSO endOfTimelineActor;
+    // public CameraMode endOfTimelineCamera = CameraMode.none;
 }

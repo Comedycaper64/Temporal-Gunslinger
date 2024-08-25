@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class ScrollingHallway : MonoBehaviour
@@ -24,6 +25,8 @@ public class ScrollingHallway : MonoBehaviour
 
     [SerializeField]
     private Transform[] thingsToDisable;
+
+    public Action OnScrollStart;
 
     private void Start()
     {
@@ -80,6 +83,8 @@ public class ScrollingHallway : MonoBehaviour
             {
                 disableObject.gameObject.SetActive(false);
             }
+
+            OnScrollStart?.Invoke();
         }
     }
 }

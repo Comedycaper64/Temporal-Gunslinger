@@ -5,6 +5,9 @@ using UnityEngine.Playables;
 
 public class CinematicManager : MonoBehaviour
 {
+    // private CameraMode endOfTimelineCamera;
+    // private ActorSO endOfTimelineActor;
+
     private Queue<CinematicNode> cinematicNodes;
     private Action OnCinematicFinished;
 
@@ -84,7 +87,10 @@ public class CinematicManager : MonoBehaviour
         }
         else if (nodeType == typeof(TimelineSO))
         {
-            int timelineIndex = (cinematicNode as TimelineSO).directorIndex;
+            TimelineSO timeline = cinematicNode as TimelineSO;
+            int timelineIndex = timeline.directorIndex;
+            // endOfTimelineCamera = timeline.endOfTimelineCamera;
+            // endOfTimelineActor = timeline.endOfTimelineActor;
             timelineDirectors[timelineIndex].Play();
             timelineDirectors[timelineIndex].stopped += TimelineFinished;
         }
@@ -143,6 +149,8 @@ public class CinematicManager : MonoBehaviour
 
     private void TimelineFinished(PlayableDirector director)
     {
+        // Set active camera
+        //dialogueManager.SetDialogueCamera(endOfTimelineCamera, endOfTimelineActor);
         TryPlayNextNode();
     }
 }
