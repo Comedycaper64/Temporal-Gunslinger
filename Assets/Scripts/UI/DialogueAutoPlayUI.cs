@@ -6,7 +6,7 @@ public class DialogueAutoPlayUI : MonoBehaviour
 {
     [SerializeField]
     private Image autoPlayImage;
-    private static bool bAutoPlay = true;
+    private static bool bAutoPlay = false;
 
     public static EventHandler<bool> OnAutoPlayToggle;
 

@@ -11,9 +11,20 @@ public class DangerTracker : MonoBehaviour
     private void Awake()
     {
         pocketwatchUI = GetComponent<PocketwatchUI>();
+    }
+
+    private void OnEnable()
+    {
         EnemyMovement.OnEnemyMovementChange += GetDeathTime;
         BulletMovement.OnChangeDirection += SetNewDeathTime;
         pocketwatchUI.OnShowUI += GetDeathTime;
+    }
+
+    private void OnDisable()
+    {
+        EnemyMovement.OnEnemyMovementChange -= GetDeathTime;
+        BulletMovement.OnChangeDirection -= SetNewDeathTime;
+        pocketwatchUI.OnShowUI -= GetDeathTime;
     }
 
     private void SetNewDeathTime(object sender, float newDeathTime)

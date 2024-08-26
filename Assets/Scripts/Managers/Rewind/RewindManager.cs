@@ -32,8 +32,10 @@ public class RewindManager : MonoBehaviour
 
     private void Start()
     {
+        bRewinding = false;
         input = InputManager.Instance;
         rewindableMovements = RewindableMovement.Instances;
+        RewindableMovement.UpdateMovementTimescale(1f);
         RewindableAction.OnRewindableActionCreated += RewindableActionCreated;
     }
 

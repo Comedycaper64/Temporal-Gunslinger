@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
             .FindGameObjectWithTag("Player")
             .GetComponent<PlayerStateMachine>()
             .GetRevenantChest();
+
+        bLevelActive = false;
+
+        TimeManager.ResetTimeManager();
     }
 
     public virtual void Start()
@@ -56,6 +60,8 @@ public class GameManager : MonoBehaviour
     {
         rewindManager.OnResetLevel -= RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart -= RewindManager_OnRewindToStart;
+
+        EnemyDeadState.enemiesAlive = 0;
     }
 
     public virtual void SetupLevel()

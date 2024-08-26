@@ -9,6 +9,14 @@ public class TimeManager
     private static float slowTimeScale = 0.05f;
     private static float pausedTimeScale = 0f;
 
+    public static void ResetTimeManager()
+    {
+        Time.timeScale = normalTimeScale;
+
+        bTimeSlowed = false;
+        bTimeTurbo = false;
+    }
+
     public static void ToggleMenuTimePause(bool toggle)
     {
         if (toggle)

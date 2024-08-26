@@ -21,7 +21,7 @@ public class ActorAnimatorMapper : MonoBehaviour
             );
             if (desiredAnimators.Length == 0)
             {
-                Debug.Log("Animator not found");
+                //Debug.Log("Animator not found");
                 return new Animator[0];
             }
             actorAnimators = new Animator[desiredAnimators.Length];

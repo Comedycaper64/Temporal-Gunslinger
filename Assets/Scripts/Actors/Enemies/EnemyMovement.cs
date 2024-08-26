@@ -54,12 +54,12 @@ public class EnemyMovement : RewindableMovement
     {
         if (Mathf.Abs(GetUnscaledSpeed()) > 0f)
         {
-            Debug.Log(
-                "Damage Point Position: "
-                    + damagePoint.position
-                    + ", Target Position: "
-                    + movementTarget.position
-            );
+            // Debug.Log(
+            //     "Damage Point Position: "
+            //         + damagePoint.position
+            //         + ", Target Position: "
+            //         + movementTarget.position
+            // );
 
             float distanceToTarget = Vector3.Distance(
                 damagePoint.position,

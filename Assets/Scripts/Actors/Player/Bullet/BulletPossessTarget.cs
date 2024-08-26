@@ -24,6 +24,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     {
         bullet = GetComponent<Bullet>();
         highlightActive = false;
+        // possessables = new HashSet<BulletPossessTarget>();
+        // highlightables = new HashSet<IHighlightable>();
     }
 
     private void OnEnable()
@@ -51,12 +53,13 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
         if (possessableWhileInactive)
         {
-            highlightables.Remove(this);
-            possessables.Remove(this);
+            highlightables?.Remove(this);
+            possessables?.Remove(this);
         }
         else
         {
             bullet.OnActiveToggled -= ToggleBulletActive;
+            ToggleBulletActive(null, false);
         }
     }
 
@@ -141,8 +144,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         }
         else
         {
-            highlightables.Remove(this);
-            possessables.Remove(this);
+            highlightables?.Remove(this);
+            possessables?.Remove(this);
         }
     }
 

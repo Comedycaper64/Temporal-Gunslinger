@@ -14,11 +14,6 @@ public class EnemyEnforcerStateMachine : EnemyRangedStateMachine
     [SerializeField]
     protected VFXPlayback secondaryGunfireVFX;
 
-    private void Start()
-    {
-        SwitchState(stateDictionary[StateEnum.inactive]);
-    }
-
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));

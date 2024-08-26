@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour
 {
     private bool bIsSentenceTyping;
     private bool bLoopToChoice;
-    private bool bAutoPlay = true;
+    private bool bAutoPlay = false;
     private float crossFadeTime = 0.1f;
     private Coroutine autoPlayCoroutine;
     private ActorSO currentActor;
@@ -83,6 +83,7 @@ public class DialogueManager : MonoBehaviour
     private void OnDisable()
     {
         DialogueAutoPlayUI.OnAutoPlayToggle -= ToggleAutoPlay;
+        InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
     }
 
     public void PlayDialogue(DialogueSO dialogueSO, Action onDialogueComplete)
@@ -143,7 +144,16 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
-        currentAnimationCrossFadeTimes = new Queue<float>(dialogueNode.animationCrossFadeTime);
+
+        if (dialogueNode.animationCrossFadeTime != null)
+        {
+            currentAnimationCrossFadeTimes = new Queue<float>(dialogueNode.animationCrossFadeTime);
+        }
+        else
+        {
+            currentAnimationCrossFadeTimes = new Queue<float>();
+        }
+
         if (dialogueNode.voiceClip != null)
         {
             currentVoiceClips = new Queue<AudioClip>(dialogueNode.voiceClip);

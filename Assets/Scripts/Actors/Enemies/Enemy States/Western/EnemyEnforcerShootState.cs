@@ -54,7 +54,7 @@ public class EnemyEnforcerShootState : State
 
     public override void Exit()
     {
-        Debug.Log("Animation exit time: " + animationTimeNormalised);
+        //Debug.Log("Animation exit time: " + animationTimeNormalised);
         stateMachine.SetRunAnimationExitTime(animationTimeNormalised);
         stateMachine.stateMachineAnimator.SetBool("shot", false);
     }

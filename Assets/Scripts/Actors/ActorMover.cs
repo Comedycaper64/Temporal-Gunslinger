@@ -54,8 +54,8 @@ public class ActorMover : MonoBehaviour
             return;
         }
 
-        Debug.Log(movingAnimations[currentMovementType].name);
-        Debug.Log(currentMovementType);
+        //Debug.Log(movingAnimations[currentMovementType].name);
+        //Debug.Log(currentMovementType);
 
         actorAnimator.CrossFadeInFixedTime(movingAnimations[currentMovementType].name, 0.1f);
         actorAnimator.SetBool("moving", true);
