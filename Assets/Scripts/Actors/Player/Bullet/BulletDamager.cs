@@ -34,6 +34,8 @@ public class BulletDamager : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
+            Debug.Log(other.gameObject.name);
+
             Factory.InstantiateGameObject(ricochetVFX, transform.position, transform.rotation);
             impulseSource.GenerateImpulse();
 

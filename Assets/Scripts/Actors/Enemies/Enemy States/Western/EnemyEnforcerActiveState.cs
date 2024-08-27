@@ -39,7 +39,7 @@ public class EnemyEnforcerActiveState : State
     {
         timer += Time.deltaTime * rewindState.GetScaledSpeed();
 
-        Debug.Log("Shoot timer:" + timer);
+        //Debug.Log("Shoot timer:" + timer);
 
         if (!projectileFired && timer >= shootTime)
         {

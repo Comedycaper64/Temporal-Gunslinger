@@ -53,6 +53,11 @@ public class BulletLockOnUI : MonoBehaviour
 
     private void LockOnTarget()
     {
+        if (!currentTarget || !currentTarget.GetTarget())
+        {
+            return;
+        }
+
         Vector3 targetPosition = currentTarget.GetTarget().position;
         lockOnUI.transform.position = Camera.main.WorldToScreenPoint(targetPosition);
 

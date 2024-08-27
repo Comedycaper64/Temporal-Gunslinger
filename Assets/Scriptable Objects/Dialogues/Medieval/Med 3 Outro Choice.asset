@@ -14,32 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueChoices:
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: "What\u2019s War\u2019s story?"
+    dialogueOption: "(What\u2019s War\u2019s story?)"
     correspondingDialogue: 0
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: Who really are you?
+    dialogueOption: (Who really are you?)
     correspondingDialogue: 1
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: Why did you pick me for this?
+    dialogueOption: (Why did you pick me for this?)
     correspondingDialogue: 2
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: '[Proceed]'
+    dialogueOption: (That's enough.) [Proceed]
     correspondingDialogue: 3
     loopBackToChoice: 0
   dialogueAnswers:
   - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - "What\u2019s War\u2019s story?"
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
@@ -56,37 +47,21 @@ MonoBehaviour:
         his soul to me and used my staff to bestow upon him his powers.
       - That is a story for another time, however.
       animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip: []
   - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - Who really are you?
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
       - The answer to that is that I am simply the Reaper. I maintain the balance
         between Life and Death, and ensure souls pass correctly to the afterlife
         once their time in the Mortal Realm is up.
-      - However, I suspect that is not what you meant.
+      - "However, I suspect what you really wanted to know is who I was.\r"
       animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - No. I meant who were you before?
-      animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
@@ -112,29 +87,12 @@ MonoBehaviour:
         in a storm. In my hand was the staff.
       - Does that answer your question?
       animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - "It\u2019s as good an answer as any, I suppose."
-      animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip: []
   - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - Why did you pick me for this?
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
@@ -143,15 +101,7 @@ MonoBehaviour:
         here.
       - So far, that belief seems to hold true.
       animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - But why me? There are plenty of other assassins in the world.
-      animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
@@ -159,10 +109,9 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - Unlike them, I believe you deserve a second chance.
-      - 'You suffered at the hands of the Syndicate of the Rose. I saw how much you
-        disliked working for them, and how you resented the way they forced your
-        hand again and again. '
+      - However, unlike most other assassins, I believe you deserve a second chance.
+      - 'You suffered at the hands of the Syndicate of the Rose. I saw how you resented
+        the way they forced your hand again and again. '
       - I heard your screams of anger as they promised you freedom, trapped you inside
         that warehouse and set the building aflame.
       - 'I felt your despair. I felt your hatred. I felt your desire for vengeance. '
@@ -170,6 +119,7 @@ MonoBehaviour:
         the pain of such a betrayal.
       - Only someone like you can stop the Heralds.
       animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
@@ -179,25 +129,18 @@ MonoBehaviour:
       dialogue:
       - ...
       animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip: []
   - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-      actorNo: 0
-      dialogue:
-      - That's enough.
-      animations: []
-      animationTime: []
-      cameraModes: 
-      disableCameraOnEnd: 0
-      voiceClip: []
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
       - 'Very well. Continue: I sense we are close.'
       animations: []
+      animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
