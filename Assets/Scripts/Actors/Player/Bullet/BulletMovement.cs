@@ -72,9 +72,9 @@ public class BulletMovement : RewindableMovement
         movementTarget = GameManager.GetRevenant();
         cinemachineImpulseSource = GetComponent<CinemachineImpulseSource>();
         revenantOffset = new Vector3(
-            Random.Range(-0.1f, 0.1f),
-            Random.Range(-0.1f, 0.1f),
-            Random.Range(-0.1f, 0.1f)
+            Random.Range(-0.025f, 0.025f),
+            Random.Range(-0.025f, 0.025f),
+            Random.Range(-0.025f, 0.025f)
         );
     }
 
