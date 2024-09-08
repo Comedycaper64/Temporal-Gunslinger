@@ -14,21 +14,21 @@ public class OptionsManager : MonoBehaviour
     private Slider sfxSlider;
 
     [SerializeField]
-    private Slider gunSensitivityXSlider;
+    private Slider gunSensitivitySlider;
+
+    // [SerializeField]
+    // private Slider gunSensitivityYSlider;
 
     [SerializeField]
-    private Slider gunSensitivityYSlider;
+    private Slider bulletSensitivitySlider;
 
-    [SerializeField]
-    private Slider bulletSensitivityXSlider;
-
-    [SerializeField]
-    private Slider bulletSensitivityYSlider;
+    // [SerializeField]
+    // private Slider bulletSensitivityYSlider;
 
     public static EventHandler<float> OnMasterVolumeUpdated;
     public static EventHandler<float> OnMusicVolumeUpdated;
-    public static EventHandler<Vector2> OnGunSensitivityUpdated;
-    public static EventHandler<Vector2> OnBulletSensitivityUpdated;
+    public static EventHandler<float> OnGunSensitivityUpdated;
+    public static EventHandler<float> OnBulletSensitivityUpdated;
 
     private void Awake()
     {
@@ -36,10 +36,10 @@ public class OptionsManager : MonoBehaviour
         musicSlider.value = PlayerOptions.GetMusicVolume();
         sfxSlider.value = PlayerOptions.GetSFXVolume();
 
-        gunSensitivityXSlider.value = PlayerOptions.GetGunXSensitivity();
-        gunSensitivityYSlider.value = PlayerOptions.GetGunYSensitivity();
-        bulletSensitivityXSlider.value = PlayerOptions.GetBulletXSensitivity();
-        bulletSensitivityYSlider.value = PlayerOptions.GetBulletYSensitivity();
+        gunSensitivitySlider.value = PlayerOptions.GetGunSensitivity();
+        //gunSensitivityYSlider.value = PlayerOptions.GetGunYSensitivity();
+        bulletSensitivitySlider.value = PlayerOptions.GetBulletSensitivity();
+        //bulletSensitivityYSlider.value = PlayerOptions.GetBulletYSensitivity();
     }
 
     public void SetMasterVolume(float newVolume)
@@ -59,39 +59,41 @@ public class OptionsManager : MonoBehaviour
         PlayerOptions.SetSFXVolume(newVolume);
     }
 
-    public void SetGunXSensitivity(float newSensitivity)
+    public void SetGunSensitivity(float newSensitivity)
     {
         PlayerOptions.SetGunXSensitivity(newSensitivity);
         OnGunSensitivityUpdated?.Invoke(
             this,
-            new Vector2(newSensitivity, PlayerOptions.GetGunYSensitivity())
+            newSensitivity
+        //new Vector2(newSensitivity, PlayerOptions.GetGunYSensitivity())
         );
     }
 
-    public void SetGunYSensitivity(float newSensitivity)
-    {
-        PlayerOptions.SetGunYSensitivity(newSensitivity);
-        OnGunSensitivityUpdated?.Invoke(
-            this,
-            new Vector2(PlayerOptions.GetGunXSensitivity(), newSensitivity)
-        );
-    }
+    // public void SetGunYSensitivity(float newSensitivity)
+    // {
+    //     PlayerOptions.SetGunYSensitivity(newSensitivity);
+    //     OnGunSensitivityUpdated?.Invoke(
+    //         this,
+    //         new Vector2(PlayerOptions.GetGunXSensitivity(), newSensitivity)
+    //     );
+    // }
 
-    public void SetBulletXSensitivity(float newSensitivity)
+    public void SetBulletSensitivity(float newSensitivity)
     {
         PlayerOptions.SetBulletXSensitivity(newSensitivity);
         OnBulletSensitivityUpdated?.Invoke(
             this,
-            new Vector2(newSensitivity, PlayerOptions.GetBulletYSensitivity())
+            newSensitivity
+        //new Vector2(newSensitivity, PlayerOptions.GetBulletYSensitivity())
         );
     }
 
-    public void SetBulletYSensitivity(float newSensitivity)
-    {
-        PlayerOptions.SetBulletYSensitivity(newSensitivity);
-        OnBulletSensitivityUpdated?.Invoke(
-            this,
-            new Vector2(PlayerOptions.GetBulletXSensitivity(), newSensitivity)
-        );
-    }
+    // public void SetBulletYSensitivity(float newSensitivity)
+    // {
+    //     PlayerOptions.SetBulletYSensitivity(newSensitivity);
+    //     OnBulletSensitivityUpdated?.Invoke(
+    //         this,
+    //         new Vector2(PlayerOptions.GetBulletXSensitivity(), newSensitivity)
+    //     );
+    // }
 }

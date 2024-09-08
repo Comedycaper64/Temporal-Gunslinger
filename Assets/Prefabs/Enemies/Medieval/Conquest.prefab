@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a0fd562143f4434cb105e1fd7647907, type: 2}
+  - {fileID: 2100000, guid: 516392be23d59e740bc21cd0765ca7b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,6 +83,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1300751361971243159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1745750230523707571}
+  m_Layer: 9
+  m_Name: Spear Lock On
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1745750230523707571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300751361971243159}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.27, y: -29.21, z: -1.13}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1376854385779045777}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3282668026253159843
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +175,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a0fd562143f4434cb105e1fd7647907, type: 2}
+  - {fileID: 2100000, guid: 516392be23d59e740bc21cd0765ca7b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,8 +258,8 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a0fd562143f4434cb105e1fd7647907, type: 2}
-  - {fileID: 2100000, guid: 3a0fd562143f4434cb105e1fd7647907, type: 2}
+  - {fileID: 2100000, guid: 516392be23d59e740bc21cd0765ca7b3, type: 2}
+  - {fileID: 2100000, guid: 516392be23d59e740bc21cd0765ca7b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -588,7 +619,7 @@ Transform:
   m_Children:
   - {fileID: 7349304869132207544}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1622508820168940818
 MonoBehaviour:
@@ -811,7 +842,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a0fd562143f4434cb105e1fd7647907, type: 2}
+  - {fileID: 2100000, guid: 516392be23d59e740bc21cd0765ca7b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -907,7 +938,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3a0fd562143f4434cb105e1fd7647907, type: 2}
+  - {fileID: 2100000, guid: 516392be23d59e740bc21cd0765ca7b3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4032,6 +4063,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3993568873259753458}
+    - targetCorrespondingSourceObject: {fileID: 3522707445405793231, guid: b8f2deae8a871c04d971926e2ad7bab4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1745750230523707571}
     - targetCorrespondingSourceObject: {fileID: 7728431046291086626, guid: b8f2deae8a871c04d971926e2ad7bab4,
         type: 3}
       insertIndex: -1
@@ -4115,7 +4150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletTarget: {fileID: 1376854385779045777}
+  bulletTarget: {fileID: 1745750230523707571}
   targetWeakPoint: {fileID: 3105327603292850192}
 --- !u!114 &3105327603292850192
 MonoBehaviour:

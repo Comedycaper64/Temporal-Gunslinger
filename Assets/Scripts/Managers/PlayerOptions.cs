@@ -4,10 +4,12 @@ public class PlayerOptions
     private static float MUSIC_VOLUME = 1f;
     private static float SFX_VOLUME = 1f;
 
-    private static float GUN_SENSITIVITY_X = 1f;
-    private static float GUN_SENSITIVITY_Y = 1f;
-    private static float BULLET_SENSITIVITY_X = 1f;
-    private static float BULLET_SENSITIVITY_Y = 1f;
+    private static float GUN_SENSITIVITY = 1f;
+
+    //private static float GUN_SENSITIVITY_Y = 1f;
+    private static float BULLET_SENSITIVITY = 1f;
+
+    //private static float BULLET_SENSITIVITY_Y = 1f;
 
     public static void SetMasterVolume(float newVolume)
     {
@@ -29,27 +31,27 @@ public class PlayerOptions
 
     public static void SetGunXSensitivity(float newSensitivity)
     {
-        GUN_SENSITIVITY_X = newSensitivity;
+        GUN_SENSITIVITY = newSensitivity;
         //Save in Settings File
     }
 
-    public static void SetGunYSensitivity(float newSensitivity)
-    {
-        GUN_SENSITIVITY_Y = newSensitivity;
-        //Save in Settings File
-    }
+    // public static void SetGunYSensitivity(float newSensitivity)
+    // {
+    //     GUN_SENSITIVITY_Y = newSensitivity;
+    //     //Save in Settings File
+    // }
 
     public static void SetBulletXSensitivity(float newSensitivity)
     {
-        BULLET_SENSITIVITY_X = newSensitivity;
+        BULLET_SENSITIVITY = newSensitivity;
         //Save in Settings File
     }
 
-    public static void SetBulletYSensitivity(float newSensitivity)
-    {
-        BULLET_SENSITIVITY_Y = newSensitivity;
-        //Save in Settings File
-    }
+    // public static void SetBulletYSensitivity(float newSensitivity)
+    // {
+    //     BULLET_SENSITIVITY_Y = newSensitivity;
+    //     //Save in Settings File
+    // }
 
     public static float GetMasterVolume()
     {
@@ -66,23 +68,23 @@ public class PlayerOptions
         return SFX_VOLUME;
     }
 
-    public static float GetGunXSensitivity()
+    public static float GetGunSensitivity()
     {
-        return GUN_SENSITIVITY_X;
+        return GUN_SENSITIVITY;
     }
 
-    public static float GetGunYSensitivity()
+    // public static float GetGunYSensitivity()
+    // {
+    //     return GUN_SENSITIVITY_Y;
+    // }
+
+    public static float GetBulletSensitivity()
     {
-        return GUN_SENSITIVITY_Y;
+        return BULLET_SENSITIVITY;
     }
 
-    public static float GetBulletXSensitivity()
-    {
-        return BULLET_SENSITIVITY_X;
-    }
-
-    public static float GetBulletYSensitivity()
-    {
-        return BULLET_SENSITIVITY_Y;
-    }
+    // public static float GetBulletYSensitivity()
+    // {
+    //     return BULLET_SENSITIVITY_Y;
+    // }
 }

@@ -1,5 +1,6 @@
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class BulletLockOnUI : MonoBehaviour
@@ -15,6 +16,12 @@ public class BulletLockOnUI : MonoBehaviour
 
     [SerializeField]
     private CanvasGroupFader lockOnUI;
+
+    [SerializeField]
+    private GameObject lockOnIcon;
+
+    [SerializeField]
+    private AnimationCurve lockOnScaleCurve;
 
     [SerializeField]
     private MMF_Player lockOnFeedback;
@@ -71,6 +78,10 @@ public class BulletLockOnUI : MonoBehaviour
                 1f,
                 MMTween.MMTweenCurve.EaseInExponential
             );
+
+            float lerpScale = lockOnScaleCurve.Evaluate(lerp);
+
+            lockOnIcon.transform.localScale = new Vector3(lerpScale, lerpScale, lerpScale);
 
             lockOnUI.SetCanvasGroupAlpha(lerp);
 
@@ -147,5 +158,10 @@ public class BulletLockOnUI : MonoBehaviour
     {
         tweenTimer = 0f;
         lockingOn = toggle;
+
+        if (!lockOnFeedback.IsPlaying)
+        {
+            lockOnIcon.transform.localScale = Vector3.one;
+        }
     }
 }

@@ -88,12 +88,20 @@ public class Bullet : MonoBehaviour
 
     public void ToggleLockOn(bool toggle)
     {
+        if (!bulletMovement.CanRedirect() && (toggle == true))
+        {
+            return;
+        }
+
         bulletLockOn.ToggleLockOn(toggle);
     }
 
     public void LockOnBullet()
     {
-        bulletLockOn.TryLockOn();
+        if (bulletMovement.CanRedirect())
+        {
+            bulletLockOn.TryLockOn();
+        }
     }
 
     private Quaternion GetAimRotation(Vector3 aimDirection)

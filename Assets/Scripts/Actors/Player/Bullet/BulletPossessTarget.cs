@@ -108,10 +108,9 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
     {
         foreach (IHighlightable highlightable in highlightables)
         {
-            //Debug.Log("Highlightable in list: " + highlightable);
-
             if ((object)highlightable == this)
             {
+                highlightable.ToggleHighlight(false);
                 continue;
             }
 
@@ -129,11 +128,6 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
         highlight.gameObject.SetActive(toggle);
     }
-
-    // public Renderer GetBulletRenderer()
-    // {
-    //     return mainBulletRenderer;
-    // }
 
     public void ToggleBulletActive(object sender, bool toggle)
     {

@@ -1,5 +1,6 @@
 using System;
 using Cinemachine;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -137,9 +138,24 @@ public class BulletMovement : RewindableMovement
         );
     }
 
-    public void RedirectBullet(Vector3 newDirection, Quaternion newRotation)
+    public bool TryRedirect()
     {
         if (redirectManager.TryRedirect())
+        {
+            return true;
+        }
+        else
+        {
+            AudioManager.PlaySFX(noCoinsSFX, 0.4f, 5, transform.position);
+            return false;
+        }
+    }
+
+    public bool CanRedirect() => redirectManager.CanRedirect();
+
+    public void RedirectBullet(Vector3 newDirection, Quaternion newRotation)
+    {
+        if (TryRedirect())
         {
             GameObject coin = Factory.InstantiateGameObject(
                 redirectCoinPrefab,
@@ -164,10 +180,6 @@ public class BulletMovement : RewindableMovement
             ChangeTravelDirection(newDirection, newRotation);
 
             OnRedirect?.Invoke();
-        }
-        else
-        {
-            AudioManager.PlaySFX(noCoinsSFX, 0.4f, 5, transform.position);
         }
     }
 

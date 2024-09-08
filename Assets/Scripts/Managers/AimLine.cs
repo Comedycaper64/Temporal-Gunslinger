@@ -13,7 +13,13 @@ public class AimLine : MonoBehaviour
     private Sprite hitSprite;
 
     [SerializeField]
+    private Color hitColour;
+
+    [SerializeField]
     private Sprite killSprite;
+
+    [SerializeField]
+    private Color killColour;
 
     [SerializeField]
     private SpriteRenderer hitVisual;
@@ -84,10 +90,12 @@ public class AimLine : MonoBehaviour
         if (toggle)
         {
             hitVisual.sprite = killSprite;
+            hitVisual.color = killColour;
         }
         else
         {
             hitVisual.sprite = hitSprite;
+            hitVisual.color = hitColour;
         }
     }
 

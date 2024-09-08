@@ -11,7 +11,7 @@ public class FocusManager : MonoBehaviour
     private const float NORMAL_CAMERA_X = 225f;
     private const float FOCUS_CAMERA_Y = 1.5f;
     private const float FOCUS_CAMERA_X = 120f;
-    private Vector2 PLAYER_SENSITIVITY = Vector2.one;
+    private float PLAYER_SENSITIVITY = 1f;
     private const float NORMAL_FOV = 50f;
     private const float FOCUS_FOV = 30f;
     private const float focusZoomSpeed = 1.5f;
@@ -55,12 +55,13 @@ public class FocusManager : MonoBehaviour
     private void Awake()
     {
         cameraImpulseListener = bulletCamera.GetComponent<CinemachineImpulseListener>();
-        PLAYER_SENSITIVITY = new Vector2(
-            PlayerOptions.GetBulletXSensitivity(),
-            PlayerOptions.GetBulletYSensitivity()
-        );
-        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY.x;
-        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY.y;
+        PLAYER_SENSITIVITY = PlayerOptions.GetBulletSensitivity();
+        // new Vector2(
+        //     PlayerOptions.GetBulletSensitivity(),
+        //     PlayerOptions.GetBulletYSensitivity()
+        // );
+        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY;
+        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY;
     }
 
     private void Start()
@@ -155,8 +156,8 @@ public class FocusManager : MonoBehaviour
         targetFOV = NORMAL_FOV;
         nonTargetFOV = FOCUS_FOV;
 
-        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY.x;
-        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY.y;
+        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY;
+        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY;
 
         dissolveModel.SetActive(true);
         transparentModel.SetActive(false);
@@ -182,8 +183,8 @@ public class FocusManager : MonoBehaviour
         targetFOV = FOCUS_FOV;
         nonTargetFOV = NORMAL_FOV;
 
-        bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X * PLAYER_SENSITIVITY.x;
-        bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y * PLAYER_SENSITIVITY.y;
+        bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X * PLAYER_SENSITIVITY;
+        bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y * PLAYER_SENSITIVITY;
 
         dissolveModel.SetActive(false);
         transparentModel.SetActive(true);
@@ -222,19 +223,19 @@ public class FocusManager : MonoBehaviour
         }
     }
 
-    private void OnSensitivityUpdated(object sender, Vector2 newSensitivity)
+    private void OnSensitivityUpdated(object sender, float newSensitivity)
     {
         PLAYER_SENSITIVITY = newSensitivity;
 
         if (bFocusing)
         {
-            bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X * PLAYER_SENSITIVITY.x;
-            bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y * PLAYER_SENSITIVITY.y;
+            bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X * PLAYER_SENSITIVITY;
+            bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y * PLAYER_SENSITIVITY;
         }
         else
         {
-            bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY.x;
-            bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY.y;
+            bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY;
+            bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY;
         }
     }
 }

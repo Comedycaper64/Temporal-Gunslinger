@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     private const float REST_MOUSE_SENSITIVITY = 10f;
     private const float AIM_MOUSE_SENSITIVITY = 5f;
-    private Vector2 PLAYER_MOUSE_SENSITIVITY = Vector2.one;
+    private float PLAYER_MOUSE_SENSITIVITY = 1f;
 
     [SerializeField]
     private float mouseSensitivity = REST_MOUSE_SENSITIVITY;
@@ -42,10 +42,11 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         bulletPossessor = GetComponent<BulletPossessor>();
-        PLAYER_MOUSE_SENSITIVITY = new Vector2(
-            PlayerOptions.GetGunXSensitivity(),
-            PlayerOptions.GetGunYSensitivity()
-        );
+        PLAYER_MOUSE_SENSITIVITY = PlayerOptions.GetGunSensitivity();
+        // new Vector2(
+        //     PlayerOptions.GetGunSensitivity(),
+        //     PlayerOptions.GetGunYSensitivity()
+        // );
     }
 
     private void Start()
@@ -92,8 +93,8 @@ public class PlayerController : MonoBehaviour
         Vector2 mouseMovement =
             InputManager.Instance.GetMouseMovement() * mouseSensitivity * Time.deltaTime;
 
-        mouseMovement.x *= PLAYER_MOUSE_SENSITIVITY.x;
-        mouseMovement.y *= PLAYER_MOUSE_SENSITIVITY.y;
+        mouseMovement.x *= PLAYER_MOUSE_SENSITIVITY;
+        mouseMovement.y *= PLAYER_MOUSE_SENSITIVITY;
 
         xRotation -= mouseMovement.y;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
@@ -239,7 +240,7 @@ public class PlayerController : MonoBehaviour
         bulletPossessor.TryPossess();
     }
 
-    private void OnSensitivityUpdated(object sender, Vector2 newSensitivity)
+    private void OnSensitivityUpdated(object sender, float newSensitivity)
     {
         PLAYER_MOUSE_SENSITIVITY = newSensitivity;
     }

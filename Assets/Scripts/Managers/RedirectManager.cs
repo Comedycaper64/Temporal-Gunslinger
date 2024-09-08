@@ -48,6 +48,16 @@ public class RedirectManager : MonoBehaviour
         }
     }
 
+    public bool CanRedirect()
+    {
+        if (redirects <= 0)
+        {
+            OnRedirectFailed?.Invoke();
+        }
+
+        return redirects > 0;
+    }
+
     public void SetRedirects(int newRedirects)
     {
         redirects = newRedirects;
