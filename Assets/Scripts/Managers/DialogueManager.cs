@@ -91,6 +91,7 @@ public class DialogueManager : MonoBehaviour
         this.onDialogueComplete = onDialogueComplete;
         dialogues = new Queue<Dialogue>(dialogueSO.GetDialogues());
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+
         ToggleDialogueUI(true);
         TryPlayNextDialogue();
     }
@@ -169,11 +170,16 @@ public class DialogueManager : MonoBehaviour
 
     private void DisplayNextSentence()
     {
+        //Debug.Log("Go, go go!");
+
         if (bIsSentenceTyping)
         {
+            //Debug.Log("We're typin here!");
             OnFinishTypingDialogue?.Invoke();
             return;
         }
+
+        //Debug.Log("Next sentence");
 
         if (autoPlayCoroutine != null)
         {
@@ -194,10 +200,19 @@ public class DialogueManager : MonoBehaviour
 
         float animationTimer = TrySetAnimationTimer();
 
+        if (animationTimer > 0f)
+        {
+            StartCoroutine(AnimationPause(animationTimer));
+        }
+
         if (currentSentence == "")
         {
             ToggleDialogueUI(false);
-            StartCoroutine(AnimationPause(animationTimer));
+
+            if (animationTimer == 0f)
+            {
+                StartCoroutine(AnimationPause(animationTimer));
+            }
         }
         else
         {
@@ -293,9 +308,12 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator AnimationPause(float pauseTime)
     {
-        bIsSentenceTyping = true;
+        InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
+
         yield return new WaitForSeconds(pauseTime);
-        bIsSentenceTyping = false;
+
+        InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+
         DisplayNextSentence();
     }
 
@@ -321,6 +339,7 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue()
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
+
         ToggleDialogueUI(false);
         if (disableCameraOnEnd)
         {
