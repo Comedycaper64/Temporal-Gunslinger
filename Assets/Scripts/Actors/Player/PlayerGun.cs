@@ -56,12 +56,15 @@ public class PlayerGun : MonoBehaviour
     [SerializeField]
     private CinemachineVirtualCamera gunPOVCamera;
     private Bullet bullet;
+    private BulletPossessTarget bulletPossessTarget;
     private CinemachineImpulseSource impulseSource;
     public static EventHandler<bool> OnAimGun;
 
     private void Start()
     {
         bullet = bulletStateMachine.GetComponent<Bullet>();
+        bulletPossessTarget = bulletStateMachine.GetComponent<BulletPossessTarget>();
+
         impulseSource = GetComponent<CinemachineImpulseSource>();
         foreach (Renderer renderer in gunModelRenderers)
         {
@@ -146,8 +149,6 @@ public class PlayerGun : MonoBehaviour
             {
                 renderer.material = transGunMaterial;
             }
-
-            OnAimGun?.Invoke(this, true);
         }
         else
         {
@@ -162,9 +163,12 @@ public class PlayerGun : MonoBehaviour
             {
                 renderer.material = opaqueGunMaterial;
             }
-
-            OnAimGun?.Invoke(this, false);
         }
+
+        bulletPossessTarget.ToggleNearbyPossessableHighlight(toggle);
+
+        OnAimGun?.Invoke(this, toggle);
+
         shouldGunMove = true;
     }
 
@@ -173,6 +177,7 @@ public class PlayerGun : MonoBehaviour
         AudioManager.PlaySFX(shootSFX, 0.6f, 0, transform.position);
         gunShotVFX.PlayEffect();
         impulseSource.GenerateImpulse();
+        bulletPossessTarget.ToggleNearbyPossessableHighlight(false);
         bulletStateMachine.SwitchToActive();
     }
 

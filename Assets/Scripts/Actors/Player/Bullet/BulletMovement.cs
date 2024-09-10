@@ -106,11 +106,6 @@ public class BulletMovement : RewindableMovement
 
         transform.position += flightDirection * GetSpeed() * Time.deltaTime;
 
-        if (bShouldSpin)
-        {
-            SpinBullet();
-        }
-
         if (!bShouldRotate)
         {
             return;
@@ -126,6 +121,14 @@ public class BulletMovement : RewindableMovement
         if (Quaternion.Angle(bulletModel.rotation, targetRotation) < 0.1f)
         {
             bShouldRotate = false;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        if (bShouldSpin)
+        {
+            SpinBullet();
         }
     }
 
@@ -186,13 +189,17 @@ public class BulletMovement : RewindableMovement
     public void ChangeTravelDirection(Vector3 newDirection, Quaternion newRotation)
     {
         flightDirection = newDirection;
-        targetRotation = newRotation;
+
         if (!bShouldRotate)
         {
             rotationTimer = 0f;
         }
 
-        bShouldRotate = true;
+        if (Quaternion.Angle(targetRotation, newRotation) > 0.1f)
+        {
+            bShouldRotate = true;
+            targetRotation = newRotation;
+        }
 
         float deathTime;
         WillKillRevenant(out deathTime);
