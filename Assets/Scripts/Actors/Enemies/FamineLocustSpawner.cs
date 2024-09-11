@@ -45,5 +45,10 @@ public class FamineLocustSpawner : RewindableMovement
     {
         spawnIndex = 0;
         spawnTimer = 0f;
+
+        foreach (BulletStateMachine locust in availableLocusts)
+        {
+            locust.transform.position = transform.position;
+        }
     }
 }

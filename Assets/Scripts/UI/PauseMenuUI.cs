@@ -27,12 +27,16 @@ public class PauseMenuUI : MonoBehaviour
     private CanvasGroupFader restartConfirmFader;
 
     [SerializeField]
+    private CanvasGroupFader skipConfirmFader;
+
+    [SerializeField]
     private CanvasGroupFader mainMenuConfirmFader;
 
     [SerializeField]
     private CanvasGroupFader quitConfirmFader;
 
     public static EventHandler<bool> OnPauseToggled;
+    public static Action OnSkipCutscene;
 
     private void Start()
     {
@@ -104,6 +108,12 @@ public class PauseMenuUI : MonoBehaviour
         currentActiveGroup = newGroupFader;
     }
 
+    public void TrySkipCinematic()
+    {
+        TogglePauseMenu();
+        OnSkipCutscene?.Invoke();
+    }
+
     public void TogglePauseMenu()
     {
         pauseActive = !pauseActive;
@@ -114,6 +124,7 @@ public class PauseMenuUI : MonoBehaviour
 
         CloseGroup(controlsFader);
         CloseGroup(restartConfirmFader);
+        CloseGroup(skipConfirmFader);
         CloseGroup(optionsFader);
         CloseGroup(mainMenuConfirmFader);
         CloseGroup(quitConfirmFader);

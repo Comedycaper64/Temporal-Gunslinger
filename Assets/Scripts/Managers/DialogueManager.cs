@@ -46,6 +46,7 @@ public class DialogueManager : MonoBehaviour
     private bool bAutoPlay = false;
     private float crossFadeTime = 0.1f;
     private Coroutine autoPlayCoroutine;
+    private Coroutine animationCoroutine;
     private ActorSO currentActor;
     private DialogueChoiceSO currentChoice;
     private int actorIndex;
@@ -94,6 +95,83 @@ public class DialogueManager : MonoBehaviour
 
         ToggleDialogueUI(true);
         TryPlayNextDialogue();
+    }
+
+    public void SkipCurrentDialogue()
+    {
+        DialogueSkipCleanup();
+
+        EndDialogue();
+
+        while (currentAnimations.Count > 0)
+        {
+            TryPlayAnimation();
+        }
+
+        GoThroughDialogueAnimations();
+    }
+
+    public void SkipCurrentChoice()
+    {
+        DialogueSkipCleanup();
+
+        EndDialogue();
+    }
+
+    public void SkipDialogue(DialogueSO dialogueSO, Action onDialogueComplete)
+    {
+        DialogueSkipCleanup();
+
+        dialogues = new Queue<Dialogue>(dialogueSO.GetDialogues());
+
+        GoThroughDialogueAnimations();
+
+        onDialogueComplete();
+    }
+
+    private void DialogueSkipCleanup()
+    {
+        if (autoPlayCoroutine != null)
+        {
+            StopCoroutine(autoPlayCoroutine);
+        }
+
+        if (animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+        }
+
+        dialogueCameraDirector.EndOfDialogueCleanup();
+
+        dialogueAudioSource.Stop();
+    }
+
+    private void GoThroughDialogueAnimations()
+    {
+        foreach (Dialogue dialogue in dialogues)
+        {
+            currentActor = dialogue.actor;
+            RuntimeAnimatorController actorController = currentActor.GetAnimatorController();
+            actorAnimators = actorAnimatorMapper.GetAnimators(actorController);
+
+            actorIndex = dialogue.actorNo;
+            currentAnimations = new Queue<AnimationClip>(dialogue.animations);
+            //currentAnimationTimes = new Queue<float>(dialogue.animationTime);
+
+            if (dialogue.animationCrossFadeTime != null)
+            {
+                currentAnimationCrossFadeTimes = new Queue<float>(dialogue.animationCrossFadeTime);
+            }
+            else
+            {
+                currentAnimationCrossFadeTimes = new Queue<float>();
+            }
+
+            while (currentAnimations.Count > 0)
+            {
+                TryPlayAnimation();
+            }
+        }
     }
 
     public void DisplayChoices(DialogueChoiceSO dialogueChoiceSO, Action onDialogueComplete)
@@ -202,7 +280,7 @@ public class DialogueManager : MonoBehaviour
 
         if (animationTimer > 0f)
         {
-            StartCoroutine(AnimationPause(animationTimer));
+            animationCoroutine = StartCoroutine(AnimationPause(animationTimer));
         }
 
         if (currentSentence == "")
@@ -211,7 +289,7 @@ public class DialogueManager : MonoBehaviour
 
             if (animationTimer == 0f)
             {
-                StartCoroutine(AnimationPause(animationTimer));
+                animationCoroutine = StartCoroutine(AnimationPause(animationTimer));
             }
         }
         else
@@ -313,6 +391,8 @@ public class DialogueManager : MonoBehaviour
         yield return new WaitForSeconds(pauseTime);
 
         InputManager.Instance.OnShootAction += InputManager_OnShootAction;
+
+        animationCoroutine = null;
 
         DisplayNextSentence();
     }

@@ -8,6 +8,9 @@ public class CinematicManager : MonoBehaviour
     // private CameraMode endOfTimelineCamera;
     // private ActorSO endOfTimelineActor;
 
+    private bool skipping = false;
+
+    private CinematicNode currentCinematicNode;
     private Queue<CinematicNode> cinematicNodes;
     private Action OnCinematicFinished;
 
@@ -41,6 +44,13 @@ public class CinematicManager : MonoBehaviour
         }
         Instance = this;
         actorAnimatorMapper = dialogueManager.GetComponent<ActorAnimatorMapper>();
+
+        PauseMenuUI.OnSkipCutscene += SkipCinematic;
+    }
+
+    private void OnDisable()
+    {
+        PauseMenuUI.OnSkipCutscene -= SkipCinematic;
     }
 
     public void PlayCinematic(CinematicSO cinematicSO, Action OnCinematicFinished)
@@ -50,29 +60,41 @@ public class CinematicManager : MonoBehaviour
         TryPlayNextNode();
     }
 
+    public void SkipCinematic()
+    {
+        if ((cinematicNodes.Count <= 0) && !currentCinematicNode)
+        {
+            return;
+        }
+
+        skipping = true;
+        TrySkipCurrentNode();
+    }
+
     private void TryPlayNextNode()
     {
-        CinematicNode cinematicNode;
-
-        if (!cinematicNodes.TryDequeue(out cinematicNode))
+        if (!cinematicNodes.TryDequeue(out currentCinematicNode))
         {
             EndCinematic();
             return;
         }
 
-        Type nodeType = cinematicNode.GetType();
+        Type nodeType = currentCinematicNode.GetType();
 
         if (nodeType == typeof(DialogueSO))
         {
-            dialogueManager.PlayDialogue(cinematicNode as DialogueSO, TryPlayNextNode);
+            dialogueManager.PlayDialogue(currentCinematicNode as DialogueSO, TryPlayNextNode);
         }
         else if (nodeType == typeof(DialogueChoiceSO))
         {
-            dialogueManager.DisplayChoices(cinematicNode as DialogueChoiceSO, TryPlayNextNode);
+            dialogueManager.DisplayChoices(
+                currentCinematicNode as DialogueChoiceSO,
+                TryPlayNextNode
+            );
         }
         else if (nodeType == typeof(PlaySFXSO))
         {
-            PlaySFXSO sfx = cinematicNode as PlaySFXSO;
+            PlaySFXSO sfx = currentCinematicNode as PlaySFXSO;
             AudioManager.PlaySFX(
                 sfx.soundEffect,
                 sfx.sfxVolume,
@@ -83,11 +105,11 @@ public class CinematicManager : MonoBehaviour
         }
         else if (nodeType == typeof(ActorMovementSO))
         {
-            HandleMovementNode(cinematicNode);
+            HandleMovementNode(currentCinematicNode as ActorMovementSO);
         }
         else if (nodeType == typeof(TimelineSO))
         {
-            TimelineSO timeline = cinematicNode as TimelineSO;
+            TimelineSO timeline = currentCinematicNode as TimelineSO;
             int timelineIndex = timeline.directorIndex;
             // endOfTimelineCamera = timeline.endOfTimelineCamera;
             // endOfTimelineActor = timeline.endOfTimelineActor;
@@ -96,13 +118,13 @@ public class CinematicManager : MonoBehaviour
         }
         else if (nodeType == typeof(UIChangeSO))
         {
-            UIChangeSO uIChange = cinematicNode as UIChangeSO;
+            UIChangeSO uIChange = currentCinematicNode as UIChangeSO;
             uIChange.onFaded = TryPlayNextNode;
             OnFadeToBlackToggle?.Invoke(this, uIChange);
         }
         else if (nodeType == typeof(SceneChangeSO))
         {
-            SceneChangeSO sceneChangeSO = cinematicNode as SceneChangeSO;
+            SceneChangeSO sceneChangeSO = currentCinematicNode as SceneChangeSO;
 
             scrollingHallway.ToggleScroll(sceneChangeSO.startScrollingWalk);
 
@@ -131,26 +153,114 @@ public class CinematicManager : MonoBehaviour
         }
     }
 
-    private void HandleMovementNode(CinematicNode cinematicNode)
+    private void TrySkipCurrentNode()
     {
-        ActorMovementSO actorMovement = cinematicNode as ActorMovementSO;
+        Type nodeType = currentCinematicNode.GetType();
+
+        if (nodeType == typeof(DialogueSO))
+        {
+            dialogueManager.SkipCurrentDialogue();
+            TrySkipNextNode();
+        }
+        else if (nodeType == typeof(DialogueChoiceSO))
+        {
+            dialogueManager.SkipCurrentChoice();
+            TrySkipNextNode();
+        }
+        else if (nodeType == typeof(TimelineSO))
+        {
+            TimelineSO timeline = currentCinematicNode as TimelineSO;
+            int timelineIndex = timeline.directorIndex;
+            timelineDirectors[timelineIndex].time =
+                timelineDirectors[timelineIndex].duration - 0.001f;
+
+            timelineDirectors[timelineIndex].Play();
+            timelineDirectors[timelineIndex].stopped += TimelineSkipped;
+        }
+    }
+
+    private void TrySkipNextNode()
+    {
+        CinematicNode cinematicNode;
+
+        if (!cinematicNodes.TryDequeue(out cinematicNode))
+        {
+            skipping = false;
+            EndCinematic();
+            return;
+        }
+
+        Type nodeType = cinematicNode.GetType();
+
+        if (nodeType == typeof(DialogueSO))
+        {
+            dialogueManager.SkipDialogue(cinematicNode as DialogueSO, TrySkipNextNode);
+        }
+        else if (nodeType == typeof(ActorMovementSO))
+        {
+            SkipMovementNode(cinematicNode as ActorMovementSO);
+        }
+        else if (nodeType == typeof(TimelineSO))
+        {
+            TimelineSO timeline = cinematicNode as TimelineSO;
+            int timelineIndex = timeline.directorIndex;
+            timelineDirectors[timelineIndex].time =
+                timelineDirectors[timelineIndex].duration - 0.001f;
+
+            timelineDirectors[timelineIndex].Play();
+            timelineDirectors[timelineIndex].stopped += TimelineSkipped;
+        }
+        else if (nodeType == typeof(UIChangeSO))
+        {
+            UIChangeSO uIChange = cinematicNode as UIChangeSO;
+            uIChange.onFaded = TrySkipNextNode;
+            OnFadeToBlackToggle?.Invoke(this, uIChange);
+        }
+        else
+        {
+            TrySkipNextNode();
+        }
+    }
+
+    private void HandleMovementNode(ActorMovementSO movementNode)
+    {
         Animator animator = actorAnimatorMapper.GetAnimators(
-            actorMovement.actor.GetAnimatorController()
-        )[actorMovement.actorIndex];
+            movementNode.actor.GetAnimatorController()
+        )[movementNode.actorIndex];
         ActorMover mover = animator.GetComponent<ActorMover>();
 
-        mover.MoveActor(actorMovement, TryPlayNextNode);
+        mover.MoveActor(movementNode, TryPlayNextNode);
+    }
+
+    private void SkipMovementNode(ActorMovementSO movementNode)
+    {
+        Animator animator = actorAnimatorMapper.GetAnimators(
+            movementNode.actor.GetAnimatorController()
+        )[movementNode.actorIndex];
+        ActorMover mover = animator.GetComponent<ActorMover>();
+
+        mover.SkipActorMovement(movementNode);
+        TrySkipNextNode();
     }
 
     private void EndCinematic()
     {
+        currentCinematicNode = null;
         OnCinematicFinished?.Invoke();
     }
 
     private void TimelineFinished(PlayableDirector director)
     {
-        // Set active camera
-        //dialogueManager.SetDialogueCamera(endOfTimelineCamera, endOfTimelineActor);
+        if (skipping)
+        {
+            return;
+        }
+
         TryPlayNextNode();
+    }
+
+    private void TimelineSkipped(PlayableDirector director)
+    {
+        TrySkipNextNode();
     }
 }

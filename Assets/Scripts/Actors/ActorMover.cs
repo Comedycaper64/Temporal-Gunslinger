@@ -43,6 +43,11 @@ public class ActorMover : MonoBehaviour
         }
     }
 
+    public void SkipActorMovement(ActorMovementSO actorMovementSO)
+    {
+        movingTransform.position = movingTransform.position + actorMovementSO.movement;
+    }
+
     private void SetMovementTarget(Vector3 movement, float speed)
     {
         movementRequired = true;
