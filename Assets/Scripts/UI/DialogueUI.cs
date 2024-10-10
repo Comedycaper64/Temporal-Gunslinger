@@ -40,6 +40,7 @@ public class DialogueUI : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI actorNameText;
+    private Material actorFontMaterialInstance;
 
     [SerializeField]
     private TextMeshProUGUI dialogueText;
@@ -56,7 +57,8 @@ public class DialogueUI : MonoBehaviour
         DialogueChoiceUI.OnChoose += DialogueChoiceUI_OnChoose;
 
         ClearDialogueText();
-        SetActorName("");
+        actorFontMaterialInstance = actorNameText.fontMaterial;
+        SetActorName("", Color.black);
         dialogueFader = GetComponent<CanvasGroupFader>();
         dialogueFader.SetCanvasGroupAlpha(0f);
         actorSpriteFader.SetCanvasGroupAlpha(0f);
@@ -91,9 +93,10 @@ public class DialogueUI : MonoBehaviour
         }
     }
 
-    private void SetActorName(string actorName)
+    private void SetActorName(string actorName, Color nameColour)
     {
         actorNameText.text = actorName;
+        actorFontMaterialInstance.SetColor("_UnderlayColor", nameColour);
     }
 
     private void ClearDialogueText()
@@ -109,7 +112,7 @@ public class DialogueUI : MonoBehaviour
 
     private void SetNewActor(ActorSO actorSO)
     {
-        SetActorName(actorSO.GetActorName());
+        SetActorName(actorSO.GetActorName(), actorSO.GetActorNameColour());
 
         if (currentActor == actorSO)
         {
@@ -249,7 +252,7 @@ public class DialogueUI : MonoBehaviour
         }
 
         ClearDialogueText();
-        SetActorName("");
+        SetActorName("", Color.black);
         ToggleDialogueActive(e);
     }
 

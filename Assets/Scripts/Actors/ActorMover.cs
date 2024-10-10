@@ -48,6 +48,14 @@ public class ActorMover : MonoBehaviour
         movingTransform.position = movingTransform.position + actorMovementSO.movement;
     }
 
+    public void SkipCurrentActorMovement()
+    {
+        movingTransform.position = destination;
+        onMovementComplete = null;
+
+        FinishMovement();
+    }
+
     private void SetMovementTarget(Vector3 movement, float speed)
     {
         movementRequired = true;

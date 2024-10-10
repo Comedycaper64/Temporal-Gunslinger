@@ -167,6 +167,11 @@ public class CinematicManager : MonoBehaviour
             dialogueManager.SkipCurrentChoice();
             TrySkipNextNode();
         }
+        else if (nodeType == typeof(ActorMovementSO))
+        {
+            SkipCurrentMovementNode(currentCinematicNode as ActorMovementSO);
+            TrySkipNextNode();
+        }
         else if (nodeType == typeof(TimelineSO))
         {
             TimelineSO timeline = currentCinematicNode as TimelineSO;
@@ -222,25 +227,29 @@ public class CinematicManager : MonoBehaviour
         }
     }
 
-    private void HandleMovementNode(ActorMovementSO movementNode)
+    private ActorMover GetActorMover(ActorMovementSO movementNode)
     {
         Animator animator = actorAnimatorMapper.GetAnimators(
             movementNode.actor.GetAnimatorController()
         )[movementNode.actorIndex];
         ActorMover mover = animator.GetComponent<ActorMover>();
+        return mover;
+    }
 
-        mover.MoveActor(movementNode, TryPlayNextNode);
+    private void HandleMovementNode(ActorMovementSO movementNode)
+    {
+        GetActorMover(movementNode).MoveActor(movementNode, TryPlayNextNode);
     }
 
     private void SkipMovementNode(ActorMovementSO movementNode)
     {
-        Animator animator = actorAnimatorMapper.GetAnimators(
-            movementNode.actor.GetAnimatorController()
-        )[movementNode.actorIndex];
-        ActorMover mover = animator.GetComponent<ActorMover>();
-
-        mover.SkipActorMovement(movementNode);
+        GetActorMover(movementNode).SkipActorMovement(movementNode);
         TrySkipNextNode();
+    }
+
+    private void SkipCurrentMovementNode(ActorMovementSO movementNode)
+    {
+        GetActorMover(movementNode).SkipCurrentActorMovement();
     }
 
     private void EndCinematic()

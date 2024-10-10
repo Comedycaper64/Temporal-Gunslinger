@@ -8,6 +8,10 @@ public class ActorSO : ScriptableObject
     [SerializeField]
     private string actorName;
 
+    [ColorUsage(true, true)]
+    [SerializeField]
+    private Color actorNameColour;
+
     [SerializeField]
     private AudioClip[] dialogueNoises;
 
@@ -23,6 +27,11 @@ public class ActorSO : ScriptableObject
     public string GetActorName()
     {
         return actorName;
+    }
+
+    public Color GetActorNameColour()
+    {
+        return actorNameColour;
     }
 
     public AudioClip[] GetDialogueNoises()
