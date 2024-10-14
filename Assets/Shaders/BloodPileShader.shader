@@ -13,10 +13,20 @@ Shader"Unlit/BloodPileShader"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags 
+        { 
+            //"RenderType"="Opaque" 
+            "RenderType"="Transparent" 
+            "Queue"="Transparent"
+        }
 
         Pass
         {
+            ZWrite Off
+
+            Blend SrcAlpha
+            OneMinusSrcAlpha
+
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
