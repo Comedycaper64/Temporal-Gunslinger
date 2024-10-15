@@ -1,40 +1,68 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MentalHub : MonoBehaviour
+public class MentalHub : MonoBehaviour, IReactable
 {
+    private struct LinkPosition
+    {
+        public LinkPosition(MentalLinkTether tether, Vector3 tetherEnd)
+        {
+            this.tether = tether;
+            tetherEndPoint = tetherEnd;
+        }
+
+        public MentalLinkTether tether;
+        public Vector3 tetherEndPoint;
+    }
+
     [SerializeField]
     private GameObject linkTetherPrefab;
 
     [SerializeField]
     private EnemyHuskStateMachine[] linkedEnemies;
 
+    [SerializeField]
+    private List<LinkPosition> linkTethers = new List<LinkPosition>();
+
     private void Awake()
     {
-        SetupLinks(true);
-
         foreach (EnemyHuskStateMachine enemy in linkedEnemies)
         {
             MentalLinkTether linkTether = Instantiate(linkTetherPrefab, transform)
                 .GetComponent<MentalLinkTether>();
-            linkTether.SetTetherPoint(transform.position, enemy.GetMentalLink().transform.position);
+
+            LinkPosition linkPosition = new LinkPosition(
+                linkTether,
+                enemy.GetMentalLink().transform.position
+            );
+            linkTethers.Add(linkPosition);
+
+            //linkTether.SetTetherPoint(transform.position, enemy.GetMentalLink().transform.position);
         }
+
+        SetupLinks(true);
     }
 
     private void SetupLinks(bool toggle)
     {
         if (toggle)
         {
-            foreach (EnemyHuskStateMachine enemy in linkedEnemies)
+            for (int i = 0; i < linkedEnemies.Length; i++)
             {
-                enemy.GetMentalLink().OnLinkSevered += TransmitFeedback;
+                linkedEnemies[i].GetMentalLink().OnLinkSevered += TransmitFeedback;
+                linkTethers[i].tether.SetTetherPoint(
+                    transform.position,
+                    linkTethers[i].tetherEndPoint
+                );
             }
         }
         else
         {
-            foreach (EnemyHuskStateMachine enemy in linkedEnemies)
+            for (int i = 0; i < linkedEnemies.Length; i++)
             {
-                enemy.GetMentalLink().OnLinkSevered -= TransmitFeedback;
+                linkedEnemies[i].GetMentalLink().OnLinkSevered -= TransmitFeedback;
+                linkTethers[i].tether.SeverTetherPoint();
             }
         }
     }
@@ -56,6 +84,11 @@ public class MentalHub : MonoBehaviour
 
         SetupLinks(false);
 
-        // Rewind Event for undoing
+        StartReaction.ReactionStarted(this);
+    }
+
+    public void UndoReaction()
+    {
+        SetupLinks(true);
     }
 }

@@ -82,6 +82,7 @@ public class MentalLinkTether : MonoBehaviour
 
     public void SeverTetherPoint()
     {
+        lineRenderer.positionCount = 0;
         linkEnabled = false;
     }
 }

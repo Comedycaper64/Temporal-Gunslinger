@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,13 +13,19 @@ public class EnemyHuskStateMachine : StateMachine
     private void Start()
     {
         SwitchState(stateDictionary[StateEnum.inactive]);
+        mentalLink.OnLinkFeedback += MentalLink_OnLinkFeedback;
+    }
+
+    private void OnDisable()
+    {
+        mentalLink.OnLinkFeedback -= MentalLink_OnLinkFeedback;
     }
 
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.idle, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyInactiveState(this));
+        stateDictionary.Add(StateEnum.idle, new EnemyHuskIdleState(this));
+        stateDictionary.Add(StateEnum.active, new EnemyHuskIdleState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 
@@ -30,14 +37,19 @@ public class EnemyHuskStateMachine : StateMachine
         }
     }
 
-    public override void SwitchState(State newState)
+    public override void SwitchToDeadState()
     {
         mentalLink.LinkSever();
-        base.SwitchState(newState);
+        base.SwitchToDeadState();
     }
 
     public MentalLink GetMentalLink()
     {
         return mentalLink;
+    }
+
+    private void MentalLink_OnLinkFeedback()
+    {
+        base.SwitchToDeadState();
     }
 }
