@@ -231,7 +231,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b85ccd859431f47b8f1dd37a84cb91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bFragileBullet: 0
+  collisionLayermask:
+    serializedVersion: 2
+    m_Bits: 1600
   bulletMovement: {fileID: 7828219722662083361}
+  bulletStateMachine: {fileID: 7828219722662083371}
   impactEffect: {fileID: 3638796629300604411, guid: 7d2803c0f52335747bbcab3816fe4432,
     type: 3}
   ricochetVFX: {fileID: 6896051754062612965, guid: 60ccafae8a9ef0d49aa2f2aca1bf539e,
@@ -1254,7 +1259,7 @@ Transform:
   - {fileID: 7828219723591832201}
   - {fileID: 5493667388143854021}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7828219722662083360
 MonoBehaviour:

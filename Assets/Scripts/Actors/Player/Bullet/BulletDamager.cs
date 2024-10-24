@@ -1,13 +1,23 @@
 using Cinemachine;
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class BulletDamager : MonoBehaviour
 {
     private bool bBulletActive;
+
+    [SerializeField]
+    private bool bFragileBullet;
     private CinemachineImpulseSource impulseSource;
 
     [SerializeField]
+    private LayerMask collisionLayermask;
+
+    [SerializeField]
     private BulletMovement bulletMovement;
+
+    [SerializeField]
+    private BulletStateMachine bulletStateMachine;
 
     [SerializeField]
     private GameObject impactEffect;
@@ -34,7 +44,16 @@ public class BulletDamager : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
-            Debug.Log(other.gameObject.name);
+            if (!collisionLayermask.MMContains(other.gameObject.layer))
+            {
+                return;
+            }
+
+            if (bFragileBullet)
+            {
+                bulletStateMachine.SwitchToDeadState();
+                return;
+            }
 
             Factory.InstantiateGameObject(ricochetVFX, transform.position, transform.rotation);
             impulseSource.GenerateImpulse();
@@ -68,10 +87,21 @@ public class BulletDamager : MonoBehaviour
 
         if (other.gameObject.TryGetComponent<IDamageable>(out IDamageable damageable))
         {
+            if (!collisionLayermask.MMContains(other.gameObject.layer))
+            {
+                return;
+            }
+
             //Debug.Log("Hit: " + damageable);
             impulseSource.GenerateImpulse();
 
             damageable.ProjectileHit(out float velocityConservation);
+
+            if (bFragileBullet)
+            {
+                bulletStateMachine.SwitchToDeadState();
+                return;
+            }
 
             bulletMovement.SlowBullet(velocityConservation);
         }
