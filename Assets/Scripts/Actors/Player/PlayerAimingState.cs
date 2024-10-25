@@ -15,7 +15,7 @@ public class PlayerAimingState : State
     public override void Enter()
     {
         //When aiming, ensures mouse is captured
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
 
         animator.SetTrigger("activate");
 
@@ -27,7 +27,7 @@ public class PlayerAimingState : State
 
     public override void Exit()
     {
-        Cursor.lockState = CursorLockMode.None;
+        // Cursor.lockState = CursorLockMode.None;
         playerController.TogglePlayerController(false);
     }
 }

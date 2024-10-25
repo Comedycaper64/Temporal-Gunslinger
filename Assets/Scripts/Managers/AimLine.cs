@@ -3,6 +3,7 @@ using UnityEngine;
 public class AimLine : MonoBehaviour
 {
     private float lineRange = 100f;
+    private float sphereCastRadius = 0.1f;
     private float hitVisualHoverDistance = 0.01f;
     private bool bShowLine = false;
     private Transform lineOrigin;
@@ -38,10 +39,11 @@ public class AimLine : MonoBehaviour
         ToggleHitVisualVisibility(false);
     }
 
-    public void SetupLine(Transform lineOrigin, Vector3 lineDirection)
+    public void SetupLine(Transform lineOrigin, Vector3 lineDirection, float sphereCastRadius)
     {
         this.lineOrigin = lineOrigin;
         this.lineDirection = lineDirection;
+        this.sphereCastRadius = sphereCastRadius;
     }
 
     private void LateUpdate()
@@ -59,7 +61,18 @@ public class AimLine : MonoBehaviour
         Vector3 originPosition = lineOrigin.position;
         RaycastHit hit;
         Vector3[] positionArray = new Vector3[2] { originPosition, Vector3.zero };
-        if (Physics.Raycast(originPosition, lineDirection, out hit, lineRange, hitLayerMask))
+
+        //Physics.Raycast(originPosition, lineDirection, out hit, lineRange, hitLayerMask)
+        if (
+            Physics.SphereCast(
+                originPosition,
+                sphereCastRadius,
+                lineDirection,
+                out hit,
+                lineRange,
+                hitLayerMask
+            )
+        )
         {
             ToggleHitVisualVisibility(true);
             hitVisual.transform.position = hit.point + (hit.normal * hitVisualHoverDistance);

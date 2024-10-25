@@ -4,9 +4,14 @@ public class SFXPauser : MonoBehaviour
 {
     private AudioSource sfxAudioSource;
 
+    [SerializeField]
+    [Range(0f, 1f)]
+    private float sfxVolume = 1f;
+
     private void Awake()
     {
         sfxAudioSource = GetComponent<AudioSource>();
+        PlaySFX();
     }
 
     private void OnEnable()
@@ -33,16 +38,16 @@ public class SFXPauser : MonoBehaviour
 
     private void PauseSFX()
     {
-        sfxAudioSource.Pause();
+        sfxAudioSource.volume = 0f;
     }
 
     private void PlaySFX()
     {
-        if (sfxAudioSource.isPlaying)
-        {
-            return;
-        }
+        // if (sfxAudioSource.isPlaying)
+        // {
+        //     return;
+        // }
 
-        sfxAudioSource.Play();
+        sfxAudioSource.volume = PlayerOptions.GetSFXVolume() * sfxVolume;
     }
 }

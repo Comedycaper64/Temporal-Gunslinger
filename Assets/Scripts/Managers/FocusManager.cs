@@ -25,6 +25,9 @@ public class FocusManager : MonoBehaviour
     private float nonTargetFOV = FOCUS_FOV;
 
     [SerializeField]
+    private Collider bulletCollider;
+
+    [SerializeField]
     private Transform bulletModelTransform;
 
     [SerializeField]
@@ -123,9 +126,27 @@ public class FocusManager : MonoBehaviour
 
     private void CreateAimLine()
     {
+        float colliderRadius;
+
+        if (bulletCollider.GetType() == typeof(SphereCollider))
+        {
+            SphereCollider collider = bulletCollider as SphereCollider;
+            colliderRadius = collider.radius;
+        }
+        else if (bulletCollider.GetType() == typeof(BoxCollider))
+        {
+            BoxCollider collider = bulletCollider as BoxCollider;
+            colliderRadius = collider.size.x / 2;
+        }
+        else
+        {
+            colliderRadius = 0.025f;
+        }
+
         focusAimLine = AimLineManager.Instance.CreateAimLine(
             bulletModelTransform,
-            bulletModelTransform.forward
+            bulletModelTransform.forward,
+            colliderRadius
         );
         focusAimLine.ToggleLine(true);
     }

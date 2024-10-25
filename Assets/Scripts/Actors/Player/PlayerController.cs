@@ -53,12 +53,14 @@ public class PlayerController : MonoBehaviour
     {
         InputManager.Instance.OnFocusAction += InputManager_OnFocus;
         OptionsManager.OnGunSensitivityUpdated += OnSensitivityUpdated;
+        TutorialUI.OnDisplayTutorial += TutorialUI_OnDisplayTutorial;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnFocusAction -= InputManager_OnFocus;
         OptionsManager.OnGunSensitivityUpdated -= OnSensitivityUpdated;
+        TutorialUI.OnDisplayTutorial -= TutorialUI_OnDisplayTutorial;
     }
 
     void Update()
@@ -111,6 +113,7 @@ public class PlayerController : MonoBehaviour
 
         if (bIsPlayerActive)
         {
+            Cursor.lockState = CursorLockMode.Locked;
             InputManager.Instance.OnShootAction += InputManager_OnShootAction;
             OnPlayerStateChanged?.Invoke(this, 1);
             playerGun.ResetBullet();
@@ -125,6 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            Cursor.lockState = CursorLockMode.None;
             InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
             OnPlayerStateChanged?.Invoke(this, 0);
             RedirectManager.Instance.ToggleRedirectUI(false);
@@ -243,6 +247,11 @@ public class PlayerController : MonoBehaviour
     private void OnSensitivityUpdated(object sender, float newSensitivity)
     {
         PLAYER_MOUSE_SENSITIVITY = newSensitivity;
+    }
+
+    private void TutorialUI_OnDisplayTutorial(object sender, bool toggle)
+    {
+        TogglePlayerController(!toggle);
     }
 
     private void IsFocusingChanged(bool isFocusing)

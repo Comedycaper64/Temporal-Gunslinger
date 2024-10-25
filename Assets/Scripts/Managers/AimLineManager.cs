@@ -18,10 +18,14 @@ public class AimLineManager : MonoBehaviour
         Instance = this;
     }
 
-    public AimLine CreateAimLine(Transform originTransform, Vector3 lineDirection)
+    public AimLine CreateAimLine(
+        Transform originTransform,
+        Vector3 lineDirection,
+        float sphereCastRadius
+    )
     {
         AimLine aimLine = Instantiate(aimLinePrefab, originTransform).GetComponent<AimLine>();
-        aimLine.SetupLine(originTransform, lineDirection);
+        aimLine.SetupLine(originTransform, lineDirection, sphereCastRadius);
         return aimLine;
     }
 }

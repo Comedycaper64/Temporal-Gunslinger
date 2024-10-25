@@ -58,6 +58,16 @@ public class CanvasGroupFader : MonoBehaviour
         return canvasGroup.alpha;
     }
 
+    public void ButtonToggleFade(bool toggle)
+    {
+        ToggleFade(toggle);
+    }
+
+    public void ToggleBlockRaycasts(bool toggle)
+    {
+        canvasGroup.blocksRaycasts = toggle;
+    }
+
     public void ToggleFade(
         bool toggle,
         float targetAlpha = 1.0f,
