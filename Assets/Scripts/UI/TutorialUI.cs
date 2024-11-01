@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class TutorialUI : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class TutorialUI : MonoBehaviour
 
     [SerializeField]
     private CanvasGroupFader tutorialCanvas;
+
+    [SerializeField]
+    private VideoPlayer tutorialVideoPlayer;
     public static EventHandler<bool> OnDisplayTutorial;
 
     private void Awake()
@@ -26,18 +30,31 @@ public class TutorialUI : MonoBehaviour
     {
         yield return null;
 
-        tutorialCanvas.ToggleFade(true);
-        tutorialCanvas.ToggleBlockRaycasts(true);
+        ToggleCanvas(true);
         OnDisplayTutorial?.Invoke(this, true);
-        // turn off revenant controls
-        //Make cursor appear
         tutorialDisplayed = true;
+    }
+
+    private void ToggleCanvas(bool toggle)
+    {
+        tutorialCanvas.ToggleFade(toggle);
+        tutorialCanvas.ToggleBlockRaycasts(toggle);
+        if (tutorialVideoPlayer)
+        {
+            if (toggle)
+            {
+                tutorialVideoPlayer.Play();
+            }
+            else
+            {
+                tutorialVideoPlayer.Stop();
+            }
+        }
     }
 
     public void CloseTutorial()
     {
-        tutorialCanvas.ToggleFade(false);
-        tutorialCanvas.ToggleBlockRaycasts(false);
+        ToggleCanvas(false);
         OnDisplayTutorial?.Invoke(this, false);
     }
 
