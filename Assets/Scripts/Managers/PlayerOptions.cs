@@ -3,6 +3,7 @@ public class PlayerOptions
     private static float MASTER_VOLUME = 0.5f;
     private static float MUSIC_VOLUME = 1f;
     private static float SFX_VOLUME = 1f;
+    private static float VOICE_VOLUME = 1f;
 
     private static float GUN_SENSITIVITY = 1f;
 
@@ -26,6 +27,12 @@ public class PlayerOptions
     public static void SetSFXVolume(float newVolume)
     {
         SFX_VOLUME = newVolume;
+        //Save in Settings File
+    }
+
+    public static void SetVoiceVolume(float newVolume)
+    {
+        VOICE_VOLUME = newVolume;
         //Save in Settings File
     }
 
@@ -66,6 +73,11 @@ public class PlayerOptions
     public static float GetSFXVolume()
     {
         return SFX_VOLUME;
+    }
+
+    public static float GetVoiceVolume()
+    {
+        return VOICE_VOLUME;
     }
 
     public static float GetGunSensitivity()

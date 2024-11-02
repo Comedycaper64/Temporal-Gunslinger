@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Cursor = UnityEngine.Cursor;
 
 public class PauseMenuUI : MonoBehaviour

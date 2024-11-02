@@ -32,6 +32,9 @@ public class TutorialGameManager : GameManager
     private GameObject pauseMenuUI;
 
     [SerializeField]
+    private GameObject tutorialUI;
+
+    [SerializeField]
     private MaskStateMachine projectileMask;
 
     [SerializeField]
@@ -116,6 +119,7 @@ public class TutorialGameManager : GameManager
             revPocketwatch.SetActive(true);
             revModelPocketwatch.SetActive(true);
             pocketwatchUI.SetActive(true);
+            tutorialUI.SetActive(true);
             CinematicManager.Instance.PlayCinematic(endOfRound1Cinematic, SetupLevel);
             //round2Mask1.SetActive(true);
             //round2Mask2.SetActive(true);

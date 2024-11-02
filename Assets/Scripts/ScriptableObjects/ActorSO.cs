@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [Serializable]
 [CreateAssetMenu(fileName = "Actor", menuName = "Cinematic Node/ActorSO", order = 0)]
@@ -23,6 +24,9 @@ public class ActorSO : ScriptableObject
 
     [SerializeField]
     private RuntimeAnimatorController animatorController;
+
+    [SerializeField]
+    private AudioMixerGroup actorAudioMixer;
 
     public string GetActorName()
     {
@@ -52,5 +56,10 @@ public class ActorSO : ScriptableObject
     public RuntimeAnimatorController GetAnimatorController()
     {
         return animatorController;
+    }
+
+    public AudioMixerGroup GetAudioMixer()
+    {
+        return actorAudioMixer;
     }
 }

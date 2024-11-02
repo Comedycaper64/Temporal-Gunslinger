@@ -223,6 +223,7 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
+        dialogueAudioSource.outputAudioMixerGroup = currentActor?.GetAudioMixer();
 
         if (dialogueNode.animationCrossFadeTime != null)
         {
@@ -340,6 +341,8 @@ public class DialogueManager : MonoBehaviour
         if (currentVoiceClips.TryDequeue(out AudioClip voiceClip) && (voiceClip != null))
         {
             dialogueAudioSource.clip = voiceClip;
+            dialogueAudioSource.volume =
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetVoiceVolume();
             dialogueAudioSource.Play();
 
             if (bAutoPlay)

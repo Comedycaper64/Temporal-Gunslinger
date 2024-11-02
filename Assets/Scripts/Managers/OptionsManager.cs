@@ -14,6 +14,9 @@ public class OptionsManager : MonoBehaviour
     private Slider sfxSlider;
 
     [SerializeField]
+    private Slider voiceSlider;
+
+    [SerializeField]
     private Slider gunSensitivitySlider;
 
     // [SerializeField]
@@ -35,6 +38,7 @@ public class OptionsManager : MonoBehaviour
         masterSlider.value = PlayerOptions.GetMasterVolume();
         musicSlider.value = PlayerOptions.GetMusicVolume();
         sfxSlider.value = PlayerOptions.GetSFXVolume();
+        voiceSlider.value = PlayerOptions.GetVoiceVolume();
 
         gunSensitivitySlider.value = PlayerOptions.GetGunSensitivity();
         //gunSensitivityYSlider.value = PlayerOptions.GetGunYSensitivity();
@@ -57,6 +61,11 @@ public class OptionsManager : MonoBehaviour
     public void SetSFXVolume(float newVolume)
     {
         PlayerOptions.SetSFXVolume(newVolume);
+    }
+
+    public void SetVoiceVolume(float newVolume)
+    {
+        PlayerOptions.SetVoiceVolume(newVolume);
     }
 
     public void SetGunSensitivity(float newSensitivity)
