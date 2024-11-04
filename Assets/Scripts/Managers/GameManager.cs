@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
 
+        SaveManager.SetLevelProgress(SceneManager.GetActiveScene().buildIndex);
+
         CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
     }
 

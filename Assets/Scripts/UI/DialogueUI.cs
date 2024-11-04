@@ -40,6 +40,9 @@ public class DialogueUI : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI actorNameText;
+
+    [SerializeField]
+    private Image actorNameFlourish;
     private Material actorFontMaterialInstance;
 
     [SerializeField]
@@ -96,6 +99,7 @@ public class DialogueUI : MonoBehaviour
     private void SetActorName(string actorName, Color nameColour)
     {
         actorNameText.text = actorName;
+        actorNameFlourish.color = nameColour;
         actorFontMaterialInstance.SetColor("_UnderlayColor", nameColour);
     }
 

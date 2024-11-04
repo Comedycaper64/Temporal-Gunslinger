@@ -91,6 +91,11 @@ public class TutorialGameManager : GameManager
         EnemyDeadState.enemiesAlive = 1;
     }
 
+    public void ContinueGame()
+    {
+        SceneManager.LoadScene(SaveManager.GetLevelProgress());
+    }
+
     public void LoadGame(int buildIndex)
     {
         SceneManager.LoadScene(buildIndex);

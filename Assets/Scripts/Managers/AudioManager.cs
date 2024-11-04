@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
     private const float SLOW_PITCH = 0.4f;
     private const float MIN_PITCH_VARIATION = 0.9f;
     private const float MAX_PITCH_VARIATION = 1.1f;
-    private const float FADE_SPEED = 0.5f;
+    private const float FADE_SPEED = 0.1f;
     private const float TICK_SFX_INTERVAL = 1f;
     private bool tick;
     private bool fadeIn;
@@ -94,6 +94,8 @@ public class AudioManager : MonoBehaviour
             )
             {
                 fadeIn = false;
+                musicAudioSource.volume =
+                    PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume();
             }
         }
 
@@ -211,6 +213,7 @@ public class AudioManager : MonoBehaviour
 
     public void FadeInMusic()
     {
+        SetMusicAudioSourceVolume(0f);
         fadeIn = true;
         fadeOut = false;
     }

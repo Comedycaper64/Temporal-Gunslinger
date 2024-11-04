@@ -54,7 +54,7 @@ public class BulletVelocityUI : MonoBehaviour
 
     private void UpdateText()
     {
-        velocityText.text = displayVelocity.ToString("0.0");
+        velocityText.text = displayVelocity.ToString("0.0") + " m/s";
     }
 
     public void VelocityChanged(float newVelocity, float maxVelocity)

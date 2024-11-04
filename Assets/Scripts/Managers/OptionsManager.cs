@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
 {
+    private const float SLIDER_MOD = 8f;
+
     [SerializeField]
     private Slider masterSlider;
 
@@ -35,41 +37,46 @@ public class OptionsManager : MonoBehaviour
 
     private void Awake()
     {
-        masterSlider.value = PlayerOptions.GetMasterVolume();
-        musicSlider.value = PlayerOptions.GetMusicVolume();
-        sfxSlider.value = PlayerOptions.GetSFXVolume();
-        voiceSlider.value = PlayerOptions.GetVoiceVolume();
+        masterSlider.value = PlayerOptions.GetMasterVolume() * SLIDER_MOD;
+        musicSlider.value = PlayerOptions.GetMusicVolume() * SLIDER_MOD;
+        sfxSlider.value = PlayerOptions.GetSFXVolume() * SLIDER_MOD;
+        voiceSlider.value = PlayerOptions.GetVoiceVolume() * SLIDER_MOD;
 
-        gunSensitivitySlider.value = PlayerOptions.GetGunSensitivity();
+        gunSensitivitySlider.value = PlayerOptions.GetGunSensitivity() * SLIDER_MOD;
         //gunSensitivityYSlider.value = PlayerOptions.GetGunYSensitivity();
-        bulletSensitivitySlider.value = PlayerOptions.GetBulletSensitivity();
+        bulletSensitivitySlider.value = PlayerOptions.GetBulletSensitivity() * SLIDER_MOD;
         //bulletSensitivityYSlider.value = PlayerOptions.GetBulletYSensitivity();
     }
 
     public void SetMasterVolume(float newVolume)
     {
+        newVolume = newVolume / SLIDER_MOD;
         PlayerOptions.SetMasterVolume(newVolume);
         OnMasterVolumeUpdated?.Invoke(this, newVolume);
     }
 
     public void SetMusicVolume(float newVolume)
     {
+        newVolume = newVolume / SLIDER_MOD;
         PlayerOptions.SetMusicVolume(newVolume);
         OnMusicVolumeUpdated?.Invoke(this, newVolume);
     }
 
     public void SetSFXVolume(float newVolume)
     {
+        newVolume = newVolume / SLIDER_MOD;
         PlayerOptions.SetSFXVolume(newVolume);
     }
 
     public void SetVoiceVolume(float newVolume)
     {
+        newVolume = newVolume / SLIDER_MOD;
         PlayerOptions.SetVoiceVolume(newVolume);
     }
 
     public void SetGunSensitivity(float newSensitivity)
     {
+        newSensitivity = newSensitivity / SLIDER_MOD;
         PlayerOptions.SetGunXSensitivity(newSensitivity);
         OnGunSensitivityUpdated?.Invoke(
             this,
@@ -89,6 +96,7 @@ public class OptionsManager : MonoBehaviour
 
     public void SetBulletSensitivity(float newSensitivity)
     {
+        newSensitivity = newSensitivity / SLIDER_MOD;
         PlayerOptions.SetBulletXSensitivity(newSensitivity);
         OnBulletSensitivityUpdated?.Invoke(
             this,

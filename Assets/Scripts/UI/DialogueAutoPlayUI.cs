@@ -1,11 +1,11 @@
 using System;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class DialogueAutoPlayUI : MonoBehaviour
 {
     [SerializeField]
-    private Image autoPlayImage;
+    private TextMeshProUGUI autoPlayImage;
     private static bool bAutoPlay = false;
 
     public static EventHandler<bool> OnAutoPlayToggle;
