@@ -5,6 +5,9 @@ using UnityEngine.Video;
 
 public class TutorialUI : MonoBehaviour
 {
+    [SerializeField]
+    private bool displayTutorial = true;
+
     private bool tutorialDisplayed = false;
 
     [SerializeField]
@@ -16,7 +19,11 @@ public class TutorialUI : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+        if (displayTutorial)
+        {
+            GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+        }
+
         tutorialCanvas.SetCanvasGroupAlpha(0f);
         tutorialCanvas.ToggleBlockRaycasts(false);
     }
@@ -35,7 +42,7 @@ public class TutorialUI : MonoBehaviour
         tutorialDisplayed = true;
     }
 
-    private void ToggleCanvas(bool toggle)
+    public void ToggleCanvas(bool toggle)
     {
         tutorialCanvas.ToggleFade(toggle);
         tutorialCanvas.ToggleBlockRaycasts(toggle);

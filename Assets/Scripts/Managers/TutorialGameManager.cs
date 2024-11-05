@@ -1,7 +1,6 @@
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 enum TutorialState
 {
@@ -91,16 +90,6 @@ public class TutorialGameManager : GameManager
         EnemyDeadState.enemiesAlive = 1;
     }
 
-    public void ContinueGame()
-    {
-        SceneManager.LoadScene(SaveManager.GetLevelProgress());
-    }
-
-    public void LoadGame(int buildIndex)
-    {
-        SceneManager.LoadScene(buildIndex);
-    }
-
     public override void SetupLevel()
     {
         base.SetupLevel();
@@ -155,10 +144,5 @@ public class TutorialGameManager : GameManager
     private void ShowLevelSelect()
     {
         levelSelectUI.ToggleLevelSelector(true);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
     }
 }

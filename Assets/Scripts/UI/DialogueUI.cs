@@ -49,6 +49,9 @@ public class DialogueUI : MonoBehaviour
     private TextMeshProUGUI dialogueText;
 
     [SerializeField]
+    private Image dialogueTextbox;
+
+    [SerializeField]
     private DialogueChoiceUI[] dialogueChoiceUI;
 
     private void Awake()
@@ -100,6 +103,7 @@ public class DialogueUI : MonoBehaviour
     {
         actorNameText.text = actorName;
         actorNameFlourish.color = nameColour;
+        dialogueTextbox.color = nameColour;
         actorFontMaterialInstance.SetColor("_UnderlayColor", nameColour);
     }
 

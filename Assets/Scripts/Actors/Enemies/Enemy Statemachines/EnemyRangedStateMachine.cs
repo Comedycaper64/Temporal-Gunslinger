@@ -81,10 +81,4 @@ public class EnemyRangedStateMachine : StateMachine
             shootVFX.PlayEffect();
         }
     }
-
-    // public override void SwitchState(State newState)
-    // {
-    //     base.SwitchState(newState);
-    //     Debug.Log("Current State: " + newState.GetStateName());
-    // }
 }

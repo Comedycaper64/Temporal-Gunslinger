@@ -9,14 +9,16 @@ public class SaveManager
 
     public static int GetLevelProgress()
     {
-        if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
-        {
-            return LEVEL_PROGRESS_DEF;
-        }
-        else
-        {
-            return PlayerPrefs.GetInt(LEVEL_PROGRESS);
-        }
+        return 13;
+
+        // if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
+        // {
+        //     return LEVEL_PROGRESS_DEF;
+        // }
+        // else
+        // {
+        //     return PlayerPrefs.GetInt(LEVEL_PROGRESS);
+        // }
     }
 
     public static void SetLevelProgress(int newProgress)

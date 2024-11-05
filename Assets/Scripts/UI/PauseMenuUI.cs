@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Cursor = UnityEngine.Cursor;
 
 public class PauseMenuUI : MonoBehaviour
@@ -23,6 +22,12 @@ public class PauseMenuUI : MonoBehaviour
 
     [SerializeField]
     private CanvasGroupFader optionsFader;
+
+    [SerializeField]
+    private CanvasGroupFader tutorialFader;
+
+    [SerializeField]
+    private TutorialUIManager tutorialManager;
 
     [SerializeField]
     private CanvasGroupFader restartConfirmFader;
@@ -92,6 +97,8 @@ public class PauseMenuUI : MonoBehaviour
         CanvasGroup currentGroup = fader.GetComponent<CanvasGroup>();
         currentGroup.interactable = false;
         currentGroup.blocksRaycasts = false;
+
+        currentActiveGroup = null;
     }
 
     public void OpenGroup(CanvasGroupFader newGroupFader)
@@ -127,8 +134,11 @@ public class PauseMenuUI : MonoBehaviour
         CloseGroup(restartConfirmFader);
         CloseGroup(skipConfirmFader);
         CloseGroup(optionsFader);
+        CloseGroup(tutorialFader);
         CloseGroup(mainMenuConfirmFader);
         CloseGroup(quitConfirmFader);
+
+        tutorialManager.CloseTutorial();
 
         if (pauseActive)
         {

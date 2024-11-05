@@ -35,7 +35,7 @@ public class OptionsManager : MonoBehaviour
     public static EventHandler<float> OnGunSensitivityUpdated;
     public static EventHandler<float> OnBulletSensitivityUpdated;
 
-    private void Awake()
+    private void OnEnable()
     {
         masterSlider.value = PlayerOptions.GetMasterVolume() * SLIDER_MOD;
         musicSlider.value = PlayerOptions.GetMusicVolume() * SLIDER_MOD;
