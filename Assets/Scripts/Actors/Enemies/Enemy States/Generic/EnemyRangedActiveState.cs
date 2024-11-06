@@ -20,22 +20,23 @@ public class EnemyRangedActiveState : State
 
     public override void Enter()
     {
-        timer = 0f;
+        timer = enemyStateMachine.GetStateTimerSave();
         projectileFired = false;
         rewindState.ToggleMovement(true);
 
         stateMachine.stateMachineAnimator.CrossFade(IdleAnimHash, 0.02f);
 
-        if (rewindState.GetTimeSpeed() < 0f)
-        {
-            timer = shootTime;
-            //projectileFired = true;
-            //Debug.Log("End of animation");
-        }
+        // if (rewindState.GetTimeSpeed() < 0f)
+        // {
+        //     timer = shootTime;
+        //     //projectileFired = true;
+        //     //Debug.Log("End of animation");
+        // }
     }
 
     public override void Exit()
     {
+        enemyStateMachine.SetStateTimerSave(timer);
         rewindState.ToggleMovement(false);
     }
 

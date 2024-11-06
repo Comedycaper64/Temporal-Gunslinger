@@ -31,7 +31,10 @@ public class TutorialGameManager : GameManager
     private GameObject pauseMenuUI;
 
     [SerializeField]
-    private GameObject tutorialUI;
+    private GameObject firstTutorialUI;
+
+    [SerializeField]
+    private GameObject secondTutorialUI;
 
     [SerializeField]
     private MaskStateMachine projectileMask;
@@ -80,6 +83,9 @@ public class TutorialGameManager : GameManager
 
         rewindManager.ToggleCanReset(false);
         rewindManager.ToggleCanRewind(false);
+
+        rewindManager.OnResetLevel += RewindManager_OnResetLevel;
+        rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
     }
 
     public void StartGame()
@@ -113,7 +119,7 @@ public class TutorialGameManager : GameManager
             revPocketwatch.SetActive(true);
             revModelPocketwatch.SetActive(true);
             pocketwatchUI.SetActive(true);
-            tutorialUI.SetActive(true);
+            firstTutorialUI.SetActive(true);
             CinematicManager.Instance.PlayCinematic(endOfRound1Cinematic, SetupLevel);
             //round2Mask1.SetActive(true);
             //round2Mask2.SetActive(true);
@@ -129,6 +135,7 @@ public class TutorialGameManager : GameManager
             CinematicManager.Instance.PlayCinematic(endOfRound2Cinematic, SetupLevel);
             EnemyDeadState.enemiesAlive = 2;
             BulletDeadState.bulletNumber = 2;
+            secondTutorialUI.SetActive(true);
             projectileMask.EnableFireProjectile();
             playerController.ToggleCanPossess(true);
             rewindManager.ToggleCanRewind(true);

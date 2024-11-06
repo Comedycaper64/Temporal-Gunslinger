@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class EnemyRangedStateMachine : StateMachine
 {
+    protected float stateTimerSave = 0f;
+
     [SerializeField]
     protected float shootTimer;
 
@@ -50,6 +52,11 @@ public class EnemyRangedStateMachine : StateMachine
         return shootTimer;
     }
 
+    public float GetStateTimerSave()
+    {
+        return stateTimerSave;
+    }
+
     public string GetAimingAnimationName()
     {
         return aimingAnimationName;
@@ -64,6 +71,11 @@ public class EnemyRangedStateMachine : StateMachine
     {
         Bullet bullet = projectile.GetComponent<Bullet>();
         bullet.SetFiringPosition(projectileFirePoint);
+    }
+
+    public void SetStateTimerSave(float savedTimer)
+    {
+        stateTimerSave = savedTimer;
     }
 
     public virtual void ResetProjectile()

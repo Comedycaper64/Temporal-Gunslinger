@@ -95,6 +95,7 @@ public class BulletMovement : RewindableMovement
     {
         SetSpeed(startSpeed);
         movementActive = true;
+        targetRotation = bulletModel.rotation;
     }
 
     private void Update()
@@ -342,6 +343,20 @@ public class BulletMovement : RewindableMovement
     public void SetIsDead(bool isDead)
     {
         bIsDead = isDead;
+    }
+
+    public override void ToggleMovement(bool toggle)
+    {
+        base.ToggleMovement(toggle);
+
+        float deathTime = -1f;
+
+        if (toggle)
+        {
+            WillKillRevenant(out deathTime);
+        }
+
+        OnChangeDirection?.Invoke(this, deathTime);
     }
 
     private bool WillKillRevenant(out float deathTime)

@@ -20,6 +20,7 @@ public class EnemyRangedIdleState : State
         }
 
         enemyRangedStateMachine.ResetProjectile();
+        enemyRangedStateMachine.SetStateTimerSave(0f);
     }
 
     public override void Exit() { }

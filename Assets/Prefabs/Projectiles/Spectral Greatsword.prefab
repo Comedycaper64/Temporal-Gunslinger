@@ -325,10 +325,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.311
       objectReference: {fileID: 0}
+    - target: {fileID: 4224356582990142206, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: manualDisables.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5018278513473745014, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5251371870816650300, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6785609537071032127, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7541128228380249300, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
@@ -368,7 +383,7 @@ PrefabInstance:
     - target: {fileID: 7828219722662083367, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7828219722662083367, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
@@ -422,6 +437,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
+      propertyPath: dissolveModel
+      value: 
+      objectReference: {fileID: 1359260471609398272}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
       propertyPath: roughMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 4de685508f650824ab5e298d96d78387, type: 2}
@@ -430,6 +450,11 @@ PrefabInstance:
       propertyPath: bulletCollider
       value: 
       objectReference: {fileID: 6927245111324948281}
+    - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: transparentModel
+      value: 
+      objectReference: {fileID: 1359260471609398272}
     - target: {fileID: 7828219722662083370, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}
       propertyPath: transparentMaterial
@@ -539,6 +564,12 @@ MonoBehaviour:
   animator: {fileID: 2743964378330686657}
   animationSpeedModifier: 1
   dirtySwordFix: 1
+--- !u!1 &1359260471609398272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8578028159942018402, guid: 82610fddb3cb9a14baa714b8df409ef6,
+    type: 3}
+  m_PrefabInstance: {fileID: 7338148419495940450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3020572269623652519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5493667388143854021, guid: 82610fddb3cb9a14baa714b8df409ef6,

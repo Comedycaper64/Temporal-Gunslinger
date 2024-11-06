@@ -101,21 +101,21 @@ public class DialogueManager : MonoBehaviour
     {
         DialogueSkipCleanup();
 
-        EndDialogue();
-
         while (currentAnimations.Count > 0)
         {
             TryPlayAnimation();
         }
 
         GoThroughDialogueAnimations();
+
+        EndDialogue(true);
     }
 
     public void SkipCurrentChoice()
     {
         DialogueSkipCleanup();
 
-        EndDialogue();
+        EndDialogue(true);
     }
 
     public void SkipDialogue(DialogueSO dialogueSO, Action onDialogueComplete)
@@ -419,7 +419,7 @@ public class DialogueManager : MonoBehaviour
         OnDisplayChoices?.Invoke(this, blankChoiceUIEventArgs);
     }
 
-    private void EndDialogue()
+    private void EndDialogue(bool skipping = false)
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
 
@@ -438,7 +438,15 @@ public class DialogueManager : MonoBehaviour
         {
             //reset colour on choices
             ResetChoices();
-            onDialogueComplete();
+
+            if (!skipping)
+            {
+                onDialogueComplete();
+            }
+            else
+            {
+                onDialogueComplete = null;
+            }
         }
     }
 

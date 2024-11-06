@@ -81,6 +81,8 @@ public class CinematicManager : MonoBehaviour
 
         Type nodeType = currentCinematicNode.GetType();
 
+        Debug.Log("Playing Node: " + nodeType.ToString());
+
         if (nodeType == typeof(DialogueSO))
         {
             dialogueManager.PlayDialogue(currentCinematicNode as DialogueSO, TryPlayNextNode);

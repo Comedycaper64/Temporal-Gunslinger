@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ResetLevel());
     }
 
-    private void RewindManager_OnRewindToStart()
+    protected void RewindManager_OnRewindToStart()
     {
         OnGameStateChange?.Invoke(this, StateEnum.idle);
     }
