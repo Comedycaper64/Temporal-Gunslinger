@@ -20,7 +20,8 @@ public class DialogueUI : MonoBehaviour
 
     private const float LOW_PITCH_RANGE = 0.75f;
     private const float HIGH_PITCH_RANGE = 1.25f;
-    private string typingSentence;
+
+    //private string typingSentence;
     private Coroutine typingCoroutine;
     private Action onTypingFinished;
 
@@ -176,19 +177,23 @@ public class DialogueUI : MonoBehaviour
     {
         SetNewActor(dialogueUIEventArgs.actorSO);
 
-        typingSentence = dialogueUIEventArgs.sentence;
+        dialogueText.text = dialogueUIEventArgs.sentence;
         bPlayDialogueNoises = dialogueUIEventArgs.playDialogueNoises;
         onTypingFinished = dialogueUIEventArgs.onTypingFinished;
 
-        ClearDialogueText();
+        dialogueText.maxVisibleCharacters = 0;
+
+        yield return null;
+
+        string parsedText = dialogueText.GetParsedText();
 
         isTyping = true;
         int noiseTracker = 0;
         dialogueNoiseSource.clip = currentDialogueNoiseSet[0];
-        foreach (char letter in typingSentence.ToCharArray())
-        {
-            dialogueText.text += letter;
 
+        for (int i = 0; i < parsedText.Length; i++)
+        {
+            dialogueText.maxVisibleCharacters++;
             if (bPlayDialogueNoises)
             {
                 noiseTracker++;
@@ -205,6 +210,7 @@ public class DialogueUI : MonoBehaviour
 
             yield return new WaitForSeconds(timeBetweenLetterTyping);
         }
+
         isTyping = false;
         onTypingFinished();
     }
@@ -243,7 +249,7 @@ public class DialogueUI : MonoBehaviour
         }
 
         StopCoroutine(typingCoroutine);
-        dialogueText.text = typingSentence;
+        dialogueText.maxVisibleCharacters = dialogueText.GetParsedText().Length;
         onTypingFinished();
     }
 
