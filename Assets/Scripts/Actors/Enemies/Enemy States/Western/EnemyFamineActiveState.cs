@@ -1,13 +1,13 @@
 public class EnemyFamineActiveState : State
 {
     private FamineMovement famineMovement;
-    private FamineLocustSpawner famineLocustSpawner;
+    private RepeatingBulletSpawner famineLocustSpawner;
 
     public EnemyFamineActiveState(StateMachine stateMachine)
         : base(stateMachine)
     {
         famineMovement = stateMachine.GetComponent<FamineMovement>();
-        famineLocustSpawner = stateMachine.GetComponent<FamineLocustSpawner>();
+        famineLocustSpawner = stateMachine.GetComponent<RepeatingBulletSpawner>();
     }
 
     public override void Enter()

@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class DestroyWeakPoint : RewindableAction
 {
-    private BossHealth bossHealth;
+    private IReactable bossHealth;
 
     private Collider weakPointCollider;
     private DissolveController weakPointDissolve;
     private FocusHighlight weakPointHighlight;
 
-    public static void WeakPointDestroyed(BossHealth bossHealth, GameObject weakPoint)
+    public static void WeakPointDestroyed(IReactable bossHealth, GameObject weakPoint)
     {
         new DestroyWeakPoint(bossHealth, weakPoint);
         //Debug.Log("Weak Point destroyed" + weakPoint.name);
     }
 
-    private DestroyWeakPoint(BossHealth bossHealth, GameObject weakPoint)
+    private DestroyWeakPoint(IReactable bossHealth, GameObject weakPoint)
     {
         this.bossHealth = bossHealth;
         weakPointCollider = weakPoint.GetComponent<Collider>();

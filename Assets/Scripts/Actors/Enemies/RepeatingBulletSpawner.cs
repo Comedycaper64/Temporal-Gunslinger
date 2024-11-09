@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FamineLocustSpawner : RewindableMovement
+public class RepeatingBulletSpawner : RewindableMovement
 {
     private int spawnIndex = 0;
     private float spawnTimer = 0f;
@@ -11,7 +11,7 @@ public class FamineLocustSpawner : RewindableMovement
     private float spawnTime;
 
     [SerializeField]
-    private BulletStateMachine[] availableLocusts;
+    private BulletStateMachine[] availableBullets;
 
     private void Update()
     {
@@ -25,10 +25,10 @@ public class FamineLocustSpawner : RewindableMovement
             {
                 spawnTimer = 0f;
 
-                if (spawnIndex < availableLocusts.Length)
+                if (spawnIndex < availableBullets.Length)
                 {
-                    Debug.Log("Locust Spawn");
-                    availableLocusts[spawnIndex].SwitchToActive();
+                    //Debug.Log("Locust Spawn");
+                    availableBullets[spawnIndex].SwitchToActive();
                 }
 
                 spawnIndex++;
@@ -46,9 +46,9 @@ public class FamineLocustSpawner : RewindableMovement
         spawnIndex = 0;
         spawnTimer = 0f;
 
-        foreach (BulletStateMachine locust in availableLocusts)
+        foreach (BulletStateMachine bullet in availableBullets)
         {
-            locust.transform.position = transform.position;
+            bullet.transform.position = transform.position;
         }
     }
 }
