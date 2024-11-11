@@ -18,6 +18,8 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public event Action OnPossessAction;
     public event Action OnConquestAction;
     public event Action OnPauseAction;
+    public event Action OnFreeCamAction;
+    public event Action OnFreeCamPossessAction;
 
     private void Awake()
     {
@@ -190,6 +192,40 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else
         {
             OnConquestAction?.Invoke();
+        }
+    }
+
+    public void OnFreeCam(InputAction.CallbackContext context)
+    {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            OnFreeCamAction?.Invoke();
+        }
+    }
+
+    public void OnFreeCamPossess(InputAction.CallbackContext context)
+    {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            OnFreeCamPossessAction?.Invoke();
         }
     }
 

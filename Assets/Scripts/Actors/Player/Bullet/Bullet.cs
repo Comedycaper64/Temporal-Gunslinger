@@ -217,6 +217,8 @@ public class Bullet : MonoBehaviour
 
     public Vector2 GetCameraAxisValues() => bulletCameraController.GetCameraAxisValues();
 
+    public Transform GetCameraTransform() => bulletCameraController.GetCameraTransform();
+
     public void SetFiringPosition(Transform firingPosition)
     {
         transform.position = firingPosition.position;

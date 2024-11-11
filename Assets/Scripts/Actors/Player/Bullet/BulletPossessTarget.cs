@@ -96,6 +96,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     public Vector2 GetCameraAxisValues() => bullet.GetCameraAxisValues();
 
+    public Transform GetCameraTransform() => bullet.GetCameraTransform();
+
     public List<BulletPossessTarget> GetPossessables()
     {
         List<BulletPossessTarget> targets = new List<BulletPossessTarget>(possessables);

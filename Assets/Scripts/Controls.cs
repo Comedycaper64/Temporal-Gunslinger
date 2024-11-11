@@ -116,6 +116,24 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FreeCam"",
+                    ""type"": ""Button"",
+                    ""id"": ""d36b5eda-5037-40b1-b226-996287b2a541"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FreeCam Possess"",
+                    ""type"": ""Button"",
+                    ""id"": ""81896a62-62d1-404a-89ab-d14468693595"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -228,6 +246,28 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4630233c-7cf2-4c38-bd2e-118e34fbe647"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""FreeCam"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""566d3373-6ab1-4562-ac4d-3ecc176efb85"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""FreeCam Possess"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -252,6 +292,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Turbo = m_Player.FindAction("Turbo", throwIfNotFound: true);
         m_Player_ConquestAbility = m_Player.FindAction("Conquest Ability", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        m_Player_FreeCam = m_Player.FindAction("FreeCam", throwIfNotFound: true);
+        m_Player_FreeCamPossess = m_Player.FindAction("FreeCam Possess", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -321,6 +363,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Turbo;
     private readonly InputAction m_Player_ConquestAbility;
     private readonly InputAction m_Player_Pause;
+    private readonly InputAction m_Player_FreeCam;
+    private readonly InputAction m_Player_FreeCamPossess;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -335,6 +379,8 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Turbo => m_Wrapper.m_Player_Turbo;
         public InputAction @ConquestAbility => m_Wrapper.m_Player_ConquestAbility;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
+        public InputAction @FreeCam => m_Wrapper.m_Player_FreeCam;
+        public InputAction @FreeCamPossess => m_Wrapper.m_Player_FreeCamPossess;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -374,6 +420,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
+                @FreeCam.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCam;
+                @FreeCam.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCam;
+                @FreeCam.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCam;
+                @FreeCamPossess.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamPossess;
+                @FreeCamPossess.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamPossess;
+                @FreeCamPossess.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamPossess;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -408,6 +460,12 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @FreeCam.started += instance.OnFreeCam;
+                @FreeCam.performed += instance.OnFreeCam;
+                @FreeCam.canceled += instance.OnFreeCam;
+                @FreeCamPossess.started += instance.OnFreeCamPossess;
+                @FreeCamPossess.performed += instance.OnFreeCamPossess;
+                @FreeCamPossess.canceled += instance.OnFreeCamPossess;
             }
         }
     }
@@ -433,5 +491,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnTurbo(InputAction.CallbackContext context);
         void OnConquestAbility(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnFreeCam(InputAction.CallbackContext context);
+        void OnFreeCamPossess(InputAction.CallbackContext context);
     }
 }

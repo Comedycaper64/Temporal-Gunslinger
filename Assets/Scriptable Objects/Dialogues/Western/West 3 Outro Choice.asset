@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueChoices:
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: (Reaper, what can you tell us about Famine?)
+    dialogueOption: (<color="green">Reaper</color>, what can you tell us about <color="yellow">Famine</color>?)
     correspondingDialogue: 0
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: (Can you grant War more power, Reaper? The stronger he is, the
-      easier this will be.)
+    dialogueOption: (Can you grant <color="red">War</color> more power, <color="green">Reaper</color>?
+      The stronger he is, the easier this will be.)
     correspondingDialogue: 1
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: "(If you\u2019re stuck in the End of Time, Reaper, how can you
-      affect what\u2019s happening here?)"
+    dialogueOption: "(If you\u2019re stuck in the <color=\"green\">End of Time, Reaper</color>,
+      how can you affect what\u2019s happening here?)"
     correspondingDialogue: 2
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: (We know enough) [Proceed]
+    dialogueOption: (We know enough.) [Proceed]
     correspondingDialogue: 3
     loopBackToChoice: 0
   dialogueAnswers:
@@ -36,19 +36,19 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - 'In life, Famine was a cattle rancher. He lived in a farmstead in the Golden
-        Sands with his wife and five children. The land was barren, and most years
-        he and his family barely grew enough to sustain themselves and their livestock.
-
-'
-      - They sold what little they could spare to save up for a better life away
-        from the frontier.
-      - It was that dream that motivated them for years, until a long drought struck.
-        A swarm of locusts destroyed half of their crops, and the sun wilted the
-        rest. The cattle died soon after.
-      - Without anything else to sustain themselves, soon their savings also ran
-        dry. After half a year, Famine finally watched his children, then his wife,
-        succumb to exhaustion. Alone in the world, he followed them soon after.
+      - <alpha=#55>In life, <color="yellow">Famine</color><alpha=#55> was a cattle
+        rancher. He lived in a farmstead in the Golden Sands with his wife and five
+        children. The land was barren, and most years he and his family barely grew
+        enough to sustain themselves and their livestock.
+      - "<alpha=#55>They sold what little they could spare to save up for a better
+        life away from the frontier.\r"
+      - <alpha=#55>It was that dream that motivated them for years, until a long
+        drought struck. A swarm of locusts destroyed half of their crops, and the
+        sun wilted the rest. The cattle died soon after.
+      - <alpha=#55>Without anything else to sustain themselves, soon their savings
+        also ran dry. After half a year, Famine finally watched his children, then
+        his wife, succumb to exhaustion. Alone in the world, he followed them soon
+        after.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -58,9 +58,9 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - Gods... such suffering...
-      - The Reaper can grant such unthinkable power, surely there is something he
-        could-
+      - Gods, that is truly dreadful. Such a waste of a life!
+      - How can the <color="green">Reaper</color> allow such suffering to persist?
+        Surely there is something that can be do-
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -70,15 +70,11 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - 'In his life, Famine spent much time selling sick cows and poor quality crops
-        to unsuspecting buyers at markets. He kept his charismatic demeanor and quick
-        wit when I named him my Herald.
-
-'
-      - ' I suspect he will try to use these skills to his advantage. Despite this,
-        you must stay focused on your goal, old friend.
-
-'
+      - <alpha=#55>In his life, <color="yellow">Famine</color><alpha=#55> spent much
+        time selling sick cows and poor quality crops to unsuspecting buyers at markets.
+        He kept his charismatic demeanour and quick wit when I named him my Herald.
+      - <alpha=#55>I suspect he will try to use these skills to his advantage. Despite
+        this, you must stay focused on your goal, old friend.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -89,10 +85,13 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - No. War has broken my trust, and I will not make the same mistakes again.
-      - "You have performed adequately thus far. For now, there is no need for me
-        to grant either of you additional powers.\r"
-      - "You will be joined by Famine soon enough.\r"
+      - <alpha=#55>No.
+      - <color="red">War</color><alpha=#55> has broken my trust, and I will <i>not</i>
+        make the same mistakes again.
+      - <alpha=#55>You have performed adequately thus far. For now, there is no need
+        for me to grant either of you additional powers.
+      - <alpha=#55>You will be joined by <color="yellow">Famine</color><alpha=#55>
+        soon enough.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -102,8 +101,8 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - Hah! The Reaper would never agree to that. He fears what I would be capable
-        of.
+      - <size=125%>Hah! <size=100%>The <color="green">Reaper</color> would never
+        agree to that. He fears what I would be capable of.
       - Still, to seek more power for me? Perchance I have misjudged thee.
       animations: []
       animationCrossFadeTime: []
@@ -115,14 +114,13 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - "My earlier explanation was unsatisfactory?\r"
-      - 'Very well. The timepiece I gifted to you is more than an ordinary relic.
-        It is able to grant you power over time and allow me to communicate with
-        you because a piece of myself is contained within it.
-
-'
-      - "My control is limited, particularly when a Herald is exerting their influence
-        nearby, but I aid when I can.\r"
+      - <alpha=#55>My earlier explanation was unsatisfactory?
+      - <alpha=#55>Very well. The <color="green">timepiece</color><alpha=#55> I gifted
+        to you is more than an <i>ordinary</i> relic. It is able to grant you power
+        over time and allows me to communicate with you because a fragment of myself
+        is contained within it.
+      - <alpha=#55>My control is limited, particularly when a Herald is exerting
+        their influence nearby, but I aid when I can.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -132,9 +130,8 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - 'A part of the Reaper lies within that relic? Might this mean he is weakened?
-
-'
+      - A part of the <color="green">Reaper</color> lies within that relic? Might
+        this mean he is weakened?
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -145,7 +142,7 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - "I trust in thy judgement. Onward, then.\r"
+      - Very well. Onward, then.
       animations: []
       animationCrossFadeTime: []
       animationTime: []

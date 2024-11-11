@@ -22,6 +22,11 @@ public class BulletCameraController : MonoBehaviour
         return new Vector2(bulletCamera.m_XAxis.Value, bulletCamera.m_YAxis.Value);
     }
 
+    public Transform GetCameraTransform()
+    {
+        return bulletCamera.transform;
+    }
+
     public void ToggleCamera(bool toggle)
     {
         bulletCamera.gameObject.SetActive(toggle);

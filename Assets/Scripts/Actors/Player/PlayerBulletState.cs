@@ -26,7 +26,6 @@ public class PlayerBulletState : State
             0,
             stateMachine.GetActiveAnimationExitTime()
         );
-        BulletVelocityUI.Instance.ToggleUIActive(true);
     }
 
     public override void Tick(float deltaTime) { }
@@ -36,7 +35,6 @@ public class PlayerBulletState : State
         Cursor.lockState = CursorLockMode.None;
         playerController.ToggleBulletFired(false);
         animator.SetBool("shot", false);
-        BulletVelocityUI.Instance.ToggleUIActive(false);
     }
 
     // public Transform GetBulletTransform()

@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     private bool bBulletFired = false;
     private bool bIsPlayerActive = false;
     private bool bIsFocusing = false;
+    private bool bIsFreeCam = false;
+
+    [SerializeField]
+    private bool bCanFreeCam = true;
 
     //Tutorial bools
     private bool bCanRotate = true;
@@ -43,10 +47,6 @@ public class PlayerController : MonoBehaviour
     {
         bulletPossessor = GetComponent<BulletPossessor>();
         PLAYER_MOUSE_SENSITIVITY = PlayerOptions.GetGunSensitivity();
-        // new Vector2(
-        //     PlayerOptions.GetGunSensitivity(),
-        //     PlayerOptions.GetGunYSensitivity()
-        // );
     }
 
     private void Start()
@@ -69,12 +69,6 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        // if (InputManager.Instance.GetIsFocusing() != bIsFocusing)
-        // {
-        //     bIsFocusing = !bIsFocusing;
-        //     IsFocusingChanged(bIsFocusing);
-        // }
 
         if (bBulletFired)
         {
@@ -104,6 +98,24 @@ public class PlayerController : MonoBehaviour
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
         playerBody.Rotate(Vector3.up * mouseMovement.x);
+    }
+
+    private void ToggleFreeCamMode(bool toggle)
+    {
+        bIsFreeCam = toggle;
+
+        if (bIsFreeCam)
+        {
+            InputManager.Instance.OnFreeCamAction -= InputManager_OnFreeCamAction;
+            InputManager.Instance.OnFreeCamPossessAction += InputManager_OnPossessAction;
+            BulletVelocityUI.Instance.ToggleUIActive(false);
+        }
+        else
+        {
+            InputManager.Instance.OnFreeCamAction += InputManager_OnFreeCamAction;
+            InputManager.Instance.OnFreeCamPossessAction -= InputManager_OnPossessAction;
+            BulletVelocityUI.Instance.ToggleUIActive(true);
+        }
     }
 
     public void TogglePlayerController(bool toggle)
@@ -144,24 +156,38 @@ public class PlayerController : MonoBehaviour
             InputManager.Instance.OnShootAction += InputManager_OnStartLockOnAction;
             InputManager.Instance.OnShootReleaseAction += InputManager_OnRedirect;
             InputManager.Instance.OnPossessAction += InputManager_OnPossessAction;
-            //InputManager.Instance.OnLockOnAction += InputManager_OnLockOnAction;
-            // InputManager.Instance.OnPossessNextAction += InputManager_OnPossessNextAction;
-            // InputManager.Instance.OnPossessPreviousAction += InputManager_OnPossessPreviousAction;
+
+            if (bCanFreeCam)
+            {
+                InputManager.Instance.OnFreeCamAction += InputManager_OnFreeCamAction;
+            }
+
             if (bCanRedirect)
             {
                 RedirectManager.Instance.ToggleRedirectUI(true);
             }
+
+            BulletVelocityUI.Instance.ToggleUIActive(true);
         }
         else
         {
+            if (bIsFreeCam)
+            {
+                ToggleFreeCamMode(false);
+            }
+
             InputManager.Instance.OnShootAction -= InputManager_OnStartLockOnAction;
             InputManager.Instance.OnShootReleaseAction -= InputManager_OnRedirect;
             InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
-            //InputManager.Instance.OnLockOnAction -= InputManager_OnLockOnAction;
-            // InputManager.Instance.OnPossessNextAction -= InputManager_OnPossessNextAction;
-            // InputManager.Instance.OnPossessPreviousAction -= InputManager_OnPossessPreviousAction;
+
+            if (bCanFreeCam)
+            {
+                InputManager.Instance.OnFreeCamAction -= InputManager_OnFreeCamAction;
+            }
+
             OnPlayerStateChanged?.Invoke(this, 0);
             RedirectManager.Instance.ToggleRedirectUI(false);
+            BulletVelocityUI.Instance.ToggleUIActive(false);
         }
 
         // if (bBulletFired)
@@ -241,7 +267,21 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        bulletPossessor.TryPossess();
+
+        if (bulletPossessor.TryPossess())
+        {
+            ToggleFreeCamMode(false);
+        }
+    }
+
+    private void InputManager_OnFreeCamAction()
+    {
+        if (!GameManager.Instance.IsLevelActive() || !bCanPossess)
+        {
+            return;
+        }
+        bulletPossessor.PossessFreeCamBullet();
+        ToggleFreeCamMode(true);
     }
 
     private void OnSensitivityUpdated(object sender, float newSensitivity)

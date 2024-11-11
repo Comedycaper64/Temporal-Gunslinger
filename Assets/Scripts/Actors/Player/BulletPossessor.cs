@@ -12,10 +12,13 @@ public class BulletPossessor : MonoBehaviour
     private float lockOnTimer = 0f;
     private float lockOnTime = 1f;
 
+    [SerializeField]
+    private BulletPossessTarget freeCamBullet;
+
     public static EventHandler<BulletPossessTarget> OnNewCentralPossessable;
     public static EventHandler<BulletPossessTarget> OnNewBulletPossessed;
 
-    private void Awake()
+    private void OnEnable()
     {
         BulletPossessTarget.OnEmergencyRepossess += EmergencyPossess;
     }
@@ -115,58 +118,40 @@ public class BulletPossessor : MonoBehaviour
         PossessBullet(possessTarget);
     }
 
-    public void TryPossess()
+    public void PossessFreeCamBullet()
     {
         if (!possessedBullet)
         {
             return;
         }
 
+        if (freeCamBullet.transform.parent != null)
+        {
+            freeCamBullet.transform.parent = null;
+        }
+
+        freeCamBullet.transform.position = possessedBullet.GetCameraTransform().position;
+        freeCamBullet.transform.rotation = possessedBullet.GetCameraTransform().rotation;
+
+        PossessBullet(freeCamBullet);
+        freeCamBullet.GetComponent<BulletFreeCamMovement>().ToggleCamMovement(true);
+    }
+
+    public bool TryPossess()
+    {
+        if (!possessedBullet)
+        {
+            return false;
+        }
+
         if (!centreOfScreenPossessable)
         {
-            return;
+            return false;
         }
 
         PossessBullet(centreOfScreenPossessable);
+        return true;
     }
-
-    // public void TryPossessNext()
-    // {
-    //     if (!possessedBullet)
-    //     {
-    //         return;
-    //     }
-
-    //     List<BulletPossessTarget> possessables = possessedBullet.GetPossessables();
-
-    //     int currentPossessIndex = possessables.IndexOf(possessedBullet);
-    //     int nextIndex = currentPossessIndex + 1;
-    //     if (nextIndex >= possessables.Count)
-    //     {
-    //         nextIndex = 0;
-    //     }
-
-    //     PossessBullet(possessables[nextIndex]);
-    // }
-
-    // public void TryPossessPrevious()
-    // {
-    //     if (!possessedBullet)
-    //     {
-    //         return;
-    //     }
-
-    //     List<BulletPossessTarget> possessables = possessedBullet.GetPossessables();
-
-    //     int currentPossessIndex = possessables.IndexOf(possessedBullet);
-    //     int nextIndex = currentPossessIndex - 1;
-    //     if (nextIndex < 0)
-    //     {
-    //         nextIndex = possessables.Count - 1;
-    //     }
-
-    //     PossessBullet(possessables[nextIndex]);
-    // }
 
     public void PossessBullet(BulletPossessTarget newBullet)
     {
@@ -174,6 +159,8 @@ public class BulletPossessor : MonoBehaviour
 
         if (possessedBullet)
         {
+            freeCamBullet.GetComponent<BulletFreeCamMovement>().ToggleCamMovement(false);
+
             newBulletCameraAxis = possessedBullet.GetCameraAxisValues();
             possessedBullet.UnpossessBullet();
         }
