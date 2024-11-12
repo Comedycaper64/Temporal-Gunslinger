@@ -25,6 +25,12 @@ public class FocusManager : MonoBehaviour
     private float nonTargetFOV = FOCUS_FOV;
 
     [SerializeField]
+    private bool bSpawnAimLine = true;
+
+    [SerializeField]
+    private float cameraSpecificSensitivityMult = 1f;
+
+    [SerializeField]
     private Collider bulletCollider;
 
     [SerializeField]
@@ -63,13 +69,18 @@ public class FocusManager : MonoBehaviour
         //     PlayerOptions.GetBulletSensitivity(),
         //     PlayerOptions.GetBulletYSensitivity()
         // );
-        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY;
-        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY;
+        bulletCamera.m_XAxis.m_MaxSpeed =
+            NORMAL_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
+        bulletCamera.m_YAxis.m_MaxSpeed =
+            NORMAL_CAMERA_Y * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
     }
 
     private void Start()
     {
-        CreateAimLine();
+        if (bSpawnAimLine)
+        {
+            CreateAimLine();
+        }
     }
 
     private void OnEnable()
@@ -84,7 +95,10 @@ public class FocusManager : MonoBehaviour
 
     private void Update()
     {
-        focusAimLine.UpdateLineDirection(bulletModelTransform.forward);
+        if (focusAimLine)
+        {
+            focusAimLine.UpdateLineDirection(bulletModelTransform.forward);
+        }
 
         if (bulletCamera.m_Lens.FieldOfView != targetFOV)
         {
@@ -177,8 +191,10 @@ public class FocusManager : MonoBehaviour
         targetFOV = NORMAL_FOV;
         nonTargetFOV = FOCUS_FOV;
 
-        bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY;
-        bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY;
+        bulletCamera.m_XAxis.m_MaxSpeed =
+            NORMAL_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
+        bulletCamera.m_YAxis.m_MaxSpeed =
+            NORMAL_CAMERA_Y * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
 
         dissolveModel.SetActive(true);
         transparentModel.SetActive(false);
@@ -204,8 +220,10 @@ public class FocusManager : MonoBehaviour
         targetFOV = FOCUS_FOV;
         nonTargetFOV = NORMAL_FOV;
 
-        bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X * PLAYER_SENSITIVITY;
-        bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y * PLAYER_SENSITIVITY;
+        bulletCamera.m_XAxis.m_MaxSpeed =
+            FOCUS_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
+        bulletCamera.m_YAxis.m_MaxSpeed =
+            FOCUS_CAMERA_Y * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
 
         dissolveModel.SetActive(false);
         transparentModel.SetActive(true);
@@ -250,13 +268,17 @@ public class FocusManager : MonoBehaviour
 
         if (bFocusing)
         {
-            bulletCamera.m_XAxis.m_MaxSpeed = FOCUS_CAMERA_X * PLAYER_SENSITIVITY;
-            bulletCamera.m_YAxis.m_MaxSpeed = FOCUS_CAMERA_Y * PLAYER_SENSITIVITY;
+            bulletCamera.m_XAxis.m_MaxSpeed =
+                FOCUS_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
+            bulletCamera.m_YAxis.m_MaxSpeed =
+                FOCUS_CAMERA_Y * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
         }
         else
         {
-            bulletCamera.m_XAxis.m_MaxSpeed = NORMAL_CAMERA_X * PLAYER_SENSITIVITY;
-            bulletCamera.m_YAxis.m_MaxSpeed = NORMAL_CAMERA_Y * PLAYER_SENSITIVITY;
+            bulletCamera.m_XAxis.m_MaxSpeed =
+                NORMAL_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
+            bulletCamera.m_YAxis.m_MaxSpeed =
+                NORMAL_CAMERA_Y * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
         }
     }
 }

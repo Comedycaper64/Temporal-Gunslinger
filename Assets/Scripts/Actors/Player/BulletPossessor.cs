@@ -176,6 +176,8 @@ public class BulletPossessor : MonoBehaviour
 
         if (possessedBullet)
         {
+            freeCamBullet.GetComponent<BulletFreeCamMovement>().ToggleCamMovement(false);
+
             newBulletCameraAxis = possessedBullet.GetCameraAxisValues();
             possessedBullet.UnpossessBullet();
         }

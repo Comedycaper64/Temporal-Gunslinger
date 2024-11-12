@@ -134,6 +134,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FreeCam Movement"",
+                    ""type"": ""Value"",
+                    ""id"": ""520857e2-78b9-4ef0-a27d-e60e33be0189"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -268,6 +277,61 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""FreeCam Possess"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""2e503638-497f-4f1a-bcc1-21521d2f1500"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeCam Movement"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""50d8e285-62d5-47ae-868a-bcac9587d89f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeCam Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""4c2ca631-37f8-4be7-b9f3-09da89edf22e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeCam Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""3fb74670-6945-482d-b0c5-1e6839d2eaf6"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeCam Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""febe028c-07d4-43c3-a534-60d35b3b4c8a"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""FreeCam Movement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -294,6 +358,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_FreeCam = m_Player.FindAction("FreeCam", throwIfNotFound: true);
         m_Player_FreeCamPossess = m_Player.FindAction("FreeCam Possess", throwIfNotFound: true);
+        m_Player_FreeCamMovement = m_Player.FindAction("FreeCam Movement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -365,6 +430,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_FreeCam;
     private readonly InputAction m_Player_FreeCamPossess;
+    private readonly InputAction m_Player_FreeCamMovement;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -381,6 +447,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @FreeCam => m_Wrapper.m_Player_FreeCam;
         public InputAction @FreeCamPossess => m_Wrapper.m_Player_FreeCamPossess;
+        public InputAction @FreeCamMovement => m_Wrapper.m_Player_FreeCamMovement;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +493,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @FreeCamPossess.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamPossess;
                 @FreeCamPossess.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamPossess;
                 @FreeCamPossess.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamPossess;
+                @FreeCamMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamMovement;
+                @FreeCamMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamMovement;
+                @FreeCamMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamMovement;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -466,6 +536,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @FreeCamPossess.started += instance.OnFreeCamPossess;
                 @FreeCamPossess.performed += instance.OnFreeCamPossess;
                 @FreeCamPossess.canceled += instance.OnFreeCamPossess;
+                @FreeCamMovement.started += instance.OnFreeCamMovement;
+                @FreeCamMovement.performed += instance.OnFreeCamMovement;
+                @FreeCamMovement.canceled += instance.OnFreeCamMovement;
             }
         }
     }
@@ -493,5 +566,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnFreeCam(InputAction.CallbackContext context);
         void OnFreeCamPossess(InputAction.CallbackContext context);
+        void OnFreeCamMovement(InputAction.CallbackContext context);
     }
 }

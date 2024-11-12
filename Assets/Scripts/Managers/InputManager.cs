@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     private Controls controls;
     private Vector2 mouseMovement;
     private Vector2 mousePosition;
+    private Vector2 freeCamMovement;
     private bool bIsFocusing;
     private bool bIsRewinding;
     private bool bIsTurbo;
@@ -44,6 +45,11 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public Vector2 GetMousePosition()
     {
         return mousePosition;
+    }
+
+    public Vector2 GetFreeCamMovement()
+    {
+        return freeCamMovement;
     }
 
     public bool GetIsFocusing()
@@ -227,6 +233,17 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         {
             OnFreeCamPossessAction?.Invoke();
         }
+    }
+
+    public void OnFreeCamMovement(InputAction.CallbackContext context)
+    {
+        if (PauseMenuUI.pauseActive)
+        {
+            freeCamMovement = Vector2.zero;
+            return;
+        }
+
+        freeCamMovement = context.ReadValue<Vector2>();
     }
 
     public void OnPause(InputAction.CallbackContext context)
