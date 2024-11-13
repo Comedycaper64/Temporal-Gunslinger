@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class BulletFreeCamMovement : MonoBehaviour
     private bool bCanMove = false;
     private float moveSpeed = 3f;
     private InputManager inputManager;
+
+    public static EventHandler<bool> OnFreeCamToggle;
 
     // [SerializeField]
     // private Transform cameraTransform;
@@ -35,5 +38,6 @@ public class BulletFreeCamMovement : MonoBehaviour
     public void ToggleCamMovement(bool toggle)
     {
         bCanMove = toggle;
+        OnFreeCamToggle?.Invoke(this, toggle);
     }
 }
