@@ -109,6 +109,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Famine Abiltity"",
+                    ""type"": ""Button"",
+                    ""id"": ""92399519-a7e2-42ab-ac39-2d5e33a8bba1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""f0eed051-ba98-48b3-a918-b1bda44c6bb6"",
@@ -332,6 +341,17 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""FreeCam Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2856a8d-c7b2-4859-ba3e-ca2c079b832e"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Famine Abiltity"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -355,6 +375,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_MousePosition = m_Player.FindAction("Mouse Position", throwIfNotFound: true);
         m_Player_Turbo = m_Player.FindAction("Turbo", throwIfNotFound: true);
         m_Player_ConquestAbility = m_Player.FindAction("Conquest Ability", throwIfNotFound: true);
+        m_Player_FamineAbiltity = m_Player.FindAction("Famine Abiltity", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_FreeCam = m_Player.FindAction("FreeCam", throwIfNotFound: true);
         m_Player_FreeCamPossess = m_Player.FindAction("FreeCam Possess", throwIfNotFound: true);
@@ -427,6 +448,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MousePosition;
     private readonly InputAction m_Player_Turbo;
     private readonly InputAction m_Player_ConquestAbility;
+    private readonly InputAction m_Player_FamineAbiltity;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_FreeCam;
     private readonly InputAction m_Player_FreeCamPossess;
@@ -444,6 +466,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputAction @Turbo => m_Wrapper.m_Player_Turbo;
         public InputAction @ConquestAbility => m_Wrapper.m_Player_ConquestAbility;
+        public InputAction @FamineAbiltity => m_Wrapper.m_Player_FamineAbiltity;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @FreeCam => m_Wrapper.m_Player_FreeCam;
         public InputAction @FreeCamPossess => m_Wrapper.m_Player_FreeCamPossess;
@@ -484,6 +507,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @ConquestAbility.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
                 @ConquestAbility.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
                 @ConquestAbility.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnConquestAbility;
+                @FamineAbiltity.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFamineAbiltity;
+                @FamineAbiltity.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFamineAbiltity;
+                @FamineAbiltity.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFamineAbiltity;
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
@@ -527,6 +553,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @ConquestAbility.started += instance.OnConquestAbility;
                 @ConquestAbility.performed += instance.OnConquestAbility;
                 @ConquestAbility.canceled += instance.OnConquestAbility;
+                @FamineAbiltity.started += instance.OnFamineAbiltity;
+                @FamineAbiltity.performed += instance.OnFamineAbiltity;
+                @FamineAbiltity.canceled += instance.OnFamineAbiltity;
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
@@ -563,6 +592,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnTurbo(InputAction.CallbackContext context);
         void OnConquestAbility(InputAction.CallbackContext context);
+        void OnFamineAbiltity(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnFreeCam(InputAction.CallbackContext context);
         void OnFreeCamPossess(InputAction.CallbackContext context);

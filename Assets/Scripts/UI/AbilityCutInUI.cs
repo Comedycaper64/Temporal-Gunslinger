@@ -4,7 +4,8 @@ using UnityEngine;
 
 public enum CutInType
 {
-    Conquest
+    Conquest,
+    Famine
 }
 
 public class AbilityCutInUI : MonoBehaviour
@@ -31,11 +32,13 @@ public class AbilityCutInUI : MonoBehaviour
     private void OnEnable()
     {
         PlayerConquestAbility.OnConquestAbility += TriggerCutIn;
+        PlayerFamineAbility.OnFamineAbility += TriggerCutIn;
     }
 
     private void OnDisable()
     {
         PlayerConquestAbility.OnConquestAbility -= TriggerCutIn;
+        PlayerFamineAbility.OnFamineAbility -= TriggerCutIn;
     }
 
     private void TriggerCutIn(object sender, CutInType cutIn)

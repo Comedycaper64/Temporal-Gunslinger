@@ -219,6 +219,8 @@ public class Bullet : MonoBehaviour
 
     public Transform GetCameraTransform() => bulletCameraController.GetCameraTransform();
 
+    public void KillBullet() => bulletStateMachine.SwitchToDeadState();
+
     public void SetFiringPosition(Transform firingPosition)
     {
         transform.position = firingPosition.position;

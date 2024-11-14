@@ -241,6 +241,11 @@ public class BulletPossessor : MonoBehaviour
         return possessedBullet;
     }
 
+    public BulletPossessTarget GetCentreOfScreenPossessable()
+    {
+        return centreOfScreenPossessable;
+    }
+
     public bool CheckPossessedBullet(BulletPossessTarget possessTarget)
     {
         return possessedBullet == possessTarget;

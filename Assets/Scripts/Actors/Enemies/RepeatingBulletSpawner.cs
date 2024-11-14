@@ -13,6 +13,9 @@ public class RepeatingBulletSpawner : RewindableMovement
     [SerializeField]
     private BulletStateMachine[] availableBullets;
 
+    [SerializeField]
+    private Transform spawnLocation;
+
     private void Update()
     {
         if (movementActive)
@@ -48,7 +51,14 @@ public class RepeatingBulletSpawner : RewindableMovement
 
         foreach (BulletStateMachine bullet in availableBullets)
         {
-            bullet.transform.position = transform.position;
+            if (!spawnLocation)
+            {
+                bullet.transform.position = transform.position;
+            }
+            else
+            {
+                bullet.transform.position = spawnLocation.position;
+            }
         }
     }
 }

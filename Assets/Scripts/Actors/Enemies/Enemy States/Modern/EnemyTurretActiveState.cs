@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class EnemyTurretActiveState : State
 {
-    public EnemyTurretActiveState(StateMachine stateMachine)
-        : base(stateMachine) { }
+    private RepeatingBulletSpawner turretBulletSpawner;
 
-    public override void Enter() { }
+    public EnemyTurretActiveState(StateMachine stateMachine)
+        : base(stateMachine)
+    {
+        turretBulletSpawner = stateMachine.GetComponent<RepeatingBulletSpawner>();
+    }
+
+    public override void Enter()
+    {
+        turretBulletSpawner.ResetSpawner();
+        turretBulletSpawner.ToggleMovement(true);
+    }
 
     public override void Tick(float deltaTime) { }
 
-    public override void Exit() { }
+    public override void Exit()
+    {
+        turretBulletSpawner.ResetSpawner();
+        turretBulletSpawner.ToggleMovement(false);
+    }
 }

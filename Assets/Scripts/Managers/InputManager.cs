@@ -18,6 +18,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public event Action OnFocusAction;
     public event Action OnPossessAction;
     public event Action OnConquestAction;
+    public event Action OnFamineAction;
     public event Action OnPauseAction;
     public event Action OnFreeCamAction;
     public event Action OnFreeCamPossessAction;
@@ -198,6 +199,23 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else
         {
             OnConquestAction?.Invoke();
+        }
+    }
+
+    public void OnFamineAbiltity(InputAction.CallbackContext context)
+    {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            OnFamineAction?.Invoke();
         }
     }
 

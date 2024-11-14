@@ -69,6 +69,11 @@ public class RedirectManager : MonoBehaviour
         SetRedirects(++redirects);
     }
 
+    public void DecrementRedirects()
+    {
+        SetRedirects(--redirects);
+    }
+
     public void ToggleRedirectUI(bool toggle)
     {
         OnRedirectUIActive?.Invoke(this, toggle);

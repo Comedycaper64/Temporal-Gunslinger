@@ -92,6 +92,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         ToggleNearbyPossessableHighlight(isFocusing);
     }
 
+    public void KillBullet() => bullet.KillBullet();
+
     public bool IsFocusing() => bullet.IsFocusing();
 
     public Vector2 GetCameraAxisValues() => bullet.GetCameraAxisValues();
