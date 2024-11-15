@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 10
+  bCanFreeCam: 1
   initialBullet: {fileID: 8018966933097772308}
   playerBody: {fileID: 315466180203143034}
   playerCamera: {fileID: 282173908678326073}
@@ -186,6 +187,8 @@ MonoBehaviour:
   daggerSpawnMaterial: {fileID: 2100000, guid: 4382a6b2d77a4614bacb77afe219ad37, type: 2}
   daggerFlyMaterial: {fileID: 2100000, guid: 63da2b4b7a2418f44b9a52a646822475, type: 2}
   abilitySFX: {fileID: 8300000, guid: 969bd7f9c8bd4804199deb931d00b3db, type: 3}
+  abilityUnavailableSFX: {fileID: 8300000, guid: e49938c1e1dc296449d4fa0aa7442102,
+    type: 3}
   conquestVoicelines:
   - {fileID: 8300000, guid: 6bbb37d426fa75b42a15dd6770ad3936, type: 3}
   - {fileID: 8300000, guid: 7128c5f277ef23d49b83af62bfab2adb, type: 3}
@@ -2113,6 +2116,26 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 315466180203143034}
     m_Modifications:
+    - target: {fileID: 643839753490379152, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.99891925
+      objectReference: {fileID: 0}
+    - target: {fileID: 643839753490379152, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.046479546
+      objectReference: {fileID: 0}
+    - target: {fileID: 643839753490379152, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1e-45
+      objectReference: {fileID: 0}
+    - target: {fileID: 643839753490379152, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
     - target: {fileID: 1135553702622896153, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
         type: 3}
       propertyPath: m_RootOrder
@@ -2172,6 +2195,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FreeLook Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156972629958369160, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156972629958369160, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156972629958369160, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -1e-45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156972629958369160, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031650554060538773, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9997286
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031650554060538773, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.023296414
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031650554060538773, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8031650554060538773, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

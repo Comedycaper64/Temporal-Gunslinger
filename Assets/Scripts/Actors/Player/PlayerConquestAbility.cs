@@ -33,6 +33,9 @@ public class PlayerConquestAbility : MonoBehaviour
     private AudioClip abilitySFX;
 
     [SerializeField]
+    private AudioClip abilityUnavailableSFX;
+
+    [SerializeField]
     private AudioClip[] conquestVoicelines;
 
     public static EventHandler<bool> OnAbilityUIUsed;
@@ -79,6 +82,13 @@ public class PlayerConquestAbility : MonoBehaviour
         if (bAbilityUsed)
         {
             //SFX for abiltiy used;
+            AudioManager.PlaySFX(
+                abilityUnavailableSFX,
+                0.5f,
+                0,
+                Camera.main.transform.position,
+                false
+            );
             return;
         }
 

@@ -23,6 +23,7 @@ Shader"Unlit/BloodPileShader"
         Pass
         {
             ZWrite Off
+            Cull Off
 
             Blend SrcAlpha
             OneMinusSrcAlpha
