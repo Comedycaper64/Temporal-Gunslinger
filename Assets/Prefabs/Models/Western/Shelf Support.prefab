@@ -194,6 +194,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c632c084be3bd054186d51ed4e68599e,
         type: 3}
+      propertyPath: m_TagString
+      value: NonWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: c632c084be3bd054186d51ed4e68599e,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -275,6 +280,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityConservation: 0.75
+--- !u!114 &2353316847519274066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7998255404410653062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 1423798048725649733}
+  targetWeakPoint: {fileID: 1630874564485867926}
 --- !u!114 &3836639336558622099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,20 +313,6 @@ MonoBehaviour:
   manualDisables: []
   dissolveSFX: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
   dissolveVFX: {fileID: 0}
---- !u!114 &2353316847519274066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7998255404410653062}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletTarget: {fileID: 1423798048725649733}
-  targetWeakPoint: {fileID: 1630874564485867926}
 --- !u!23 &8502653820786010195 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: c632c084be3bd054186d51ed4e68599e,
