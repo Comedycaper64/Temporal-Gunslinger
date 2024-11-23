@@ -28,6 +28,9 @@ public class ActorSO : ScriptableObject
     [SerializeField]
     private AudioMixerGroup actorAudioMixer;
 
+    [SerializeField]
+    private float audioMixerPitchMod = 1f;
+
     public string GetActorName()
     {
         return actorName;
@@ -61,5 +64,10 @@ public class ActorSO : ScriptableObject
     public AudioMixerGroup GetAudioMixer()
     {
         return actorAudioMixer;
+    }
+
+    public float GetAudioMixerPitchMod()
+    {
+        return audioMixerPitchMod;
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 public class LevelSelectorUI : MonoBehaviour
 {
     private bool previewChange = false;
-    private float fadeSpeed = 5f;
+    private float previewFadeSpeed = 5f;
+    private float zoneSelectSpeed = 1.25f;
     private bool selectorActive = false;
     private bool confirmation = false;
 
@@ -25,11 +26,17 @@ public class LevelSelectorUI : MonoBehaviour
     private CanvasGroup[] previews;
 
     [SerializeField]
+    private RectTransform[] eraZones;
+
+    [SerializeField]
     private GameObject[] selectionConfirmation;
 
     [SerializeField]
+    private AudioClip eraChangeSFX;
+
+    [SerializeField]
     private CinematicSO endOfTutorialCinematic;
-    private CanvasGroup activePreview;
+    private int activePreviewIndex;
 
     private void Update()
     {
@@ -40,7 +47,7 @@ public class LevelSelectorUI : MonoBehaviour
 
         if (selectorActive && pocketWatchGroup.alpha <= 1f)
         {
-            pocketWatchGroup.alpha += fadeSpeed * Time.deltaTime;
+            pocketWatchGroup.alpha += previewFadeSpeed * Time.deltaTime;
         }
 
         if (selectorActive)
@@ -62,18 +69,28 @@ public class LevelSelectorUI : MonoBehaviour
 
             selectorArrow.eulerAngles = new Vector3(0f, 0f, angleDeg);
 
-            CanvasGroup desiredCanvas = GetMousedCanvasGroup(selectorArrow.eulerAngles.z);
+            int desiredCanvasIndex = GetMousedCanvasGroupIndex(selectorArrow.eulerAngles.z);
 
-            if (desiredCanvas != activePreview)
+            if (desiredCanvasIndex != activePreviewIndex)
             {
                 previewChange = true;
-                activePreview = desiredCanvas;
+                activePreviewIndex = desiredCanvasIndex;
+                AudioManager.PlaySFX(eraChangeSFX, 0.25f, 0, Camera.main.transform.position);
             }
         }
 
         if (previewChange)
         {
-            activePreview.alpha += fadeSpeed * Time.deltaTime;
+            CanvasGroup activePreview = previews[activePreviewIndex];
+            RectTransform activeZone = eraZones[activePreviewIndex];
+
+            activePreview.alpha += previewFadeSpeed * Time.deltaTime;
+            float zoneScale = Mathf.Clamp(
+                activeZone.localScale.x + zoneSelectSpeed * Time.deltaTime,
+                1f,
+                1.25f
+            );
+            activeZone.localScale = new Vector3(zoneScale, zoneScale, zoneScale);
 
             foreach (CanvasGroup preview in previews)
             {
@@ -81,7 +98,17 @@ public class LevelSelectorUI : MonoBehaviour
                 {
                     continue;
                 }
-                preview.alpha -= fadeSpeed * Time.deltaTime;
+                preview.alpha -= previewFadeSpeed * Time.deltaTime;
+            }
+
+            foreach (RectTransform zone in eraZones)
+            {
+                if ((zone == activeZone) || (zone.localScale.x <= 1f))
+                {
+                    continue;
+                }
+                float cZoneScale = zone.localScale.x - zoneSelectSpeed * Time.deltaTime;
+                zone.localScale = new Vector3(cZoneScale, cZoneScale, cZoneScale);
             }
 
             if (activePreview.alpha >= 1f)
@@ -91,34 +118,34 @@ public class LevelSelectorUI : MonoBehaviour
         }
     }
 
-    public CanvasGroup GetMousedCanvasGroup(float zRotation)
+    public int GetMousedCanvasGroupIndex(float zRotation)
     {
         if ((zRotation >= 330f) || (zRotation < 30f))
         {
-            return previews[1];
+            return 2;
         }
-        else if (zRotation < 150f)
+        else if (zRotation < 90f)
         {
-            return previews[0];
+            return 1;
         }
         else if (zRotation < 210f)
         {
-            return previews[4];
+            return 0;
         }
         else if (zRotation < 270f)
         {
-            return previews[3];
+            return 4;
         }
         else
         {
-            return previews[2];
+            return 3;
         }
     }
 
     private void ConfirmLevelSelection()
     {
         confirmation = true;
-        selectionConfirmation[Array.IndexOf(previews, activePreview)].SetActive(true);
+        selectionConfirmation[activePreviewIndex].SetActive(true);
     }
 
     public void CancelConfirmation()

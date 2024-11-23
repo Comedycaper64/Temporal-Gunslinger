@@ -347,7 +347,11 @@ public class DialogueManager : MonoBehaviour
 
             if (bAutoPlay)
             {
-                autoPlayCoroutine = StartCoroutine(DialogueAutoPlayTimer(voiceClip.length));
+                autoPlayCoroutine = StartCoroutine(
+                    DialogueAutoPlayTimer(
+                        voiceClip.length * (1 / currentActor.GetAudioMixerPitchMod())
+                    )
+                );
             }
         }
     }
@@ -422,6 +426,8 @@ public class DialogueManager : MonoBehaviour
     private void EndDialogue(bool skipping = false)
     {
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
+
+        dialogueAudioSource.Stop();
 
         ToggleDialogueUI(false);
         if (disableCameraOnEnd)
