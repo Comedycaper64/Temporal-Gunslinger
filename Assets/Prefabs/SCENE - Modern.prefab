@@ -84,7 +84,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: 7ea4ed23b3e85054bab52451661f0579, type: 2}
+  sharedProfile: {fileID: 11400000, guid: bbc6849c613d5d3438196efb9ea14f75, type: 2}
 --- !u!1 &1862222240131375672
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,7 +136,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -169,7 +169,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 2
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -304,11 +304,16 @@ PrefabInstance:
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
@@ -333,6 +338,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[4].m_Name
+      value: Particle Spawn Rate
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
       propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
       value: 0.5
       objectReference: {fileID: 0}
@@ -353,8 +363,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[4].m_Value
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Name
       value: Volume Coloure
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Name
+      value: Spawn Area_size
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
@@ -378,7 +398,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[4].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.x
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.z
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
       propertyPath: m_PropertySheet.m_Gradient.m_Array.Array.data[0].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Overridden
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5285987475824398364, guid: 303e6a3f72009734997f6c2607d43ac1,
@@ -464,12 +509,12 @@ PrefabInstance:
     - target: {fileID: 7680252700159271306, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6.75
       objectReference: {fileID: 0}
     - target: {fileID: 7680252700159271306, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 7680252700159271306, guid: 303e6a3f72009734997f6c2607d43ac1,
         type: 3}
@@ -509,6 +554,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 303e6a3f72009734997f6c2607d43ac1, type: 3}
+--- !u!1 &4587295328924553885 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2773840851597004821, guid: 303e6a3f72009734997f6c2607d43ac1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1862222240178979464}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2047217454564637857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587295328924553885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f01bb4c1fd8fd8547a60056feba2e488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startSpeed: 1
+  controlTimeVariable: 0
+  controlPlaybackVariable: 0
+  bPlayOnStart: 1
 --- !u!4 &8305284643738428162 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7680252700159271306, guid: 303e6a3f72009734997f6c2607d43ac1,

@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         mouseMovement.y *= PLAYER_MOUSE_SENSITIVITY;
 
         xRotation -= mouseMovement.y;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, -60f, 35f);
 
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
 
