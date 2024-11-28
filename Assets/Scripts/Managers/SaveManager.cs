@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class SaveManager
 {
-    private const int LEVEL_PROGRESS_DEF = 0;
+    private const int LEVEL_PROGRESS_DEF = 13;
     private const string LEVEL_PROGRESS = "LvlProgress";
 
     public static int GetLevelProgress()
     {
-        return 13;
+        //return 13;
 
-        // if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
-        // {
-        //     return LEVEL_PROGRESS_DEF;
-        // }
-        // else
-        // {
-        //     return PlayerPrefs.GetInt(LEVEL_PROGRESS);
-        // }
+        if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
+        {
+            //(temp for starting at lvl 13)
+            SetLevelProgress(LEVEL_PROGRESS_DEF);
+
+            return LEVEL_PROGRESS_DEF;
+        }
+        else
+        {
+            return PlayerPrefs.GetInt(LEVEL_PROGRESS);
+        }
     }
 
     public static void SetLevelProgress(int newProgress)

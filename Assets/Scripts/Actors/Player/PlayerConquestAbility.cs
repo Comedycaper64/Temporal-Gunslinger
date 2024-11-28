@@ -36,6 +36,9 @@ public class PlayerConquestAbility : MonoBehaviour
     private AudioClip abilityUnavailableSFX;
 
     [SerializeField]
+    private AudioSource conquestAudioSource;
+
+    [SerializeField]
     private AudioClip[] conquestVoicelines;
 
     public static EventHandler<bool> OnAbilityUIUsed;
@@ -114,14 +117,18 @@ public class PlayerConquestAbility : MonoBehaviour
 
         lastRandomVoiceline = randomInt;
 
-        AudioManager.PlaySFX(
-            conquestVoicelines[randomInt],
-            0.75f,
-            0,
-            Camera.main.transform.position,
-            false,
-            false
-        );
+        conquestAudioSource.clip = conquestVoicelines[randomInt];
+        conquestAudioSource.transform.position = Camera.main.transform.position;
+        conquestAudioSource.Play();
+
+        // AudioManager.PlaySFX(
+        //     conquestVoicelines[randomInt],
+        //     0.75f,
+        //     0,
+        //     Camera.main.transform.position,
+        //     false,
+        //     false
+        // );
 
         // Activate conquest flair
         OnConquestAbility?.Invoke(this, CutInType.Conquest);
