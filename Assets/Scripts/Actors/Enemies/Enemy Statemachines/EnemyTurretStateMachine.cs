@@ -15,7 +15,7 @@ public class EnemyTurretStateMachine : StateMachine
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.idle, new EnemyInactiveState(this));
+        stateDictionary.Add(StateEnum.idle, new EnemyTurretIdleState(this));
         stateDictionary.Add(StateEnum.active, new EnemyTurretActiveState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }

@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class SFXPauser : MonoBehaviour
 {
+    [SerializeField]
+    private bool pauseDuringLevel = true;
     private AudioSource sfxAudioSource;
 
     [SerializeField]
@@ -26,7 +28,7 @@ public class SFXPauser : MonoBehaviour
 
     private void ToggleAudioSource(object sender, StateEnum newState)
     {
-        if (newState == StateEnum.active)
+        if ((newState == StateEnum.active) && pauseDuringLevel)
         {
             PauseSFX();
         }

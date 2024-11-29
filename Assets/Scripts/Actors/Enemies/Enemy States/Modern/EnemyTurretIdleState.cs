@@ -1,15 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRangedIdleState : State
+public class EnemyTurretIdleState : State
 {
     private Animator animator;
-    private EnemyRangedStateMachine enemyRangedStateMachine;
 
-    public EnemyRangedIdleState(StateMachine stateMachine)
+    private RepeatingBulletSpawner turretBulletSpawner;
+
+    public EnemyTurretIdleState(StateMachine stateMachine)
         : base(stateMachine)
     {
         animator = stateMachine.stateMachineAnimator;
-        enemyRangedStateMachine = stateMachine as EnemyRangedStateMachine;
+        turretBulletSpawner = stateMachine.GetComponent<RepeatingBulletSpawner>();
     }
 
     public override void Enter()
@@ -19,8 +22,7 @@ public class EnemyRangedIdleState : State
             animator.SetTrigger("activate");
         }
 
-        enemyRangedStateMachine.ResetProjectile();
-        enemyRangedStateMachine.SetStateTimerSave(0f);
+        turretBulletSpawner.ResetSpawner();
     }
 
     public override void Exit() { }

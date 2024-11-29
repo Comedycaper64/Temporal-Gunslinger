@@ -8,6 +8,9 @@ public class RepeatingBulletSpawner : RewindableMovement
     private float spawnTimer = 0f;
 
     [SerializeField]
+    private bool initialBulletLaunch = false;
+
+    [SerializeField]
     private float spawnTime;
 
     [SerializeField]
@@ -30,7 +33,6 @@ public class RepeatingBulletSpawner : RewindableMovement
 
                 if (spawnIndex < availableBullets.Length)
                 {
-                    //Debug.Log("Locust Spawn");
                     availableBullets[spawnIndex].SwitchToActive();
                 }
 
@@ -59,6 +61,27 @@ public class RepeatingBulletSpawner : RewindableMovement
             {
                 bullet.transform.position = spawnLocation.position;
             }
+        }
+    }
+
+    public float GetSpawnTimer()
+    {
+        return spawnTimer;
+    }
+
+    public float GetSpawnTime()
+    {
+        return spawnTime;
+    }
+
+    public override void ToggleMovement(bool toggle)
+    {
+        base.ToggleMovement(toggle);
+
+        if (toggle && initialBulletLaunch && (spawnIndex == 0))
+        {
+            availableBullets[spawnIndex].SwitchToActive();
+            spawnIndex++;
         }
     }
 }
