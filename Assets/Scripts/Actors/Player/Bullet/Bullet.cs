@@ -208,6 +208,7 @@ public class Bullet : MonoBehaviour
         bIsDead = isDead;
         bulletMovement.SetIsDead(bIsDead);
         bulletDamager.SetBulletActive(!bIsDead);
+        focusManager.ToggleAimLine(!bIsDead);
     }
 
     public bool IsFocusing()

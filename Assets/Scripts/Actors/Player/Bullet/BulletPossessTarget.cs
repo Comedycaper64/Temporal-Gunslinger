@@ -144,6 +144,7 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
         {
             highlightables?.Remove(this);
             possessables?.Remove(this);
+            ToggleHighlight(false);
         }
     }
 

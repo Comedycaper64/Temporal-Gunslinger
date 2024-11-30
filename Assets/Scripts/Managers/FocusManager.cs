@@ -262,6 +262,14 @@ public class FocusManager : MonoBehaviour
         }
     }
 
+    public void ToggleAimLine(bool toggle)
+    {
+        if (focusAimLine)
+        {
+            focusAimLine.ToggleLine(toggle);
+        }
+    }
+
     private void OnSensitivityUpdated(object sender, float newSensitivity)
     {
         PLAYER_SENSITIVITY = newSensitivity;

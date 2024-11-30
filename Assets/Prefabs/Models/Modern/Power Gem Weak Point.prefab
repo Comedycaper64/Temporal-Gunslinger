@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &738176759850477667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2101306477340168547}
+  m_Layer: 9
+  m_Name: Lock On Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2101306477340168547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738176759850477667}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1567618197498700228}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &466217526941786179
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -121,7 +152,11 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents:
     - {fileID: 5901039089862819421, guid: 8e88562566311584093fe9839d435c65, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1421195946782622087, guid: 8e88562566311584093fe9839d435c65,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2101306477340168547}
   m_SourcePrefab: {fileID: 100100000, guid: 8e88562566311584093fe9839d435c65, type: 3}
 --- !u!1 &1117693875098528042 stripped
 GameObject:
@@ -143,12 +178,38 @@ CapsuleCollider:
   m_Height: 0.5
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &39464199187628371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117693875098528042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 2101306477340168547}
+  targetWeakPoint: {fileID: 6430281343459757723}
 --- !u!4 &1567618197498700228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1421195946782622087, guid: 8e88562566311584093fe9839d435c65,
     type: 3}
   m_PrefabInstance: {fileID: 466217526941786179}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6430281343459757723 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6864792665902329560, guid: 8e88562566311584093fe9839d435c65,
+    type: 3}
+  m_PrefabInstance: {fileID: 466217526941786179}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117693875098528042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf740c2f9eb0f0645b92a3172b45f4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &466217527079309911
 PrefabInstance:
   m_ObjectHideFlags: 0
