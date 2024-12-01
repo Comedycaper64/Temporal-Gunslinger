@@ -1040,7 +1040,7 @@ Transform:
   - {fileID: 6688757722104848887}
   - {fileID: 3887947571293158880}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4058299627551243243
 MonoBehaviour:
@@ -1803,6 +1803,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3897450719351224549}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &3142102467821428436 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2129212288490202673, guid: 799a6560ace815647b41f7139652486c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3897450719351224549}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4788969533384187074 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8386635637151589415, guid: 799a6560ace815647b41f7139652486c,
@@ -1815,12 +1821,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf740c2f9eb0f0645b92a3172b45f4ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &5455422905939499493 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9053089558673531136, guid: 799a6560ace815647b41f7139652486c,
-    type: 3}
-  m_PrefabInstance: {fileID: 3897450719351224549}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5202165098374116494
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2704,10 +2704,10 @@ MonoBehaviour:
   startSpeed: 1
   skinnedMeshRenderers:
   - {fileID: 5088345021600070838}
-  meshRenderers: []
+  meshRenderers:
+  - {fileID: 3142102467821428436}
   manualDisables:
   - {fileID: 1301740173296290794}
-  - {fileID: 5455422905939499493}
   dissolveSFX: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
   dissolveVFX: {fileID: 8012913231347121443}
 --- !u!4 &6688757722104848887 stripped

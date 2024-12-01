@@ -134,7 +134,8 @@ public class AudioManager : MonoBehaviour
         int pitchEnum,
         Vector3 originPosition,
         bool useSlowdownSettings = true,
-        bool varyPitch = true
+        bool varyPitch = true,
+        bool playDuringRewind = false
     )
     {
         if (!Application.isPlaying)
@@ -142,7 +143,7 @@ public class AudioManager : MonoBehaviour
             return null;
         }
 
-        if (RewindManager.bRewinding)
+        if (RewindManager.bRewinding && !playDuringRewind)
         {
             return null;
         }

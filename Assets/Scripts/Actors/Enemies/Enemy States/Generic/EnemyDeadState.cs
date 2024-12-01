@@ -3,8 +3,8 @@ using UnityEngine;
 public class EnemyDeadState : State
 {
     public static int enemiesAlive;
-    private Animator animator;
-    private DissolveController dissolveController;
+    protected Animator animator;
+    protected DissolveController dissolveController;
 
     //public static EventHandler<float> OnEnemyDeadChange;
 
