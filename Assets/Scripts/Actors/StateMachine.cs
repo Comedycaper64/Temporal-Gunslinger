@@ -21,7 +21,7 @@ public abstract class StateMachine : MonoBehaviour
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
     }
 
-    private void OnDisable()
+    public virtual void OnDisable()
     {
         GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
     }

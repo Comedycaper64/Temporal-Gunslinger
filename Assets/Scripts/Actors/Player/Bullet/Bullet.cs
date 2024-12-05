@@ -12,6 +12,9 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     private bool moveToTarget = true;
+
+    [SerializeField]
+    private bool followWhenInactive = true;
     private Transform gunParent;
     private AudioSource bulletFlightSFX;
     private BulletMovement bulletMovement;
@@ -143,6 +146,7 @@ public class Bullet : MonoBehaviour
         //bulletMovement.RemoveDeadFlag();
         bulletDamager.SetBulletActive(toggle);
         bBulletActive = toggle;
+        focusManager.ToggleAimLine(toggle);
 
         OnActiveToggled?.Invoke(this, bBulletActive);
 
@@ -240,6 +244,11 @@ public class Bullet : MonoBehaviour
         // }
 
         ToggleBulletPossessed(false, Vector2.zero);
+
+        if (!followWhenInactive && bBulletPossessed)
+        {
+            OnShuntOut?.Invoke();
+        }
 
         transform.parent = gunParent;
         transform.position = bulletPosition.position;

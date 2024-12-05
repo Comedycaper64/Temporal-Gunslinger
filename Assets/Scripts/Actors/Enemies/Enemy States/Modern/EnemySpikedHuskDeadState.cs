@@ -9,7 +9,7 @@ public class EnemySpikedHuskDeadState : EnemyDeadState
     public EnemySpikedHuskDeadState(StateMachine stateMachine)
         : base(stateMachine)
     {
-        enemiesAlive++;
+        //enemiesAlive++;
         animator = stateMachine.stateMachineAnimator;
         dissolveController = stateMachine.GetDissolveController();
         enemyStateMachine = stateMachine as EnemySpikedHuskStateMachine;

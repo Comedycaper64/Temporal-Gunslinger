@@ -12,6 +12,7 @@ public class EnemyDeadState : State
         : base(stateMachine)
     {
         enemiesAlive++;
+        Debug.Log("Alive enemies:" + enemiesAlive);
         animator = stateMachine.stateMachineAnimator;
         dissolveController = stateMachine.GetDissolveController();
     }
@@ -30,7 +31,7 @@ public class EnemyDeadState : State
 
         stateMachine.ToggleInactive(true);
         enemiesAlive--;
-
+        Debug.Log("Alive enemies:" + enemiesAlive);
         //OnEnemyDeadChange?.Invoke();
 
         //Debug.Log("Enemies remaining: " + enemyNumber);

@@ -162,7 +162,7 @@ public class FocusManager : MonoBehaviour
             bulletModelTransform.forward,
             colliderRadius
         );
-        focusAimLine.ToggleLine(true);
+        focusAimLine.ToggleLine(false);
     }
 
     public void ToggleCanFocus(bool toggle)

@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
-    private bool bWeaponActive;
+    // private bool bWeaponActive;
 
-    [SerializeField]
-    private RewindableMovement movement;
+    // [SerializeField]
+    // private RewindableMovement movement;
 
     public void WeaponImpact()
     {

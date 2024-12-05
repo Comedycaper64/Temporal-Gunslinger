@@ -44,15 +44,14 @@ public class AbilityCutInUI : MonoBehaviour
     private void TriggerCutIn(object sender, CutInType cutIn)
     {
         GameObject currentCutIn = cutIns[(int)cutIn];
-
-        cutInCamera.SetActive(true);
-        currentCutIn.SetActive(true);
-        canvasGroupFader.ToggleFade(true, 0.5f, MMTween.MMTweenCurve.EaseOutCubic);
-
         if (cutInCoroutine != null)
         {
             StopCoroutine(cutInCoroutine);
+            DisableCutIns();
         }
+        cutInCamera.SetActive(true);
+        currentCutIn.SetActive(true);
+        canvasGroupFader.ToggleFade(true, 0.5f, MMTween.MMTweenCurve.EaseOutCubic);
 
         cutInCoroutine = StartCoroutine(CutInWindDown());
     }

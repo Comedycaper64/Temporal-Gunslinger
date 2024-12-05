@@ -78,6 +78,8 @@ public class DialogueManager : MonoBehaviour
         actorAnimatorMapper = GetComponent<ActorAnimatorMapper>();
         dialogueAudioSource = GetComponent<AudioSource>();
 
+        bAutoPlay = PlayerOptions.GetDialogueAutoPlay();
+
         DialogueAutoPlayUI.OnAutoPlayToggle += ToggleAutoPlay;
     }
 
@@ -477,6 +479,7 @@ public class DialogueManager : MonoBehaviour
     private void ToggleAutoPlay(object sender, bool e)
     {
         bAutoPlay = e;
+        PlayerOptions.SetDialogueAutoPlay(bAutoPlay);
 
         if (autoPlayCoroutine != null)
         {

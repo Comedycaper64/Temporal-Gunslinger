@@ -96,14 +96,14 @@ public class GameManager : MonoBehaviour
 
     protected virtual void LoadNextLevel()
     {
-        // if (SceneManager.GetActiveScene().buildIndex == 11)
-        // {
-        //     SceneManager.LoadScene(0);
-        // }
-        // else
-        // {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        //}
+        if (SceneManager.GetActiveScene().buildIndex == 17)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public virtual void EndLevel(Transform lastEnemy)

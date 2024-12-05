@@ -10,4 +10,9 @@ public class AnimationVFXManager : MonoBehaviour
     {
         visualEffects[vfxNum].PlayEffect();
     }
+
+    public void StopVFX(int vfxNum)
+    {
+        visualEffects[vfxNum].StopEffect();
+    }
 }

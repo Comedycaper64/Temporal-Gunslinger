@@ -65,7 +65,10 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     private void EmergencyRepossess()
     {
-        OnEmergencyRepossess?.Invoke(this, GetPossessables()[0]);
+        if (GetPossessables().Count > 0)
+        {
+            OnEmergencyRepossess?.Invoke(this, GetPossessables()[0]);
+        }
     }
 
     public void PossessBullet(bool isFocusing, Vector2 newCameraAxis)

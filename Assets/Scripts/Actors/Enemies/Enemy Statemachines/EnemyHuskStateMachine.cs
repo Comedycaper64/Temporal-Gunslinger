@@ -15,8 +15,9 @@ public class EnemyHuskStateMachine : StateMachine
         mentalLink.OnLinkFeedback += MentalLink_OnLinkFeedback;
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
+        base.OnDisable();
         mentalLink.OnLinkFeedback -= MentalLink_OnLinkFeedback;
     }
 

@@ -69,11 +69,14 @@ public class CinematicManagerUI : MonoBehaviour
         fadeTarget = uIChange.fadeToBlackToggle;
         if (uIChange.waitUntilFaded)
         {
-            onFade = uIChange.onFaded;
+            onFade = uIChange?.onFaded;
         }
         else
         {
-            uIChange.onFaded();
+            // if (uIChange.onFaded != null)
+            // {
+            uIChange?.onFaded();
+            //}
         }
     }
 }
