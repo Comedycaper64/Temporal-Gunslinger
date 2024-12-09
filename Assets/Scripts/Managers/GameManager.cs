@@ -39,8 +39,13 @@ public class GameManager : MonoBehaviour
 
         revenantTransform = GameObject
             .FindGameObjectWithTag("Player")
-            .GetComponent<PlayerStateMachine>()
-            .GetRevenantChest();
+            ?.GetComponent<PlayerStateMachine>()
+            ?.GetRevenantChest();
+
+        if (revenantTransform == null)
+        {
+            revenantTransform = new GameObject("Rev Target").GetComponent<Transform>();
+        }
 
         bLevelActive = false;
 
@@ -134,6 +139,11 @@ public class GameManager : MonoBehaviour
 
     public virtual void LevelLost()
     {
+        if (!bLevelActive)
+        {
+            return;
+        }
+
         TimeManager.SetPausedTime();
         endOfLevelCam.gameObject.SetActive(true);
         endOfLevelCam.m_Follow = revenantTransform;

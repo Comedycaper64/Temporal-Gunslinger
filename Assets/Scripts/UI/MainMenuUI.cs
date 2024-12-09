@@ -62,7 +62,7 @@ public class MainMenuUI : MonoBehaviour
                 continueText += " - Medieval Level 4";
                 break;
             case 5:
-                continueText += " - Medieval Level 5";
+                continueText += " - Medieval Boss ~ War";
                 break;
             case 6:
                 continueText += " - Medieval Intermission";
@@ -80,13 +80,25 @@ public class MainMenuUI : MonoBehaviour
                 continueText += " - Western Level 4";
                 break;
             case 11:
-                continueText += " - Western Level 5";
+                continueText += " - Western Boss ~ Famine";
                 break;
             case 12:
                 continueText += " - Western Intermission";
                 break;
             case 13:
                 continueText += " - Modern Level 1";
+                break;
+            case 14:
+                continueText += " - Modern Level 2";
+                break;
+            case 15:
+                continueText += " - Modern Level 3";
+                break;
+            case 16:
+                continueText += " - Modern Level 4";
+                break;
+            case 17:
+                continueText += " - Modern Boss ~ Pestilence";
                 break;
             default:
                 break;
