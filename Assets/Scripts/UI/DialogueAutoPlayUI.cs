@@ -12,7 +12,7 @@ public class DialogueAutoPlayUI : MonoBehaviour
 
     private void Start()
     {
-        SetAutoPlay(bAutoPlay);
+        SetAutoPlay(PlayerOptions.GetDialogueAutoPlay());
         InputManager.Instance.OnFocusAction += AutoPlayButtonPress;
     }
 
@@ -22,6 +22,20 @@ public class DialogueAutoPlayUI : MonoBehaviour
     }
 
     private void SetAutoPlay(bool toggle)
+    {
+        bAutoPlay = toggle;
+
+        if (toggle)
+        {
+            autoPlayImage.color = Color.white;
+        }
+        else
+        {
+            autoPlayImage.color = Color.grey;
+        }
+    }
+
+    private void ToggleAutoPlay(bool toggle)
     {
         if (GameManager.bLevelActive)
         {
@@ -42,6 +56,6 @@ public class DialogueAutoPlayUI : MonoBehaviour
     public void AutoPlayButtonPress()
     {
         bAutoPlay = !bAutoPlay;
-        SetAutoPlay(bAutoPlay);
+        ToggleAutoPlay(bAutoPlay);
     }
 }

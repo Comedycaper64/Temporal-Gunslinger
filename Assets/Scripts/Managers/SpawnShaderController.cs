@@ -8,7 +8,7 @@ public class SpawnShaderController : MonoBehaviour
     private float reaperOpening = 0.95f;
     private float targetOpening = 0f;
     private float startOpening;
-    private float openingSpeed = 0.5f;
+    private float openingSpeed = 0.75f;
     private float tweenTimer = 0f;
 
     [SerializeField]

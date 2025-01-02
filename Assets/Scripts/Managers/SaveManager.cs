@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SaveManager
 {
-    private const int LEVEL_PROGRESS_DEF = 0;
+    private const int LEVEL_PROGRESS_DEF = 13;
     private const string LEVEL_PROGRESS = "LvlProgress";
 
     public static int GetLevelProgress()

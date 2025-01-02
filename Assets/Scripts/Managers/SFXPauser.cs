@@ -1,9 +1,13 @@
+using System;
 using UnityEngine;
 
 public class SFXPauser : MonoBehaviour
 {
     [SerializeField]
     private bool pauseDuringLevel = true;
+
+    [SerializeField]
+    private bool loopingSFX = false;
     private AudioSource sfxAudioSource;
 
     [SerializeField]
@@ -19,11 +23,23 @@ public class SFXPauser : MonoBehaviour
     private void OnEnable()
     {
         GameManager.OnGameStateChange += ToggleAudioSource;
+
+        if (loopingSFX)
+        {
+            OptionsManager.OnMasterVolumeUpdated += UpdateVolume;
+            OptionsManager.OnSFXVolumeUpdated += UpdateVolume;
+        }
     }
 
     private void OnDisable()
     {
         GameManager.OnGameStateChange -= ToggleAudioSource;
+
+        if (loopingSFX)
+        {
+            OptionsManager.OnMasterVolumeUpdated -= UpdateVolume;
+            OptionsManager.OnSFXVolumeUpdated -= UpdateVolume;
+        }
     }
 
     private void ToggleAudioSource(object sender, StateEnum newState)
@@ -50,6 +66,11 @@ public class SFXPauser : MonoBehaviour
         //     return;
         // }
 
+        sfxAudioSource.volume = PlayerOptions.GetSFXVolume() * sfxVolume;
+    }
+
+    private void UpdateVolume(object sender, float e)
+    {
         sfxAudioSource.volume = PlayerOptions.GetSFXVolume() * sfxVolume;
     }
 }

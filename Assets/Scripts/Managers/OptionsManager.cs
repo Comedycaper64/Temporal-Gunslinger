@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class OptionsManager : MonoBehaviour
 {
     private const float SLIDER_MOD = 8f;
+    private AudioSource sampleAudioSource;
 
     [SerializeField]
     private Slider masterSlider;
@@ -16,7 +17,13 @@ public class OptionsManager : MonoBehaviour
     private Slider sfxSlider;
 
     [SerializeField]
+    private AudioClip sampleSFX;
+
+    [SerializeField]
     private Slider voiceSlider;
+
+    [SerializeField]
+    private AudioClip sampleVoice;
 
     [SerializeField]
     private Slider gunSensitivitySlider;
@@ -32,6 +39,7 @@ public class OptionsManager : MonoBehaviour
 
     public static EventHandler<float> OnMasterVolumeUpdated;
     public static EventHandler<float> OnMusicVolumeUpdated;
+    public static EventHandler<float> OnSFXVolumeUpdated;
     public static EventHandler<float> OnGunSensitivityUpdated;
     public static EventHandler<float> OnBulletSensitivityUpdated;
 
@@ -46,6 +54,8 @@ public class OptionsManager : MonoBehaviour
         //gunSensitivityYSlider.value = PlayerOptions.GetGunYSensitivity();
         bulletSensitivitySlider.value = PlayerOptions.GetBulletSensitivity() * SLIDER_MOD;
         //bulletSensitivityYSlider.value = PlayerOptions.GetBulletYSensitivity();
+
+        sampleAudioSource = GetComponent<AudioSource>();
     }
 
     public void SetMasterVolume(float newVolume)
@@ -66,12 +76,33 @@ public class OptionsManager : MonoBehaviour
     {
         newVolume = newVolume / SLIDER_MOD;
         PlayerOptions.SetSFXVolume(newVolume);
+
+        OnSFXVolumeUpdated?.Invoke(this, newVolume);
+
+        if (!sampleAudioSource)
+        {
+            return;
+        }
+
+        sampleAudioSource.clip = sampleSFX;
+        sampleAudioSource.volume = PlayerOptions.GetSFXVolume();
+        sampleAudioSource.Play();
     }
 
     public void SetVoiceVolume(float newVolume)
     {
         newVolume = newVolume / SLIDER_MOD;
+
         PlayerOptions.SetVoiceVolume(newVolume);
+
+        if (!sampleAudioSource)
+        {
+            return;
+        }
+
+        sampleAudioSource.clip = sampleVoice;
+        sampleAudioSource.volume = PlayerOptions.GetVoiceVolume();
+        sampleAudioSource.Play();
     }
 
     public void SetGunSensitivity(float newSensitivity)

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class HuskPustule : MonoBehaviour
 {
+    [SerializeField]
     private WeakPoint pustuleWeakPoint;
 
     [SerializeField]
@@ -10,11 +11,6 @@ public class HuskPustule : MonoBehaviour
 
     [SerializeField]
     private VFXPlayback pustuleBurstVFX;
-
-    private void Awake()
-    {
-        pustuleWeakPoint = GetComponent<WeakPoint>();
-    }
 
     private void OnEnable()
     {
