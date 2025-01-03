@@ -61,9 +61,12 @@ public class BulletVelocityUI : MonoBehaviour
     {
         //this.maxVelocity = maxVelocity;
         displayVelocity = newVelocity;
+        targetVelocity = newVelocity;
         velocityBar.material.SetFloat("_MaxVelocity", maxVelocity);
-        float invLerp = Mathf.InverseLerp(0f, maxVelocity, newVelocity);
-        targetVelocity = Mathf.Lerp(-maxVelocity + maxVelocity * 0.25f, 0f, invLerp);
+
+        //float invLerp = Mathf.InverseLerp(0f, maxVelocity, newVelocity);
+        //targetVelocity = Mathf.Lerp(-maxVelocity + maxVelocity * 0.25f, 0f, invLerp);
+
         velocityBar.material.SetFloat("_Velocity", targetVelocity);
         if (!bActive)
         {

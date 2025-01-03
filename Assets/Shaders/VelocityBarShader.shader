@@ -2,6 +2,7 @@ Shader"Unlit/VelocityBarShader"
 {
     Properties
     {
+        _MainTex ("Texture", 2D) = "white" {}
         _MaxVelocity ("Max Velocity", float) = 1
         _Velocity ("Velocity", float) = 0
         _DeltaVelocity ("Delta Velocity", float) = 0
@@ -10,7 +11,7 @@ Shader"Unlit/VelocityBarShader"
         _FillColourEnd ("End Fill Colour", Color) = (1,1,1,1)
         _EmptyColour ("Empty Colour", Color) = (0,0,0,0)
         _DeltaColour ("Delta Colour", Color) = (1,1,1,1)
-        _InnerLoss ("Inner Circle Missing", Range(0,1)) = 0.5
+        //_InnerLoss ("Inner Circle Missing", Range(0,1)) = 0.5
     }
     SubShader
     {
@@ -44,10 +45,11 @@ Shader"Unlit/VelocityBarShader"
                 float4 vertex : SV_POSITION;
             };
 
+            sampler2D _MainTex;
             float _MaxVelocity;
             float _Velocity;
             float _DeltaVelocity;
-            float _InnerLoss;   
+            //float _InnerLoss;   
 //float _Offset;
             float4 _FillColourStart;
             float4 _FillColourEnd;
@@ -71,17 +73,17 @@ Shader"Unlit/VelocityBarShader"
             {
                 //float valueLerp = saturate(InverseLerp(_MaxVelocity / 5, _MaxVelocity - (_MaxVelocity / 5), _Velocity));
                 float2 uvsCentered = i.uv * 2 - 1;
-                float sdf = distance(i.uv, float2(0.5, 0.5)) * 2 - 1;            
+                //float sdf = distance(i.uv, float2(0.5, 0.5)) * 2 - 1;            
                 //clip(-sdf);
     
-                float innerSdf = distance(i.uv, float2(0.5, 0.5)) * 2 - _InnerLoss;
+                //float innerSdf = distance(i.uv, float2(0.5, 0.5)) * 2 - _InnerLoss;
                 //clip(innerSdf);
-                float compoundSdf = -sdf * innerSdf;
-                clip(compoundSdf);
+                //float compoundSdf = -sdf * innerSdf;
+                //clip(compoundSdf);
     
    
                 
-                float radial = (atan2(uvsCentered.y, uvsCentered.x) / pi) * _MaxVelocity + _MaxVelocity / 2.5;
+                float radial = (atan2(uvsCentered.y, uvsCentered.x) / pi) * _MaxVelocity + _MaxVelocity / 1;
                 //radial = ((radial * 0.5 + 0.5) + _Offset) % _MaxVelocity;
     
                 float reveal = step(radial, _Velocity);
@@ -89,10 +91,11 @@ Shader"Unlit/VelocityBarShader"
     
                 float tBarColour = saturate(InverseLerp(0.075, 1, i.uv.x));
                 float4 barColour = lerp(_FillColourStart, _FillColourEnd, tBarColour);
+                float4 texColour = tex2D(_MainTex, i.uv);
                 //float barMask = _Velocity > i.uv.x * _MaxVelocity;
 
                 //return float4(barColour * reveal + _DeltaColour * deltaReveal, reveal);
-    return barColour * reveal + _DeltaColour * deltaReveal * (1 - reveal);
+    return texColour * (barColour * reveal + _DeltaColour * deltaReveal * (1 - reveal) + _EmptyColour * (1 - reveal));
 }
             ENDCG
         }

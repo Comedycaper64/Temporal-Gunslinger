@@ -27,6 +27,11 @@ public class BulletStateMachine : StateMachine
         // {
         //     return;
         // }
+        if (!GameManager.bLevelActive)
+        {
+            return;
+        }
+
         SwitchState(stateDictionary[StateEnum.active]);
     }
 
