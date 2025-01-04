@@ -12,6 +12,9 @@ public class HuskPustule : MonoBehaviour
     [SerializeField]
     private VFXPlayback pustuleBurstVFX;
 
+    [SerializeField]
+    private AudioClip virusSpawnSFX;
+
     private void OnEnable()
     {
         pustuleWeakPoint.OnHit += BurstPustule;
@@ -25,7 +28,7 @@ public class HuskPustule : MonoBehaviour
     private void BurstPustule(object sender, EventArgs e)
     {
         homingVirus.SwitchToActive();
-
+        AudioManager.PlaySFX(virusSpawnSFX, 1f, 2, transform.position, false);
         pustuleBurstVFX.PlayEffect();
     }
 }

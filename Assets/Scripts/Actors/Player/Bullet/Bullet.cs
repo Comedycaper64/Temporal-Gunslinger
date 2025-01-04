@@ -71,7 +71,8 @@ public class Bullet : MonoBehaviour
         {
             BulletVelocityUI.Instance.VelocityChanged(
                 bulletMovement.GetVelocity(),
-                bulletMovement.GetMaxVelocity()
+                bulletMovement.GetMaxVelocity(),
+                bulletMovement.GetLowVelocity()
             );
 
             float bulletMovementVelocity = Mathf.Clamp(bulletMovement.GetVelocity(), 1f, 999f);
@@ -123,13 +124,6 @@ public class Bullet : MonoBehaviour
         {
             bulletStateMachine.GetDissolveController().StopDissolve();
         }
-
-        if (bBulletPossessed)
-        {
-            BulletVelocityUI.Instance.ToggleLowVelocity(toggle);
-        }
-
-        //Show warning on UI
     }
 
     public void ToggleBulletActive(bool toggle)
@@ -187,8 +181,6 @@ public class Bullet : MonoBehaviour
             RewindableMovement.UpdateMovementTimescale(1f / bulletMovement.GetVelocity());
             int randomInt = Random.Range(0, possessSFX.Length);
             AudioManager.PlaySFX(possessSFX[randomInt], 0.25f, 4, transform.position);
-
-            BulletVelocityUI.Instance.ToggleLowVelocity(bulletMovement.GetIsLowVelocity());
         }
 
         bBulletPossessed = toggle;

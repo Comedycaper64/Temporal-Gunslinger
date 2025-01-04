@@ -16,7 +16,7 @@ public class DissolveController : RewindableMovement
     [SerializeField]
     private GameObject[] manualDisables;
 
-    private List<Material> materials = new List<Material>();
+    private Material[] meshMaterials;
 
     [SerializeField]
     private AudioClip dissolveSFX;
@@ -26,14 +26,14 @@ public class DissolveController : RewindableMovement
 
     private void Start()
     {
-        foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
-        {
-            materials.Add(skinnedMeshRenderer.material);
-        }
-        foreach (MeshRenderer meshRenderer in meshRenderers)
-        {
-            materials.Add(meshRenderer.material);
-        }
+        // foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
+        // {
+        //     materials.Add(skinnedMeshRenderer.material);
+        // }
+        // foreach (MeshRenderer meshRenderer in meshRenderers)
+        // {
+        //     materials.Add(meshRenderer.material);
+        // }
 
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;
     }
@@ -48,7 +48,7 @@ public class DissolveController : RewindableMovement
     {
         if (e == StateEnum.idle)
         {
-            foreach (Material material in materials)
+            foreach (Material material in GetMeshMaterials())
             {
                 material.SetFloat("_Dissolve_Amount", 0f);
             }
@@ -68,6 +68,8 @@ public class DissolveController : RewindableMovement
         ToggleMovement(true);
         counter = 0;
         dissolveTarget = targetDissolve;
+
+        meshMaterials = GetMeshMaterials();
 
         foreach (GameObject gameObject in manualDisables)
         {
@@ -90,7 +92,7 @@ public class DissolveController : RewindableMovement
         ToggleMovement(false);
         counter = 0;
 
-        foreach (Material material in materials)
+        foreach (Material material in GetMeshMaterials())
         {
             material.SetFloat("_Dissolve_Amount", counter);
         }
@@ -101,13 +103,31 @@ public class DissolveController : RewindableMovement
         }
     }
 
+    private Material[] GetMeshMaterials()
+    {
+        List<Material> materials = new List<Material>();
+
+        foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
+        {
+            materials.Add(skinnedMeshRenderer.material);
+        }
+
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            materials.Add(meshRenderer.material);
+        }
+
+        return materials.ToArray();
+    }
+
     private void Dissolve()
     {
         counter += dissolveRate * GetSpeed() * Time.deltaTime;
         float newCounter = Mathf.Clamp(counter, 0f, dissolveTarget);
 
-        foreach (Material material in materials)
+        foreach (Material material in meshMaterials)
         {
+            //Debug.Log("Material: " + material.name + " dissolve at " + newCounter);
             material.SetFloat("_Dissolve_Amount", newCounter);
         }
         //yield return new WaitForSeconds(0.025f);

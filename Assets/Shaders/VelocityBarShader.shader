@@ -6,12 +6,16 @@ Shader"Unlit/VelocityBarShader"
         _MaxVelocity ("Max Velocity", float) = 1
         _Velocity ("Velocity", float) = 0
         _DeltaVelocity ("Delta Velocity", float) = 0
-        //_Offset ("Offset", float) = 0
+        _PulseThreshold ("Pulse Threshold Velocity", float) = 0
+        _PulseAmount ("Pulse Amount", float) = 0
+        _PulseSpeed ("Pulse Speed", float) = 4
+        _UnscaledTime ("Unscaled Time", float) = 0
+
         _FillColourStart ("Start Fill Colour", Color) = (1,1,1,1)
         _FillColourEnd ("End Fill Colour", Color) = (1,1,1,1)
         _EmptyColour ("Empty Colour", Color) = (0,0,0,0)
         _DeltaColour ("Delta Colour", Color) = (1,1,1,1)
-        //_InnerLoss ("Inner Circle Missing", Range(0,1)) = 0.5
+        _PulseColour ("Pulse Colour", Color) = (1,1,1,1)
     }
     SubShader
     {
@@ -49,12 +53,16 @@ Shader"Unlit/VelocityBarShader"
             float _MaxVelocity;
             float _Velocity;
             float _DeltaVelocity;
-            //float _InnerLoss;   
-//float _Offset;
+            float _PulseThreshold;
+            float _PulseAmount;
+            float _PulseSpeed;
+            float _UnscaledTime;
+
             float4 _FillColourStart;
             float4 _FillColourEnd;
             float4 _EmptyColour;
             float4 _DeltaColour;
+            float4 _PulseColour;
 
             float InverseLerp(float a, float b, float v)
             {
@@ -93,9 +101,12 @@ Shader"Unlit/VelocityBarShader"
                 float4 barColour = lerp(_FillColourStart, _FillColourEnd, tBarColour);
                 float4 texColour = tex2D(_MainTex, i.uv);
                 //float barMask = _Velocity > i.uv.x * _MaxVelocity;
+    
+                float pulseStrength = saturate( InverseLerp(_PulseThreshold, 0, _Velocity) );
+                float pulse = (cos(_UnscaledTime * _PulseSpeed) * _PulseAmount + 1) * pulseStrength;
 
                 //return float4(barColour * reveal + _DeltaColour * deltaReveal, reveal);
-    return texColour * (barColour * reveal + _DeltaColour * deltaReveal * (1 - reveal) + _EmptyColour * (1 - reveal));
+                return texColour * (barColour * reveal + _DeltaColour * deltaReveal * (1 - reveal) + _EmptyColour * (1 - reveal) + _PulseColour * pulse * reveal);
 }
             ENDCG
         }

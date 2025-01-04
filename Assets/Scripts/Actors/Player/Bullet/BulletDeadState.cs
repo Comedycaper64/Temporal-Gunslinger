@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class BulletDeadState : State
 {
     public static int bulletNumber;
@@ -30,6 +32,7 @@ public class BulletDeadState : State
         if (dissolveController)
         {
             dissolveController.StartDissolve();
+            Debug.Log("Dissolve Start");
         }
 
         //stateMachine.ToggleInactive(true);

@@ -61,6 +61,7 @@ public class BulletMovement : RewindableMovement
     private GameObject redirectVFXPrefab;
     private CinemachineImpulseSource cinemachineImpulseSource;
     private RedirectManager redirectManager;
+
     public EventHandler<bool> OnLowVelocity;
     public static EventHandler<float> OnChangeDirection;
     public Action OnRedirect;
@@ -399,9 +400,9 @@ public class BulletMovement : RewindableMovement
         return timeToRevenant;
     }
 
-    public bool GetIsLowVelocity()
+    public float GetLowVelocity()
     {
-        return bLowVelocity;
+        return lowVelocityThreshhold;
     }
 
     public void UndoRedirect(
