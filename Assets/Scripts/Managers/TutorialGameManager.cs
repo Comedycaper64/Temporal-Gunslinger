@@ -107,6 +107,11 @@ public class TutorialGameManager : GameManager
         base.LevelLost();
     }
 
+    public void EndTutorial()
+    {
+        CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
+    }
+
     public override IEnumerator EndOfLevelWindDown()
     {
         yield return new WaitForSeconds(2f);

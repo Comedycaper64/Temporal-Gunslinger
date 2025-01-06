@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelSelectorUI : MonoBehaviour
 {
@@ -10,8 +8,8 @@ public class LevelSelectorUI : MonoBehaviour
     private bool selectorActive = false;
     private bool confirmation = false;
 
-    [SerializeField]
-    private int nextLevelBuildIndex;
+    // [SerializeField]
+    // private int nextLevelBuildIndex;
 
     [SerializeField]
     private RectTransform canvas;
@@ -34,8 +32,6 @@ public class LevelSelectorUI : MonoBehaviour
     [SerializeField]
     private AudioClip eraChangeSFX;
 
-    [SerializeField]
-    private CinematicSO endOfTutorialCinematic;
     private int activePreviewIndex;
 
     private void Update()
@@ -153,14 +149,21 @@ public class LevelSelectorUI : MonoBehaviour
         confirmation = false;
     }
 
+    public void LevelSelected()
+    {
+        //CinematicManager.Instance.PlayCinematic(endOfTutorialCinematic, LoadNextLevel);
+        GameManager.Instance.EndLevel(transform);
+    }
+
     public void EndTutorial()
     {
-        CinematicManager.Instance.PlayCinematic(endOfTutorialCinematic, LoadNextLevel);
+        TutorialGameManager tutorialGameManager = GameManager.Instance as TutorialGameManager;
+        tutorialGameManager.EndTutorial();
     }
 
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(nextLevelBuildIndex);
+        //SceneManager.LoadScene(nextLevelBuildIndex);
     }
 
     public void ToggleLevelSelector(bool toggle)

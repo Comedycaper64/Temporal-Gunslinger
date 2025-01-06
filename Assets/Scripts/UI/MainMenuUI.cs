@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuUI : MonoBehaviour
 {
+    private int loadBuildIndex = 0;
     private CanvasGroupFader currentActiveGroup;
 
     [SerializeField]
@@ -30,6 +31,9 @@ public class MainMenuUI : MonoBehaviour
 
     [SerializeField]
     private CanvasGroupFader optionsFader;
+
+    [SerializeField]
+    private CinematicSO levelLoadFade;
 
     private void Start()
     {
@@ -144,12 +148,19 @@ public class MainMenuUI : MonoBehaviour
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(SaveManager.GetLevelProgress());
+        loadBuildIndex = SaveManager.GetLevelProgress();
+        CinematicManager.Instance.PlayCinematic(levelLoadFade, LoadLevel);
     }
 
     public void LoadGame(int buildIndex)
     {
-        SceneManager.LoadScene(buildIndex);
+        loadBuildIndex = buildIndex;
+        CinematicManager.Instance.PlayCinematic(levelLoadFade, LoadLevel);
+    }
+
+    private void LoadLevel()
+    {
+        SceneManager.LoadSceneAsync(loadBuildIndex);
     }
 
     public void QuitGame()

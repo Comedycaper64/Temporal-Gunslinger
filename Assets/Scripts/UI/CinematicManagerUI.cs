@@ -1,4 +1,5 @@
 using System;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class CinematicManagerUI : MonoBehaviour
@@ -11,6 +12,9 @@ public class CinematicManagerUI : MonoBehaviour
 
     [SerializeField]
     private float fadeSpeed = 2f;
+
+    [SerializeField]
+    private MMF_Player loadingScreenPlayer;
     private CanvasGroup canvasGroup;
     private Action onFade;
 
@@ -67,6 +71,17 @@ public class CinematicManagerUI : MonoBehaviour
     private void ToggleFade(object sender, UIChangeSO uIChange)
     {
         fadeTarget = uIChange.fadeToBlackToggle;
+
+        if (uIChange.midLevelFade)
+        {
+            loadingScreenPlayer.gameObject.SetActive(false);
+        }
+        else
+        {
+            loadingScreenPlayer.gameObject.SetActive(true);
+            loadingScreenPlayer.PlayFeedbacks();
+        }
+
         if (uIChange.waitUntilFaded)
         {
             onFade = uIChange?.onFaded;

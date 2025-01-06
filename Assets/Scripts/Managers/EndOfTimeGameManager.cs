@@ -14,6 +14,11 @@ public class EndOfTimeGameManager : GameManager
 
     protected override void OnDisable() { }
 
+    public override void EndLevel(Transform lastEnemy)
+    {
+        CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
+    }
+
     private void ShowLevelSelect()
     {
         levelSelectUI.ToggleLevelSelector(true);

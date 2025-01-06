@@ -6,5 +6,6 @@ public class UIChangeSO : CinematicNode
 {
     public bool fadeToBlackToggle;
     public bool waitUntilFaded;
+    public bool midLevelFade = false;
     public Action onFaded;
 }
