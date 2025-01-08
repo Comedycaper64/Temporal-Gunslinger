@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool bIsPlayerActive = false;
     private bool bIsFocusing = false;
     private bool bIsFreeCam = false;
+    private bool bFreeCamSaveState = false;
 
     [SerializeField]
     private bool bCanFreeCam = true;
@@ -174,6 +175,7 @@ public class PlayerController : MonoBehaviour
     {
         bIsPlayerActive = toggle;
         bIsFocusing = false;
+        bFreeCamSaveState = false;
 
         if (bIsPlayerActive)
         {
@@ -219,12 +221,28 @@ public class PlayerController : MonoBehaviour
                 RedirectManager.Instance.ToggleRedirectUI(true);
             }
 
+            if (bIsFocusing)
+            {
+                OnPlayerStateChanged?.Invoke(this, 4);
+            }
+            else
+            {
+                OnPlayerStateChanged?.Invoke(this, 3);
+            }
+
             BulletVelocityUI.Instance.ToggleUIActive(true);
+
+            if (bFreeCamSaveState)
+            {
+                bFreeCamSaveState = false;
+                ToggleFreeCamMode(true);
+            }
         }
         else
         {
             if (bIsFreeCam)
             {
+                bFreeCamSaveState = true;
                 ToggleFreeCamMode(false);
             }
 
@@ -269,7 +287,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        OnPlayerStateChanged?.Invoke(this, 3);
+        //OnPlayerStateChanged?.Invoke(this, 3);
     }
 
     private void InputManager_OnFocus()

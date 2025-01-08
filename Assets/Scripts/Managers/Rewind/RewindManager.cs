@@ -160,7 +160,7 @@ public class RewindManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("Undo");
+                    //Debug.Log("Undo");
                     rewindableActions.Pop();
 
                     rewindable.Undo();

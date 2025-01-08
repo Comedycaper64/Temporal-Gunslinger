@@ -12,7 +12,7 @@ public class BulletDeadState : State
     {
         bullet = stateMachine.GetComponent<Bullet>();
         bulletStateMachine = stateMachine;
-        if (!stateMachine.conquestDagger && stateMachine.bCountAsAvailableBullet)
+        if (!stateMachine.spawnedBullet && stateMachine.bCountAsAvailableBullet)
         {
             bulletNumber++;
         }
@@ -32,7 +32,7 @@ public class BulletDeadState : State
         if (dissolveController)
         {
             dissolveController.StartDissolve();
-            Debug.Log("Dissolve Start");
+            //Debug.Log("Dissolve Start");
         }
 
         //stateMachine.ToggleInactive(true);

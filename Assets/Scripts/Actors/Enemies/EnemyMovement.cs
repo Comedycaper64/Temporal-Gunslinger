@@ -11,6 +11,9 @@ public class EnemyMovement : RewindableMovement
     [SerializeField]
     private Transform damagePoint;
 
+    [SerializeField]
+    private Sprite pocketwatchDangerSprite;
+
     private Transform movementTarget;
 
     public static Action OnEnemyMovementChange;
@@ -31,7 +34,7 @@ public class EnemyMovement : RewindableMovement
 
         float deathTime;
         WillKillRevenant(out deathTime);
-        DangerTracker.dangers.Add(this, deathTime);
+        DangerTracker.dangers.Add(this, new PocketwatchDanger(pocketwatchDangerSprite, deathTime));
         OnEnemyMovementChange?.Invoke();
 
         transform.LookAt(movementTarget.position); //+ revenantOffset);
@@ -43,6 +46,12 @@ public class EnemyMovement : RewindableMovement
         base.StopMovement();
         DangerTracker.dangers.Remove(this);
         OnEnemyMovementChange?.Invoke();
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        DangerTracker.dangers.Remove(this);
     }
 
     private void Update()

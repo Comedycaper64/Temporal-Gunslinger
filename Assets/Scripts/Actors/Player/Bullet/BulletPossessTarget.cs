@@ -65,6 +65,8 @@ public class BulletPossessTarget : MonoBehaviour, IHighlightable
 
     private void EmergencyRepossess()
     {
+        //Debug.Log("Available Possessables: " + GetPossessables().Count);
+
         if (GetPossessables().Count > 0)
         {
             OnEmergencyRepossess?.Invoke(this, GetPossessables()[0]);

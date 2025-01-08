@@ -12,8 +12,14 @@ public class FocusManager : MonoBehaviour
     private const float FOCUS_CAMERA_Y = 1.5f;
     private const float FOCUS_CAMERA_X = 120f;
     private float PLAYER_SENSITIVITY = 1f;
-    private const float NORMAL_FOV = 50f;
-    private const float FOCUS_FOV = 30f;
+    private float NORMAL_FOV = 50f;
+
+    [SerializeField]
+    private float normalFOVOverride = -1f;
+    private float FOCUS_FOV = 30f;
+
+    [SerializeField]
+    private float focusFOVOverride = -1f;
     private const float focusZoomSpeed = 1.5f;
 
     // private const float focusAlpha = 0.25f;
@@ -21,8 +27,8 @@ public class FocusManager : MonoBehaviour
 
     // private float alphaNonTarget = focusAlpha;
     // private float alphaTarget = 1f;
-    private float targetFOV = NORMAL_FOV;
-    private float nonTargetFOV = FOCUS_FOV;
+    private float targetFOV = 0f;
+    private float nonTargetFOV = 0f;
 
     [SerializeField]
     private bool bSpawnAimLine = true;
@@ -69,6 +75,20 @@ public class FocusManager : MonoBehaviour
         //     PlayerOptions.GetBulletSensitivity(),
         //     PlayerOptions.GetBulletYSensitivity()
         // );
+
+        if (normalFOVOverride > 0f)
+        {
+            NORMAL_FOV = normalFOVOverride;
+        }
+
+        if (focusFOVOverride > 0f)
+        {
+            FOCUS_FOV = focusFOVOverride;
+        }
+
+        targetFOV = NORMAL_FOV;
+        nonTargetFOV = FOCUS_FOV;
+
         bulletCamera.m_XAxis.m_MaxSpeed =
             NORMAL_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
         bulletCamera.m_YAxis.m_MaxSpeed =

@@ -3,7 +3,7 @@ using UnityEngine;
 public class BulletStateMachine : StateMachine
 {
     [SerializeField]
-    public bool conquestDagger;
+    public bool spawnedBullet;
 
     [SerializeField]
     public bool bCountAsAvailableBullet = true;

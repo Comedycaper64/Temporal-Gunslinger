@@ -17,10 +17,16 @@ public class DestroyWeakPoint : RewindableAction
     private DestroyWeakPoint(IReactable bossHealth, GameObject weakPoint)
     {
         this.bossHealth = bossHealth;
+
         weakPointCollider = weakPoint.GetComponent<Collider>();
         weakPointCollider.enabled = false;
+
         weakPointDissolve = weakPoint.GetComponent<DissolveController>();
-        weakPointDissolve.StartDissolve();
+        if (weakPointDissolve)
+        {
+            weakPointDissolve.StartDissolve();
+        }
+
         weakPointHighlight = weakPoint.GetComponent<FocusHighlight>();
         weakPointHighlight.ToggleHighlight(false);
         weakPointHighlight.enabled = false;
@@ -45,6 +51,9 @@ public class DestroyWeakPoint : RewindableAction
 
         weakPointCollider.enabled = true;
         weakPointHighlight.enabled = true;
-        weakPointDissolve.StopDissolve();
+        if (weakPointDissolve)
+        {
+            weakPointDissolve.StopDissolve();
+        }
     }
 }

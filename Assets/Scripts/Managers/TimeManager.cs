@@ -59,14 +59,19 @@ public class TimeManager
         }
 
         float timeScale = normalTimeScale;
+
+        Time.fixedDeltaTime = 0.02f;
         if (bTimeSlowed)
         {
             timeScale *= slowTimeScale;
+            Time.fixedDeltaTime *= slowTimeScale;
         }
         if (bTimeTurbo)
         {
             timeScale *= turboTimeScale;
+            //Time.fixedDeltaTime *= turboTimeScale;
         }
+
         Time.timeScale = timeScale;
     }
 

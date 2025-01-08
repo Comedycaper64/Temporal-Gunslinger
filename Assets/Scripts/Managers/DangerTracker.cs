@@ -2,11 +2,23 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public class PocketwatchDanger
+{
+    public PocketwatchDanger(Sprite deathIcon, float deathTime = -1)
+    {
+        this.deathTime = deathTime;
+        this.deathIcon = deathIcon;
+    }
+
+    public float deathTime;
+    public Sprite deathIcon;
+}
+
 public class DangerTracker : MonoBehaviour
 {
     private PocketwatchUI pocketwatchUI;
-    public static Dictionary<RewindableMovement, float> dangers =
-        new Dictionary<RewindableMovement, float>();
+    public static Dictionary<RewindableMovement, PocketwatchDanger> dangers =
+        new Dictionary<RewindableMovement, PocketwatchDanger>();
 
     private void Awake()
     {
@@ -15,57 +27,66 @@ public class DangerTracker : MonoBehaviour
 
     private void OnEnable()
     {
-        EnemyMovement.OnEnemyMovementChange += GetDeathTime;
+        EnemyMovement.OnEnemyMovementChange += SetDeathTimes;
         BulletMovement.OnChangeDirection += SetNewDeathTime;
-        pocketwatchUI.OnShowUI += GetDeathTime;
+        pocketwatchUI.OnShowUI += SetDeathTimes;
     }
 
     private void OnDisable()
     {
-        EnemyMovement.OnEnemyMovementChange -= GetDeathTime;
+        EnemyMovement.OnEnemyMovementChange -= SetDeathTimes;
         BulletMovement.OnChangeDirection -= SetNewDeathTime;
-        pocketwatchUI.OnShowUI -= GetDeathTime;
+        pocketwatchUI.OnShowUI -= SetDeathTimes;
     }
 
-    private void SetNewDeathTime(object sender, float newDeathTime)
+    private void SetNewDeathTime(object sender, PocketwatchDanger danger)
     {
         RewindableMovement movement = sender as RewindableMovement;
 
-        dangers[movement] = pocketwatchUI.GetCurrentPocketwatchTime() + newDeathTime;
+        dangers[movement] = new PocketwatchDanger(
+            danger.deathIcon,
+            pocketwatchUI.GetCurrentPocketwatchTime() + danger.deathTime
+        );
 
-        GetDeathTime();
+        //Debug.Log((sender as BulletMovement).gameObject.name + " " + newDeathTime);
+
+        SetDeathTimes();
     }
 
-    private void GetDeathTime()
+    private void SetDeathTimes()
     {
         //Get lowest death time
         //Set it in pocketweatch ui
 
-        float lowestDeathTime = 9999f;
+        //float lowestDeathTime = 9999f;
 
-        List<float> deathTimes = dangers.Values.ToList();
+        List<PocketwatchDanger> dangers = DangerTracker.dangers.Values.ToList();
 
-        foreach (float deathTime in deathTimes)
+        pocketwatchUI.ClearDeathTimes();
+
+        foreach (PocketwatchDanger danger in dangers)
         {
-            if (deathTime < 0f)
+            if (danger.deathTime < 0f)
             {
                 continue;
             }
 
-            if (deathTime < lowestDeathTime)
-            {
-                lowestDeathTime = deathTime;
-            }
+            // if (deathTime < lowestDeathTime)
+            // {
+            //     lowestDeathTime = deathTime;
+            // }
+
+            pocketwatchUI.SetDeathTime(danger.deathTime, danger.deathIcon);
         }
 
-        if (lowestDeathTime < 9999f)
-        {
-            //Debug.Log("Closest object time: " + lowestDeathTime);
-            pocketwatchUI.SetDeathTime(lowestDeathTime);
-        }
-        else
-        {
-            pocketwatchUI.SetDeathTime(-1f);
-        }
+        // if (lowestDeathTime < 9999f)
+        // {
+        //     //Debug.Log("Closest object time: " + lowestDeathTime);
+
+        // }
+        // else
+        // {
+        //     pocketwatchUI.SetDeathTime(-1f);
+        // }
     }
 }

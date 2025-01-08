@@ -32,6 +32,10 @@ public class EnemySpikedHuskDeadState : EnemyDeadState
         foreach (BulletStateMachine spike in enemyStateMachine.spikeProjectiles)
         {
             spike.SwitchToActive();
+
+            //Might break available bullet count but testing
+            //Should only be doing this if Spawned Bullet is true
+            BulletDeadState.bulletNumber++;
         }
     }
 
@@ -41,6 +45,7 @@ public class EnemySpikedHuskDeadState : EnemyDeadState
         {
             Bullet bullet = enemyStateMachine.spikeProjectiles[i].GetComponent<Bullet>();
             bullet.ResetBullet(enemyStateMachine.spikePositions[i]);
+            BulletDeadState.bulletNumber--;
         }
     }
 }

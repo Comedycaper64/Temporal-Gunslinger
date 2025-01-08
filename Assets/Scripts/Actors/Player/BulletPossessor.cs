@@ -130,8 +130,9 @@ public class BulletPossessor : MonoBehaviour
             freeCamBullet.transform.parent = null;
         }
 
-        freeCamBullet.transform.position = possessedBullet.GetCameraTransform().position;
-        freeCamBullet.transform.rotation = possessedBullet.GetCameraTransform().rotation;
+        //freeCamBullet.transform.position = possessedBullet.GetCameraTransform().position;
+        freeCamBullet.transform.position = possessedBullet.transform.position;
+        //freeCamBullet.transform.rotation = possessedBullet.GetCameraTransform().rotation;
 
         PossessBullet(freeCamBullet);
         freeCamBullet.GetComponent<BulletFreeCamMovement>().ToggleCamMovement(true);

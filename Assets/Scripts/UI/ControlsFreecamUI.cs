@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ControlsFreecamUI : MonoBehaviour
 {
+    private bool controlUIToggle = false;
     private bool uiActive = false;
 
     [SerializeField]
@@ -31,13 +32,18 @@ public class ControlsFreecamUI : MonoBehaviour
             freeCamControlUI.SetActive(false);
             freeCamStartUI.SetActive(false);
             uiActive = false;
+
+            if (uIMode > 0)
+            {
+                controlUIToggle = false;
+            }
         }
         else
         {
             if (!uiActive)
             {
                 uiActive = true;
-                freeCamStartUI.SetActive(true);
+                ToggleFreeCamUI(controlUIToggle);
             }
         }
     }
@@ -49,6 +55,13 @@ public class ControlsFreecamUI : MonoBehaviour
             return;
         }
 
+        controlUIToggle = toggle;
+
+        ToggleFreeCamUI(toggle);
+    }
+
+    private void ToggleFreeCamUI(bool toggle)
+    {
         if (toggle)
         {
             freeCamControlUI.SetActive(true);

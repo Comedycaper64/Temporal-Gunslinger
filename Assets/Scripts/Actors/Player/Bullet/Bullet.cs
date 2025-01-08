@@ -235,12 +235,12 @@ public class Bullet : MonoBehaviour
         //     Debug.Log("Bullet State Machine not found for " + gameObject.name);
         // }
 
-        ToggleBulletPossessed(false, Vector2.zero);
-
         if (!followWhenInactive && bBulletPossessed)
         {
             OnShuntOut?.Invoke();
         }
+
+        ToggleBulletPossessed(false, Vector2.zero);
 
         transform.parent = gunParent;
         transform.position = bulletPosition.position;

@@ -45,7 +45,7 @@ public class PustuleWall : MonoBehaviour, IReactable
         if (weakPointTracker <= 0)
         {
             wallCollider.enabled = false;
-            dissolveController.StartDissolve();
+            dissolveController.StartDissolve(10f);
         }
     }
 

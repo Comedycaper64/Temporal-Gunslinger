@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PocketwatchUI : RewindableMovement
 {
     private bool uiActive = false;
     private float currentPocketwatchTime = 0f;
+    private int deathMarkerIndex = 0;
 
     [SerializeField]
     private Transform pockewatchHand;
@@ -16,7 +18,7 @@ public class PocketwatchUI : RewindableMovement
     private Transform markerPlacerTip;
 
     [SerializeField]
-    private Transform deathMarker;
+    private Image[] deathMarkers;
 
     private CanvasGroupFader canvasGroupFader;
 
@@ -57,30 +59,58 @@ public class PocketwatchUI : RewindableMovement
         currentPocketwatchTime = 0f;
     }
 
-    public void SetDeathTime(float newDeathTime)
+    public void ClearDeathTimes()
+    {
+        deathMarkerIndex = 0;
+        foreach (Image marker in deathMarkers)
+        {
+            marker.sprite = null;
+            marker.gameObject.SetActive(false);
+        }
+    }
+
+    public void SetDeathTime(float newDeathTime, Sprite deathIcon)
     {
         if (!uiActive)
         {
             return;
         }
 
-        if (newDeathTime < 0f)
+        if (deathMarkerIndex >= deathMarkers.Length)
         {
-            deathMarker.gameObject.SetActive(false);
+            return;
         }
-        else
-        {
-            //Debug.Log("Death Time: " + newDeathTime)
-            //deathTime = currentPocketwatchTime + newDeathTime;
-            deathMarker.gameObject.SetActive(true);
-            markerPlacerHand.eulerAngles = new Vector3(
-                0,
-                0,
-                -Mathf.Abs(GetStartSpeed()) * newDeathTime
-            );
 
-            deathMarker.position = markerPlacerTip.position;
-        }
+        deathMarkers[deathMarkerIndex].sprite = deathIcon;
+        deathMarkers[deathMarkerIndex].gameObject.SetActive(true);
+
+        markerPlacerHand.eulerAngles = new Vector3(
+            0,
+            0,
+            -Mathf.Abs(GetStartSpeed()) * newDeathTime
+        );
+
+        deathMarkers[deathMarkerIndex].transform.position = markerPlacerTip.position;
+
+        deathMarkerIndex++;
+
+        // if (newDeathTime < 0f)
+        // {
+        //     deathMarker.gameObject.SetActive(false);
+        // }
+        // else
+        // {
+        //     //Debug.Log("Death Time: " + newDeathTime)
+        //     //deathTime = currentPocketwatchTime + newDeathTime;
+        //     deathMarker.gameObject.SetActive(true);
+        //     markerPlacerHand.eulerAngles = new Vector3(
+        //         0,
+        //         0,
+        //         -Mathf.Abs(GetStartSpeed()) * newDeathTime
+        //     );
+
+        //     deathMarker.position = markerPlacerTip.position;
+        // }
     }
 
     public float GetCurrentPocketwatchTime()

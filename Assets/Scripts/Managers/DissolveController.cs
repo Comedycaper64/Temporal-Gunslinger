@@ -7,6 +7,9 @@ public class DissolveController : RewindableMovement
     private float counter = 0;
     private float dissolveTarget = 1f;
 
+    // [SerializeField]
+    // private float dissolveTargetOverride = -1;
+
     [SerializeField]
     private SkinnedMeshRenderer[] skinnedMeshRenderers;
 
@@ -33,6 +36,11 @@ public class DissolveController : RewindableMovement
         // foreach (MeshRenderer meshRenderer in meshRenderers)
         // {
         //     materials.Add(meshRenderer.material);
+        // }
+
+        // if (dissolveTargetOverride > 0f)
+        // {
+        //     dissolveTarget = dissolveTargetOverride;
         // }
 
         GameManager.OnGameStateChange += GameManager_OnGameStateChange;

@@ -55,6 +55,9 @@ public class BulletMovement : RewindableMovement
     private AudioClip[] ricochetSFX;
 
     [SerializeField]
+    private Sprite pocketwatchDangerSprite;
+
+    [SerializeField]
     private GameObject redirectCoinPrefab;
 
     [SerializeField]
@@ -63,7 +66,7 @@ public class BulletMovement : RewindableMovement
     private RedirectManager redirectManager;
 
     public EventHandler<bool> OnLowVelocity;
-    public static EventHandler<float> OnChangeDirection;
+    public static EventHandler<PocketwatchDanger> OnChangeDirection;
     public Action OnRedirect;
     public Action OnRicochet;
 
@@ -82,7 +85,7 @@ public class BulletMovement : RewindableMovement
     protected override void OnEnable()
     {
         base.OnEnable();
-        DangerTracker.dangers.Add(this, 9999f);
+        DangerTracker.dangers.Add(this, new PocketwatchDanger(pocketwatchDangerSprite, 9999f));
     }
 
     protected override void OnDisable()
@@ -204,7 +207,7 @@ public class BulletMovement : RewindableMovement
 
         float deathTime;
         WillKillRevenant(out deathTime);
-        OnChangeDirection?.Invoke(this, deathTime);
+        OnChangeDirection?.Invoke(this, new PocketwatchDanger(pocketwatchDangerSprite, deathTime));
     }
 
     public Vector3 GetRevenantDirection()
@@ -356,7 +359,7 @@ public class BulletMovement : RewindableMovement
             WillKillRevenant(out deathTime);
         }
 
-        OnChangeDirection?.Invoke(this, deathTime);
+        OnChangeDirection?.Invoke(this, new PocketwatchDanger(pocketwatchDangerSprite, deathTime));
     }
 
     private bool WillKillRevenant(out float deathTime)
