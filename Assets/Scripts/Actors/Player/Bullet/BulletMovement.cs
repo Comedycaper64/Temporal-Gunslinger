@@ -346,6 +346,15 @@ public class BulletMovement : RewindableMovement
     public void SetIsDead(bool isDead)
     {
         bIsDead = isDead;
+
+        float deathTime = -1f;
+
+        if (!isDead)
+        {
+            WillKillRevenant(out deathTime);
+        }
+
+        OnChangeDirection?.Invoke(this, new PocketwatchDanger(pocketwatchDangerSprite, deathTime));
     }
 
     public override void ToggleMovement(bool toggle)
@@ -374,7 +383,7 @@ public class BulletMovement : RewindableMovement
             )
         )
         {
-            if (hit.transform.CompareTag("Player"))
+            if (hit.transform.CompareTag("Revenant"))
             {
                 deathTime = GetTimeToRevenant();
                 return true;

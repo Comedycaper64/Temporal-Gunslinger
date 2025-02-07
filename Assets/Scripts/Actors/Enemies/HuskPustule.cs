@@ -28,7 +28,7 @@ public class HuskPustule : MonoBehaviour
     private void BurstPustule(object sender, EventArgs e)
     {
         homingVirus.SwitchToActive();
-        AudioManager.PlaySFX(virusSpawnSFX, 1f, 2, transform.position, false);
+        AudioManager.PlaySFX(virusSpawnSFX, 0.5f, 2, transform.position, false);
         pustuleBurstVFX.PlayEffect();
     }
 }

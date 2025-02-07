@@ -48,7 +48,7 @@ public class DangerTracker : MonoBehaviour
             pocketwatchUI.GetCurrentPocketwatchTime() + danger.deathTime
         );
 
-        //Debug.Log((sender as BulletMovement).gameObject.name + " " + newDeathTime);
+        //Debug.Log((sender as BulletMovement).gameObject.name + " " + danger.deathTime);
 
         SetDeathTimes();
     }

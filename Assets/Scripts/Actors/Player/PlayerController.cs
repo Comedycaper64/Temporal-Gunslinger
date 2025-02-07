@@ -219,18 +219,18 @@ public class PlayerController : MonoBehaviour
             if (bCanRedirect)
             {
                 RedirectManager.Instance.ToggleRedirectUI(true);
-            }
 
-            if (bIsFocusing)
-            {
-                OnPlayerStateChanged?.Invoke(this, 4);
-            }
-            else
-            {
-                OnPlayerStateChanged?.Invoke(this, 3);
-            }
+                if (bIsFocusing)
+                {
+                    OnPlayerStateChanged?.Invoke(this, 4);
+                }
+                else
+                {
+                    OnPlayerStateChanged?.Invoke(this, 3);
+                }
 
-            BulletVelocityUI.Instance.ToggleUIActive(true);
+                BulletVelocityUI.Instance.ToggleUIActive(true);
+            }
 
             if (bFreeCamSaveState)
             {
