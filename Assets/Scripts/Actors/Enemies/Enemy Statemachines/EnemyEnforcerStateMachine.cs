@@ -18,7 +18,7 @@ public class EnemyEnforcerStateMachine : EnemyRangedStateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyRangedIdleState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyEnforcerActiveState(this)); // change to enforcer state
+        stateDictionary.Add(StateEnum.active, new EnemyEnforcerActiveState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 

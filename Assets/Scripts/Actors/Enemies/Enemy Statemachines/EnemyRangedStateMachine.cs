@@ -26,7 +26,7 @@ public class EnemyRangedStateMachine : StateMachine
     [SerializeField]
     protected VFXPlayback shootVFX;
 
-    private void Start()
+    public virtual void Start()
     {
         SwitchState(stateDictionary[StateEnum.inactive]);
     }
@@ -80,9 +80,14 @@ public class EnemyRangedStateMachine : StateMachine
 
     public virtual void ResetProjectile()
     {
-        Bullet bullet = projectile.GetComponent<Bullet>();
-        bullet.ResetBullet(projectileRestPoint);
         SetRunAnimationExitTime(0f);
+
+        if (projectile)
+        {
+            Bullet bullet = projectile.GetComponent<Bullet>();
+            bullet.ResetBullet(projectileRestPoint);
+        }
+
         //Debug.Log("Animation Time Reset");
     }
 

@@ -9,7 +9,11 @@ public class EnemyRangedIdleState : State
         : base(stateMachine)
     {
         animator = stateMachine.stateMachineAnimator;
-        enemyRangedStateMachine = stateMachine as EnemyRangedStateMachine;
+
+        if (stateMachine.GetType() == typeof(EnemyRangedStateMachine))
+        {
+            enemyRangedStateMachine = stateMachine as EnemyRangedStateMachine;
+        }
     }
 
     public override void Enter()
@@ -19,8 +23,11 @@ public class EnemyRangedIdleState : State
             animator.SetTrigger("activate");
         }
 
-        enemyRangedStateMachine.ResetProjectile();
-        enemyRangedStateMachine.SetStateTimerSave(0f);
+        if (enemyRangedStateMachine)
+        {
+            enemyRangedStateMachine.ResetProjectile();
+            enemyRangedStateMachine.SetStateTimerSave(0f);
+        }
     }
 
     public override void Exit() { }

@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class BulletLockOn : MonoBehaviour
 {
+    [SerializeField]
+    private bool persistentLockOn = true;
+
+    [SerializeField]
     private float rotationSpeed = 5f;
     private float currentLockOnTotalRotation = 0f;
     private Vector3 initialDirection;
@@ -79,6 +83,8 @@ public class BulletLockOn : MonoBehaviour
 
         float distanceRotated = (newDirection - currentDirection).magnitude;
 
+        //Debug.Log(distanceRotated);
+
         // Debug.Log(
         //     "New Direction: "
         //         + newDirection
@@ -91,6 +97,16 @@ public class BulletLockOn : MonoBehaviour
         currentLockOnTotalRotation += distanceRotated * rewindModifier;
 
         //Debug.Log("Current LockOn Rotation: " + currentLockOnTotalRotation);
+
+        if (
+            !persistentLockOn
+            && !bulletMovement.IsBulletReversing()
+            && ((targetDirection - currentDirection).magnitude <= 0.01f)
+        )
+        {
+            DisableLockOn();
+            return;
+        }
 
         if (currentLockOnTotalRotation > 0f)
         {
@@ -186,9 +202,10 @@ public class BulletLockOn : MonoBehaviour
         }
 
         bulletTarget = newTarget;
-
+        //Debug.Log("Setting target");
         if (bulletTarget != null)
         {
+            //Debug.Log("Has target");
             bulletTarget.OnTargetDestroyed += DisableLockOn;
             currentLockOnTotalRotation = 0f;
             initialDirection = bulletMovement.GetFlightDirection();
@@ -201,6 +218,11 @@ public class BulletLockOn : MonoBehaviour
                 );
             }
         }
+    }
+
+    public void LockOnOverride(LockOnTarget target)
+    {
+        SetTarget(target, false);
     }
 
     public void UndoLockOn(Vector3 initialPosition, Vector3 initialDirection)
