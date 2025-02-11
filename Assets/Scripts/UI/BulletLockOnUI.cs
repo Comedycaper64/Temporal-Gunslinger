@@ -1,3 +1,4 @@
+using System;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine;
@@ -6,7 +7,9 @@ public class BulletLockOnUI : MonoBehaviour
 {
     private bool uiActive = false;
     private bool lockingOn = false;
+    private bool charging = false;
     private float tweenTimer = 0f;
+    private float chargeTweenTimer = 0f;
     private LockOnTarget currentTarget;
     private BulletPossessTarget raycastOrigin;
 
@@ -17,6 +20,9 @@ public class BulletLockOnUI : MonoBehaviour
     private CanvasGroupFader lockOnUI;
 
     [SerializeField]
+    private CanvasGroupFader chargeUI;
+
+    [SerializeField]
     private GameObject lockOnIcon;
 
     [SerializeField]
@@ -25,6 +31,9 @@ public class BulletLockOnUI : MonoBehaviour
     [SerializeField]
     private MMF_Player lockOnFeedback;
 
+    [SerializeField]
+    private MMF_Player chargeFeedback;
+
     private void Awake()
     {
         lockOnUI.SetCanvasGroupAlpha(0f);
@@ -32,6 +41,7 @@ public class BulletLockOnUI : MonoBehaviour
         BulletLockOn.OnLockOnUI += ToggleLockingOn;
         FocusManager.OnFocusToggle += ToggleUI;
         BulletPossessor.OnNewBulletPossessed += SetNewRaycastOrigin;
+        BulletPossessor.OnBulletCharging += ToggleCharging;
         // GameManager.OnGameStateChange += ToggleUI;
         // RewindManager.OnRewindToStart += TurnOffUI;
     }
@@ -41,6 +51,7 @@ public class BulletLockOnUI : MonoBehaviour
         BulletLockOn.OnLockOnUI -= ToggleLockingOn;
         FocusManager.OnFocusToggle -= ToggleUI;
         BulletPossessor.OnNewBulletPossessed -= SetNewRaycastOrigin;
+        BulletPossessor.OnBulletCharging -= ToggleCharging;
         // GameManager.OnGameStateChange -= ToggleUI;
         // RewindManager.OnRewindToStart -= TurnOffUI;
     }
@@ -50,6 +61,11 @@ public class BulletLockOnUI : MonoBehaviour
         if (lockingOn)
         {
             LockOnTarget();
+
+            if (charging)
+            {
+                ChargingLockOn();
+            }
         }
         else if (uiActive)
         {
@@ -89,6 +105,39 @@ public class BulletLockOnUI : MonoBehaviour
             if (lockOnUI.GetCanvasGroupAlpha() >= 1f)
             {
                 lockOnFeedback.PlayFeedbacks();
+            }
+        }
+    }
+
+    private void ChargingLockOn()
+    {
+        if (!currentTarget || !currentTarget.GetTarget())
+        {
+            return;
+        }
+
+        if (chargeUI.GetCanvasGroupAlpha() < 1f)
+        {
+            float lerp = MMTween.Tween(
+                chargeTweenTimer,
+                0f,
+                1.5f,
+                0f,
+                1f,
+                MMTween.MMTweenCurve.EaseInExponential
+            );
+
+            float lerpScale = lockOnScaleCurve.Evaluate(lerp);
+
+            chargeUI.transform.localScale = new Vector3(lerpScale, lerpScale, lerpScale);
+
+            chargeUI.SetCanvasGroupAlpha(lerp);
+
+            chargeTweenTimer += Time.unscaledDeltaTime;
+
+            if (chargeUI.GetCanvasGroupAlpha() >= 1f)
+            {
+                chargeFeedback.PlayFeedbacks();
             }
         }
     }
@@ -149,6 +198,7 @@ public class BulletLockOnUI : MonoBehaviour
         if (!toggle)
         {
             lockOnUI.SetCanvasGroupAlpha(0f);
+            chargeUI.SetCanvasGroupAlpha(0f);
             //lockOnUI.ToggleFade(false);
         }
     }
@@ -161,6 +211,17 @@ public class BulletLockOnUI : MonoBehaviour
         if (!lockOnFeedback.IsPlaying)
         {
             lockOnIcon.transform.localScale = Vector3.one;
+        }
+    }
+
+    private void ToggleCharging(object sender, bool toggle)
+    {
+        chargeTweenTimer = 0f;
+        charging = toggle;
+
+        if (!chargeFeedback.IsPlaying)
+        {
+            chargeUI.transform.localScale = Vector3.one;
         }
     }
 }

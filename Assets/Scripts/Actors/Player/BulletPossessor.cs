@@ -6,11 +6,15 @@ public class BulletPossessor : MonoBehaviour
 {
     private BulletPossessTarget possessedBullet;
     private BulletPossessTarget centreOfScreenPossessable;
+    private PlayerPestilenceAbility pestilenceAbility;
     private bool bIsFocusing;
     private bool bLockOnStarted = false;
     private bool bLockedOn = false;
+    private bool bCharged = false;
+    private bool bPestilenceLockOn = false;
     private float lockOnTimer = 0f;
     private float lockOnTime = 1f;
+    private float chargeTime = 1.5f;
 
     [SerializeField]
     private BulletPossessTarget freeCamBullet;
@@ -18,9 +22,12 @@ public class BulletPossessor : MonoBehaviour
     public static EventHandler<BulletPossessTarget> OnNewCentralPossessable;
     public static EventHandler<BulletPossessTarget> OnNewBulletPossessed;
 
+    public static EventHandler<bool> OnBulletCharging;
+
     private void OnEnable()
     {
         BulletPossessTarget.OnEmergencyRepossess += EmergencyPossess;
+        pestilenceAbility = GetComponent<PlayerPestilenceAbility>();
     }
 
     private void OnDisable()
@@ -37,7 +44,7 @@ public class BulletPossessor : MonoBehaviour
 
         FindCentreOfScreenPossessable();
 
-        if (bLockOnStarted)
+        if (bLockOnStarted || bPestilenceLockOn)
         {
             lockOnTimer += Time.unscaledDeltaTime;
 
@@ -45,6 +52,12 @@ public class BulletPossessor : MonoBehaviour
             {
                 bLockOnStarted = false;
                 bLockedOn = true;
+            }
+
+            if (lockOnTimer > chargeTime)
+            {
+                bPestilenceLockOn = false;
+                bCharged = true;
             }
         }
     }
@@ -200,8 +213,20 @@ public class BulletPossessor : MonoBehaviour
         {
             return;
         }
+
         bLockOnStarted = true;
         lockOnTimer = 0f;
+        bPestilenceLockOn = false;
+
+        if (
+            pestilenceAbility
+            && possessedBullet.GetComponent<BulletBooster>()
+            && RedirectManager.Instance.CanBoost()
+        )
+        {
+            bPestilenceLockOn = true;
+            OnBulletCharging?.Invoke(this, true);
+        }
 
         possessedBullet.ToggleLockOn(true);
     }
@@ -214,8 +239,16 @@ public class BulletPossessor : MonoBehaviour
         }
 
         bLockOnStarted = false;
+        OnBulletCharging?.Invoke(this, false);
 
-        if (bLockedOn)
+        if (bCharged)
+        {
+            bCharged = false;
+            bLockedOn = false;
+            possessedBullet.LockOnBullet();
+            possessedBullet.GetComponent<BulletBooster>().CrystalBoost();
+        }
+        else if (bLockedOn)
         {
             bLockedOn = false;
             possessedBullet.LockOnBullet();

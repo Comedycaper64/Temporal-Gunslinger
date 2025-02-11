@@ -58,6 +58,11 @@ public class RedirectManager : MonoBehaviour
         return redirects > 0;
     }
 
+    public bool CanBoost()
+    {
+        return redirects > 1;
+    }
+
     public void SetRedirects(int newRedirects)
     {
         redirects = newRedirects;
