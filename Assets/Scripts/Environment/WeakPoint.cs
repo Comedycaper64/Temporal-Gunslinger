@@ -8,7 +8,7 @@ public class WeakPoint : MonoBehaviour, IDamageable
     public event EventHandler OnHit;
     public event EventHandler OnCrush;
 
-    public void ProjectileHit(out float velocityConservation)
+    public void ProjectileHit(out float velocityConservation, float bulletSpeed = 0f)
     {
         OnHit?.Invoke(this, null);
 

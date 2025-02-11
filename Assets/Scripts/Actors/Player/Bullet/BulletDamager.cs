@@ -95,7 +95,7 @@ public class BulletDamager : MonoBehaviour
             //Debug.Log("Hit: " + damageable);
             impulseSource.GenerateImpulse();
 
-            damageable.ProjectileHit(out float velocityConservation);
+            damageable.ProjectileHit(out float velocityConservation, bulletMovement.GetVelocity());
 
             if (bFragileBullet)
             {

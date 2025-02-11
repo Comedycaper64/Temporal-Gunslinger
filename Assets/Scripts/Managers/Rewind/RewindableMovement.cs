@@ -10,7 +10,7 @@ public abstract class RewindableMovement : MonoBehaviour
     private float speed = 0f;
     private static float timeScale = 1f;
 
-    //private const float timeScaleLowerLimit = 0.0001f;
+    private const float timeScaleLowerLimit = 0.002f;
     public static HashSet<RewindableMovement> Instances = new HashSet<RewindableMovement>();
 
     public virtual void BeginRewind()
@@ -87,7 +87,8 @@ public abstract class RewindableMovement : MonoBehaviour
 
     public static void UpdateMovementTimescale(float newTimeScale)
     {
-        timeScale = Mathf.Clamp01(newTimeScale);
+        //timeScale = Mathf.Clamp01(newTimeScale);
+        timeScale = Mathf.Clamp(newTimeScale, timeScaleLowerLimit, 1f);
     }
 
     public static float GetTimescale()
