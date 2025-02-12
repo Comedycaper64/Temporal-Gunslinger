@@ -340,6 +340,11 @@ public class DialogueManager : MonoBehaviour
 
     private void TryPlayVoiceClip()
     {
+        if (dialogueAudioSource.isPlaying)
+        {
+            dialogueAudioSource.Stop();
+        }
+
         if (currentVoiceClips.TryDequeue(out AudioClip voiceClip) && (voiceClip != null))
         {
             dialogueAudioSource.clip = voiceClip;

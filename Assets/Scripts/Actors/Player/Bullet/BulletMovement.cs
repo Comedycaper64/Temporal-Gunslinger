@@ -69,6 +69,7 @@ public class BulletMovement : RewindableMovement
     public static EventHandler<PocketwatchDanger> OnChangeDirection;
     public Action OnRedirect;
     public Action OnRicochet;
+    public Action OnSlowed;
 
     private void Start()
     {
@@ -301,6 +302,7 @@ public class BulletMovement : RewindableMovement
     {
         float speed = GetUnscaledSpeed();
         SetSpeed(speed *= velocityMultiplier);
+        OnSlowed?.Invoke();
     }
 
     public void LoseVelocity()
