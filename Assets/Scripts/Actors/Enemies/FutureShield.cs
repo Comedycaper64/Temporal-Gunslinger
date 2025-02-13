@@ -1,9 +1,10 @@
-using System;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class FutureShield : MonoBehaviour, IReactable
 {
+    [SerializeField]
+    private DissolveController dissolveController;
+
     [SerializeField]
     private float shieldBreakThreshold = 500f;
 
@@ -27,6 +28,7 @@ public class FutureShield : MonoBehaviour, IReactable
     {
         breakablePoint.gameObject.SetActive(false);
         shieldCollider.gameObject.SetActive(false);
+        dissolveController.StartDissolve();
 
         StartReaction.ReactionStarted(this);
     }
@@ -43,5 +45,6 @@ public class FutureShield : MonoBehaviour, IReactable
     {
         breakablePoint.gameObject.SetActive(true);
         shieldCollider.gameObject.SetActive(true);
+        dissolveController.StopDissolve();
     }
 }
