@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 {
     public static bool bLevelActive;
 
+    [SerializeField]
+    private bool bPlayIntroCinematicOnStart = true;
+
     public static GameManager Instance { get; private set; }
     public static EventHandler<StateEnum> OnGameStateChange;
 
@@ -60,7 +63,10 @@ public class GameManager : MonoBehaviour
 
         SaveManager.SetLevelProgress(SceneManager.GetActiveScene().buildIndex);
 
-        CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
+        if (bPlayIntroCinematicOnStart)
+        {
+            CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
+        }
     }
 
     protected virtual void OnDisable()
@@ -162,6 +168,11 @@ public class GameManager : MonoBehaviour
     public bool IsLevelActive()
     {
         return bLevelActive;
+    }
+
+    public void PlayIntroCinematic()
+    {
+        CinematicManager.Instance.PlayCinematic(levelIntroCinematic, SetupLevel);
     }
 
     public static Transform GetRevenant()

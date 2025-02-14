@@ -59,6 +59,7 @@ public class FocusManager : MonoBehaviour
     [SerializeField]
     private GameObject transparentModel;
 
+    [SerializeField]
     private AimLine focusAimLine;
 
     [SerializeField]
@@ -177,11 +178,12 @@ public class FocusManager : MonoBehaviour
             colliderRadius = 0.025f;
         }
 
-        focusAimLine = AimLineManager.Instance.CreateAimLine(
-            bulletModelTransform,
-            bulletModelTransform.forward,
-            colliderRadius
-        );
+        // focusAimLine = AimLineManager.Instance.CreateAimLine(
+        //     bulletModelTransform,
+        //     bulletModelTransform.forward,
+        //     colliderRadius
+        // );
+        focusAimLine.SetupLine(bulletModelTransform, bulletModelTransform.forward, colliderRadius);
         focusAimLine.ToggleLine(false);
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class AudioManager : MonoBehaviour
     // [SerializeField]
     // private float MUSIC_VOLUME = 1f;
     // private const float SFX_VOLUME = 1f;
-    private const float SLOW_PITCH = 0.4f;
+    //private const float SLOW_PITCH = 0.4f;
     private const float MIN_PITCH_VARIATION = 0.9f;
     private const float MAX_PITCH_VARIATION = 1.1f;
     private const float FADE_SPEED = 0.1f;
@@ -19,6 +20,10 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField]
     private AudioSource musicAudioSource;
+
+    [SerializeField]
+    private AudioMixerGroup mixSetter;
+    private static AudioMixerGroup slowdownMixer;
 
     [SerializeField]
     private bool fadeInAtStart;
@@ -47,6 +52,8 @@ public class AudioManager : MonoBehaviour
     {
         OptionsManager.OnMasterVolumeUpdated += UpdateMasterVolume;
         OptionsManager.OnMusicVolumeUpdated += UpdateMusicVolume;
+
+        slowdownMixer = mixSetter;
     }
 
     private void OnDisable()
@@ -113,7 +120,8 @@ public class AudioManager : MonoBehaviour
         AudioClip clip,
         Vector3 position,
         float volume,
-        float pitch
+        float pitch,
+        bool useSlowdownMixer = false
     )
     {
         var tempGameObject = new GameObject("CustomsOneShotAudio");
@@ -122,6 +130,12 @@ public class AudioManager : MonoBehaviour
         tempAudioSource.clip = clip;
         tempAudioSource.volume = volume;
         tempAudioSource.pitch = pitch;
+
+        if (useSlowdownMixer)
+        {
+            tempAudioSource.outputAudioMixerGroup = slowdownMixer;
+        }
+
         tempAudioSource.Play();
         Destroy(tempGameObject, clip.length);
 
@@ -155,13 +169,14 @@ public class AudioManager : MonoBehaviour
             pitchVariance = Random.Range(MIN_PITCH_VARIATION, MAX_PITCH_VARIATION);
         }
 
-        if (GameManager.bLevelActive && useSlowdownSettings)
+        if (RewindManager.bTimerActive && useSlowdownSettings)
         {
             return PlaySFXClip(
                 clip,
                 originPosition,
                 volume * PlayerOptions.GetMasterVolume() * PlayerOptions.GetSFXVolume(),
-                enumToPitch[(PitchEnum)pitchEnum] * SLOW_PITCH * pitchVariance
+                enumToPitch[(PitchEnum)pitchEnum] * pitchVariance,
+                true
             );
         }
         else

@@ -5,6 +5,7 @@ using UnityEngine;
 public class RewindManager : MonoBehaviour
 {
     public static bool bRewinding;
+    public static bool bTimerActive;
 
     private double rewindTimer = 0f;
 
@@ -13,7 +14,7 @@ public class RewindManager : MonoBehaviour
     private const float RESET_TIME = 1f;
     private bool bCanReset = true;
     private bool bCanRewind = true;
-    private bool bTimerActive = false;
+
     private bool bRewindActive = false;
     private bool bTurboActive = false;
     private Stack<RewindableAction> rewindableActions = new Stack<RewindableAction>();
@@ -37,6 +38,7 @@ public class RewindManager : MonoBehaviour
     private void Start()
     {
         bRewinding = false;
+        bTimerActive = false;
         input = InputManager.Instance;
         rewindableMovements = RewindableMovement.Instances;
         RewindableMovement.UpdateMovementTimescale(1f);
@@ -275,16 +277,6 @@ public class RewindManager : MonoBehaviour
         rewindTimer = 0f;
         //timerAugment = 1f;
         RewindableMovement.UpdateMovementTimescale(1f);
-    }
-
-    public bool GetRewindActive()
-    {
-        return bRewindActive;
-    }
-
-    public bool GetTimerActive()
-    {
-        return bTimerActive;
     }
 
     public void StartTimer()

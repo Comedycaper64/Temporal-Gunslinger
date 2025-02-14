@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AimLine : MonoBehaviour
@@ -6,6 +7,8 @@ public class AimLine : MonoBehaviour
     private float sphereCastRadius = 0.1f;
     private float hitVisualHoverDistance = 0.01f;
     private bool bShowLine = false;
+
+    //private bool bShowFocusLine = false;
     private Transform lineOrigin;
     private Vector3 lineDirection;
     private Transform currentTarget;
@@ -39,6 +42,16 @@ public class AimLine : MonoBehaviour
         ToggleHitVisualVisibility(false);
     }
 
+    // private void OnEnable()
+    // {
+    //     FocusManager.OnFocusToggle += ToggleFocusLine;
+    // }
+
+    // private void OnDisable()
+    // {
+    //     FocusManager.OnFocusToggle -= ToggleFocusLine;
+    // }
+
     public void SetupLine(Transform lineOrigin, Vector3 lineDirection, float sphereCastRadius)
     {
         this.lineOrigin = lineOrigin;
@@ -53,11 +66,24 @@ public class AimLine : MonoBehaviour
             return;
         }
 
+        // if (bShowFocusLine)
+        // {
+        //     DrawFocusLine();
+        // }
+        // else
+        // {
         DrawLine();
+        //}
     }
 
     private void DrawLine()
     {
+        // Vector3 originPosition = lineOrigin.position;
+        // Vector3[] positionArray = new Vector3[2] { originPosition, lineDirection * lineRange };
+
+        // ToggleHitVisualVisibility(false);
+        // lineRenderer.SetPositions(positionArray);
+
         Vector3 originPosition = lineOrigin.position;
         RaycastHit hit;
         Vector3[] positionArray = new Vector3[2] { originPosition, Vector3.zero };
@@ -119,6 +145,14 @@ public class AimLine : MonoBehaviour
         highlightLineRenderer.enabled = toggle;
         ToggleHitVisualVisibility(false);
     }
+
+    // private void ToggleFocusLine(object sender, bool toggle)
+    // {
+    //     if (bShowLine)
+    //     {
+    //         bShowFocusLine = toggle;
+    //     }
+    // }
 
     public void UpdateLineDirection(Vector3 direction)
     {
