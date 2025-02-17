@@ -28,6 +28,7 @@ public class DangerTracker : MonoBehaviour
     private void OnEnable()
     {
         EnemyMovement.OnEnemyMovementChange += SetDeathTimes;
+        TimedDanger.OnTimedDangerChange += SetDeathTimes;
         BulletMovement.OnChangeDirection += SetNewDeathTime;
         pocketwatchUI.OnShowUI += SetDeathTimes;
     }
@@ -35,6 +36,7 @@ public class DangerTracker : MonoBehaviour
     private void OnDisable()
     {
         EnemyMovement.OnEnemyMovementChange -= SetDeathTimes;
+        TimedDanger.OnTimedDangerChange -= SetDeathTimes;
         BulletMovement.OnChangeDirection -= SetNewDeathTime;
         pocketwatchUI.OnShowUI -= SetDeathTimes;
     }

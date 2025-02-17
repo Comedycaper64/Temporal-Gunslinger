@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletBooster : MonoBehaviour, IReactable
@@ -45,8 +44,11 @@ public class BulletBooster : MonoBehaviour, IReactable
 
     private void RemoveBoostEffect()
     {
-        boostEffect.SetActive(false);
-        StartReaction.ReactionStarted(this);
+        if (boostEffect.activeInHierarchy)
+        {
+            boostEffect.SetActive(false);
+            StartReaction.ReactionStarted(this);
+        }
     }
 
     public void UndoBoost(float initialSpeed, float initialVelocityLoss)

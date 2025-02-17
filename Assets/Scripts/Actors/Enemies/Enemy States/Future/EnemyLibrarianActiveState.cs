@@ -4,6 +4,7 @@ public class EnemyLibrarianActiveState : State
 {
     private EnemyLibrarianStateMachine librarianStateMachine;
     private RewindState rewindState;
+    private Material sigilMaterial;
     private float timer;
     private float shootTime;
     private float animationTimeNormalised = 0f;
@@ -17,6 +18,8 @@ public class EnemyLibrarianActiveState : State
         shootTime = librarianStateMachine.GetShootTimer();
         rewindState = librarianStateMachine.GetComponent<RewindState>();
         ActiveAnimHash = Animator.StringToHash(stateMachine.GetActiveAnimationName());
+        sigilMaterial = librarianStateMachine.GetSigil();
+        sigilMaterial.SetFloat("_Reveal", 0f);
     }
 
     public override void Enter()
@@ -24,6 +27,7 @@ public class EnemyLibrarianActiveState : State
         timer = librarianStateMachine.GetStateTimerSave();
         rewindState.ToggleMovement(true);
         stateMachine.stateMachineAnimator.SetBool("shot", true);
+        librarianStateMachine.ToggleAttack(true);
 
         if (stateMachine.GetActiveAnimationExitTime() >= 0.01f)
         {
@@ -47,6 +51,9 @@ public class EnemyLibrarianActiveState : State
             .GetCurrentAnimatorStateInfo(0)
             .normalizedTime;
 
+        float sigilReveal = Mathf.InverseLerp(0f, shootTime, timer);
+        sigilMaterial.SetFloat("_Reveal", sigilReveal);
+
         if (!projectileFired && timer >= shootTime)
         {
             projectileFired = true;
@@ -67,5 +74,6 @@ public class EnemyLibrarianActiveState : State
         stateMachine.stateMachineAnimator.SetBool("shot", false);
         stateMachine.SetRunAnimationExitTime(animationTimeNormalised);
         librarianStateMachine.SetStateTimerSave(timer);
+        librarianStateMachine.ToggleAttack(false);
     }
 }

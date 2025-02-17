@@ -1,10 +1,15 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class EnemyLibrarianStateMachine : EnemyRangedStateMachine
+public class EnemyLibrarianStateMachine : EnemyRangedStateMachine, ISetAttacker
 {
     [SerializeField]
     public GameObject shotArrow;
+
+    [SerializeField]
+    private Renderer sigilRenderer;
+
+    public event EventHandler<bool> OnAttackToggled;
 
     protected override void SetupDictionary()
     {
@@ -20,5 +25,15 @@ public class EnemyLibrarianStateMachine : EnemyRangedStateMachine
         {
             collider.SetActive(!toggle);
         }
+    }
+
+    public void ToggleAttack(bool toggle)
+    {
+        OnAttackToggled?.Invoke(this, toggle);
+    }
+
+    public Material GetSigil()
+    {
+        return sigilRenderer.material;
     }
 }

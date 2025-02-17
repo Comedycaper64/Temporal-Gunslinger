@@ -217,6 +217,8 @@ public class BulletPossessor : MonoBehaviour
         bLockOnStarted = true;
         lockOnTimer = 0f;
         bPestilenceLockOn = false;
+        bCharged = false;
+        bLockedOn = false;
 
         if (
             pestilenceAbility
@@ -239,6 +241,7 @@ public class BulletPossessor : MonoBehaviour
         }
 
         bLockOnStarted = false;
+        bPestilenceLockOn = false;
         OnBulletCharging?.Invoke(this, false);
 
         if (bCharged)
