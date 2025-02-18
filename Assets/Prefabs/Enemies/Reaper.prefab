@@ -46,7 +46,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 10c94af55a6af044ca59e2996f3e46fe, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.15
-  m_Pitch: 1
+  m_Pitch: 0.5
   Loop: 1
   Mute: 0
   Spatialize: 0
@@ -141,6 +141,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f814ca28e56518744a129935a2e30014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseDuringLevel: 1
+  loopingSFX: 0
+  sfxVolume: 1
 --- !u!1 &2512471663057669173
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +324,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.0000004120356
       objectReference: {fileID: 0}
+    - target: {fileID: 300099135536540417, guid: 92087c671bccf63478cf13e4e3c74283,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb61cec19cfa1648afca2b07c8e8121, type: 2}
     - target: {fileID: 323954248764340889, guid: 92087c671bccf63478cf13e4e3c74283,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -706,6 +714,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 2.3393536
       objectReference: {fileID: 0}
+    - target: {fileID: 1894052875512186101, guid: 92087c671bccf63478cf13e4e3c74283,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb61cec19cfa1648afca2b07c8e8121, type: 2}
     - target: {fileID: 1916285429243386781, guid: 92087c671bccf63478cf13e4e3c74283,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1446,6 +1459,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 4.3194476e-10
       objectReference: {fileID: 0}
+    - target: {fileID: 6224489861966036069, guid: 92087c671bccf63478cf13e4e3c74283,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb61cec19cfa1648afca2b07c8e8121, type: 2}
     - target: {fileID: 6270003970718905998, guid: 92087c671bccf63478cf13e4e3c74283,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1636,6 +1654,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -2.2350392e-10
       objectReference: {fileID: 0}
+    - target: {fileID: 7343456667487418075, guid: 92087c671bccf63478cf13e4e3c74283,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb61cec19cfa1648afca2b07c8e8121, type: 2}
+    - target: {fileID: 7559848695459310030, guid: 92087c671bccf63478cf13e4e3c74283,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bdb61cec19cfa1648afca2b07c8e8121, type: 2}
     - target: {fileID: 7576649465605767417, guid: 92087c671bccf63478cf13e4e3c74283,
         type: 3}
       propertyPath: m_LocalScale.x
