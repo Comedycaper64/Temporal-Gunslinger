@@ -8,6 +8,12 @@ public class IntroPocketwatch : MonoBehaviour
     private MMF_Player player;
 
     [SerializeField]
+    private AudioManager audioManager;
+
+    [SerializeField]
+    private AudioClip introTrack;
+
+    [SerializeField]
     private TutorialGameManager tutorialGameManager;
 
     private void Awake()
@@ -28,8 +34,7 @@ public class IntroPocketwatch : MonoBehaviour
 
             if (Vector3.Distance(transform.eulerAngles, Vector3.zero) < 1f)
             {
-                lookAtCamera = false;
-                tutorialGameManager.StartGame();
+                StartGame();
             }
         }
     }
@@ -39,5 +44,15 @@ public class IntroPocketwatch : MonoBehaviour
         //player.PauseFeedbacks();
         player.StopFeedbacks();
         lookAtCamera = true;
+        audioManager.FadeOutMusic();
+    }
+
+    public void StartGame()
+    {
+        lookAtCamera = false;
+        tutorialGameManager.StartGame();
+
+        audioManager.SetMusicTrack(introTrack);
+        audioManager.FadeInMusic();
     }
 }
