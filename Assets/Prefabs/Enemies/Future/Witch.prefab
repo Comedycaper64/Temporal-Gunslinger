@@ -474,6 +474,7 @@ GameObject:
   - component: {fileID: 784481809}
   - component: {fileID: 784481808}
   - component: {fileID: 6573633170953872868}
+  - component: {fileID: 7352774527344549428}
   m_Layer: 9
   m_Name: Head Collider
   m_TagString: Untagged
@@ -539,6 +540,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityConservation: 0.8
+--- !u!114 &7352774527344549428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784481805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 784481806}
+  targetWeakPoint: {fileID: 6573633170953872868}
 --- !u!1 &936364046
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,6 +720,7 @@ GameObject:
   - component: {fileID: 1297730820}
   - component: {fileID: 1297730819}
   - component: {fileID: 3081277450402178109}
+  - component: {fileID: 7244792388095618449}
   m_Layer: 9
   m_Name: Waist Collider (1)
   m_TagString: Untagged
@@ -770,6 +786,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityConservation: 0.8
+--- !u!114 &7244792388095618449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1297730816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 118266683560422302}
+  targetWeakPoint: {fileID: 3081277450402178109}
 --- !u!1 &1437601255
 GameObject:
   m_ObjectHideFlags: 0
@@ -1167,6 +1197,7 @@ GameObject:
   - component: {fileID: 1899700675}
   - component: {fileID: 1899700674}
   - component: {fileID: 7237921821699178801}
+  - component: {fileID: 1369595040723636130}
   m_Layer: 9
   m_Name: Waist Collider (2)
   m_TagString: Untagged
@@ -1232,6 +1263,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocityConservation: 0.8
+--- !u!114 &1369595040723636130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899700671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 760b164bc4926524a859945b1f3b3955, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletTarget: {fileID: 118266683560422302}
+  targetWeakPoint: {fileID: 7237921821699178801}
 --- !u!1 &2076756902
 GameObject:
   m_ObjectHideFlags: 0
@@ -4014,6 +4059,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 784481806}
   m_SourcePrefab: {fileID: 100100000, guid: ad1594669c015c944b5eaa2ee41f5edd, type: 3}
+--- !u!4 &118266683560422302 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 844025066618263690, guid: ad1594669c015c944b5eaa2ee41f5edd,
+    type: 3}
+  m_PrefabInstance: {fileID: 725852219843244820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &174747471436200297 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 612046831801944701, guid: ad1594669c015c944b5eaa2ee41f5edd,

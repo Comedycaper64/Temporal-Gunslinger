@@ -10,10 +10,10 @@ public class EnemyRangedIdleState : State
     {
         animator = stateMachine.stateMachineAnimator;
 
-        if (stateMachine.GetType() == typeof(EnemyRangedStateMachine))
-        {
-            enemyRangedStateMachine = stateMachine as EnemyRangedStateMachine;
-        }
+        //if (stateMachine.GetType() == typeof(EnemyRangedStateMachine))
+        //{
+        enemyRangedStateMachine = stateMachine as EnemyRangedStateMachine;
+        //}
     }
 
     public override void Enter()

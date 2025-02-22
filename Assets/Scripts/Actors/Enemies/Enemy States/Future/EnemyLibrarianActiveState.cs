@@ -52,6 +52,7 @@ public class EnemyLibrarianActiveState : State
             .normalizedTime;
 
         float sigilReveal = Mathf.InverseLerp(0f, shootTime, timer);
+        //Debug.Log("Timer: " + sigilReveal);
         sigilMaterial.SetFloat("_Reveal", sigilReveal);
 
         if (!projectileFired && timer >= shootTime)
@@ -73,6 +74,7 @@ public class EnemyLibrarianActiveState : State
         librarianStateMachine.shotArrow.SetActive(false);
         stateMachine.stateMachineAnimator.SetBool("shot", false);
         stateMachine.SetRunAnimationExitTime(animationTimeNormalised);
+        sigilMaterial.SetFloat("_Reveal", 0f);
         librarianStateMachine.SetStateTimerSave(timer);
         librarianStateMachine.ToggleAttack(false);
     }

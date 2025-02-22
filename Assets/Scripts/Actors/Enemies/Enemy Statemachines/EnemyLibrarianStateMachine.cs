@@ -36,4 +36,10 @@ public class EnemyLibrarianStateMachine : EnemyRangedStateMachine, ISetAttacker
     {
         return sigilRenderer.material;
     }
+
+    // public override void ResetProjectile()
+    // {
+    //     base.ResetProjectile();
+    //     stateTimerSave = 0f;
+    // }
 }
