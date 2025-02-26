@@ -18,6 +18,9 @@ public class VFXPlayback : RewindableMovement
     private bool controlPlaybackVariable = false;
 
     [SerializeField]
+    private bool clamp01 = false;
+
+    [SerializeField]
     private bool bPlayOnStart;
 
     private void Start()
@@ -50,7 +53,13 @@ public class VFXPlayback : RewindableMovement
         }
         else
         {
-            visualEffect.playRate = GetSpeed();
+            float speed = GetSpeed();
+            if (clamp01)
+            {
+                speed = Mathf.Clamp01(speed);
+            }
+
+            visualEffect.playRate = speed;
         }
     }
 

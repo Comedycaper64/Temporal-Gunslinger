@@ -250,14 +250,6 @@ public class FocusManager : MonoBehaviour
         dissolveModel.SetActive(false);
         transparentModel.SetActive(true);
 
-        // alphaTarget = focusAlpha;
-        // alphaNonTarget = 1f;
-
-        // foreach (Renderer renderer in modelRenderer)
-        // {
-        //     renderer.material = transparentMaterial;
-        // }
-
         AudioManager.PlaySFX(focusSFX, 1f, 0, transform.position);
 
         tweenTimer = 0f;
@@ -277,6 +269,7 @@ public class FocusManager : MonoBehaviour
         if (bFocusing)
         {
             return Camera.main.transform.forward;
+            //return focusAimLine.transform.forward;
         }
         else
         {

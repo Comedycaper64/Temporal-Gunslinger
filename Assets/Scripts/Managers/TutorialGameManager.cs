@@ -12,6 +12,8 @@ enum TutorialState
 
 public class TutorialGameManager : GameManager
 {
+    private bool testBool = true;
+
     [SerializeField]
     private GameObject reaper;
 
@@ -63,7 +65,11 @@ public class TutorialGameManager : GameManager
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         //playerStateMachine.stateMachineAnimator.CrossFadeInFixedTime("Revenant walk", 0.1f);
         playerController = playerStateMachine.GetComponent<PlayerController>();
-        playerController.ToggleTutorialStartMode();
+        if (testBool)
+        {
+            playerController.ToggleTutorialStartMode();
+        }
+
         reaper.SetActive(false);
 
         if (revPocketwatch)
@@ -82,7 +88,11 @@ public class TutorialGameManager : GameManager
         }
 
         rewindManager.ToggleCanReset(false);
-        rewindManager.ToggleCanRewind(false);
+
+        if (testBool)
+        {
+            rewindManager.ToggleCanRewind(false);
+        }
 
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;

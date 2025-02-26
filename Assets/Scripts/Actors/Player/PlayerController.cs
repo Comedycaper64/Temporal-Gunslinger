@@ -22,8 +22,10 @@ public class PlayerController : MonoBehaviour
 
     //Tutorial bools
     private bool bCanRotate = true;
+
     private bool bCanRedirect = true;
     private bool bCanPossess = true;
+
     private bool bCanFocus = true;
 
     private BulletPossessor bulletPossessor;

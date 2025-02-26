@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class DissolveController : RewindableMovement
 {
-    private float dissolveRate = 100f;
-    private float counter = 0;
-    private float dissolveTarget = 1f;
+    protected float dissolveRate = 100f;
+    protected float counter = 0;
+    protected float dissolveValue = 0f;
+    protected float dissolveInitialState = 0f;
+    protected float dissolveTarget = 1f;
 
     // [SerializeField]
     // private float dissolveTargetOverride = -1;
@@ -19,7 +21,7 @@ public class DissolveController : RewindableMovement
     [SerializeField]
     private GameObject[] manualDisables;
 
-    private Material[] meshMaterials;
+    protected Material[] meshMaterials;
 
     [SerializeField]
     private AudioClip dissolveSFX;
@@ -71,7 +73,7 @@ public class DissolveController : RewindableMovement
         }
     }
 
-    public void StartDissolve(float targetDissolve = 1f)
+    public virtual void StartDissolve(float targetDissolve = 1f)
     {
         ToggleMovement(true);
         counter = 0;
@@ -95,7 +97,7 @@ public class DissolveController : RewindableMovement
         }
     }
 
-    public void StopDissolve()
+    public virtual void StopDissolve()
     {
         ToggleMovement(false);
         counter = 0;
@@ -111,7 +113,18 @@ public class DissolveController : RewindableMovement
         }
     }
 
-    private Material[] GetMeshMaterials()
+    public void SetDissolve(float targetDissolve)
+    {
+        meshMaterials = GetMeshMaterials();
+        dissolveValue = targetDissolve;
+
+        foreach (Material material in meshMaterials)
+        {
+            material.SetFloat("_Dissolve_Amount", targetDissolve);
+        }
+    }
+
+    protected Material[] GetMeshMaterials()
     {
         List<Material> materials = new List<Material>();
 
@@ -128,7 +141,7 @@ public class DissolveController : RewindableMovement
         return materials.ToArray();
     }
 
-    private void Dissolve()
+    protected virtual void Dissolve()
     {
         counter += dissolveRate * GetSpeed() * Time.deltaTime;
         float newCounter = Mathf.Clamp(counter, 0f, dissolveTarget);

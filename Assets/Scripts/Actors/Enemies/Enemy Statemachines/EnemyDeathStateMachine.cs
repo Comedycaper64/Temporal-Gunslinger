@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class EnemyDeathStateMachine : StateMachine
 {
+    public float etherealDissolveValue = 0.25f;
     private int flowIndex = 0;
     private List<State> stateFlow = new List<State>();
     private Stack<float> stateAnimationTimes = new Stack<float>();
@@ -65,6 +66,11 @@ public class EnemyDeathStateMachine : StateMachine
         flowIndex++;
     }
 
+    public void DecrementFlow()
+    {
+        flowIndex--;
+    }
+
     public void AddAnimationTime(float time)
     {
         stateAnimationTimes.Push(time);
@@ -92,12 +98,12 @@ public class EnemyDeathStateMachine : StateMachine
 
     public Transform GetScytheAPosition()
     {
-        return restPosition;
+        return scytheAPosition;
     }
 
     public Transform GetScytheBPosition()
     {
-        return restPosition;
+        return scytheBPosition;
     }
 
     public State GetNextState()

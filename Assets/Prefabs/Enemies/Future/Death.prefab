@@ -267,7 +267,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeAnimationName: 
   stateMachineAnimator: {fileID: 2085924747122465229}
-  dissolveController: {fileID: 7261376569222313826}
+  dissolveController: {fileID: 5061032717100594996}
+  etherealDissolveValue: 0.25
+  restPosition: {fileID: 0}
+  scytheAPosition: {fileID: 0}
+  scytheBPosition: {fileID: 0}
+  deathScythe: {fileID: 4371786779964947114}
+  health: {fileID: 8467225165088728800}
+  rewindState: {fileID: 4463604407731712534}
 --- !u!114 &4463604407731712534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -880,7 +887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSpeed: 1
   animator: {fileID: 2085924747122465229}
-  animationSpeedModifier: 10
+  animationSpeedModifier: 20
   dirtySwordFix: 0
 --- !u!114 &2878809057486497368
 MonoBehaviour:
@@ -896,7 +903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visualEffects:
   - {fileID: 8381932531903054859}
---- !u!114 &7261376569222313826
+--- !u!114 &5061032717100594996
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -905,14 +912,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 4708880618906441997}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3a6d69dfafb6024eb4fc90f688790cd, type: 3}
+  m_Script: {fileID: 11500000, guid: c24454037c3df914799d58a8f7e32820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startSpeed: 1
+  startSpeed: 3
   skinnedMeshRenderers:
   - {fileID: 6697372160062790099}
   - {fileID: 1855163657588855193}
   - {fileID: 6028308059459280752}
+  - {fileID: 6979545573708754082}
   meshRenderers:
   - {fileID: 7063217693190561734}
   - {fileID: 6100227059782071268}
@@ -929,13 +937,12 @@ MonoBehaviour:
   - {fileID: 860019651760202780}
   - {fileID: 1915859842930411494}
   manualDisables:
-  - {fileID: 5159537011780873757}
   - {fileID: 28609089871525425}
   - {fileID: 2824001156049842276}
-  - {fileID: 5685594317703405117}
   - {fileID: 4485348091891266853}
+  - {fileID: 5685594317703405117}
   - {fileID: 836345499595231874}
-  dissolveSFX: {fileID: 8300000, guid: 30c63aabfe107e74585ac5991084254b, type: 3}
+  dissolveSFX: {fileID: 8300000, guid: aa2f84206cdcf3f4fadc850afca1e1ab, type: 3}
   dissolveVFX: {fileID: 0}
 --- !u!114 &8275213379502315012
 MonoBehaviour:
@@ -977,12 +984,6 @@ Transform:
 --- !u!4 &4968883614324024023 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8720356313728135328, guid: ef6e2b1df56344342afdb0f64d2f6134,
-    type: 3}
-  m_PrefabInstance: {fileID: 4463604407662236279}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &5159537011780873757 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8821341228650904682, guid: ef6e2b1df56344342afdb0f64d2f6134,
     type: 3}
   m_PrefabInstance: {fileID: 4463604407662236279}
   m_PrefabAsset: {fileID: 0}
@@ -1211,6 +1212,12 @@ Transform:
 --- !u!4 &6950788596283968283 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6739568576115825004, guid: ef6e2b1df56344342afdb0f64d2f6134,
+    type: 3}
+  m_PrefabInstance: {fileID: 4463604407662236279}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6979545573708754082 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6714228464747822805, guid: ef6e2b1df56344342afdb0f64d2f6134,
     type: 3}
   m_PrefabInstance: {fileID: 4463604407662236279}
   m_PrefabAsset: {fileID: 0}
