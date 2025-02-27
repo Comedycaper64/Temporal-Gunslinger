@@ -10,16 +10,25 @@ public class AudioManager : MonoBehaviour
     // private float MUSIC_VOLUME = 1f;
     // private const float SFX_VOLUME = 1f;
     //private const float SLOW_PITCH = 0.4f;
+    private bool levelActive = false;
     private const float MIN_PITCH_VARIATION = 0.9f;
     private const float MAX_PITCH_VARIATION = 1.1f;
     private const float FADE_SPEED = 0.1f;
     private const float TICK_SFX_INTERVAL = 1f;
+    private const float EMPHASISED_VOLUME = 1.25f;
+    private const float REDUCED_VOLUME = 0.75f;
     private bool tick;
+    private float fadeCounter = 0f;
     private bool fadeIn;
     private bool fadeOut;
+    private bool activeSwitch = false;
+    private bool inactiveSwitch = false;
 
     [SerializeField]
-    private AudioSource musicAudioSource;
+    private AudioSource leadMusicAudioSource;
+
+    [SerializeField]
+    private AudioSource backingMusicAudioSource;
 
     [SerializeField]
     private AudioMixerGroup mixSetter;
@@ -53,6 +62,8 @@ public class AudioManager : MonoBehaviour
         OptionsManager.OnMasterVolumeUpdated += UpdateMasterVolume;
         OptionsManager.OnMusicVolumeUpdated += UpdateMusicVolume;
 
+        GameManager.OnGameStateChange += UpdateMusicTracks;
+
         slowdownMixer = mixSetter;
     }
 
@@ -60,6 +71,8 @@ public class AudioManager : MonoBehaviour
     {
         OptionsManager.OnMasterVolumeUpdated -= UpdateMasterVolume;
         OptionsManager.OnMusicVolumeUpdated -= UpdateMusicVolume;
+
+        GameManager.OnGameStateChange -= UpdateMusicTracks;
     }
 
     private void Start()
@@ -83,7 +96,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            musicAudioSource.volume =
+            leadMusicAudioSource.volume =
                 PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume();
         }
 
@@ -94,25 +107,136 @@ public class AudioManager : MonoBehaviour
     {
         if (fadeIn)
         {
-            musicAudioSource.volume += FADE_SPEED * Time.unscaledDeltaTime;
-            if (
-                musicAudioSource.volume
-                >= PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume()
-            )
-            {
-                fadeIn = false;
-                musicAudioSource.volume =
-                    PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume();
-            }
+            FadeIn();
+        }
+        else if (fadeOut)
+        {
+            FadeOut();
         }
 
-        if (fadeOut)
+        if (activeSwitch)
         {
-            musicAudioSource.volume -= FADE_SPEED * Time.unscaledDeltaTime;
-            if (musicAudioSource.volume <= 0f)
-            {
-                fadeOut = false;
-            }
+            SwitchToActiveMusic();
+        }
+        else if (inactiveSwitch)
+        {
+            SwitchToInactiveMusic();
+        }
+    }
+
+    private void SwitchToActiveMusic()
+    {
+        fadeCounter += FADE_SPEED * 5f * Time.unscaledDeltaTime;
+
+        if (fadeCounter < 1f)
+        {
+            float leadVolume = Mathf.Lerp(
+                PlayerOptions.GetMasterVolume()
+                    * PlayerOptions.GetMusicVolume()
+                    * EMPHASISED_VOLUME,
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME,
+                fadeCounter
+            );
+            leadMusicAudioSource.volume = leadVolume;
+
+            float backingVolume = Mathf.Lerp(
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME,
+                PlayerOptions.GetMasterVolume()
+                    * PlayerOptions.GetMusicVolume()
+                    * EMPHASISED_VOLUME,
+                fadeCounter
+            );
+            backingMusicAudioSource.volume = backingVolume;
+        }
+        else
+        {
+            activeSwitch = false;
+        }
+    }
+
+    private void SwitchToInactiveMusic()
+    {
+        fadeCounter += FADE_SPEED * 5f * Time.unscaledDeltaTime;
+
+        if (fadeCounter < 1f)
+        {
+            float leadVolume = Mathf.Lerp(
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME,
+                PlayerOptions.GetMasterVolume()
+                    * PlayerOptions.GetMusicVolume()
+                    * EMPHASISED_VOLUME,
+                fadeCounter
+            );
+            leadMusicAudioSource.volume = leadVolume;
+
+            float backingVolume = Mathf.Lerp(
+                PlayerOptions.GetMasterVolume()
+                    * PlayerOptions.GetMusicVolume()
+                    * EMPHASISED_VOLUME,
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME,
+                fadeCounter
+            );
+            backingMusicAudioSource.volume = backingVolume;
+        }
+        else
+        {
+            inactiveSwitch = false;
+        }
+    }
+
+    private void FadeIn()
+    {
+        fadeCounter += FADE_SPEED * Time.unscaledDeltaTime;
+
+        if (fadeCounter < 1f)
+        {
+            float leadVolume = Mathf.Lerp(
+                0f,
+                PlayerOptions.GetMasterVolume()
+                    * PlayerOptions.GetMusicVolume()
+                    * EMPHASISED_VOLUME,
+                fadeCounter
+            );
+            leadMusicAudioSource.volume = leadVolume;
+
+            float backingVolume = Mathf.Lerp(
+                0f,
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME,
+                fadeCounter
+            );
+            backingMusicAudioSource.volume = backingVolume;
+        }
+        else
+        {
+            fadeIn = false;
+        }
+    }
+
+    private void FadeOut()
+    {
+        fadeCounter += FADE_SPEED * Time.unscaledDeltaTime;
+
+        if (fadeCounter < 1f)
+        {
+            float leadVolume = Mathf.Lerp(
+                PlayerOptions.GetMasterVolume()
+                    * PlayerOptions.GetMusicVolume()
+                    * EMPHASISED_VOLUME,
+                0f,
+                fadeCounter
+            );
+            leadMusicAudioSource.volume = leadVolume;
+
+            float backingVolume = Mathf.Lerp(
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME,
+                0f,
+                fadeCounter
+            );
+            backingMusicAudioSource.volume = backingVolume;
+        }
+        else
+        {
+            fadeOut = false;
         }
     }
 
@@ -218,13 +342,23 @@ public class AudioManager : MonoBehaviour
 
     private void SetMusicAudioSourceVolume(float newVolume)
     {
-        musicAudioSource.volume = newVolume;
+        if (levelActive)
+        {
+            leadMusicAudioSource.volume = newVolume * REDUCED_VOLUME;
+            backingMusicAudioSource.volume = newVolume * EMPHASISED_VOLUME;
+        }
+        else
+        {
+            leadMusicAudioSource.volume = newVolume * EMPHASISED_VOLUME;
+            backingMusicAudioSource.volume = newVolume * REDUCED_VOLUME;
+        }
     }
 
     public void FadeOutMusic()
     {
         fadeOut = true;
         fadeIn = false;
+        fadeCounter = 0f;
     }
 
     public void FadeInMusic()
@@ -232,12 +366,20 @@ public class AudioManager : MonoBehaviour
         SetMusicAudioSourceVolume(0f);
         fadeIn = true;
         fadeOut = false;
+        fadeCounter = 0f;
     }
 
-    public void SetMusicTrack(AudioClip newTrack)
+    public void SetMusicTrack(AudioClip newLeadTrack, AudioClip newBackingTrack)
     {
-        musicAudioSource.clip = newTrack;
-        musicAudioSource.Play();
+        leadMusicAudioSource.clip = newLeadTrack;
+        leadMusicAudioSource.Play();
+
+        backingMusicAudioSource.clip = newBackingTrack;
+
+        if (backingMusicAudioSource.clip)
+        {
+            backingMusicAudioSource.Play();
+        }
     }
 
     private void UpdateMasterVolume(object sender, float newVolume)
@@ -248,5 +390,29 @@ public class AudioManager : MonoBehaviour
     private void UpdateMusicVolume(object sender, float newVolume)
     {
         SetMusicAudioSourceVolume(PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume());
+    }
+
+    private void UpdateMusicTracks(object sender, StateEnum state)
+    {
+        if (state == StateEnum.active)
+        {
+            if (levelActive != true)
+            {
+                activeSwitch = true;
+                inactiveSwitch = false;
+                levelActive = true;
+                fadeCounter = 0f;
+            }
+        }
+        else
+        {
+            if (levelActive != false)
+            {
+                inactiveSwitch = true;
+                activeSwitch = false;
+                levelActive = false;
+                fadeCounter = 0f;
+            }
+        }
     }
 }

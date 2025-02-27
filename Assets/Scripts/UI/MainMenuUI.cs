@@ -104,6 +104,24 @@ public class MainMenuUI : MonoBehaviour
             case 17:
                 continueText += " - Modern Boss ~ Pestilence";
                 break;
+            case 18:
+                continueText += " - Modern Intermission";
+                break;
+            case 19:
+                continueText += " - Future Level 1";
+                break;
+            case 20:
+                continueText += " - Future Level 2";
+                break;
+            case 21:
+                continueText += " - Future Level 3";
+                break;
+            case 22:
+                continueText += " - Future Level 4";
+                break;
+            case 23:
+                continueText += " - Future ~ Death";
+                break;
             default:
                 break;
         }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyDeathHeavyCastInterruptState : State
 {
     private float timer = 0f;
-    private float stateTime = 0.02f;
+    private float stateTime = 0.015f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
 
@@ -42,7 +42,13 @@ public class EnemyDeathHeavyCastInterruptState : State
 
         if (timer > stateTime)
         {
-            deathSM.SwitchState(new EnemyDeathRestingState(deathSM, false));
+            //deathSM.SwitchState(new EnemyDeathRestingState(deathSM, false));
+            deathSM.SwitchState(
+                new EnemyDeathTeleportBufferState(
+                    deathSM,
+                    new EnemyDeathRestingState(deathSM, false)
+                )
+            );
         }
     }
 

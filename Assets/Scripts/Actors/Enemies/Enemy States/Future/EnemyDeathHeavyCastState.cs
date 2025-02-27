@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyDeathHeavyCastState : State
@@ -23,6 +24,10 @@ public class EnemyDeathHeavyCastState : State
         Debug.Log(" Heavy Pattern ");
 
         deathSM.GetDissolveController().StartDissolve(0f);
+        deathSM.ToggleShield(true);
+        deathSM.ToggleWeakPoint(true);
+
+        deathSM.GetHealth().OnDamageTaken += InterruptCast;
 
         if (rewindState.IsRewinding())
         {
@@ -51,10 +56,20 @@ public class EnemyDeathHeavyCastState : State
 
     public override void Exit()
     {
+        deathSM.ToggleShield(false);
+        deathSM.ToggleWeakPoint(false);
+
+        deathSM.GetHealth().OnDamageTaken -= InterruptCast;
+
         if (!rewindState.IsRewinding())
         {
             deathSM.AddAnimationTime(animationTimeNormalised);
             deathSM.AddDurationTime(timer);
         }
+    }
+
+    private void InterruptCast()
+    {
+        deathSM.SwitchState(new EnemyDeathHeavyCastInterruptState(deathSM));
     }
 }

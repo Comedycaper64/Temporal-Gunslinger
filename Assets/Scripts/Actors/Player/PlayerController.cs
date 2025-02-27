@@ -65,6 +65,12 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnFocusAction -= InputManager_OnFocus;
         OptionsManager.OnGunSensitivityUpdated -= OnSensitivityUpdated;
         TutorialUI.OnDisplayTutorial -= TutorialUI_OnDisplayTutorial;
+
+        InputManager.Instance.OnFreeCamAction -= InputManager_OnFreeCamAction;
+        InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
+        InputManager.Instance.OnShootAction -= InputManager_OnStartLockOnAction;
+        InputManager.Instance.OnShootReleaseAction -= InputManager_OnRedirect;
+        InputManager.Instance.OnFreeCamPossessAction -= InputManager_OnPossessAction;
     }
 
     void Update()

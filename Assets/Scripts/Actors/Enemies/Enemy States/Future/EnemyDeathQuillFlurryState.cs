@@ -4,7 +4,7 @@ public class EnemyDeathQuillFlurryState : State
 {
     private bool quillThrown = false;
     private float timer = 0f;
-    private float throwTime = 0.02f;
+    private float throwTime = 0.035f;
     private float stateTime = 0.06f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;

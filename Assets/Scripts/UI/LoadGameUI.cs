@@ -42,14 +42,19 @@ public class LoadGameUI : MonoBehaviour
             levelBackgrounds[0].enabled = true;
         }
 
-        if (levelProgress > 7)
+        if (levelProgress > 6)
         {
             levelBackgrounds[1].enabled = true;
         }
 
-        if (levelProgress > 13)
+        if (levelProgress > 12)
         {
             levelBackgrounds[2].enabled = true;
+        }
+
+        if (levelProgress > 18)
+        {
+            levelBackgrounds[3].enabled = true;
         }
     }
 

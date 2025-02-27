@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SaveManager
 {
-    private const int LEVEL_PROGRESS_DEF = 0;
+    private const int LEVEL_PROGRESS_DEF = 19;
     private const string LEVEL_PROGRESS = "LvlProgress";
 
     public static int GetLevelProgress()
     {
-        //return 13;
+        return 19;
 
         if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
         {

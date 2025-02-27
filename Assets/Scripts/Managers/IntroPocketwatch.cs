@@ -52,7 +52,7 @@ public class IntroPocketwatch : MonoBehaviour
         lookAtCamera = false;
         tutorialGameManager.StartGame();
 
-        audioManager.SetMusicTrack(introTrack);
+        audioManager.SetMusicTrack(introTrack, null);
         audioManager.FadeInMusic();
     }
 }

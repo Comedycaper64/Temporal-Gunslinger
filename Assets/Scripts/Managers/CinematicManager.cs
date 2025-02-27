@@ -134,7 +134,10 @@ public class CinematicManager : MonoBehaviour
             {
                 if (sceneChangeSO.musicTrackChange)
                 {
-                    audioManager.SetMusicTrack(sceneChangeSO.musicTrackChange);
+                    audioManager.SetMusicTrack(
+                        sceneChangeSO.musicTrackChange,
+                        sceneChangeSO.musicTrackChangeBacking
+                    );
                 }
                 if (sceneChangeSO.fadeInMusic)
                 {

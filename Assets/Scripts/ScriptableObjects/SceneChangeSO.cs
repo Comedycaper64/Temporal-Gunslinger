@@ -7,4 +7,5 @@ public class SceneChangeSO : CinematicNode
     public bool fadeOutMusic;
     public bool fadeInMusic;
     public AudioClip musicTrackChange;
+    public AudioClip musicTrackChangeBacking;
 }

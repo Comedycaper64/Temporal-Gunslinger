@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyDeathStateMachine : StateMachine
+public class EnemyDeathStateMachine : StateMachine, IReactable
 {
     public float etherealDissolveValue = 0.25f;
     private int flowIndex = 0;
+    private int quillIndex = 0;
     private List<State> stateFlow = new List<State>();
     private Stack<float> stateAnimationTimes = new Stack<float>();
     private Stack<float> stateDurationTimes = new Stack<float>();
@@ -19,10 +20,22 @@ public class EnemyDeathStateMachine : StateMachine
     private Transform scytheBPosition;
 
     [SerializeField]
+    private Transform[] quillPositions;
+
+    [SerializeField]
     private DeathScythe deathScythe;
 
     [SerializeField]
+    private FutureShield[] deathShields;
+
+    [SerializeField]
+    private BulletStateMachine[] deathQuills;
+
+    [SerializeField]
     private DeathHealth health;
+
+    [SerializeField]
+    private GameObject weakPoint;
 
     [SerializeField]
     private RewindState rewindState;
@@ -57,8 +70,14 @@ public class EnemyDeathStateMachine : StateMachine
     public void ResetFlow()
     {
         flowIndex = 0;
+        quillIndex = 0;
         stateAnimationTimes = new Stack<float>();
         stateDurationTimes = new Stack<float>();
+
+        foreach (BulletStateMachine bullet in deathQuills)
+        {
+            ResetQuill(bullet);
+        }
     }
 
     public void IncrementFlow()
@@ -116,6 +135,44 @@ public class EnemyDeathStateMachine : StateMachine
         return deathScythe;
     }
 
+    public BulletStateMachine GetQuill()
+    {
+        BulletStateMachine availableQuill = deathQuills[quillIndex];
+        quillIndex++;
+
+        StartReaction.ReactionStarted(this);
+
+        return availableQuill;
+    }
+
+    private void ReplaceQuill()
+    {
+        quillIndex--;
+    }
+
+    public void SetQuillAtFiringPoint(BulletStateMachine quill, int location)
+    {
+        Bullet bullet = quill.GetComponent<Bullet>();
+        bullet.SetFiringPosition(quillPositions[location]);
+    }
+
+    public void ResetQuill(BulletStateMachine quill)
+    {
+        Bullet bullet = quill.GetComponent<Bullet>();
+        bullet.ResetBullet(quillPositions[0]);
+    }
+
+    public void ToggleShield(bool toggle)
+    {
+        int index = flowIndex / 5;
+        deathShields[index].gameObject.SetActive(toggle);
+    }
+
+    public void ToggleWeakPoint(bool toggle)
+    {
+        weakPoint.SetActive(toggle);
+    }
+
     public DeathHealth GetHealth()
     {
         return health;
@@ -124,5 +181,10 @@ public class EnemyDeathStateMachine : StateMachine
     public RewindState GetRewindState()
     {
         return rewindState;
+    }
+
+    public void UndoReaction()
+    {
+        ReplaceQuill();
     }
 }
