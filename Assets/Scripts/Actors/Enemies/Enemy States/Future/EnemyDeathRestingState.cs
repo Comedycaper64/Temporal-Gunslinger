@@ -4,7 +4,7 @@ public class EnemyDeathRestingState : State
 {
     private bool teleport;
     private float timer = 0f;
-    private float restTime = 0.03f;
+    private float restTime = 0.01f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
 
@@ -27,11 +27,11 @@ public class EnemyDeathRestingState : State
         stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0.01f, 0);
 
         //If teleport and not reversing, start off dissolves, teleport to rest point, then undissolve
-        if (teleport)
-        {
-            deathSM.transform.position = deathSM.GetRestPosition().position;
-            deathSM.transform.rotation = deathSM.GetRestPosition().rotation;
-        }
+        // if (teleport)
+        // {
+        deathSM.transform.position = deathSM.GetRestPosition().position;
+        deathSM.transform.rotation = deathSM.GetRestPosition().rotation;
+        //}
 
         if (rewindState.IsRewinding())
         {

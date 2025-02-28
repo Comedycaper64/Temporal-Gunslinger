@@ -1,11 +1,14 @@
+using System;
 using UnityEngine;
 
 public class EnemyDeathScytheBAltState : State
 {
     private bool quillThrown = false;
     private float timer = 0f;
-    private float throwTime = 0.01f;
-    private float attackTime = 0.075f;
+    private float animationTimeNormalised = 0f;
+    private float throwTime = 0.016f;
+
+    //private float attackTime = 0.075f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
     private readonly int StateAnimHash;
@@ -26,10 +29,18 @@ public class EnemyDeathScytheBAltState : State
         deathSM.transform.position = deathSM.GetScytheBPosition().position;
         deathSM.transform.rotation = deathSM.GetScytheBPosition().rotation;
 
+        deathSM.GetWeapon().ToggleScythe(true);
+        deathSM.GetWeapon().GetScytheWeakPoint().OnHit += CounterAttack;
+
         if (rewindState.IsRewinding())
         {
-            timer = attackTime;
-            stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0, 1f);
+            timer = deathSM.GetDurationTime();
+            stateMachine.stateMachineAnimator.CrossFade(
+                StateAnimHash,
+                0f,
+                0,
+                deathSM.GetAnimationTime()
+            );
             quillThrown = true;
         }
         else
@@ -40,20 +51,60 @@ public class EnemyDeathScytheBAltState : State
         }
     }
 
-    public override void Tick(float deltaTime)
+    public override void Exit()
     {
-        timer += Time.deltaTime * rewindState.GetScaledSpeed();
+        deathSM.GetWeapon().ToggleScythe(false);
+        deathSM.GetWeapon().GetScytheWeakPoint().OnHit -= CounterAttack;
 
-        if (timer > attackTime)
+        if (!rewindState.IsRewinding())
         {
-            deathSM.SwitchState(
-                new EnemyDeathTeleportBufferState(
-                    deathSM,
-                    new EnemyDeathRestingState(deathSM, true)
-                )
-            );
+            deathSM.AddAnimationTime(animationTimeNormalised);
+            deathSM.AddDurationTime(timer);
         }
     }
 
-    public override void Exit() { }
+    public override void Tick(float deltaTime)
+    {
+        timer += Time.deltaTime * rewindState.GetScaledSpeed();
+        animationTimeNormalised = stateMachine.stateMachineAnimator
+            .GetCurrentAnimatorStateInfo(0)
+            .normalizedTime;
+
+        if (!quillThrown && (timer > throwTime))
+        {
+            ThrowQuill();
+            quillThrown = true;
+        }
+        else if (quillThrown && (timer <= throwTime))
+        {
+            quillThrown = false;
+        }
+
+        // if (timer > attackTime)
+        // {
+        //     deathSM.SwitchState(
+        //         new EnemyDeathTeleportBufferState(
+        //             deathSM,
+        //             new EnemyDeathRestingState(deathSM, true)
+        //         )
+        //     );
+        // }
+    }
+
+    private void ThrowQuill()
+    {
+        BulletStateMachine quill = deathSM.GetQuill();
+        deathSM.SetQuillAtFiringPoint(quill, 2);
+        quill.SwitchToActive();
+
+        BulletLockOn bulletLockOn = quill.GetComponent<BulletLockOn>();
+        bulletLockOn.LockOnOverride(deathSM.GetRevenantTarget());
+    }
+
+    private void CounterAttack(object sender, EventArgs e)
+    {
+        deathSM.SwitchState(
+            new EnemyDeathTeleportBufferState(deathSM, new EnemyDeathRestingState(deathSM, true))
+        );
+    }
 }

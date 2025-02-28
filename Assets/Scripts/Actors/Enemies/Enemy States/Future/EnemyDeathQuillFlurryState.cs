@@ -1,11 +1,13 @@
+using System;
 using UnityEngine;
 
 public class EnemyDeathQuillFlurryState : State
 {
     private bool quillThrown = false;
+    private int quillThrowNum = 3;
     private float timer = 0f;
-    private float throwTime = 0.035f;
-    private float stateTime = 0.06f;
+    private float throwTime = 0.014f;
+    private float stateTime = 0.024f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
 
@@ -44,9 +46,32 @@ public class EnemyDeathQuillFlurryState : State
     {
         timer += Time.deltaTime * rewindState.GetScaledSpeed();
 
+        if (!quillThrown && (timer > throwTime))
+        {
+            ThrowQuills();
+            quillThrown = true;
+        }
+        else if (quillThrown && (timer <= throwTime))
+        {
+            quillThrown = false;
+        }
+
         if (timer > stateTime)
         {
             deathSM.SwitchState(new EnemyDeathRestingState(deathSM, false));
+        }
+    }
+
+    private void ThrowQuills()
+    {
+        for (int i = 0; i < quillThrowNum; i++)
+        {
+            BulletStateMachine quill = deathSM.GetQuill();
+            deathSM.SetQuillAtFiringPoint(quill, i + 3);
+            quill.SwitchToActive();
+
+            BulletLockOn bulletLockOn = quill.GetComponent<BulletLockOn>();
+            bulletLockOn.LockOnOverride(deathSM.GetRevenantTarget());
         }
     }
 

@@ -2,12 +2,11 @@ using UnityEngine;
 
 public class EnemyDeathDeadzonesState : State
 {
-    private bool deadzonesSpawned = false;
     private float timer = 0f;
-    private float spawnTime = 0.02f;
-    private float stateTime = 0.06f;
+    private float stateTime = 0.024f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
+    private DeathDeadzone[] deadzones;
 
     private readonly int StateAnimHash;
     private readonly string StateAnimName = "Death Conjure Deadzones";
@@ -18,6 +17,12 @@ public class EnemyDeathDeadzonesState : State
         deathSM = stateMachine as EnemyDeathStateMachine;
         rewindState = deathSM.GetRewindState();
         StateAnimHash = Animator.StringToHash(StateAnimName);
+        deadzones = new DeathDeadzone[]
+        {
+            deathSM.GetDeathDeadzone(),
+            deathSM.GetDeathDeadzone(),
+            deathSM.GetDeathDeadzone()
+        };
     }
 
     public override void Enter()
@@ -30,13 +35,16 @@ public class EnemyDeathDeadzonesState : State
         {
             timer = stateTime;
             stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0, 1f);
-            deadzonesSpawned = true;
         }
         else
         {
             timer = 0f;
             stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0);
-            deadzonesSpawned = false;
+
+            foreach (DeathDeadzone deadzone in deadzones)
+            {
+                deadzone.ToggleMovement(true);
+            }
         }
     }
 
@@ -50,5 +58,14 @@ public class EnemyDeathDeadzonesState : State
         }
     }
 
-    public override void Exit() { }
+    public override void Exit()
+    {
+        if (rewindState.IsRewinding())
+        {
+            foreach (DeathDeadzone deadzone in deadzones)
+            {
+                deadzone.ToggleMovement(false);
+            }
+        }
+    }
 }

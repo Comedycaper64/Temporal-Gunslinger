@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class EnemyDeathHeavyCastState : State
 {
+    private bool killRevenant = false;
     private float timer = 0f;
     private float animationTimeNormalised = 0f;
+    private float killTime = 0.0925f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
+    private FingerOfDeath deathSpell;
 
     private readonly int StateAnimHash;
     private readonly string StateAnimName = "Death Heavy Cast";
@@ -16,6 +19,7 @@ public class EnemyDeathHeavyCastState : State
     {
         deathSM = stateMachine as EnemyDeathStateMachine;
         rewindState = deathSM.GetRewindState();
+        deathSpell = deathSM.GetSpell();
         StateAnimHash = Animator.StringToHash(StateAnimName);
     }
 
@@ -52,12 +56,28 @@ public class EnemyDeathHeavyCastState : State
         animationTimeNormalised = stateMachine.stateMachineAnimator
             .GetCurrentAnimatorStateInfo(0)
             .normalizedTime;
+
+        float timerLerp = timer / killTime;
+
+        deathSpell.UpdateAttackVisual(timerLerp);
+
+        if (!killRevenant && (timer > killTime))
+        {
+            deathSpell.EnableKillBox(true);
+            killRevenant = true;
+        }
+        else if (killRevenant && (timer <= killTime))
+        {
+            deathSpell.EnableKillBox(false);
+            killRevenant = false;
+        }
     }
 
     public override void Exit()
     {
         deathSM.ToggleShield(false);
         deathSM.ToggleWeakPoint(false);
+        deathSpell.DisableAttackVisual();
 
         deathSM.GetHealth().OnDamageTaken -= InterruptCast;
 
@@ -70,6 +90,13 @@ public class EnemyDeathHeavyCastState : State
 
     private void InterruptCast()
     {
-        deathSM.SwitchState(new EnemyDeathHeavyCastInterruptState(deathSM));
+        if (deathSM.GetIsOutOfMoves())
+        {
+            deathSM.SwitchToDeadState();
+        }
+        else
+        {
+            deathSM.SwitchState(new EnemyDeathHeavyCastInterruptState(deathSM));
+        }
     }
 }

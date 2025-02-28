@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 
 public class EnemyDeathScytheAState : State
 {
     private float timer = 0f;
-    private float attackTime = 0.075f;
+    private float animationTimeNormalised = 0f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
     private readonly int StateAnimHash;
@@ -24,10 +25,18 @@ public class EnemyDeathScytheAState : State
         deathSM.transform.position = deathSM.GetScytheAPosition().position;
         deathSM.transform.rotation = deathSM.GetScytheAPosition().rotation;
 
+        deathSM.GetWeapon().ToggleScythe(true);
+        deathSM.GetWeapon().GetScytheWeakPoint().OnHit += CounterAttack;
+
         if (rewindState.IsRewinding())
         {
-            timer = attackTime;
-            stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0, 1f);
+            timer = deathSM.GetDurationTime();
+            stateMachine.stateMachineAnimator.CrossFade(
+                StateAnimHash,
+                0f,
+                0,
+                deathSM.GetAnimationTime()
+            );
         }
         else
         {
@@ -36,20 +45,40 @@ public class EnemyDeathScytheAState : State
         }
     }
 
-    public override void Tick(float deltaTime)
+    public override void Exit()
     {
-        timer += Time.deltaTime * rewindState.GetScaledSpeed();
+        deathSM.GetWeapon().ToggleScythe(false);
+        deathSM.GetWeapon().GetScytheWeakPoint().OnHit -= CounterAttack;
 
-        if (timer > attackTime)
+        if (!rewindState.IsRewinding())
         {
-            deathSM.SwitchState(
-                new EnemyDeathTeleportBufferState(
-                    deathSM,
-                    new EnemyDeathRestingState(deathSM, true)
-                )
-            );
+            deathSM.AddAnimationTime(animationTimeNormalised);
+            deathSM.AddDurationTime(timer);
         }
     }
 
-    public override void Exit() { }
+    public override void Tick(float deltaTime)
+    {
+        timer += Time.deltaTime * rewindState.GetScaledSpeed();
+        animationTimeNormalised = stateMachine.stateMachineAnimator
+            .GetCurrentAnimatorStateInfo(0)
+            .normalizedTime;
+
+        // if (timer > attackTime)
+        // {
+        //     deathSM.SwitchState(
+        //         new EnemyDeathTeleportBufferState(
+        //             deathSM,
+        //             new EnemyDeathRestingState(deathSM, true)
+        //         )
+        //     );
+        // }
+    }
+
+    private void CounterAttack(object sender, EventArgs e)
+    {
+        deathSM.SwitchState(
+            new EnemyDeathTeleportBufferState(deathSM, new EnemyDeathRestingState(deathSM, true))
+        );
+    }
 }

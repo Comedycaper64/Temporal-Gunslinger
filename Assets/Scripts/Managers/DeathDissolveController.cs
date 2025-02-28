@@ -26,7 +26,7 @@ public class DeathDissolveController : DissolveController
         dissolveValue = Mathf.Lerp(dissolveInitialState, dissolveTarget, newCounter);
 
         // Debug.Log("Counter: " + counter);
-        Debug.Log("Dissolve Value: " + dissolveValue);
+        //Debug.Log("Dissolve Value: " + dissolveValue);
         // Debug.Log("Dissolve: " + dissolve);
 
         foreach (Material material in meshMaterials)

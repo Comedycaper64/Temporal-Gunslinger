@@ -3,7 +3,7 @@ using UnityEngine;
 public class EnemyDeathTeleportBufferState : State
 {
     private float timer = 0f;
-    private float bufferTime = 0.01f;
+    private float bufferTime = 0.005f;
     private State nextState;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;

@@ -6,6 +6,8 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     public float etherealDissolveValue = 0.25f;
     private int flowIndex = 0;
     private int quillIndex = 0;
+    private int deadZoneIndex = 0;
+    private LockOnTarget revenantTarget;
     private List<State> stateFlow = new List<State>();
     private Stack<float> stateAnimationTimes = new Stack<float>();
     private Stack<float> stateDurationTimes = new Stack<float>();
@@ -32,6 +34,12 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     private BulletStateMachine[] deathQuills;
 
     [SerializeField]
+    private FingerOfDeath deathSpell;
+
+    [SerializeField]
+    private DeathDeadzone[] deathDeadzones;
+
+    [SerializeField]
     private DeathHealth health;
 
     [SerializeField]
@@ -40,14 +48,25 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     [SerializeField]
     private RewindState rewindState;
 
+    private void Start()
+    {
+        revenantTarget = GameManager.GetRevenant().GetComponent<LockOnTarget>();
+    }
+
     public override void ToggleInactive(bool toggle) { }
 
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyDeathIdleState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyDeathRestingState(this, false));
+        stateDictionary.Add(StateEnum.active, new EnemyDeathRestingState(this, true));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
+
+        // stateFlow.Add(new EnemyDeathScytheAAltState(this));
+        // stateFlow.Add(new EnemyDeathScytheBAltState(this));
+        // stateFlow.Add(new EnemyDeathDeadzonesState(this));
+        // stateFlow.Add(new EnemyDeathHeavyCastState(this));
+        // stateFlow.Add(new EnemyDeathQuillFlurryState(this));
 
         stateFlow.Add(new EnemyDeathScytheAAltState(this));
         stateFlow.Add(new EnemyDeathScytheBAltState(this));
@@ -77,6 +96,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         foreach (BulletStateMachine bullet in deathQuills)
         {
             ResetQuill(bullet);
+        }
+
+        foreach (DeathDeadzone deadzone in deathDeadzones)
+        {
+            deadzone.ResetZone();
         }
     }
 
@@ -135,6 +159,18 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         return deathScythe;
     }
 
+    public FingerOfDeath GetSpell()
+    {
+        return deathSpell;
+    }
+
+    public DeathDeadzone GetDeathDeadzone()
+    {
+        DeathDeadzone deadzone = deathDeadzones[deadZoneIndex];
+        deadZoneIndex++;
+        return deadzone;
+    }
+
     public BulletStateMachine GetQuill()
     {
         BulletStateMachine availableQuill = deathQuills[quillIndex];
@@ -173,6 +209,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         weakPoint.SetActive(toggle);
     }
 
+    public bool GetIsOutOfMoves()
+    {
+        return flowIndex > 12;
+    }
+
     public DeathHealth GetHealth()
     {
         return health;
@@ -181,6 +222,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     public RewindState GetRewindState()
     {
         return rewindState;
+    }
+
+    public LockOnTarget GetRevenantTarget()
+    {
+        return revenantTarget;
     }
 
     public void UndoReaction()

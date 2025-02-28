@@ -342,6 +342,11 @@ public class AudioManager : MonoBehaviour
 
     private void SetMusicAudioSourceVolume(float newVolume)
     {
+        fadeIn = false;
+        fadeOut = false;
+        inactiveSwitch = false;
+        activeSwitch = false;
+
         if (levelActive)
         {
             leadMusicAudioSource.volume = newVolume * REDUCED_VOLUME;

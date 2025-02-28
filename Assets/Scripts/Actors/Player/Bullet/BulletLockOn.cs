@@ -29,12 +29,14 @@ public class BulletLockOn : MonoBehaviour
     {
         bulletMovement.OnRedirect += DisableLockOn;
         bulletMovement.OnRicochet += DisableLockOn;
+        bulletMovement.OnMovementStopped += DisableLockOn;
     }
 
     private void OnDisable()
     {
         bulletMovement.OnRedirect -= DisableLockOn;
         bulletMovement.OnRicochet -= DisableLockOn;
+        bulletMovement.OnMovementStopped -= DisableLockOn;
     }
 
     private void Update()

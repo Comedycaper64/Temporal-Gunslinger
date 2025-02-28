@@ -70,6 +70,7 @@ public class BulletMovement : RewindableMovement
     public Action OnRedirect;
     public Action OnRicochet;
     public Action OnSlowed;
+    public Action OnMovementStopped;
 
     private void Start()
     {
@@ -354,6 +355,10 @@ public class BulletMovement : RewindableMovement
         if (!isDead)
         {
             WillKillRevenant(out deathTime);
+        }
+        else
+        {
+            OnMovementStopped?.Invoke();
         }
 
         OnChangeDirection?.Invoke(this, new PocketwatchDanger(pocketwatchDangerSprite, deathTime));
