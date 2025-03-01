@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class FingerOfDeath : MonoBehaviour
+public class FingerOfDeath : MonoBehaviour, ISetAttacker
 {
     [SerializeField]
     private Transform[] startPoints;
@@ -14,6 +15,9 @@ public class FingerOfDeath : MonoBehaviour
 
     [SerializeField]
     private MentalLinkTether[] tethers;
+
+    public event EventHandler<bool> OnAttackToggled;
+    public event EventHandler<float> OnTimeOffset;
 
     private void Start()
     {
@@ -42,5 +46,15 @@ public class FingerOfDeath : MonoBehaviour
     public void EnableKillBox(bool toggle)
     {
         killBox.SetActive(toggle);
+    }
+
+    public void ToggleAttack(bool toggle)
+    {
+        OnAttackToggled?.Invoke(this, toggle);
+    }
+
+    public void SetTimeOffset(float offset)
+    {
+        OnTimeOffset?.Invoke(this, offset);
     }
 }

@@ -36,6 +36,7 @@ public class EnemyDeathHeavyCastState : State
         if (rewindState.IsRewinding())
         {
             timer = deathSM.GetDurationTime();
+            deathSM.GetSpell().SetTimeOffset(-timer);
             stateMachine.stateMachineAnimator.CrossFade(
                 StateAnimHash,
                 0f,
@@ -46,8 +47,10 @@ public class EnemyDeathHeavyCastState : State
         else
         {
             timer = 0f;
+            deathSM.GetSpell().SetTimeOffset(0f);
             stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0);
         }
+        deathSM.GetSpell().ToggleAttack(true);
     }
 
     public override void Tick(float deltaTime)
@@ -78,6 +81,7 @@ public class EnemyDeathHeavyCastState : State
         deathSM.ToggleShield(false);
         deathSM.ToggleWeakPoint(false);
         deathSpell.DisableAttackVisual();
+        deathSM.GetSpell().ToggleAttack(false);
 
         deathSM.GetHealth().OnDamageTaken -= InterruptCast;
 

@@ -7,6 +7,7 @@ public class PocketwatchUI : RewindableMovement
     private bool uiActive = false;
     private float currentPocketwatchTime = 0f;
     private int deathMarkerIndex = 0;
+    public static float pocketwatchTime = 0f;
 
     [SerializeField]
     private Transform pockewatchHand;
@@ -43,6 +44,7 @@ public class PocketwatchUI : RewindableMovement
 
     private void Update()
     {
+        pocketwatchTime = currentPocketwatchTime;
         if (uiActive)
         {
             float newZDegree = pockewatchHand.eulerAngles.z + (-GetSpeed() * Time.deltaTime);

@@ -43,6 +43,7 @@ public class PauseMenuUI : MonoBehaviour
 
     public static EventHandler<bool> OnPauseToggled;
     public static Action OnSkipCutscene;
+    public static Action OnExitLevel;
 
     private void Start()
     {
@@ -76,12 +77,14 @@ public class PauseMenuUI : MonoBehaviour
 
     public void QuitGame()
     {
+        OnExitLevel?.Invoke();
         Application.Quit();
     }
 
     public void QuitToMainMenu()
     {
         TimeManager.ToggleMenuTimePause(false);
+        OnExitLevel?.Invoke();
         SceneManager.LoadScene(0);
     }
 

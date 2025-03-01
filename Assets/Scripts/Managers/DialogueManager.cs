@@ -116,6 +116,7 @@ public class DialogueManager : MonoBehaviour
     public void SkipCurrentChoice()
     {
         DialogueSkipCleanup();
+        ResetChoices();
 
         EndDialogue(true);
     }

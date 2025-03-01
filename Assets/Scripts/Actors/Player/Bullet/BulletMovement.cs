@@ -18,6 +18,7 @@ public class BulletMovement : RewindableMovement
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
     private float spinSpeedModifier = 200f;
+    private float ricochetRaycastDistance = 5f;
 
     [SerializeField]
     private float lowVelocityThreshhold = 50f;
@@ -228,7 +229,7 @@ public class BulletMovement : RewindableMovement
                 transform.position,
                 GetFlightDirection(),
                 out RaycastHit hit,
-                1f,
+                ricochetRaycastDistance,
                 ricochetLayermask
             )
         )

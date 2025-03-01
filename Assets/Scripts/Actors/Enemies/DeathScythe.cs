@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class DeathScythe : MonoBehaviour
+public class DeathScythe : MonoBehaviour, ISetAttacker
 {
     [SerializeField]
     private WeakPoint scytheWeakPoint;
@@ -11,6 +12,9 @@ public class DeathScythe : MonoBehaviour
 
     [SerializeField]
     private MeleeWeapon scytheMeleeWeapon;
+
+    public event EventHandler<bool> OnAttackToggled;
+    public event EventHandler<float> OnTimeOffset;
 
     private void Awake()
     {
@@ -23,6 +27,8 @@ public class DeathScythe : MonoBehaviour
         scytheWeakPoint.gameObject.SetActive(toggle);
 
         scytheMeleeWeapon.gameObject.SetActive(toggle);
+
+        ToggleAttack(toggle);
 
         if (toggle)
         {
@@ -37,5 +43,15 @@ public class DeathScythe : MonoBehaviour
     public WeakPoint GetScytheWeakPoint()
     {
         return scytheWeakPoint;
+    }
+
+    public void ToggleAttack(bool toggle)
+    {
+        OnAttackToggled?.Invoke(this, toggle);
+    }
+
+    public void SetTimeOffset(float offset)
+    {
+        OnTimeOffset?.Invoke(this, offset);
     }
 }

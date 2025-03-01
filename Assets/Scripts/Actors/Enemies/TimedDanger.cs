@@ -5,6 +5,7 @@ public class TimedDanger : RewindableMovement
 {
     [SerializeField]
     private float timeToKill;
+    private float timeOffset = 0f;
 
     [SerializeField]
     private Sprite pocketwatchDangerSprite;
@@ -18,12 +19,14 @@ public class TimedDanger : RewindableMovement
         base.OnEnable();
         attacker = GetComponent<ISetAttacker>();
         attacker.OnAttackToggled += SetDanger;
+        attacker.OnTimeOffset += SetOffset;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        attacker.OnAttackToggled += SetDanger;
+        attacker.OnAttackToggled -= SetDanger;
+        attacker.OnTimeOffset -= SetOffset;
         DangerTracker.dangers.Remove(this);
     }
 
@@ -36,7 +39,10 @@ public class TimedDanger : RewindableMovement
             deathTime = timeToKill;
             DangerTracker.dangers.Add(
                 this,
-                new PocketwatchDanger(pocketwatchDangerSprite, deathTime)
+                new PocketwatchDanger(
+                    pocketwatchDangerSprite,
+                    PocketwatchUI.pocketwatchTime + deathTime + timeOffset
+                )
             );
             OnTimedDangerChange?.Invoke();
         }
@@ -45,5 +51,10 @@ public class TimedDanger : RewindableMovement
             DangerTracker.dangers.Remove(this);
             OnTimedDangerChange?.Invoke();
         }
+    }
+
+    private void SetOffset(object sender, float offset)
+    {
+        timeOffset = offset;
     }
 }

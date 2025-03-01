@@ -25,12 +25,10 @@ public class EnemyDeathScytheBState : State
         deathSM.transform.position = deathSM.GetScytheBPosition().position;
         deathSM.transform.rotation = deathSM.GetScytheBPosition().rotation;
 
-        deathSM.GetWeapon().ToggleScythe(true);
-        deathSM.GetWeapon().GetScytheWeakPoint().OnHit += CounterAttack;
-
         if (rewindState.IsRewinding())
         {
             timer = deathSM.GetDurationTime();
+            deathSM.GetWeapon().SetTimeOffset(-timer);
             stateMachine.stateMachineAnimator.CrossFade(
                 StateAnimHash,
                 0f,
@@ -41,8 +39,11 @@ public class EnemyDeathScytheBState : State
         else
         {
             timer = 0f;
+            deathSM.GetWeapon().SetTimeOffset(0f);
             stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0);
         }
+        deathSM.GetWeapon().ToggleScythe(true);
+        deathSM.GetWeapon().GetScytheWeakPoint().OnHit += CounterAttack;
     }
 
     public override void Exit()

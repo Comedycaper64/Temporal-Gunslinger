@@ -27,7 +27,7 @@ public class MainMenuUI : MonoBehaviour
     private CanvasGroupFader startGameConfirmFader;
 
     [SerializeField]
-    private CanvasGroupFader loadGameFader;
+    private GameObject savingGameUI;
 
     [SerializeField]
     private CanvasGroupFader optionsFader;
@@ -173,6 +173,8 @@ public class MainMenuUI : MonoBehaviour
     public void LoadGame(int buildIndex)
     {
         loadBuildIndex = buildIndex;
+        savingGameUI.SetActive(false);
+        mainMenuGroup.interactable = false;
         CinematicManager.Instance.PlayCinematic(levelLoadFade, LoadLevel);
     }
 

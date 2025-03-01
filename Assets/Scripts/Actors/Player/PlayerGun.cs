@@ -143,7 +143,7 @@ public class PlayerGun : MonoBehaviour
             fovTarget = GUN_AIM_FOV;
             fovNonTarget = GUN_REST_FOV;
 
-            AudioManager.PlaySFX(aimGunSFX, 0.3f, 5, transform.position);
+            AudioManager.PlaySFX(aimGunSFX, 0.3f, 3, transform.position);
 
             foreach (Renderer renderer in gunModelRenderers)
             {

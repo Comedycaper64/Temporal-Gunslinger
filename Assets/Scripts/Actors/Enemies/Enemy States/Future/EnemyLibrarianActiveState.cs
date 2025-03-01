@@ -27,7 +27,6 @@ public class EnemyLibrarianActiveState : State
         timer = librarianStateMachine.GetStateTimerSave();
         rewindState.ToggleMovement(true);
         stateMachine.stateMachineAnimator.SetBool("shot", true);
-        librarianStateMachine.ToggleAttack(true);
 
         if (stateMachine.GetActiveAnimationExitTime() >= 0.01f)
         {
@@ -37,11 +36,15 @@ public class EnemyLibrarianActiveState : State
                 0,
                 stateMachine.GetActiveAnimationExitTime()
             );
+            librarianStateMachine.SetTimeOffset(-timer);
         }
         else
         {
             stateMachine.stateMachineAnimator.CrossFade(ActiveAnimHash, 0.02f);
+            librarianStateMachine.SetTimeOffset(0f);
         }
+
+        librarianStateMachine.ToggleAttack(true);
     }
 
     public override void Tick(float deltaTime)

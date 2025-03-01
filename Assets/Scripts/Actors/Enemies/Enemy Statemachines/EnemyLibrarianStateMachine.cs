@@ -10,6 +10,7 @@ public class EnemyLibrarianStateMachine : EnemyRangedStateMachine, ISetAttacker
     private Renderer sigilRenderer;
 
     public event EventHandler<bool> OnAttackToggled;
+    public event EventHandler<float> OnTimeOffset;
 
     protected override void SetupDictionary()
     {
@@ -35,6 +36,11 @@ public class EnemyLibrarianStateMachine : EnemyRangedStateMachine, ISetAttacker
     public Material GetSigil()
     {
         return sigilRenderer.material;
+    }
+
+    public void SetTimeOffset(float offset)
+    {
+        OnTimeOffset?.Invoke(this, offset);
     }
 
     // public override void ResetProjectile()

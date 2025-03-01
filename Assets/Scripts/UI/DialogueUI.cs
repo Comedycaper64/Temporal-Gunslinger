@@ -228,6 +228,7 @@ public class DialogueUI : MonoBehaviour
         for (int i = 0; i < dialogueChoiceUI.Length; i++)
         {
             dialogueChoiceUI[i].ResetChoiceColour();
+            dialogueChoiceUI[i].CloseDialogueChoice();
         }
     }
 

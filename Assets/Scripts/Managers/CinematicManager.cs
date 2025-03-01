@@ -9,7 +9,7 @@ public class CinematicManager : MonoBehaviour
     // private ActorSO endOfTimelineActor;
 
     private bool skipping = false;
-
+    private bool exitFlag = false;
     private CinematicNode currentCinematicNode;
     private Queue<CinematicNode> cinematicNodes;
     private Action OnCinematicFinished;
@@ -44,13 +44,16 @@ public class CinematicManager : MonoBehaviour
         }
         Instance = this;
         actorAnimatorMapper = dialogueManager.GetComponent<ActorAnimatorMapper>();
+        exitFlag = false;
 
         PauseMenuUI.OnSkipCutscene += SkipCinematic;
+        PauseMenuUI.OnExitLevel += ExitCleanup;
     }
 
     private void OnDisable()
     {
         PauseMenuUI.OnSkipCutscene -= SkipCinematic;
+        PauseMenuUI.OnExitLevel -= ExitCleanup;
     }
 
     public void PlayCinematic(CinematicSO cinematicSO, Action OnCinematicFinished)
@@ -266,6 +269,11 @@ public class CinematicManager : MonoBehaviour
 
     private void TimelineFinished(PlayableDirector director)
     {
+        if (exitFlag)
+        {
+            return;
+        }
+
         if (skipping)
         {
             return;
@@ -277,5 +285,10 @@ public class CinematicManager : MonoBehaviour
     private void TimelineSkipped(PlayableDirector director)
     {
         TrySkipNextNode();
+    }
+
+    private void ExitCleanup()
+    {
+        exitFlag = true;
     }
 }
