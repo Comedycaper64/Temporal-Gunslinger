@@ -39,7 +39,7 @@ public class PlayerPestilenceAbility : MonoBehaviour
 
     private void PlayAbilityAudio()
     {
-        AudioManager.PlaySFX(abilitySFX, 0.5f, 3, Camera.main.transform.position, false);
+        AudioManager.PlaySFX(abilitySFX, 0.6f, 0, Camera.main.transform.position, false);
 
         int randomInt = Random.Range(0, pestilenceVoicelines.Length);
 

@@ -222,7 +222,8 @@ public class BulletPossessor : MonoBehaviour
 
         if (
             pestilenceAbility
-            && possessedBullet.GetComponent<BulletBooster>()
+            && possessedBullet.TryGetComponent<BulletBooster>(out BulletBooster booster)
+            && !booster.HasBoosted()
             && RedirectManager.Instance.CanBoost()
         )
         {

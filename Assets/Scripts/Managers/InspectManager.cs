@@ -55,14 +55,22 @@ public class InspectManager : MonoBehaviour
 
             foreach (InspectTarget target in sceneInspectables)
             {
-                Vector2 viewPos = Camera.main.WorldToViewportPoint(target.transform.position);
+                Vector3 viewPos = Camera.main.WorldToViewportPoint(target.transform.position);
 
-                if (viewPos.x < 0.4f || viewPos.x > 0.6f || viewPos.y < 0.4f || viewPos.y > 0.6f)
+                //Debug.Log(viewPos);
+
+                if (
+                    viewPos.z < 0f
+                    || viewPos.x < 0.4f
+                    || viewPos.x > 0.6f
+                    || viewPos.y < 0.4f
+                    || viewPos.y > 0.6f
+                )
                 {
                     continue;
                 }
 
-                Vector2 toCenter = viewPos - new Vector2(0.5f, 0.5f);
+                Vector3 toCenter = viewPos - new Vector3(0.5f, 0.5f);
                 if (toCenter.sqrMagnitude < closestTargetDistance)
                 {
                     closestTarget = target;

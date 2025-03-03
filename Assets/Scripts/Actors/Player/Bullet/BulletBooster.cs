@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BulletBooster : MonoBehaviour, IReactable
 {
+    private bool hasBoosted = false;
     private float boostSpeed = 600f;
     private float boostVelocityLoss = 300f;
     private BulletMovement bulletMovement;
@@ -38,6 +39,7 @@ public class BulletBooster : MonoBehaviour, IReactable
         bulletMovement.velocityLossRate = boostVelocityLoss;
         boostEffect.SetActive(true);
         boostCrystals.SetActive(true);
+        hasBoosted = true;
 
         OnBoost?.Invoke();
     }
@@ -59,6 +61,12 @@ public class BulletBooster : MonoBehaviour, IReactable
         bulletMovement.velocityLossRate = initialVelocityLoss;
         boostEffect.SetActive(false);
         boostCrystals.SetActive(false);
+        hasBoosted = false;
+    }
+
+    public bool HasBoosted()
+    {
+        return hasBoosted;
     }
 
     public void UndoReaction()
