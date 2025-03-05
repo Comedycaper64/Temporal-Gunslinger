@@ -34,6 +34,12 @@ public class BulletLockOnUI : MonoBehaviour
     [SerializeField]
     private MMF_Player chargeFeedback;
 
+    [SerializeField]
+    private AudioClip lockOnSFX;
+
+    [SerializeField]
+    private AudioClip lockOnChargedSFX;
+
     private void Awake()
     {
         lockOnUI.SetCanvasGroupAlpha(0f);
@@ -104,6 +110,7 @@ public class BulletLockOnUI : MonoBehaviour
 
             if (lockOnUI.GetCanvasGroupAlpha() >= 1f)
             {
+                AudioManager.PlaySFX(lockOnSFX, 0.5f, 0, Camera.main.transform.position, false);
                 lockOnFeedback.PlayFeedbacks();
             }
         }
@@ -137,6 +144,13 @@ public class BulletLockOnUI : MonoBehaviour
 
             if (chargeUI.GetCanvasGroupAlpha() >= 1f)
             {
+                AudioManager.PlaySFX(
+                    lockOnChargedSFX,
+                    0.5f,
+                    0,
+                    Camera.main.transform.position,
+                    false
+                );
                 chargeFeedback.PlayFeedbacks();
             }
         }

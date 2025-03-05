@@ -11,6 +11,9 @@ public class FingerOfDeath : MonoBehaviour, ISetAttacker
     private Transform endPoint;
 
     [SerializeField]
+    private GameObject castSFX;
+
+    [SerializeField]
     private GameObject killBox;
 
     [SerializeField]
@@ -51,6 +54,7 @@ public class FingerOfDeath : MonoBehaviour, ISetAttacker
     public void ToggleAttack(bool toggle)
     {
         OnAttackToggled?.Invoke(this, toggle);
+        castSFX.SetActive(toggle);
     }
 
     public void SetTimeOffset(float offset)

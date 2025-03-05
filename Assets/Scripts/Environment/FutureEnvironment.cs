@@ -19,6 +19,8 @@ public class FutureEnvironment : RewindableMovement
     private Vector3 currentRevealPos = Vector3.zero;
 
     //private float timeToUnreveal = 0.025f;
+    [SerializeField]
+    private AudioClip illusionRevealSFX;
 
     [SerializeField]
     private AnimationCurve revealCurve;
@@ -142,6 +144,8 @@ public class FutureEnvironment : RewindableMovement
 
         tweenTimer = 0f;
         currentRevealPos = revealPos;
+
+        AudioManager.PlaySFX(illusionRevealSFX, 0.75f, 0, revealPos);
 
         Shader.SetGlobalFloat("_RevealMaskRadius", 0f);
         Shader.SetGlobalVector("_RevealMaskPosition", currentRevealPos);

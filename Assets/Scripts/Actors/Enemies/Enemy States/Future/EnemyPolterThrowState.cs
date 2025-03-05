@@ -23,6 +23,7 @@ public class EnemyPolterThrowState : State
         projectileFired = false;
         rewindState.ToggleMovement(true);
         enemyStateMachine.PlayShootFX();
+        timer = 0f;
 
         stateMachine.stateMachineAnimator.CrossFade(ThrowAnimHash, 0.02f);
     }
