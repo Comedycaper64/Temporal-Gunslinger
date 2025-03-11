@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
 
         //MIGHT BREAK THINGS HOPEFULLY NOT
         rewindManager.ResetManager(true);
-
+        endOfLevelCam.gameObject.SetActive(false);
         CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
     }
 

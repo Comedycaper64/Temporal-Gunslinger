@@ -9,7 +9,7 @@ public class SaveManager
 
     public static int GetLevelProgress()
     {
-        return 19;
+        //return 19;
 
         if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
         {

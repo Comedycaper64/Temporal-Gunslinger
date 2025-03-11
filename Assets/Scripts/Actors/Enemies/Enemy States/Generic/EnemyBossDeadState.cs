@@ -22,6 +22,8 @@ public class EnemyBossDeadState : State
         dissolveController.StartDissolve(0.25f);
         EnemyDeadState.enemiesAlive = 0;
 
+        stateMachine.ToggleInactive(true);
+
         //disable all enemies
 
         GameManager.Instance.EndLevel(stateMachine.transform);

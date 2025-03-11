@@ -19,8 +19,8 @@ public class AudioManager : MonoBehaviour
     private const float REDUCED_VOLUME = 0.75f;
     private bool tick;
     private float fadeCounter = 0f;
-    private bool fadeIn;
-    private bool fadeOut;
+    private bool fadeIn = false;
+    private bool fadeOut = false;
     private bool activeSwitch = false;
     private bool inactiveSwitch = false;
 
@@ -97,7 +97,11 @@ public class AudioManager : MonoBehaviour
         else
         {
             leadMusicAudioSource.volume =
-                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume();
+                PlayerOptions.GetMasterVolume()
+                * PlayerOptions.GetMusicVolume()
+                * EMPHASISED_VOLUME;
+            backingMusicAudioSource.volume =
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME;
         }
 
         StartCoroutine(ClockTickSFX());
@@ -208,6 +212,13 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
+            leadMusicAudioSource.volume =
+                PlayerOptions.GetMasterVolume()
+                * PlayerOptions.GetMusicVolume()
+                * EMPHASISED_VOLUME;
+
+            backingMusicAudioSource.volume =
+                PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME;
             fadeIn = false;
         }
     }

@@ -150,4 +150,15 @@ public class FutureEnvironment : RewindableMovement
         Shader.SetGlobalFloat("_RevealMaskRadius", 0f);
         Shader.SetGlobalVector("_RevealMaskPosition", currentRevealPos);
     }
+
+    public void RevealPositionOverride(Vector3 revealPos)
+    {
+        currentRevealPos = revealPos;
+        Shader.SetGlobalVector("_RevealMaskPosition", currentRevealPos);
+    }
+
+    public void RevealRadiusOverride(float radius)
+    {
+        Shader.SetGlobalFloat("_RevealMaskRadius", radius);
+    }
 }

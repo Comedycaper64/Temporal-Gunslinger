@@ -13,10 +13,10 @@ public class DissolveController : RewindableMovement
     // private float dissolveTargetOverride = -1;
 
     [SerializeField]
-    private SkinnedMeshRenderer[] skinnedMeshRenderers;
+    protected SkinnedMeshRenderer[] skinnedMeshRenderers;
 
     [SerializeField]
-    private MeshRenderer[] meshRenderers;
+    protected MeshRenderer[] meshRenderers;
 
     [SerializeField]
     private GameObject[] manualDisables;
@@ -29,7 +29,7 @@ public class DissolveController : RewindableMovement
     [SerializeField]
     private VFXPlayback dissolveVFX;
 
-    private void Start()
+    protected virtual void Start()
     {
         // foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
         // {
@@ -54,7 +54,7 @@ public class DissolveController : RewindableMovement
         GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
     }
 
-    private void GameManager_OnGameStateChange(object sender, StateEnum e)
+    protected virtual void GameManager_OnGameStateChange(object sender, StateEnum e)
     {
         if (e == StateEnum.idle)
         {
@@ -65,7 +65,7 @@ public class DissolveController : RewindableMovement
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (IsActive())
         {
@@ -124,7 +124,7 @@ public class DissolveController : RewindableMovement
         }
     }
 
-    protected Material[] GetMeshMaterials()
+    protected virtual Material[] GetMeshMaterials()
     {
         List<Material> materials = new List<Material>();
 

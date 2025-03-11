@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Cursor = UnityEngine.Cursor;
 
 public class PauseMenuUI : MonoBehaviour
@@ -41,6 +42,9 @@ public class PauseMenuUI : MonoBehaviour
     [SerializeField]
     private CanvasGroupFader quitConfirmFader;
 
+    [SerializeField]
+    private Button skipCutsceneButton;
+
     public static EventHandler<bool> OnPauseToggled;
     public static Action OnSkipCutscene;
     public static Action OnExitLevel;
@@ -67,12 +71,14 @@ public class PauseMenuUI : MonoBehaviour
             InputManager.Instance.OnPauseAction += TogglePauseMenu;
             listeningToInput = true;
         }
+        GameManager.OnGameStateChange += ToggleCanSkipCutscene;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnPauseAction -= TogglePauseMenu;
         listeningToInput = false;
+        GameManager.OnGameStateChange -= ToggleCanSkipCutscene;
     }
 
     public void QuitGame()
@@ -123,6 +129,18 @@ public class PauseMenuUI : MonoBehaviour
     {
         TogglePauseMenu();
         OnSkipCutscene?.Invoke();
+    }
+
+    private void ToggleCanSkipCutscene(object sender, StateEnum state)
+    {
+        if (state == StateEnum.idle)
+        {
+            skipCutsceneButton.interactable = false;
+        }
+        else if (state == StateEnum.inactive)
+        {
+            skipCutsceneButton.interactable = true;
+        }
     }
 
     public void TogglePauseMenu()

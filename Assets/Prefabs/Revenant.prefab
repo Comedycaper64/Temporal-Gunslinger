@@ -1221,6 +1221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 254485437083864503}
   - component: {fileID: 8202455585439966129}
+  - component: {fileID: 5596356305193013036}
   m_Layer: 6
   m_Name: Dash SFX
   m_TagString: Untagged
@@ -1255,7 +1256,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 407a988493b3abb4e82272a9504b66b8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.1
   m_Pitch: 1.25
   Loop: 1
   Mute: 0
@@ -1339,6 +1340,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5596356305193013036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5387645483834851422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f814ca28e56518744a129935a2e30014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseDuringLevel: 1
+  loopingSFX: 1
+  sfxVolume: 0.1
 --- !u!1 &6063936759268726405
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,12 +2580,12 @@ PrefabInstance:
     - target: {fileID: 6156972629958369160, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000007318311
+      value: -0.0000000073183113
       objectReference: {fileID: 0}
     - target: {fileID: 6156972629958369160, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000004522965
+      value: -0.0000000045229647
       objectReference: {fileID: 0}
     - target: {fileID: 6919502383751833621, guid: 3f8fe81ee7c4f374ca6b49acbe3fd296,
         type: 3}

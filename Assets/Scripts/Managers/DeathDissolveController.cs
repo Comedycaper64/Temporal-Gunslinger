@@ -1,7 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathDissolveController : DissolveController
 {
+    [SerializeField]
+    private float dissolveOverride;
+    private MaterialPropertyBlock propBlock;
+
+    protected override void Start()
+    {
+        base.Start();
+        meshMaterials = GetMeshMaterials();
+    }
+
     public override void StartDissolve(float targetDissolve = 1)
     {
         dissolveInitialState = dissolveValue;
@@ -14,6 +25,21 @@ public class DeathDissolveController : DissolveController
         DeathDissolve.Dissolved(this, dissolveInitialState, dissolveTarget, counter, false);
         ToggleMovement(false);
         counter = 0;
+    }
+
+    protected override void Update()
+    {
+        if (dissolveOverride >= 0f)
+        {
+            foreach (Material material in meshMaterials)
+            {
+                material.SetFloat("_Dissolve_Amount", dissolveOverride);
+            }
+        }
+        else
+        {
+            base.Update();
+        }
     }
 
     protected override void Dissolve()
@@ -34,11 +60,51 @@ public class DeathDissolveController : DissolveController
             material.SetFloat("_Dissolve_Amount", dissolveValue);
         }
 
+        // foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
+        // {
+        //     skinnedMeshRenderer.GetPropertyBlock(propBlock);
+        //     propBlock.SetFloat("_Dissolve_Amount", dissolveValue);
+        //     skinnedMeshRenderer.SetPropertyBlock(propBlock);
+        // }
+
+        // foreach (MeshRenderer meshRenderer in meshRenderers)
+        // {
+        //     meshRenderer.GetPropertyBlock(propBlock);
+        //     propBlock.SetFloat("_Dissolve_Amount", dissolveValue);
+        //     meshRenderer.SetPropertyBlock(propBlock);
+        // }
+
         if (newCounter >= 1f)
         {
             StopDissolve();
         }
     }
+
+    // protected override Material[] GetMeshMaterials()
+    // {
+    //     Material[] materials = base.GetMeshMaterials();
+    //     List<MaterialPropertyBlock> blocks = new List<MaterialPropertyBlock>();
+
+    //     foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
+    //     {
+    //         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+    //         skinnedMeshRenderer.GetPropertyBlock(propBlock);
+    //         blocks.Add(propBlock);
+    //     }
+
+    //     foreach (MeshRenderer meshRenderer in meshRenderers)
+    //     {
+    //         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+    //         meshRenderer.GetPropertyBlock(propBlock);
+    //         blocks.Add(propBlock);
+    //     }
+
+    //     materialPropertyBlocks = blocks.ToArray();
+
+    //     return materials;
+    // }
+
+    protected override void GameManager_OnGameStateChange(object sender, StateEnum e) { }
 
     public void UndoDissolve(float dissolveState)
     {

@@ -2,39 +2,39 @@ using UnityEngine;
 
 public class LevelSelectorUI : MonoBehaviour
 {
-    private bool previewChange = false;
-    private float previewFadeSpeed = 5f;
-    private float zoneSelectSpeed = 1.25f;
-    private bool selectorActive = false;
-    private bool confirmation = false;
+    protected bool previewChange = false;
+    protected float previewFadeSpeed = 5f;
+    protected float zoneSelectSpeed = 1.25f;
+    protected bool selectorActive = false;
+    protected bool confirmation = false;
 
     // [SerializeField]
     // private int nextLevelBuildIndex;
 
     [SerializeField]
-    private RectTransform canvas;
+    protected RectTransform canvas;
 
     [SerializeField]
-    private Transform selectorArrow;
+    protected Transform selectorArrow;
 
     [SerializeField]
-    private CanvasGroup pocketWatchGroup;
+    protected CanvasGroup pocketWatchGroup;
 
     [SerializeField]
-    private CanvasGroup[] previews;
+    protected CanvasGroup[] previews;
 
     [SerializeField]
-    private RectTransform[] eraZones;
+    protected RectTransform[] eraZones;
 
     [SerializeField]
-    private GameObject[] selectionConfirmation;
+    protected GameObject[] selectionConfirmation;
 
     [SerializeField]
-    private AudioClip eraChangeSFX;
+    protected AudioClip eraChangeSFX;
 
-    private int activePreviewIndex;
+    protected int activePreviewIndex;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (confirmation)
         {
@@ -114,7 +114,7 @@ public class LevelSelectorUI : MonoBehaviour
         }
     }
 
-    public int GetMousedCanvasGroupIndex(float zRotation)
+    public virtual int GetMousedCanvasGroupIndex(float zRotation)
     {
         if ((zRotation >= 330f) || (zRotation < 30f))
         {

@@ -15,6 +15,12 @@ public abstract class StateMachine : MonoBehaviour
     [SerializeField]
     private DissolveController dissolveController;
 
+    //REMOVE ON RELEASE
+    private void DebugKill()
+    {
+        SwitchToDeadState();
+    }
+
     public virtual void Awake()
     {
         SetupDictionary();
@@ -29,6 +35,11 @@ public abstract class StateMachine : MonoBehaviour
     void Update()
     {
         currentState?.Tick(Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            DebugKill();
+        }
     }
 
     public virtual void SwitchState(State newState)

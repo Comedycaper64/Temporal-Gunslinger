@@ -39,6 +39,9 @@ public class TutorialGameManager : GameManager
     private GameObject secondTutorialUI;
 
     [SerializeField]
+    private GameObject vfxCleanup;
+
+    [SerializeField]
     private MaskStateMachine projectileMask;
 
     [SerializeField]
@@ -131,6 +134,7 @@ public class TutorialGameManager : GameManager
         if (tutorialState == TutorialState.Round1)
         {
             reaper.SetActive(true);
+            vfxCleanup.SetActive(true);
             revPocketwatch.SetActive(true);
             revModelPocketwatch.SetActive(true);
             pocketwatchUI.SetActive(true);

@@ -46,6 +46,9 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     private GameObject weakPoint;
 
     [SerializeField]
+    private VFXPlayback deathVFX;
+
+    [SerializeField]
     private RewindState rewindState;
 
     private void Start()
@@ -53,14 +56,17 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         revenantTarget = GameManager.GetRevenant().GetComponent<LockOnTarget>();
     }
 
-    public override void ToggleInactive(bool toggle) { }
+    public override void ToggleInactive(bool toggle)
+    {
+        deathVFX.StopEffect();
+    }
 
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyDeathIdleState(this));
         stateDictionary.Add(StateEnum.active, new EnemyDeathRestingState(this, true));
-        stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
+        stateDictionary.Add(StateEnum.dead, new EnemyBossDeadState(this));
 
         // stateFlow.Add(new EnemyDeathScytheAAltState(this));
         // stateFlow.Add(new EnemyDeathScytheBAltState(this));
