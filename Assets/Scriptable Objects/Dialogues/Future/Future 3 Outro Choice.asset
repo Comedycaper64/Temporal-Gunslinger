@@ -14,52 +14,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueChoices:
   - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
-    dialogueOption: "(I\u2019m guessing we\u2019ve almost reached her. Tell us about
-      Death.)"
+    dialogueOption: (Reaper, what is this place?)
     correspondingDialogue: 0
+    loopBackToChoice: 1
+  - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
+    dialogueOption: (The Heralds and I want to know more about Death.)
+    correspondingDialogue: 1
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
     dialogueOption: (You dodged the question before. What will happen to the Heralds
       after this?)
-    correspondingDialogue: 1
+    correspondingDialogue: 2
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
     dialogueOption: "\u2026 [Proceed]"
-    correspondingDialogue: 2
+    correspondingDialogue: 3
     loopBackToChoice: 0
   dialogueAnswers:
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - This time there is not terribly much to tell.
-      - "Death lived for a very long time. It became possible to artificially enhance
-        a person\u2019s lifespan when she was near the end of her life, and so she
-        continued to live on."
-      - "\rShe was driven and wise, but the world changed in many ways and it broke
-        her. She cut her own life short.\r\n"
-      - It seemed a waste for such a passionate person to meet their end like that.
-        As her soul passed me by, I rashly decided to interfere with her fate. With
-        that, she became my first Herald.
-      - She was a fascinating person to converse with, we spent much time trying
-        to figure out the nature of the powers and artifacts that we held.
-      - "And yet\u2026 she was the first to betray me. Such wanton foolishness."
+      - You are right to be suspicious of this place, old friend. This is no normal
+        library.
+      - "In truth, this is a space station orbiting the Mortal Realm. The curator
+        that Death has possessed is the only living crew member that remains here.
+        I suspect some of her latent power has corrupted this place into appearing
+        as it is not.\r"
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip: []
-  - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+    - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - I thought I made it clear that it depended on how this last mission resolves.
-      - These are traitors who have wilfully abused their power to change the state
-        of the world. Such a grave misdeed will not be undone with a simple slap
-        on the wrist.
-      - You cannot know what possible effect an ill-thought, drastic, emotionally-charged
-        action could have.
+      - "A station\u2026 of space? I must confess, this eludes mine understanding. "
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -69,8 +60,20 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 3b7ac2a857f6d7640b66f5359f396051, type: 2}
       actorNo: 0
       dialogue:
-      - "So you\u2019d rather sit there and do nothing? There\u2019s a chance the
-        world could be made a better place and you choose inaction?"
+      - "Ah, of course. I suppose in archaic terms, this library is in a ship that
+        flies above the heavens?\r"
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
+      actorNo: 0
+      dialogue:
+      - "Thou speaketh truth, that such staggering ambitions have been achieved in
+        but a thousand years? By the gods, what I wouldst give to witness more of
+        this age\u2019s wonders."
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -80,8 +83,30 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
       actorNo: 0
       dialogue:
-      - "He can\u2019t hear you when we\u2019re outside of The End of Time darlin\u2019.
-        I\u2019m glad we\u2019re on the same page though."
+      - "Heck, that\u2019s a tall tale if I ever heard one. What\u2019s next, folks
+        settin\u2019 up ranches on the moon?\r"
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: 3b7ac2a857f6d7640b66f5359f396051, type: 2}
+      actorNo: 0
+      dialogue:
+      - "That\u2019s\u2026 not outside the realm of possibility. In my time, people
+        were already able to travel to and from the moon. It is plausible that people
+        have settled on it by now.\r"
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
+      actorNo: 0
+      dialogue:
+      - "Huh. Well, I\u2019ll be\u2026"
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -89,10 +114,95 @@ MonoBehaviour:
       disableCameraOnEnd: 0
       voiceClip: []
   - dialogueAnswers:
-    - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - ...
+      - This time, there is little to tell.
+      - Death lived for an exceedingly long time. Near the end of her lifespan, it
+        became possible to indefinitely extend mortal life expectancy through supplements,
+        and so she continued to live on.
+      - But as the world shifted around her over the years, it began to take its
+        toll. Where she was once driven and wise, she became skeptical and dour.
+        Several decades later, she finally stopped taking the supplements and passed
+        on naturally.
+      - It seemed a waste for a mind so bright to be lost like that. And so, as her
+        soul passed me by, I decided to interfere with her fate. With that, she became
+        my first Herald.
+      - 'She was a fascinating person to converse with. Together, we spent much time
+        deciphering the nature of artefacts we held and the latent powers we manifested
+        from them. '
+      - Of all the Heralds, she was the closest I had to a friend. And yet, she was
+        the first to betray me.
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
+      actorNo: 0
+      dialogue:
+      - "Heh, the Reaper havin\u2019 friends? Reckon I\u2019d sooner believe the
+        sky turned green."
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+  - dialogueAnswers:
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+      actorNo: 0
+      dialogue:
+      - As I stated before, that will depend on the outcome of your task.
+      - But consider each Herald is a traitor who has wilfully abused their powers
+        to change the state of the world. Such a grave transgression cannot be righted
+        with a simple slap on the wrist.
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: 3b7ac2a857f6d7640b66f5359f396051, type: 2}
+      actorNo: 0
+      dialogue:
+      - "So you\u2019d rather sit there and do nothing? We already have enough evidence
+        to suggest the world is suffering. "
+      - "With our powers, there\u2019s the possibility the world could be made a
+        better place, and yet you still choose inaction?"
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
+      actorNo: 0
+      dialogue:
+      - "He can\u2019t hear ya when we\u2019re outside the End o\u2019 Time, miss.
+        Glad to see we\u2019re singin\u2019 from the same prayer book, though."
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
+      actorNo: 0
+      dialogue:
+      - Aye, we are of one mind in this. I wonder if Death, too, sees as we do?
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+  - dialogueAnswers:
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+      actorNo: 0
+      dialogue:
+      - That is all the knowledge I can give for now. Continue on.
       animations: []
       animationCrossFadeTime: []
       animationTime: []

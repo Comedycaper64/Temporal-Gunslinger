@@ -179,6 +179,11 @@ public class LevelSelectorUI : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        InputManager.Instance.OnShootAction -= InputManager_OnShoot;
+    }
+
     private void InputManager_OnShoot()
     {
         if (confirmation == false)

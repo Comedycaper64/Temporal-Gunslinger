@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EndingChoiceUI : LevelSelectorUI
@@ -10,6 +11,8 @@ public class EndingChoiceUI : LevelSelectorUI
 
     [SerializeField]
     private CinematicManager cinematicManager;
+
+    public static Action OnGameBeat;
 
     protected override void Update()
     {
@@ -126,6 +129,6 @@ public class EndingChoiceUI : LevelSelectorUI
 
     private void StartCredits()
     {
-        Debug.Log("END");
+        OnGameBeat?.Invoke();
     }
 }

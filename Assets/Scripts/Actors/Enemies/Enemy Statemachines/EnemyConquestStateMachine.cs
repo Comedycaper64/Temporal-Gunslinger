@@ -35,6 +35,6 @@ public class EnemyConquestStateMachine : EnemyRangedStateMachine
 
     public void SetBulletAnimationTime(float clipTime)
     {
-        projectileBulletHolder.Play(SpawnHash, 0, clipTime);
+        projectileBulletHolder.CrossFade(SpawnHash, 0f, 0, clipTime);
     }
 }

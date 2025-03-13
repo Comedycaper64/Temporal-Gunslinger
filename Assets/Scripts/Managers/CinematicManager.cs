@@ -131,7 +131,10 @@ public class CinematicManager : MonoBehaviour
         {
             SceneChangeSO sceneChangeSO = currentCinematicNode as SceneChangeSO;
 
-            scrollingHallway.ToggleScroll(sceneChangeSO.startScrollingWalk);
+            if (sceneChangeSO.startScrollingWalk)
+            {
+                scrollingHallway.ToggleScroll(sceneChangeSO.startScrollingWalk);
+            }
 
             if (audioManager)
             {

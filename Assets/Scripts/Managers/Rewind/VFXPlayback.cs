@@ -70,6 +70,11 @@ public class VFXPlayback : RewindableMovement
 
     public void StopEffect()
     {
+        if (!visualEffect)
+        {
+            return;
+        }
+
         visualEffect.Reinit();
         visualEffect.Stop();
         effectPlaying = false;
@@ -79,6 +84,11 @@ public class VFXPlayback : RewindableMovement
 
     public void PlayEffect()
     {
+        if (!visualEffect)
+        {
+            return;
+        }
+
         visualEffect.Play();
         ToggleMovement(true);
         effectPlaying = true;

@@ -2,6 +2,7 @@ Shader"Unlit/CircleProgressShader"
 {
     Properties
     {
+        _MainTex ("Texture", 2D) = "white" {}
         _Colour ("Colour", Color) = (1,1,1,1)
         _Offset("Offset", Range(0,1)) = 0.25
         _BorderSize("Border Size", float) = 0
@@ -41,6 +42,7 @@ Shader"Unlit/CircleProgressShader"
                 float4 vertex : SV_POSITION;
             };
 
+            sampler2D _MainTex;
             float4 _Colour;
             float _Progress;
             float _Offset;

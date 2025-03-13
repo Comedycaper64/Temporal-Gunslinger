@@ -26,6 +26,11 @@ public class LoadGameUI : MonoBehaviour
 
         for (int i = 1; i <= levelProgress; i++)
         {
+            if (i >= levelButtons.Count)
+            {
+                break;
+            }
+
             levelButtons[i].gameObject.SetActive(true);
         }
     }

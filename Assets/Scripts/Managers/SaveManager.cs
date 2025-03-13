@@ -13,7 +13,7 @@ public class SaveManager
 
         if (!PlayerPrefs.HasKey(LEVEL_PROGRESS))
         {
-            //(temp for starting at lvl 13)
+            //(temp for starting at later level)
             SetLevelProgress(LEVEL_PROGRESS_DEF);
 
             return LEVEL_PROGRESS_DEF;
@@ -31,6 +31,11 @@ public class SaveManager
             || (newProgress > PlayerPrefs.GetInt(LEVEL_PROGRESS))
         )
         {
+            if (newProgress > 24)
+            {
+                newProgress = 24;
+            }
+
             PlayerPrefs.SetInt(LEVEL_PROGRESS, newProgress);
         }
     }

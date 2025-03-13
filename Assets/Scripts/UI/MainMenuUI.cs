@@ -122,6 +122,9 @@ public class MainMenuUI : MonoBehaviour
             case 23:
                 continueText += " - Future ~ Death";
                 break;
+            case 24:
+                continueText += " - Epilogue";
+                break;
             default:
                 break;
         }

@@ -88,10 +88,10 @@ public class CinematicManagerUI : MonoBehaviour
         }
         else
         {
-            // if (uIChange.onFaded != null)
-            // {
-            uIChange?.onFaded();
-            //}
+            if (uIChange.onFaded != null)
+            {
+                uIChange?.onFaded();
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndOfTimeGameManager : GameManager
 {
@@ -9,6 +8,8 @@ public class EndOfTimeGameManager : GameManager
 
     public override void Start()
     {
+        SaveManager.SetLevelProgress(SceneManager.GetActiveScene().buildIndex);
+
         CinematicManager.Instance.PlayCinematic(levelIntroCinematic, ShowLevelSelect);
     }
 

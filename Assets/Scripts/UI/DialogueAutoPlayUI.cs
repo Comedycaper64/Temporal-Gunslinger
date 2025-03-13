@@ -41,6 +41,7 @@ public class DialogueAutoPlayUI : MonoBehaviour
         {
             return;
         }
+        bAutoPlay = toggle;
 
         OnAutoPlayToggle?.Invoke(this, toggle);
         if (toggle)
@@ -55,7 +56,7 @@ public class DialogueAutoPlayUI : MonoBehaviour
 
     public void AutoPlayButtonPress()
     {
-        bAutoPlay = !bAutoPlay;
-        ToggleAutoPlay(bAutoPlay);
+        bool newAutoPlay = !bAutoPlay;
+        ToggleAutoPlay(newAutoPlay);
     }
 }

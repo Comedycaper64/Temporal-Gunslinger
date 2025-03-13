@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     protected virtual void LoadNextLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 17)
+        if (SceneManager.GetActiveScene().buildIndex == 24)
         {
             SceneManager.LoadScene(0);
         }

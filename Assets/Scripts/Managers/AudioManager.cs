@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
     private bool levelActive = false;
     private const float MIN_PITCH_VARIATION = 0.9f;
     private const float MAX_PITCH_VARIATION = 1.1f;
-    private const float FADE_SPEED = 0.1f;
+    private const float FADE_SPEED = 0.25f;
     private const float TICK_SFX_INTERVAL = 1f;
     private const float EMPHASISED_VOLUME = 1.25f;
     private const float REDUCED_VOLUME = 0.75f;
@@ -130,7 +130,7 @@ public class AudioManager : MonoBehaviour
 
     private void SwitchToActiveMusic()
     {
-        fadeCounter += FADE_SPEED * 5f * Time.unscaledDeltaTime;
+        fadeCounter += FADE_SPEED * 2f * Time.unscaledDeltaTime;
 
         if (fadeCounter < 1f)
         {
@@ -160,7 +160,7 @@ public class AudioManager : MonoBehaviour
 
     private void SwitchToInactiveMusic()
     {
-        fadeCounter += FADE_SPEED * 5f * Time.unscaledDeltaTime;
+        fadeCounter += FADE_SPEED * 2f * Time.unscaledDeltaTime;
 
         if (fadeCounter < 1f)
         {
@@ -225,7 +225,7 @@ public class AudioManager : MonoBehaviour
 
     private void FadeOut()
     {
-        fadeCounter += FADE_SPEED * Time.unscaledDeltaTime;
+        fadeCounter += FADE_SPEED * 1.5f * Time.unscaledDeltaTime;
 
         if (fadeCounter < 1f)
         {

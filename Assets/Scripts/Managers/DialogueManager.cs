@@ -117,6 +117,7 @@ public class DialogueManager : MonoBehaviour
     {
         DialogueSkipCleanup();
         ResetChoices();
+        bLoopToChoice = false;
 
         EndDialogue(true);
     }
