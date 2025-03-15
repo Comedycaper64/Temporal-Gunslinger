@@ -9,6 +9,9 @@ public class CinematicSkipVFXCleanup : MonoBehaviour
     [SerializeField]
     private GameObject[] objectsToDisable;
 
+    [SerializeField]
+    private GameObject[] objectsToEnable;
+
     private void OnEnable()
     {
         PauseMenuUI.OnSkipCutscene += VFXCleanup;
@@ -38,6 +41,14 @@ public class CinematicSkipVFXCleanup : MonoBehaviour
             foreach (GameObject obj in objectsToDisable)
             {
                 obj.SetActive(false);
+            }
+        }
+        if (objectsToEnable.Length > 0)
+        {
+            foreach (GameObject obj in objectsToEnable)
+            {
+                Debug.Log("Setting active: " + obj.name);
+                obj.SetActive(true);
             }
         }
     }

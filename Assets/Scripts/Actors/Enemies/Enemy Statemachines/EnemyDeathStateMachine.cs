@@ -99,6 +99,8 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         stateAnimationTimes = new Stack<float>();
         stateDurationTimes = new Stack<float>();
 
+        deathVFX.PlayEffect();
+
         foreach (BulletStateMachine bullet in deathQuills)
         {
             ResetQuill(bullet);

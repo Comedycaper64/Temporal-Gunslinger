@@ -34,6 +34,11 @@ public class EndingChoiceUI : LevelSelectorUI
             }
         }
 
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         if (selectorActive)
         {
             Vector3 mousePosition = Input.mousePosition;

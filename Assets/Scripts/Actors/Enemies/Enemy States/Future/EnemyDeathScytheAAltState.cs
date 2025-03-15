@@ -49,13 +49,13 @@ public class EnemyDeathScytheAAltState : State
             quillThrown = false;
         }
         deathSM.GetWeapon().ToggleScythe(true);
-        deathSM.GetWeapon().GetScytheWeakPoint().OnHit += CounterAttack;
+        deathSM.GetWeapon().OnHit += CounterAttack;
     }
 
     public override void Exit()
     {
         deathSM.GetWeapon().ToggleScythe(false);
-        deathSM.GetWeapon().GetScytheWeakPoint().OnHit -= CounterAttack;
+        deathSM.GetWeapon().OnHit -= CounterAttack;
 
         if (!rewindState.IsRewinding())
         {
@@ -102,7 +102,7 @@ public class EnemyDeathScytheAAltState : State
         bulletLockOn.LockOnOverride(deathSM.GetRevenantTarget());
     }
 
-    private void CounterAttack(object sender, EventArgs e)
+    private void CounterAttack()
     {
         deathSM.SwitchState(
             new EnemyDeathTeleportBufferState(deathSM, new EnemyDeathRestingState(deathSM, true))

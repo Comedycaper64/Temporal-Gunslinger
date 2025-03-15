@@ -46,6 +46,11 @@ public class LevelSelectorUI : MonoBehaviour
             pocketWatchGroup.alpha += previewFadeSpeed * Time.deltaTime;
         }
 
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         if (selectorActive)
         {
             Vector3 mousePosition = Input.mousePosition;

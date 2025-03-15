@@ -4,7 +4,7 @@ using UnityEngine;
 public class DeathScythe : MonoBehaviour, ISetAttacker
 {
     [SerializeField]
-    private WeakPoint scytheWeakPoint;
+    private WeakPoint[] scytheWeakPoints;
 
     [SerializeField]
     private Renderer scytheRenderer;
@@ -13,6 +13,7 @@ public class DeathScythe : MonoBehaviour, ISetAttacker
     [SerializeField]
     private MeleeWeapon scytheMeleeWeapon;
 
+    public event Action OnHit;
     public event EventHandler<bool> OnAttackToggled;
     public event EventHandler<float> OnTimeOffset;
 
@@ -22,9 +23,29 @@ public class DeathScythe : MonoBehaviour, ISetAttacker
         ToggleScythe(false);
     }
 
+    private void OnDisable()
+    {
+        foreach (WeakPoint weakPoint in scytheWeakPoints)
+        {
+            weakPoint.OnHit -= ScytheHit;
+        }
+    }
+
     public void ToggleScythe(bool toggle)
     {
-        scytheWeakPoint.gameObject.SetActive(toggle);
+        foreach (WeakPoint weakPoint in scytheWeakPoints)
+        {
+            weakPoint.gameObject.SetActive(toggle);
+
+            if (toggle)
+            {
+                weakPoint.OnHit += ScytheHit;
+            }
+            else
+            {
+                weakPoint.OnHit -= ScytheHit;
+            }
+        }
 
         scytheMeleeWeapon.gameObject.SetActive(toggle);
 
@@ -40,9 +61,9 @@ public class DeathScythe : MonoBehaviour, ISetAttacker
         }
     }
 
-    public WeakPoint GetScytheWeakPoint()
+    private void ScytheHit(object sender, EventArgs e)
     {
-        return scytheWeakPoint;
+        OnHit?.Invoke();
     }
 
     public void ToggleAttack(bool toggle)
