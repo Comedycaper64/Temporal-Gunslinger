@@ -28,7 +28,7 @@ public class FlameCarrier : MonoBehaviour, IReactable
     private void Start()
     {
         flammableObjects++;
-        Debug.Log("Flammable objects: " + flammableObjects);
+        //Debug.Log("Flammable objects: " + flammableObjects);
     }
 
     private void OnEnable()
@@ -49,7 +49,7 @@ public class FlameCarrier : MonoBehaviour, IReactable
 
     public void StartFlame(object sender, EventArgs e)
     {
-        Debug.Log("Flame started");
+        //Debug.Log("Flame started");
 
         flameVFX.PlayEffect();
         dissolver.StartDissolve(0.25f);

@@ -127,7 +127,7 @@ public class BulletLockOn : MonoBehaviour
         SetTarget(null, false);
     }
 
-    public void ToggleLockOn(bool toggle)
+    public bool ToggleLockOn(bool toggle)
     {
         if (toggle)
         {
@@ -145,6 +145,7 @@ public class BulletLockOn : MonoBehaviour
                 {
                     lockingOnTarget = lockOnTarget;
                     OnLockOnUI?.Invoke(this, true);
+                    return true;
                     //Turn on lockon UI;
                 }
             }
@@ -155,6 +156,7 @@ public class BulletLockOn : MonoBehaviour
             OnLockOnUI?.Invoke(this, false);
             //Turn off lockon UI;
         }
+        return false;
     }
 
     public void TryLockOn()

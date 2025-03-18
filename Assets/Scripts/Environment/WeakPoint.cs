@@ -17,7 +17,7 @@ public class WeakPoint : MonoBehaviour, IDamageable
 
     public void EnvironmentCrush()
     {
-        Debug.Log("Crush");
+        //Debug.Log("Crush");
         OnCrush?.Invoke(this, null);
     }
 }

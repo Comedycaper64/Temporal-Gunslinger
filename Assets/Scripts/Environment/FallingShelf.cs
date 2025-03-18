@@ -134,5 +134,10 @@ public class FallingShelf : RewindableMovement, IReactable, IFireStarter
         }
 
         isAflame = aflame;
+
+        if (isAflame && bFallen)
+        {
+            OnFireStarted?.Invoke(this, null);
+        }
     }
 }

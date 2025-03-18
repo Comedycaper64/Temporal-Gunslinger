@@ -214,11 +214,20 @@ public class BulletPossessor : MonoBehaviour
             return;
         }
 
-        bLockOnStarted = true;
+        bLockOnStarted = false;
         lockOnTimer = 0f;
         bPestilenceLockOn = false;
         bCharged = false;
         bLockedOn = false;
+
+        bool lockOnTargetFound = possessedBullet.ToggleLockOn(true);
+
+        if (!lockOnTargetFound)
+        {
+            return;
+        }
+
+        bLockOnStarted = true;
 
         if (
             pestilenceAbility
@@ -230,8 +239,6 @@ public class BulletPossessor : MonoBehaviour
             bPestilenceLockOn = true;
             OnBulletCharging?.Invoke(this, true);
         }
-
-        possessedBullet.ToggleLockOn(true);
     }
 
     public void RedirectBullet()

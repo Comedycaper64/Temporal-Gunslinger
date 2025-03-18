@@ -90,14 +90,14 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void ToggleLockOn(bool toggle)
+    public bool ToggleLockOn(bool toggle)
     {
         if (!bulletMovement.CanRedirect() && (toggle == true))
         {
-            return;
+            return false;
         }
 
-        bulletLockOn.ToggleLockOn(toggle);
+        return bulletLockOn.ToggleLockOn(toggle);
     }
 
     public void LockOnBullet()
