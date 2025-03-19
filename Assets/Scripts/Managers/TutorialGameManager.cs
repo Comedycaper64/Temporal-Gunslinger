@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 enum TutorialState
 {
@@ -60,6 +62,9 @@ public class TutorialGameManager : GameManager
     [SerializeField]
     private CinematicSO endOfRound3Cinematic;
 
+    [SerializeField]
+    private CinematicSO derailmentCinematic;
+
     private TutorialState tutorialState;
 
     public override void Start()
@@ -99,6 +104,16 @@ public class TutorialGameManager : GameManager
 
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
+        EnemyReaperMaskDeadState.OnReaperMaskKilled += DerailTutorial;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        EnemyReaperMaskDeadState.OnReaperMaskKilled -= DerailTutorial;
+
+        EnemyDeadState.enemiesAlive = 0;
+        BulletDeadState.bulletNumber = 0;
     }
 
     public void StartGame()
@@ -123,6 +138,35 @@ public class TutorialGameManager : GameManager
     public void EndTutorial()
     {
         CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
+    }
+
+    private void DerailTutorial(object sender, Transform lastEnemy)
+    {
+        bLevelActive = false;
+        OnGameStateChange?.Invoke(this, StateEnum.inactive);
+        rewindManager.ToggleCanRewind(false);
+        TimeManager.SetNormalTime();
+        endOfLevelCam.gameObject.SetActive(true);
+        endOfLevelCam.m_Follow = lastEnemy;
+        endOfLevelCam.m_LookAt = lastEnemy;
+        //switch on last enemy killed camera
+        // do a focus on it
+        StartCoroutine(EndOfTutorialDerail());
+    }
+
+    private IEnumerator EndOfTutorialDerail()
+    {
+        yield return new WaitForSeconds(2f);
+        RewindableMovement.UpdateMovementTimescale(1f);
+        endOfLevelCam.gameObject.SetActive(false);
+        rewindManager.ResetManager(true);
+
+        CinematicManager.Instance.PlayCinematic(derailmentCinematic, RestartGame);
+    }
+
+    private void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public override IEnumerator EndOfLevelWindDown()

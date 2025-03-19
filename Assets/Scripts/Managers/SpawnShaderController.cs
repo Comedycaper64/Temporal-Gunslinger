@@ -12,6 +12,9 @@ public class SpawnShaderController : MonoBehaviour
     private float tweenTimer = 0f;
 
     [SerializeField]
+    private float openingOverride = -1f;
+
+    [SerializeField]
     private MeshRenderer spawnMesh;
     private Material spawnShader;
 
@@ -23,6 +26,12 @@ public class SpawnShaderController : MonoBehaviour
 
     private void Update()
     {
+        if (openingOverride >= 0f)
+        {
+            spawnShader.SetFloat("_Size", openingOverride);
+            return;
+        }
+
         if (bOnOpeningChange)
         {
             float newSize = MMTween.Tween(

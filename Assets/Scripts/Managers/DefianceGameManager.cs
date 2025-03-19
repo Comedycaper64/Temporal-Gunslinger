@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
@@ -23,7 +24,7 @@ public class DefianceGameManager : GameManager
     private GameObject vfxCleanup;
 
     [SerializeField]
-    private MaskStateMachine projectileMask;
+    private GameObject[] abilityUI;
 
     [SerializeField]
     private PlayerStateMachine playerStateMachine;
@@ -33,13 +34,13 @@ public class DefianceGameManager : GameManager
     private CinemachineVirtualCamera startOfLevelCam;
 
     [SerializeField]
-    private CinematicSO endOfRound1Cinematic;
+    private CinematicSO defianceIntroCinematic;
 
     [SerializeField]
-    private CinematicSO endOfRound2Cinematic;
+    private CinematicSO defianceMidPointCinematic;
 
     [SerializeField]
-    private CinematicSO endOfRound3Cinematic;
+    private CinematicSO defianceOutroCinematic;
 
     private TutorialState tutorialState;
 
@@ -49,6 +50,8 @@ public class DefianceGameManager : GameManager
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         //playerStateMachine.stateMachineAnimator.CrossFadeInFixedTime("Revenant walk", 0.1f);
         playerController = playerStateMachine.GetComponent<PlayerController>();
+
+        playerController.ToggleTutorialStartMode();
 
         reaper.SetActive(false);
 
@@ -71,6 +74,16 @@ public class DefianceGameManager : GameManager
 
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
+        EnemyReaperMaskDeadState.OnReaperMaskKilled += AdvanceLevel;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        EnemyReaperMaskDeadState.OnReaperMaskKilled -= AdvanceLevel;
+
+        EnemyDeadState.enemiesAlive = 0;
+        BulletDeadState.bulletNumber = 0;
     }
 
     public void StartGame()
@@ -92,10 +105,21 @@ public class DefianceGameManager : GameManager
         base.LevelLost();
     }
 
-    public void EndTutorial()
+    private void AdvanceLevel(object sender, Transform lastEnemy)
     {
-        CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
+        bLevelActive = false;
+        OnGameStateChange?.Invoke(this, StateEnum.inactive);
+        rewindManager.ToggleCanRewind(false);
+        TimeManager.SetNormalTime();
+        endOfLevelCam.gameObject.SetActive(true);
+        endOfLevelCam.m_Follow = lastEnemy;
+        endOfLevelCam.m_LookAt = lastEnemy;
+        //switch on last enemy killed camera
+        // do a focus on it
+        StartCoroutine(EndOfLevelWindDown());
     }
+
+    private void ShowCredits() { }
 
     public override IEnumerator EndOfLevelWindDown()
     {
@@ -111,30 +135,35 @@ public class DefianceGameManager : GameManager
             revModelPocketwatch.SetActive(true);
             pocketwatchUI.SetActive(true);
 
-            CinematicManager.Instance.PlayCinematic(endOfRound1Cinematic, SetupLevel);
+            CinematicManager.Instance.PlayCinematic(defianceIntroCinematic, SetupLevel);
             //round2Mask1.SetActive(true);
             //round2Mask2.SetActive(true);
-            EnemyDeadState.enemiesAlive = 2;
-            BulletDeadState.bulletNumber = 1;
+            EnemyDeadState.enemiesAlive = 3;
+            //BulletDeadState.bulletNumber = 1;
             playerController.ToggleCanRotate(true);
             playerController.ToggleCanFocus(true);
             playerController.ToggleCanRedirect(true);
+            playerController.ToggleCanPossess(true);
             rewindManager.ToggleCanRewind(true);
+
+            foreach (GameObject ui in abilityUI)
+            {
+                ui.SetActive(true);
+            }
         }
         else if (tutorialState == TutorialState.Round2)
         {
-            CinematicManager.Instance.PlayCinematic(endOfRound2Cinematic, SetupLevel);
-            EnemyDeadState.enemiesAlive = 2;
-            BulletDeadState.bulletNumber = 2;
-            projectileMask.EnableFireProjectile();
-            playerController.ToggleCanPossess(true);
+            CinematicManager.Instance.PlayCinematic(defianceMidPointCinematic, SetupLevel);
+            EnemyDeadState.enemiesAlive = 99;
+            //BulletDeadState.bulletNumber = 2;
+
             rewindManager.ToggleCanRewind(true);
         }
         else if (tutorialState == TutorialState.Round3)
         {
             EnemyDeadState.enemiesAlive = 0;
             BulletDeadState.bulletNumber = 0;
-            //CinematicManager.Instance.PlayCinematic(endOfRound3Cinematic, ShowLevelSelect);
+            CinematicManager.Instance.PlayCinematic(defianceOutroCinematic, ShowCredits);
         }
     }
 }

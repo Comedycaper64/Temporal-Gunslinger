@@ -16,6 +16,9 @@ public class IntroPocketwatch : MonoBehaviour
     [SerializeField]
     private TutorialGameManager tutorialGameManager;
 
+    [SerializeField]
+    private DefianceGameManager defianceGameManager;
+
     private void Awake()
     {
         player = GetComponent<MMF_Player>();
@@ -50,7 +53,15 @@ public class IntroPocketwatch : MonoBehaviour
     public void StartGame()
     {
         lookAtCamera = false;
-        tutorialGameManager.StartGame();
+
+        if (!tutorialGameManager)
+        {
+            defianceGameManager.StartGame();
+        }
+        else
+        {
+            tutorialGameManager.StartGame();
+        }
 
         audioManager.SetMusicTrack(introTrack, null);
         audioManager.FadeInMusic();

@@ -12,7 +12,7 @@ public class ActorHealth : MonoBehaviour
     [SerializeField]
     private AudioClip deathSFX;
 
-    private void Awake()
+    private void OnEnable()
     {
         stateMachine = GetComponent<StateMachine>();
         foreach (WeakPoint weakPoint in weakPoints)

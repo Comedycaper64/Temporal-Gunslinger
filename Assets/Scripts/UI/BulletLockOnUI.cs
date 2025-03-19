@@ -213,6 +213,7 @@ public class BulletLockOnUI : MonoBehaviour
         {
             lockOnUI.SetCanvasGroupAlpha(0f);
             chargeUI.SetCanvasGroupAlpha(0f);
+            ToggleLockingOn(this, false);
             //lockOnUI.ToggleFade(false);
         }
     }

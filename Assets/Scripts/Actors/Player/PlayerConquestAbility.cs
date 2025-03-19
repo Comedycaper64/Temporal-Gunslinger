@@ -17,17 +17,19 @@ public class PlayerConquestAbility : MonoBehaviour
     [SerializeField]
     private GameObject conquestDagger;
 
-    [SerializeField]
-    private MeshRenderer daggerRenderer;
+    // [SerializeField]
+    // private MeshRenderer daggerRenderer;
 
     [SerializeField]
     private GameObject conquestPortal;
 
     [SerializeField]
-    private Material daggerSpawnMaterial;
+    private GameObject daggerSpawnModel;
+
+    private Renderer daggerSpawnRenderer;
 
     [SerializeField]
-    private Material daggerFlyMaterial;
+    private GameObject daggerFlyModel;
 
     [SerializeField]
     private AudioClip abilitySFX;
@@ -50,6 +52,8 @@ public class PlayerConquestAbility : MonoBehaviour
         bulletPossessor = GetComponent<BulletPossessor>();
         rewindState = GetComponent<RewindState>();
         rewindState.ToggleMovement(true);
+        daggerSpawnRenderer = daggerSpawnModel.GetComponent<Renderer>();
+
         InputManager.Instance.OnConquestAction += TryUseAbility;
     }
 
@@ -64,12 +68,16 @@ public class PlayerConquestAbility : MonoBehaviour
             if ((daggerSpawnTimer > daggerSpawnDuration) && (spawned == false))
             {
                 spawned = true;
-                daggerRenderer.material = daggerFlyMaterial;
+                //daggerRenderer.material = daggerFlyMaterial;
+                daggerFlyModel.SetActive(true);
+                daggerSpawnModel.SetActive(false);
             }
             else if ((daggerSpawnTimer < daggerSpawnDuration) && (spawned == true))
             {
                 spawned = false;
-                daggerRenderer.material = daggerSpawnMaterial;
+                //daggerRenderer.material = daggerSpawnMaterial;
+                daggerFlyModel.SetActive(false);
+                daggerSpawnModel.SetActive(true);
                 SetDaggerMaterialPoints();
             }
         }
@@ -141,7 +149,7 @@ public class PlayerConquestAbility : MonoBehaviour
 
     private void SetDaggerMaterialPoints()
     {
-        Material daggerMaterial = daggerRenderer.material;
+        Material daggerMaterial = daggerSpawnRenderer.material;
         daggerMaterial.SetVector("_Portal_Point", currentPortalPoint);
         daggerMaterial.SetVector("_Portal_Direction", currentPortalDirection);
     }

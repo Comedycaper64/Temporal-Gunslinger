@@ -166,11 +166,6 @@ public class LevelSelectorUI : MonoBehaviour
         tutorialGameManager.EndTutorial();
     }
 
-    public void LoadNextLevel()
-    {
-        //SceneManager.LoadScene(nextLevelBuildIndex);
-    }
-
     public void ToggleLevelSelector(bool toggle)
     {
         selectorActive = toggle;

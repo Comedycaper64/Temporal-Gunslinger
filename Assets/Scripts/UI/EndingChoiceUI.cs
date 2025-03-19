@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndingChoiceUI : LevelSelectorUI
 {
@@ -107,6 +108,11 @@ public class EndingChoiceUI : LevelSelectorUI
         }
     }
 
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
     public override int GetMousedCanvasGroupIndex(float zRotation)
     {
         if ((zRotation >= 270f) || (zRotation < 90f))
@@ -123,6 +129,7 @@ public class EndingChoiceUI : LevelSelectorUI
     {
         confirmation = false;
         ToggleLevelSelector(false);
+        cinematicManager.PlayCinematic(defyCinematic, LoadNextLevel);
     }
 
     public void HandOverThePocketwatch()

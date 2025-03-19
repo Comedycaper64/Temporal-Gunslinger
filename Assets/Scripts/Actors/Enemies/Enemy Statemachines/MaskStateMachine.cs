@@ -1,14 +1,24 @@
+using UnityEngine;
+
 public class MaskStateMachine : EnemyRangedStateMachine
 {
-    // [SerializeField]
-    // private bool fireProjectile;
+    [SerializeField]
+    private bool reaperMask = false;
 
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
-        stateDictionary.Add(StateEnum.idle, new EnemyInactiveState(this));
+        stateDictionary.Add(StateEnum.idle, new EnemyRangedIdleState(this));
         stateDictionary.Add(StateEnum.active, new BlankState(this));
-        stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
+
+        if (reaperMask)
+        {
+            stateDictionary.Add(StateEnum.dead, new EnemyReaperMaskDeadState(this));
+        }
+        else
+        {
+            stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
+        }
 
         //Debug.Log(stateDictionary.Count);
     }

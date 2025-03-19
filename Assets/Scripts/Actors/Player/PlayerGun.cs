@@ -42,6 +42,9 @@ public class PlayerGun : MonoBehaviour
     private Transform bulletPosition;
 
     [SerializeField]
+    private Transform bulletShootPosition;
+
+    [SerializeField]
     private AudioClip aimGunSFX;
 
     [SerializeField]
@@ -178,6 +181,8 @@ public class PlayerGun : MonoBehaviour
         gunShotVFX.PlayEffect();
         impulseSource.GenerateImpulse();
         bulletPossessTarget.ToggleNearbyPossessableHighlight(false);
+
+        bullet.SetFiringPosition(bulletShootPosition);
         bulletStateMachine.SwitchToActive();
     }
 

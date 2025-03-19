@@ -105,7 +105,7 @@ Transform:
   - {fileID: 8103246640756053612}
   - {fileID: 6431480447875362668}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &282173908676742487
 MonoBehaviour:
@@ -183,11 +183,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   conquestDagger: {fileID: 5295901601736239158}
-  daggerRenderer: {fileID: 8127987924602567102}
   conquestPortal: {fileID: 4953520897273820608, guid: 8b548bf5fbc520c4580b0bfe8a1e4120,
     type: 3}
-  daggerSpawnMaterial: {fileID: 2100000, guid: 4382a6b2d77a4614bacb77afe219ad37, type: 2}
-  daggerFlyMaterial: {fileID: 2100000, guid: 5fb100ae98cb62249a4d5f3d2d598936, type: 2}
+  daggerSpawnModel: {fileID: 7767747852250781803}
+  daggerFlyModel: {fileID: 2373352428271035131}
   abilitySFX: {fileID: 8300000, guid: 969bd7f9c8bd4804199deb931d00b3db, type: 3}
   abilityUnavailableSFX: {fileID: 8300000, guid: e49938c1e1dc296449d4fa0aa7442102,
     type: 3}
@@ -495,6 +494,7 @@ Transform:
   - {fileID: 282173907855892012}
   - {fileID: 282173908174197357}
   - {fileID: 282173908866422009}
+  - {fileID: 2664471214683357787}
   - {fileID: 4025539070700873019}
   m_Father: {fileID: 282173908678326073}
   m_RootOrder: -1
@@ -528,6 +528,7 @@ MonoBehaviour:
   standbyPosition: {fileID: 282173908174197357}
   aimingPosition: {fileID: 282173908866422009}
   bulletPosition: {fileID: 282173908916033126}
+  bulletShootPosition: {fileID: 2664471214683357787}
   aimGunSFX: {fileID: 8300000, guid: 7c1e225e5d154284fa758e7e4b78e8ab, type: 3}
   shootSFX: {fileID: 8300000, guid: 813b10f08188d6c40a65e738a2ea21c6, type: 3}
   gunShotVFX: {fileID: 4434253767667778994}
@@ -829,6 +830,37 @@ MonoBehaviour:
   pauseDuringLevel: 0
   loopingSFX: 0
   sfxVolume: 0.75
+--- !u!1 &1513144200008606498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2664471214683357787}
+  m_Layer: 7
+  m_Name: Bullet Fire Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2664471214683357787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513144200008606498}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.5754227, y: 0.593552, z: -0.17572272}
+  m_LocalScale: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 282173909489301258}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2219877403679196840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2960,6 +2992,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: d97295638a0839c4c83237b6350737e7, type: 3}
+--- !u!1 &2373352428271035131 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4313260973820839548, guid: d97295638a0839c4c83237b6350737e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1960226328234058887}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5295901601736239157 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5929777289824521394, guid: d97295638a0839c4c83237b6350737e7,
@@ -2972,9 +3010,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1960226328234058887}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &8127987924602567102 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7780098655613869369, guid: d97295638a0839c4c83237b6350737e7,
+--- !u!1 &7767747852250781803 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8140409096780414188, guid: d97295638a0839c4c83237b6350737e7,
     type: 3}
   m_PrefabInstance: {fileID: 1960226328234058887}
   m_PrefabAsset: {fileID: 0}

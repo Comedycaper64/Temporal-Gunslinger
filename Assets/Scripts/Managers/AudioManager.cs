@@ -18,6 +18,7 @@ public class AudioManager : MonoBehaviour
     private const float EMPHASISED_VOLUME = 1.25f;
     private const float REDUCED_VOLUME = 0.75f;
     private bool tick;
+    private static int sfxPoolCounter = 0;
     private float fadeCounter = 0f;
     private bool fadeIn = false;
     private bool fadeOut = false;
@@ -29,6 +30,10 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField]
     private AudioSource backingMusicAudioSource;
+
+    [SerializeField]
+    private AudioSource[] localSfxPool;
+    private static AudioSource[] sfxPool;
 
     [SerializeField]
     private AudioMixerGroup mixSetter;
@@ -65,6 +70,8 @@ public class AudioManager : MonoBehaviour
         GameManager.OnGameStateChange += UpdateMusicTracks;
 
         slowdownMixer = mixSetter;
+        sfxPool = localSfxPool;
+        sfxPoolCounter = 0;
     }
 
     private void OnDisable()
@@ -259,22 +266,31 @@ public class AudioManager : MonoBehaviour
         bool useSlowdownMixer = false
     )
     {
-        var tempGameObject = new GameObject("CustomsOneShotAudio");
-        tempGameObject.transform.position = position;
-        var tempAudioSource = tempGameObject.AddComponent<AudioSource>();
-        tempAudioSource.clip = clip;
-        tempAudioSource.volume = volume;
-        tempAudioSource.pitch = pitch;
+        AudioSource source = sfxPool[sfxPoolCounter];
+        source.transform.position = position;
+        source.clip = clip;
+        source.volume = volume;
+        source.pitch = pitch;
 
         if (useSlowdownMixer)
         {
-            tempAudioSource.outputAudioMixerGroup = slowdownMixer;
+            source.outputAudioMixerGroup = slowdownMixer;
+        }
+        else
+        {
+            source.outputAudioMixerGroup = null;
         }
 
-        tempAudioSource.Play();
-        Destroy(tempGameObject, clip.length);
+        source.Play();
 
-        return tempAudioSource;
+        sfxPoolCounter++;
+
+        if (sfxPoolCounter >= sfxPool.Length)
+        {
+            sfxPoolCounter = 0;
+        }
+
+        return source;
     }
 
     public static AudioSource PlaySFX(
