@@ -27,12 +27,15 @@ public class EnemyBossMaskShootState : State
         projectileFired = false;
         rewindState.ToggleMovement(true);
 
-        stateMachine.stateMachineAnimator.CrossFade(
-            ActiveAnimHash,
-            0.01f,
-            0,
-            stateMachine.GetActiveAnimationExitTime()
-        );
+        if (stateMachine.GetActiveAnimationExitTime() < 0.01f)
+        {
+            stateMachine.stateMachineAnimator.CrossFade(
+                ActiveAnimHash,
+                0.01f,
+                0,
+                stateMachine.GetActiveAnimationExitTime()
+            );
+        }
 
         if (timer >= shootTime)
         {

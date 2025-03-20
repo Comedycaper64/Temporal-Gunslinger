@@ -6,7 +6,7 @@ public class EnemyMaskBossStateMachine : EnemyRangedStateMachine
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
         stateDictionary.Add(StateEnum.idle, new EnemyRangedIdleState(this));
-        stateDictionary.Add(StateEnum.active, new EnemyMaskShootState(this));
+        stateDictionary.Add(StateEnum.active, new EnemyBossMaskShootState(this));
         stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
     }
 

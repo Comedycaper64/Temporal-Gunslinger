@@ -44,6 +44,8 @@ public class DefianceGameManager : GameManager
 
     private TutorialState tutorialState;
 
+    public static Action OnGameBeat;
+
     public override void Start()
     {
         tutorialState = TutorialState.MainMenu;
@@ -119,7 +121,10 @@ public class DefianceGameManager : GameManager
         StartCoroutine(EndOfLevelWindDown());
     }
 
-    private void ShowCredits() { }
+    private void ShowCredits()
+    {
+        OnGameBeat?.Invoke();
+    }
 
     public override IEnumerator EndOfLevelWindDown()
     {
@@ -155,6 +160,7 @@ public class DefianceGameManager : GameManager
         {
             CinematicManager.Instance.PlayCinematic(defianceMidPointCinematic, SetupLevel);
             EnemyDeadState.enemiesAlive = 99;
+            RedirectManager.Instance.SetRedirects(0);
             //BulletDeadState.bulletNumber = 2;
 
             rewindManager.ToggleCanRewind(true);
