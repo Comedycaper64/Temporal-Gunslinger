@@ -4,6 +4,7 @@ using Random = UnityEngine.Random;
 
 public class PlayerConquestAbility : MonoBehaviour
 {
+    public bool bCanUseAbility = true;
     private bool bAbilityUsed = true;
     private bool spawned = false;
     private int lastRandomVoiceline = 0;
@@ -90,6 +91,11 @@ public class PlayerConquestAbility : MonoBehaviour
 
     private void TryUseAbility()
     {
+        if (!bCanUseAbility)
+        {
+            return;
+        }
+
         if (bAbilityUsed)
         {
             //SFX for abiltiy used;

@@ -15,6 +15,13 @@ public class EnemyMaskBossStateMachine : EnemyRangedStateMachine
         SwitchState(stateDictionary[StateEnum.active]);
     }
 
+    public override void ToggleInactive(bool toggle)
+    {
+        base.ToggleInactive(toggle);
+
+        stateMachineAnimator.SetBool("deactivate", toggle);
+    }
+
     public override void GameManager_OnGameStateChange(object sender, StateEnum stateChange)
     {
         if (stateChange == StateEnum.active)

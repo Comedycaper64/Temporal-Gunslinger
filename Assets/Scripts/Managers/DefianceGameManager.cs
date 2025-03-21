@@ -161,6 +161,7 @@ public class DefianceGameManager : GameManager
             CinematicManager.Instance.PlayCinematic(defianceMidPointCinematic, SetupLevel);
             EnemyDeadState.enemiesAlive = 99;
             RedirectManager.Instance.SetRedirects(0);
+            playerStateMachine.GetComponent<PlayerConquestAbility>().bCanUseAbility = true;
             //BulletDeadState.bulletNumber = 2;
 
             rewindManager.ToggleCanRewind(true);
