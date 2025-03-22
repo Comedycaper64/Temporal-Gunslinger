@@ -59,6 +59,14 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     public override void ToggleInactive(bool toggle)
     {
         deathVFX.StopEffect();
+
+        if (toggle)
+        {
+            foreach (DeathDeadzone deadzone in deathDeadzones)
+            {
+                deadzone.ResetZone();
+            }
+        }
     }
 
     protected override void SetupDictionary()
@@ -114,11 +122,21 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
 
     public void IncrementFlow()
     {
-        flowIndex++;
+        int newFlow = flowIndex + 1;
+
+        if (newFlow < stateFlow.Count)
+        {
+            flowIndex = newFlow;
+        }
     }
 
     public void DecrementFlow()
     {
+        if (flowIndex <= 0)
+        {
+            return;
+        }
+
         flowIndex--;
     }
 
@@ -181,6 +199,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
 
     public BulletStateMachine GetQuill()
     {
+        if (quillIndex >= deathQuills.Length)
+        {
+            return null;
+        }
+
         BulletStateMachine availableQuill = deathQuills[quillIndex];
         quillIndex++;
 
@@ -209,6 +232,12 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     public void ToggleShield(bool toggle)
     {
         int index = flowIndex / 5;
+
+        if (index > 2)
+        {
+            return;
+        }
+
         deathShields[index].gameObject.SetActive(toggle);
     }
 

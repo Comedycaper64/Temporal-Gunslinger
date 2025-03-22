@@ -95,6 +95,12 @@ public class EnemyDeathScytheAAltState : State
     private void ThrowQuill()
     {
         BulletStateMachine quill = deathSM.GetQuill();
+
+        if (!quill)
+        {
+            return;
+        }
+
         deathSM.SetQuillAtFiringPoint(quill, 1);
         quill.SwitchToActive();
 

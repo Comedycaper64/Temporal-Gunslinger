@@ -67,6 +67,12 @@ public class EnemyDeathQuillFlurryState : State
         for (int i = 0; i < quillThrowNum; i++)
         {
             BulletStateMachine quill = deathSM.GetQuill();
+
+            if (!quill)
+            {
+                continue;
+            }
+
             deathSM.SetQuillAtFiringPoint(quill, i + 3);
             quill.SwitchToActive();
 
