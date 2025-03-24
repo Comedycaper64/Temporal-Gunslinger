@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
 {
+    private bool vSyncState;
+
     private const float SLIDER_MOD = 8f;
     private AudioSource sampleAudioSource;
 
@@ -36,12 +38,16 @@ public class OptionsManager : MonoBehaviour
 
     // [SerializeField]
     // private Slider bulletSensitivityYSlider;
+    [SerializeField]
+    private Image vsyncButtonImage;
 
     public static EventHandler<float> OnMasterVolumeUpdated;
     public static EventHandler<float> OnMusicVolumeUpdated;
     public static EventHandler<float> OnSFXVolumeUpdated;
+    public static EventHandler<float> OnVoiceVolumeUpdated;
     public static EventHandler<float> OnGunSensitivityUpdated;
     public static EventHandler<float> OnBulletSensitivityUpdated;
+    public static EventHandler<bool> OnVSyncUpdated;
 
     private void OnEnable()
     {
@@ -54,6 +60,17 @@ public class OptionsManager : MonoBehaviour
         //gunSensitivityYSlider.value = PlayerOptions.GetGunYSensitivity();
         bulletSensitivitySlider.value = PlayerOptions.GetBulletSensitivity() * SLIDER_MOD;
         //bulletSensitivityYSlider.value = PlayerOptions.GetBulletYSensitivity();
+
+        vSyncState = PlayerOptions.GetVSync();
+
+        if (vSyncState)
+        {
+            vsyncButtonImage.color = Color.white;
+        }
+        else
+        {
+            vsyncButtonImage.color = Color.gray;
+        }
 
         sampleAudioSource = GetComponent<AudioSource>();
     }
@@ -92,8 +109,9 @@ public class OptionsManager : MonoBehaviour
     public void SetVoiceVolume(float newVolume)
     {
         newVolume = newVolume / SLIDER_MOD;
-
         PlayerOptions.SetVoiceVolume(newVolume);
+
+        OnVoiceVolumeUpdated?.Invoke(this, newVolume);
 
         if (!sampleAudioSource)
         {
@@ -134,6 +152,24 @@ public class OptionsManager : MonoBehaviour
             newSensitivity
         //new Vector2(newSensitivity, PlayerOptions.GetBulletYSensitivity())
         );
+    }
+
+    public void ToggleVSync()
+    {
+        vSyncState = !vSyncState;
+
+        if (vSyncState)
+        {
+            vsyncButtonImage.color = Color.white;
+        }
+        else
+        {
+            vsyncButtonImage.color = Color.gray;
+        }
+
+        PlayerOptions.SetVSync(vSyncState);
+
+        OnVSyncUpdated?.Invoke(this, vSyncState);
     }
 
     // public void SetBulletYSensitivity(float newSensitivity)

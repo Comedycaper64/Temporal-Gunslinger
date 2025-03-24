@@ -9,6 +9,7 @@ public class PlayerOptions
     private const string GUN_SENSITIVITY = "GunSens";
     private const string BULLET_SENSITIVITY = "BulletSens";
     private const string DIALOGUE_AUTOPLAY = "AutoPlay";
+    private const string VSYNC = "VSync";
 
     private static float MASTER_VOLUME_DEF = 0.5f;
     private static float MUSIC_VOLUME_DEF = 1f;
@@ -19,6 +20,7 @@ public class PlayerOptions
     private static float BULLET_SENSITIVITY_DEF = 1f;
 
     private static bool DIALOGUE_AUTOPLAY_DEF = false;
+    private static bool VSYNC_DEF = true;
 
     public static void SetMasterVolume(float newVolume)
     {
@@ -71,6 +73,17 @@ public class PlayerOptions
         }
 
         PlayerPrefs.SetInt(DIALOGUE_AUTOPLAY, autoPlay);
+    }
+
+    public static void SetVSync(bool toggle)
+    {
+        int vSync = 0;
+        if (toggle)
+        {
+            vSync = 1;
+        }
+
+        PlayerPrefs.SetInt(VSYNC, vSync);
     }
 
     public static float GetMasterVolume()
@@ -160,6 +173,24 @@ public class PlayerOptions
             }
 
             return autoPlay;
+        }
+    }
+
+    public static bool GetVSync()
+    {
+        if (!PlayerPrefs.HasKey(VSYNC))
+        {
+            return VSYNC_DEF;
+        }
+        else
+        {
+            bool vSync = false;
+            if (PlayerPrefs.GetInt(VSYNC) == 1)
+            {
+                vSync = true;
+            }
+
+            return vSync;
         }
     }
 }

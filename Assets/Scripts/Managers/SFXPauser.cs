@@ -7,12 +7,12 @@ public class SFXPauser : MonoBehaviour
     private bool pauseDuringLevel = true;
 
     [SerializeField]
-    private bool loopingSFX = false;
-    private AudioSource sfxAudioSource;
+    protected bool loopingSFX = false;
+    protected AudioSource sfxAudioSource;
 
     [SerializeField]
     [Range(0f, 1f)]
-    private float sfxVolume = 1f;
+    protected float sfxVolume = 1f;
 
     private void Awake()
     {
@@ -20,7 +20,7 @@ public class SFXPauser : MonoBehaviour
         PlaySFX();
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         GameManager.OnGameStateChange += ToggleAudioSource;
 
@@ -31,7 +31,7 @@ public class SFXPauser : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         GameManager.OnGameStateChange -= ToggleAudioSource;
 
@@ -42,7 +42,7 @@ public class SFXPauser : MonoBehaviour
         }
     }
 
-    private void ToggleAudioSource(object sender, StateEnum newState)
+    protected void ToggleAudioSource(object sender, StateEnum newState)
     {
         if ((newState == StateEnum.active) && pauseDuringLevel)
         {
@@ -59,7 +59,7 @@ public class SFXPauser : MonoBehaviour
         sfxAudioSource.volume = 0f;
     }
 
-    private void PlaySFX()
+    protected virtual void PlaySFX()
     {
         // if (sfxAudioSource.isPlaying)
         // {
@@ -69,7 +69,7 @@ public class SFXPauser : MonoBehaviour
         sfxAudioSource.volume = PlayerOptions.GetSFXVolume() * sfxVolume;
     }
 
-    private void UpdateVolume(object sender, float e)
+    protected virtual void UpdateVolume(object sender, float e)
     {
         sfxAudioSource.volume = PlayerOptions.GetSFXVolume() * sfxVolume;
     }
