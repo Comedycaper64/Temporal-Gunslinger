@@ -19,8 +19,6 @@ public class MaskStateMachine : EnemyRangedStateMachine
         {
             stateDictionary.Add(StateEnum.dead, new EnemyDeadState(this));
         }
-
-        //Debug.Log(stateDictionary.Count);
     }
 
     public void EnableFireProjectile()

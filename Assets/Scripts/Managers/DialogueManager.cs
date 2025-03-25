@@ -87,6 +87,16 @@ public class DialogueManager : MonoBehaviour
     {
         DialogueAutoPlayUI.OnAutoPlayToggle -= ToggleAutoPlay;
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
+
+        if (animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+        }
+
+        if (autoPlayCoroutine != null)
+        {
+            StopCoroutine(autoPlayCoroutine);
+        }
     }
 
     public void PlayDialogue(DialogueSO dialogueSO, Action onDialogueComplete)

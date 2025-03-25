@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using MoreMountains.Tools;
 using UnityEngine;
@@ -24,6 +25,8 @@ public class BulletDamager : MonoBehaviour
 
     [SerializeField]
     private GameObject ricochetVFX;
+
+    public EventHandler<IDamageable> OnHitAchievementCheck;
 
     private void Awake()
     {
@@ -94,6 +97,8 @@ public class BulletDamager : MonoBehaviour
 
             //Debug.Log("Hit: " + damageable);
             impulseSource.GenerateImpulse();
+
+            OnHitAchievementCheck?.Invoke(this, damageable);
 
             damageable.ProjectileHit(out float velocityConservation, bulletMovement.GetVelocity());
 

@@ -85,17 +85,6 @@ public class BulletLockOn : MonoBehaviour
 
         float distanceRotated = (newDirection - currentDirection).magnitude;
 
-        //Debug.Log(distanceRotated);
-
-        // Debug.Log(
-        //     "New Direction: "
-        //         + newDirection
-        //         + ", Current Direction: "
-        //         + currentDirection
-        //         + ", Distance Rotated: "
-        //         + distanceRotated
-        // );
-
         currentLockOnTotalRotation += distanceRotated * rewindModifier;
 
         //Debug.Log("Current LockOn Rotation: " + currentLockOnTotalRotation);

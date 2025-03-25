@@ -4,11 +4,6 @@ using UnityEngine.UI;
 
 public class ConquestAbilityUI : MonoBehaviour
 {
-    // [SerializeField]
-    // private Color unusedColour;
-
-    // [SerializeField]
-    // private Color usedColour;
     [SerializeField]
     private MMF_Player usedFeedback;
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class RepeatingBulletSpawner : RewindableMovement
@@ -16,6 +17,7 @@ public class RepeatingBulletSpawner : RewindableMovement
 
     [SerializeField]
     private Transform spawnLocation;
+    public EventHandler<int> OnBulletSpawned;
 
     private void Update()
     {
@@ -32,6 +34,7 @@ public class RepeatingBulletSpawner : RewindableMovement
                 if (spawnIndex < availableBullets.Length)
                 {
                     availableBullets[spawnIndex].SwitchToActive();
+                    OnBulletSpawned?.Invoke(this, spawnIndex + 1);
                 }
 
                 spawnIndex++;

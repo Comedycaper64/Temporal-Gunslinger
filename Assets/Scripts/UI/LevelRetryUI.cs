@@ -10,9 +10,13 @@ public class LevelRetryUI : MonoBehaviour
     private float uiScale = 1.4f;
     private float targetScale = 1f;
 
+    [SerializeField]
+    private CanvasGroupFader noBulletsFader;
+
     private void Start()
     {
         GameManager.Instance.OnLevelLost += GameManager_OnLevelLost;
+        GameManager.Instance.OnNoBulletsLeft += GameManager_OnNoBullets;
         canvasGroup = GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0f;
         transform.localScale = new Vector3(uiScale, uiScale, uiScale);
@@ -53,6 +57,7 @@ public class LevelRetryUI : MonoBehaviour
     private void OnDisable()
     {
         GameManager.Instance.OnLevelLost -= GameManager_OnLevelLost;
+        GameManager.Instance.OnNoBulletsLeft -= GameManager_OnNoBullets;
     }
 
     private void GameManager_OnLevelLost(object sender, bool e)
@@ -68,5 +73,10 @@ public class LevelRetryUI : MonoBehaviour
             targetAlpha = 0f;
             targetScale = uiScale;
         }
+    }
+
+    private void GameManager_OnNoBullets(object sender, bool toggle)
+    {
+        noBulletsFader.ToggleFade(toggle);
     }
 }

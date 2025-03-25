@@ -58,6 +58,11 @@ public class PlayerConquestAbility : MonoBehaviour
         InputManager.Instance.OnConquestAction += TryUseAbility;
     }
 
+    private void OnDisable()
+    {
+        InputManager.Instance.OnConquestAction -= TryUseAbility;
+    }
+
     private void Update()
     {
         if (bAbilityUsed)
@@ -82,11 +87,6 @@ public class PlayerConquestAbility : MonoBehaviour
                 SetDaggerMaterialPoints();
             }
         }
-    }
-
-    private void OnDisable()
-    {
-        InputManager.Instance.OnConquestAction -= TryUseAbility;
     }
 
     private void TryUseAbility()
@@ -124,10 +124,24 @@ public class PlayerConquestAbility : MonoBehaviour
 
         int randomInt = Random.Range(0, conquestVoicelines.Length);
 
-        while (randomInt == lastRandomVoiceline)
+        int retries = 3;
+        int counter = 0;
+
+        while (counter < retries)
         {
+            if (randomInt != lastRandomVoiceline)
+            {
+                break;
+            }
+
             randomInt = Random.Range(0, conquestVoicelines.Length);
+            counter++;
         }
+
+        // while (randomInt == lastRandomVoiceline)
+        // {
+        //     randomInt = Random.Range(0, conquestVoicelines.Length);
+        // }
 
         lastRandomVoiceline = randomInt;
 

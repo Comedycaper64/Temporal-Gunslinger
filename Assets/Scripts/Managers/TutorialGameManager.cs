@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using Cinemachine;
 using UnityEngine;
@@ -130,7 +129,7 @@ public class TutorialGameManager : GameManager
         tutorialState++;
     }
 
-    public override void LevelLost()
+    public override void LevelLost(bool bulletsSpent = false)
     {
         base.LevelLost();
     }

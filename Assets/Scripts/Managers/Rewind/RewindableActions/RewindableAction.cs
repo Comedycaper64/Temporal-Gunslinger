@@ -7,7 +7,6 @@ public abstract class RewindableAction
 
     public virtual void Execute()
     {
-        //RewindManager.Instance.AddRewindable(this);
         OnRewindableActionCreated?.Invoke(this, this);
     }
 

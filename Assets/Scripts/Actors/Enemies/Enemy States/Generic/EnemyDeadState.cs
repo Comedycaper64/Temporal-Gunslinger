@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyDeadState : State
@@ -6,7 +7,7 @@ public class EnemyDeadState : State
     protected Animator animator;
     protected DissolveController dissolveController;
 
-    //public static EventHandler<float> OnEnemyDeadChange;
+    public static EventHandler<int> OnEnemyDeadACH;
 
     public EnemyDeadState(StateMachine stateMachine)
         : base(stateMachine)
@@ -31,10 +32,11 @@ public class EnemyDeadState : State
 
         stateMachine.ToggleInactive(true);
         enemiesAlive--;
-        //Debug.Log("Alive enemies:" + enemiesAlive);
-        //OnEnemyDeadChange?.Invoke();
 
-        //Debug.Log("Enemies remaining: " + enemyNumber);
+        //Debug.Log("Alive enemies:" + enemiesAlive);
+
+        OnEnemyDeadACH?.Invoke(this, enemiesAlive);
+
         if (enemiesAlive <= 0)
         {
             GameManager.Instance.EndLevel(stateMachine.transform);

@@ -15,6 +15,7 @@ public class FlameCarrier : MonoBehaviour, IReactable
 
     [SerializeField]
     private VFXPlayback flameVFX;
+    public static Action OnLevelFinished;
 
     private void Awake()
     {
@@ -63,6 +64,7 @@ public class FlameCarrier : MonoBehaviour, IReactable
 
         if (flammableObjects <= 0)
         {
+            OnLevelFinished?.Invoke();
             GameManager.Instance.EndLevel(transform);
         }
 

@@ -17,6 +17,11 @@ public class FocusVolumeManager : MonoBehaviour
         FocusManager.OnFocusToggle += ToggleFocusVolume;
     }
 
+    private void OnDisable()
+    {
+        FocusManager.OnFocusToggle -= ToggleFocusVolume;
+    }
+
     private void Update()
     {
         if (bFocusChanged)

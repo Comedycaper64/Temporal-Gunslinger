@@ -153,19 +153,4 @@ public class DissolveController : RewindableMovement
         }
         //yield return new WaitForSeconds(0.025f);
     }
-
-    // private IEnumerator UnDissolve()
-    // {
-    //     float counter = 1;
-
-    //     while (counter > 0)
-    //     {
-    //         counter -= dissolveRate;
-    //         foreach (Material material in materials)
-    //         {
-    //             material.SetFloat("_Dissolve_Amount", counter);
-    //         }
-    //         yield return new WaitForSeconds(0.025f);
-    //     }
-    // }
 }

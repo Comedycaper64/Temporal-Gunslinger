@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyBossDeadState : State
@@ -5,6 +6,7 @@ public class EnemyBossDeadState : State
     private readonly int DeathAnimHash;
     private Animator animator;
     private DissolveController dissolveController;
+    public static Action OnBossDeadACH;
 
     public EnemyBossDeadState(StateMachine stateMachine)
         : base(stateMachine)
@@ -17,6 +19,7 @@ public class EnemyBossDeadState : State
 
     public override void Enter()
     {
+        OnBossDeadACH?.Invoke();
         animator.SetBool("death", true);
         animator.CrossFade(DeathAnimHash, 0.02f);
         dissolveController.StartDissolve(0.25f);

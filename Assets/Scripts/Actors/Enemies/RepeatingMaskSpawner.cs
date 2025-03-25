@@ -42,38 +42,5 @@ public class RepeatingMaskSpawner : RewindableMovement
     {
         spawnIndex = 0;
         spawnTimer = 0f;
-
-        // foreach (BulletStateMachine bullet in availableMasks)
-        // {
-        //     if (!spawnLocation)
-        //     {
-        //         bullet.transform.position = transform.position;
-        //     }
-        //     else
-        //     {
-        //         bullet.transform.position = spawnLocation.position;
-        //     }
-        // }
     }
-
-    // public float GetSpawnTimer()
-    // {
-    //     return spawnTimer;
-    // }
-
-    // public float GetSpawnTime()
-    // {
-    //     return spawnTime;
-    // }
-
-    // public override void ToggleMovement(bool toggle)
-    // {
-    //     base.ToggleMovement(toggle);
-
-    //     if (toggle && initialBulletLaunch && (spawnIndex == 0))
-    //     {
-    //         availableMasks[spawnIndex].SwitchToActive();
-    //         spawnIndex++;
-    //     }
-    // }
 }

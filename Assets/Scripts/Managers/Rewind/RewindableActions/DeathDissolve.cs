@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class DeathDissolve : RewindableAction
 {
     private bool start;

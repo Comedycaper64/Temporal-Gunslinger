@@ -1,11 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathDissolveController : DissolveController
 {
     [SerializeField]
     private float dissolveOverride;
-    private MaterialPropertyBlock propBlock;
 
     protected override void Start()
     {
@@ -47,62 +45,18 @@ public class DeathDissolveController : DissolveController
         counter += dissolveRate * GetSpeed() * Time.deltaTime;
         float newCounter = Mathf.Clamp(counter, 0f, 1f);
 
-        // dissolveValue = Mathf.LerpUnclamped(dissolveInitialState, dissolveTarget, counter);
-        // float dissolve = Mathf.Lerp(dissolveInitialState, dissolveTarget, newCounter);
         dissolveValue = Mathf.Lerp(dissolveInitialState, dissolveTarget, newCounter);
-
-        // Debug.Log("Counter: " + counter);
-        //Debug.Log("Dissolve Value: " + dissolveValue);
-        // Debug.Log("Dissolve: " + dissolve);
 
         foreach (Material material in meshMaterials)
         {
             material.SetFloat("_Dissolve_Amount", dissolveValue);
         }
 
-        // foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
-        // {
-        //     skinnedMeshRenderer.GetPropertyBlock(propBlock);
-        //     propBlock.SetFloat("_Dissolve_Amount", dissolveValue);
-        //     skinnedMeshRenderer.SetPropertyBlock(propBlock);
-        // }
-
-        // foreach (MeshRenderer meshRenderer in meshRenderers)
-        // {
-        //     meshRenderer.GetPropertyBlock(propBlock);
-        //     propBlock.SetFloat("_Dissolve_Amount", dissolveValue);
-        //     meshRenderer.SetPropertyBlock(propBlock);
-        // }
-
         if (newCounter >= 1f)
         {
             StopDissolve();
         }
     }
-
-    // protected override Material[] GetMeshMaterials()
-    // {
-    //     Material[] materials = base.GetMeshMaterials();
-    //     List<MaterialPropertyBlock> blocks = new List<MaterialPropertyBlock>();
-
-    //     foreach (SkinnedMeshRenderer skinnedMeshRenderer in skinnedMeshRenderers)
-    //     {
-    //         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-    //         skinnedMeshRenderer.GetPropertyBlock(propBlock);
-    //         blocks.Add(propBlock);
-    //     }
-
-    //     foreach (MeshRenderer meshRenderer in meshRenderers)
-    //     {
-    //         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-    //         meshRenderer.GetPropertyBlock(propBlock);
-    //         blocks.Add(propBlock);
-    //     }
-
-    //     materialPropertyBlocks = blocks.ToArray();
-
-    //     return materials;
-    // }
 
     protected override void GameManager_OnGameStateChange(object sender, StateEnum e) { }
 

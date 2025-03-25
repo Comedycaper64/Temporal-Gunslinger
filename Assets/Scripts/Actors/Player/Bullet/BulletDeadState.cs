@@ -38,7 +38,7 @@ public class BulletDeadState : State
         //stateMachine.ToggleInactive(true);
         if (bulletNumber <= 0)
         {
-            GameManager.Instance.LevelLost();
+            GameManager.Instance.LevelLost(true);
         }
     }
 

@@ -7,6 +7,7 @@ public class CreditsUI : MonoBehaviour
 {
     private int openCreditIndex = 0;
     private CanvasGroupFader openCredit;
+    private EndingACH endingAchievements;
 
     [SerializeField]
     private Button closeButton;
@@ -22,6 +23,8 @@ public class CreditsUI : MonoBehaviour
         EndingChoiceUI.OnGameBeat += StartCredits;
         DefianceGameManager.OnGameBeat += StartCredits;
 
+        endingAchievements = GetComponent<EndingACH>();
+
         openCreditIndex = 0;
         openCredit = creditSlides[0];
     }
@@ -36,6 +39,15 @@ public class CreditsUI : MonoBehaviour
     {
         canvasGroup.ToggleFade(true);
         canvasGroup.ToggleBlockRaycasts(true);
+
+        if (SceneManager.GetActiveScene().buildIndex > 24)
+        {
+            endingAchievements.EvaluateAchievements(true);
+        }
+        else
+        {
+            endingAchievements.EvaluateAchievements(false);
+        }
     }
 
     public void NextTutorial()

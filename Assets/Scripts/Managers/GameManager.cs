@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     protected CinematicSO levelOutroCinematic;
 
     public event EventHandler<bool> OnLevelLost;
+    public event EventHandler<bool> OnNoBulletsLeft;
 
     private void Awake()
     {
@@ -143,7 +144,7 @@ public class GameManager : MonoBehaviour
         CinematicManager.Instance.PlayCinematic(levelOutroCinematic, LoadNextLevel);
     }
 
-    public virtual void LevelLost()
+    public virtual void LevelLost(bool bulletsSpent = false)
     {
         if (!bLevelActive)
         {
@@ -155,6 +156,7 @@ public class GameManager : MonoBehaviour
         endOfLevelCam.m_Follow = revenantTransform;
         endOfLevelCam.m_LookAt = revenantTransform;
         OnLevelLost?.Invoke(this, true);
+        OnNoBulletsLeft?.Invoke(this, bulletsSpent);
     }
 
     public virtual void UndoLevelLost()
@@ -163,6 +165,7 @@ public class GameManager : MonoBehaviour
         endOfLevelCam.m_Follow = null;
         endOfLevelCam.m_LookAt = null;
         OnLevelLost?.Invoke(this, false);
+        OnNoBulletsLeft?.Invoke(this, false);
     }
 
     public bool IsLevelActive()

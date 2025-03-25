@@ -81,24 +81,6 @@ public class EnemyWitchStateMachine : EnemyRangedStateMachine
         GetBulletsFired()[bulletIndex] = false;
     }
 
-    // public float GetSecondShootTimer()
-    // {
-    //     return secondaryShootTimer;
-    // }
-
-    // public float GetThirdShootTimer()
-    // {
-    //     return thirdShootTimer;
-    // }
-
-    // public override void SetProjectileAtFirePoint()
-    // {
-    //     Bullet bullet1 = projectile.GetComponent<Bullet>();
-    //     Bullet bullet2 = secondaryProjectile.GetComponent<Bullet>();
-    //     bullet1.SetFiringPosition(projectileFirePoint);
-    //     bullet2.SetFiringPosition(secondaryProjectileFirePoint);
-    // }
-
     public override void ResetProjectile()
     {
         Bullet bullet1 = projectile.GetComponent<Bullet>();

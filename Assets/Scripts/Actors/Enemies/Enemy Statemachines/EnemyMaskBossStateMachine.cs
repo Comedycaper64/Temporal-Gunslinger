@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class EnemyMaskBossStateMachine : EnemyRangedStateMachine
 {
     protected override void SetupDictionary()

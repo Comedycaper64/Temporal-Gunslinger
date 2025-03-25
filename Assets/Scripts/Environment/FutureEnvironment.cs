@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MoreMountains.Tools;
 using UnityEngine;
 
 using Random = UnityEngine.Random;
@@ -36,10 +35,25 @@ public class FutureEnvironment : RewindableMovement
         {
             particleTimer = 0f;
             int index = lastParticleSpawned;
-            while (index == lastParticleSpawned)
+
+            int retries = 3;
+            int counter = 0;
+
+            while (counter < retries)
             {
+                if (index != lastParticleSpawned)
+                {
+                    break;
+                }
+
                 index = Random.Range(0, futureVolumeVFX.Count);
+                counter++;
             }
+
+            // while (index == lastParticleSpawned)
+            // {
+            //     index = Random.Range(0, futureVolumeVFX.Count);
+            // }
 
             futureVolumeVFX[index].PlayEffect();
             lastParticleSpawned = index;
@@ -49,53 +63,12 @@ public class FutureEnvironment : RewindableMovement
         {
             tweenTimer += GetSpeed() * Time.deltaTime;
 
-            //float lerp = Mathf.Lerp(0f, timeToReveal, tweenTimer);
             float lerp = Mathf.InverseLerp(0f, timeToReveal, tweenTimer);
 
             float curveValue = revealCurve.Evaluate(lerp);
 
             Shader.SetGlobalFloat("_RevealMaskRadius", curveValue * revealRadius);
-            // float lerp = MMTween.Tween(
-            //     tweenTimer,
-            //     0f,
-            //     timeToReveal,
-            //     0f,
-            //     revealRadius,
-            //     MMTween.MMTweenCurve.EaseOutExponential
-            // );
-
-            // Shader.SetGlobalFloat("_RevealMaskRadius", lerp);
-
-            // tweenTimer += GetSpeed() * Time.deltaTime;
-
-            // if (tweenTimer >= timeToReveal)
-            // {
-            //     reveal = false;
-            //     unreveal = true;
-            //     tweenTimer = 0f;
-            // }
         }
-        // else if (unreveal)
-        // {
-        //     float lerp = MMTween.Tween(
-        //         tweenTimer,
-        //         0f,
-        //         timeToUnreveal,
-        //         revealRadius,
-        //         0f,
-        //         MMTween.MMTweenCurve.EaseInExponential
-        //     );
-
-        //     Shader.SetGlobalFloat("_RevealMaskRadius", lerp);
-
-        //     tweenTimer += GetSpeed() * Time.deltaTime;
-
-        //     if (tweenTimer >= timeToReveal)
-        //     {
-        //         unreveal = false;
-        //         tweenTimer = 0f;
-        //     }
-        // }
     }
 
     protected override void OnEnable()

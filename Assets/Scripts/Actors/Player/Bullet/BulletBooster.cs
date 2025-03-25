@@ -14,6 +14,7 @@ public class BulletBooster : MonoBehaviour, IReactable
     [SerializeField]
     private GameObject boostCrystals;
     public static Action OnBoost;
+    public static Action OnBoostACH;
 
     private void Awake()
     {
@@ -29,11 +30,14 @@ public class BulletBooster : MonoBehaviour, IReactable
     public void CrystalBoost()
     {
         RedirectManager.Instance.TryRedirect();
-        PestilenceAbility.BulletBoosted(
-            this,
-            bulletMovement.GetVelocity(),
-            bulletMovement.velocityLossRate
-        );
+
+        float bulletVelocity = bulletMovement.GetVelocity();
+        PestilenceAbility.BulletBoosted(this, bulletVelocity, bulletMovement.velocityLossRate);
+
+        if ((bulletVelocity > 0f) && bulletMovement.ShouldBulletDrop())
+        {
+            OnBoostACH?.Invoke();
+        }
 
         bulletMovement.SetSpeed(boostSpeed);
         bulletMovement.velocityLossRate = boostVelocityLoss;

@@ -102,7 +102,7 @@ public class DefianceGameManager : GameManager
         tutorialState++;
     }
 
-    public override void LevelLost()
+    public override void LevelLost(bool bulletsSpent = false)
     {
         base.LevelLost();
     }

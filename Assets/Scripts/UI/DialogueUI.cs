@@ -23,6 +23,7 @@ public class DialogueUI : MonoBehaviour
 
     //private string typingSentence;
     private Coroutine typingCoroutine;
+    private Coroutine actorFadeInCoroutine;
     private Action onTypingFinished;
 
     private CanvasGroupFader dialogueFader;
@@ -79,6 +80,16 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnFinishTypingDialogue -= DialogueManager_OnFinishTypingDialogue;
         DialogueManager.OnDisplayChoices -= DialogueManager_OnDisplayChoices;
         DialogueChoiceUI.OnChoose -= DialogueChoiceUI_OnChoose;
+
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
+
+        if (actorFadeInCoroutine != null)
+        {
+            StopCoroutine(actorFadeInCoroutine);
+        }
     }
 
     private void Update()
@@ -117,6 +128,14 @@ public class DialogueUI : MonoBehaviour
     {
         bIsDialogueActive = toggle;
         dialogueFader.ToggleFade(toggle);
+
+        if (!toggle)
+        {
+            if (actorFadeInCoroutine != null)
+            {
+                StopCoroutine(actorFadeInCoroutine);
+            }
+        }
     }
 
     private void SetNewActor(ActorSO actorSO)
@@ -138,7 +157,7 @@ public class DialogueUI : MonoBehaviour
         else
         {
             actorSpriteFader.ToggleFade(false);
-            StartCoroutine(ActorFadeInDelay());
+            actorFadeInCoroutine = StartCoroutine(ActorFadeInDelay());
         }
     }
 

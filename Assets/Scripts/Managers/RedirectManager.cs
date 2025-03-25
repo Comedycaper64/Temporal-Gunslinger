@@ -63,6 +63,11 @@ public class RedirectManager : MonoBehaviour
         return redirects > 1;
     }
 
+    public int GetRemainingRedirects()
+    {
+        return redirects;
+    }
+
     public void SetRedirects(int newRedirects)
     {
         redirects = newRedirects;

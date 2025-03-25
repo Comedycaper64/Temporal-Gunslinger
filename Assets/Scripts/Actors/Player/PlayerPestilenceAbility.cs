@@ -43,10 +43,24 @@ public class PlayerPestilenceAbility : MonoBehaviour
 
         int randomInt = Random.Range(0, pestilenceVoicelines.Length);
 
-        while (randomInt == lastRandomVoiceline)
+        int retries = 3;
+        int counter = 0;
+
+        while (counter < retries)
         {
+            if (randomInt != lastRandomVoiceline)
+            {
+                break;
+            }
+
             randomInt = Random.Range(0, pestilenceVoicelines.Length);
+            counter++;
         }
+
+        // while (randomInt == lastRandomVoiceline)
+        // {
+        //     randomInt = Random.Range(0, pestilenceVoicelines.Length);
+        // }
 
         lastRandomVoiceline = randomInt;
 
