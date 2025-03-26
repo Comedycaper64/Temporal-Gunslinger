@@ -15,7 +15,7 @@ MonoBehaviour:
   dialogueChoices:
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
     dialogueOption: "(I didn\u2019t sign up to butcher defenceless people. Why can\u2019t
-      I just go straight to Pestilence and deal with her?)"
+      I just go straight to <color=\"purple\">Pestilence</color> and deal with her?)"
     correspondingDialogue: 0
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
@@ -32,17 +32,20 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - <alpha=#55>It is unfortunate, but necessary, old friend.
+      - <alpha=#55>It is unfortunate, but <i>necessary</i>, old friend.
       - <alpha=#55>They are vessels for a dangerous, unknown threat. Moreover, they
         are a perversion of the natural balance of Life and Death itself.
       - <alpha=#55>I can sense it. These beings were once the dead that littered
-        the frozen wastes. Her plague appears to have granted them second life.
+        the frozen wastes. Her plague appears to have granted them <i>second life</i>.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: 69cd8ea65bf2941419041f1319d23d8c, type: 3}
+      - {fileID: 8300000, guid: b1abcaae67843b645860d2496d333308, type: 3}
+      - {fileID: 8300000, guid: 379942edb6a14b5428a141b812a4dd6f, type: 3}
     - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
       actorNo: 0
       dialogue:
@@ -57,7 +60,8 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - Pestilence is raising the dead? What foul plot doth brew in her mind?
+      - <color="purple">Pestilence</color> is raising the dead? What foul plot doth
+        brew in her mind?
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -67,27 +71,29 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - "<alpha=#55>Do not forget, these husks exert Pestilence<alpha=#55>\u2019s
+      - "<alpha=#55>Do not forget, these husks exert <color=\"purple\">Pestilence</color><alpha=#55>\u2019s
         influence. To reach the queen, we must first take her pawns."
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: 632dc30b46234cb419aa4434d9aabcda, type: 3}
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
       - <alpha=#55>I believe I have an answer for you now.
-      - "Much of Pestilence\u2019s life was spent researching the properties of a
-        crystalline growth found on roses caused by a virus."
-      - "I shall not pretend to understand the details, but I can offer a simple
-        explanation. In essence, these growths are capable of enhancing a plant\u2019s
-        natural photosynthesis, and are even capable of generating energy to sustain
-        themselves once the plant is dead. "
-      - "I bring this up now as Pestilence\u2019s latent ability is the power to
-        conjure elements of the natural world."
+      - "<alpha=#55>Much of <color=\"purple\">Pestilence</color><alpha=#55>\u2019s
+        life was spent researching the properties of a crystalline growth found on
+        roses caused by a virus."
+      - "<alpha=#55>I shall not pretend to understand the details, but I can offer
+        a simple explanation. In essence, these growths are capable of enhancing
+        a plant\u2019s natural photosynthesis, and are even capable of generating
+        energy to sustain themselves once the plant is dead. "
+      - "<alpha=#55>I bring this up now as <color=\"purple\">Pestilence</color><alpha=#55>\u2019s
+        latent ability is the power to conjure elements of the natural world."
       - <alpha=#55>It seems she is capable of summoning the growths, and has deduced
         how to harvest the energy from them. I believe this is powering the facility.
       animations: []
@@ -95,7 +101,12 @@ MonoBehaviour:
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: 72a6b0f04f8d9d44b894f521ab47b601, type: 3}
+      - {fileID: 8300000, guid: eab1a45edd6f45b4fa8563381c00e55f, type: 3}
+      - {fileID: 8300000, guid: 00480a47d694fe54c8361f528f2f998b, type: 3}
+      - {fileID: 8300000, guid: 556d08339cd924642a589a91acc7e734, type: 3}
+      - {fileID: 8300000, guid: 9d69d8d26b3915146accd7dccf1d2304, type: 3}
     - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
       actorNo: 0
       dialogue:
@@ -111,13 +122,14 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - Be ready, old friend. I sense more of her creations up ahead.
+      - <alpha=#55>Be ready, old friend. I sense more of her creations up ahead.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: af0fb202dd857b1459c3d24b750603fe, type: 3}
     - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
       actorNo: 0
       dialogue:

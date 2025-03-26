@@ -72,6 +72,8 @@ public class PauseMenuUI : MonoBehaviour
             listeningToInput = true;
         }
         GameManager.OnGameStateChange += ToggleCanSkipCutscene;
+
+        SteamOverlay.OnOverlayEnable += PauseGame;
     }
 
     private void OnDisable()
@@ -79,6 +81,7 @@ public class PauseMenuUI : MonoBehaviour
         InputManager.Instance.OnPauseAction -= TogglePauseMenu;
         listeningToInput = false;
         GameManager.OnGameStateChange -= ToggleCanSkipCutscene;
+        SteamOverlay.OnOverlayEnable -= PauseGame;
     }
 
     public void QuitGame()
@@ -174,5 +177,13 @@ public class PauseMenuUI : MonoBehaviour
         TimeManager.ToggleMenuTimePause(pauseActive);
 
         OnPauseToggled?.Invoke(this, pauseActive);
+    }
+
+    private void PauseGame()
+    {
+        if (!pauseActive)
+        {
+            TogglePauseMenu();
+        }
     }
 }

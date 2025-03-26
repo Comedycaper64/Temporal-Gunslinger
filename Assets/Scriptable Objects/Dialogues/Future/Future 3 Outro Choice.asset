@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueChoices:
   - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
-    dialogueOption: (Reaper, what is this place?)
+    dialogueOption: (<color="green">Reaper</color>, what is this place?)
     correspondingDialogue: 0
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
-    dialogueOption: (The Heralds and I want to know more about Death.)
+    dialogueOption: (The Heralds and I want to know more about <alpha=#88>Death</color>.)
     correspondingDialogue: 1
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: be784cc64426a7248ba7d795b1148aed, type: 2}
@@ -35,18 +35,20 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - You are right to be suspicious of this place, old friend. This is no normal
-        library.
-      - "In truth, this is a space station orbiting the Mortal Realm. The curator
-        that Death has possessed is the only living crew member that remains here.
-        I suspect some of her latent power has corrupted this place into appearing
-        as it is not.\r"
+      - <alpha=#55>You are right to be suspicious of this place, old friend. This
+        is no normal library.
+      - "<alpha=#55>In truth, this is a space station orbiting the Mortal Realm.
+        The curator that <alpha=#88>Death<alpha=#FF><alpha=#55> has possessed is
+        the only living crew member that remains here. I suspect some of her latent
+        power has corrupted this place into appearing as it is not.\r"
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: ec1f808d2304b6d4396b2c634ff0b956, type: 3}
+      - {fileID: 8300000, guid: 5c705174ce2fd1243a884147ee54d5e2, type: 3}
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
@@ -117,33 +119,39 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - This time, there is little to tell.
-      - Death lived for an exceedingly long time. Near the end of her lifespan, it
-        became possible to indefinitely extend mortal life expectancy through supplements,
-        and so she continued to live on.
-      - But as the world shifted around her over the years, it began to take its
-        toll. Where she was once driven and wise, she became skeptical and dour.
-        Several decades later, she finally stopped taking the supplements and passed
-        on naturally.
-      - It seemed a waste for a mind so bright to be lost like that. And so, as her
-        soul passed me by, I decided to interfere with her fate. With that, she became
-        my first Herald.
-      - 'She was a fascinating person to converse with. Together, we spent much time
-        deciphering the nature of artefacts we held and the latent powers we manifested
-        from them. '
-      - Of all the Heralds, she was the closest I had to a friend. And yet, she was
-        the first to betray me.
+      - <alpha=#55>This time, there is little to tell.
+      - <alpha=#88>Death<alpha=#55> lived for an exceedingly long time. Near the
+        end of her lifespan, it became possible to indefinitely extend mortal life
+        expectancy through supplements, and so she continued to live on.
+      - <alpha=#55>But as the world shifted around her over the years, it began to
+        take its toll. Where she was once driven and wise, she became skeptical and
+        dour. Several decades later, she finally stopped taking the supplements and
+        passed on naturally.
+      - <alpha=#55>It seemed a waste for a mind so bright to be lost like that. And
+        so, as her soul passed me by, I decided to interfere with her fate. With
+        that, she became my first Herald.
+      - '<alpha=#55>She was a fascinating person to converse with. Together, we spent
+        much time deciphering the nature of artefacts we held and the latent powers
+        we manifested from them. '
+      - <alpha=#55>Of all the Heralds, she was the closest I had to a friend. And
+        yet, she was the first to betray me.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: 4773d307e19300941946c5aeed05ef8e, type: 3}
+      - {fileID: 8300000, guid: f69f39df5252ffa428a493c3a946cb69, type: 3}
+      - {fileID: 8300000, guid: dc158c30df98db94899777adb1328d8d, type: 3}
+      - {fileID: 8300000, guid: 143dba728988281499057f20cef707e2, type: 3}
+      - {fileID: 8300000, guid: 4b16d6ad9faeb7e448392c8bb5b01174, type: 3}
+      - {fileID: 8300000, guid: 592474acbae582a43b798ba416862fd1, type: 3}
     - actor: {fileID: 11400000, guid: 27354eff76e67d941b134882bd3e875d, type: 2}
       actorNo: 0
       dialogue:
-      - "Heh, the Reaper havin\u2019 friends? Reckon I\u2019d sooner believe the
-        sky turned green."
+      - "Heh, the <color=\"green\">Reaper</color> havin\u2019 friends? Reckon I\u2019d
+        sooner believe the sky turned green."
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -154,16 +162,18 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - As I stated before, that will depend on the outcome of your task.
-      - But consider each Herald is a traitor who has wilfully abused their powers
-        to change the state of the world. Such a grave transgression cannot be righted
-        with a simple slap on the wrist.
+      - <alpha=#55>As I stated before, that will depend on the outcome of your task.
+      - <alpha=#55>But consider each Herald is a traitor who has wilfully abused
+        their powers to change the state of the world. Such a grave transgression
+        cannot be righted with a simple slap on the wrist.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: ca37442e7e8ea724695fdf67badcd6ea, type: 3}
+      - {fileID: 8300000, guid: 1c615967b6cb703439e1f6bdd4f5c1ee, type: 3}
     - actor: {fileID: 11400000, guid: 3b7ac2a857f6d7640b66f5359f396051, type: 2}
       actorNo: 0
       dialogue:
@@ -191,7 +201,8 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - Aye, we are of one mind in this. I wonder if Death, too, sees as we do?
+      - Aye, we are of one mind in this. I wonder if <alpha=#88>Death<alpha=#FF>,
+        too, sees as we do?
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -202,10 +213,11 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - That is all the knowledge I can give for now. Continue on.
+      - <alpha=#55>That is all the knowledge I can give for now. Continue on.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
-      voiceClip: []
+      voiceClip:
+      - {fileID: 8300000, guid: 9c4d3458c55856b45931adb6139ea96e, type: 3}

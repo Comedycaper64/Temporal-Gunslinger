@@ -13,6 +13,8 @@ public class BulletStateMachine : StateMachine
         SwitchState(stateDictionary[StateEnum.idle]);
     }
 
+    protected override void DebugKill() { }
+
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.idle, new BulletInactiveState(this));

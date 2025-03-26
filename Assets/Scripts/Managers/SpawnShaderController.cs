@@ -7,7 +7,7 @@ public class SpawnShaderController : MonoBehaviour
     private float maskOpening = 0.5f;
     private float reaperOpening = 0.95f;
     private float targetOpening = 0f;
-    private float startOpening;
+    private float startOpening = 0f;
     private float openingSpeed = 0.75f;
     private float tweenTimer = 0f;
 
@@ -46,26 +46,10 @@ public class SpawnShaderController : MonoBehaviour
 
             tweenTimer += openingSpeed * Time.unscaledDeltaTime;
 
-            if (Mathf.Abs(targetOpening - newSize) < 0.01f)
+            if (tweenTimer > 1f)
             {
                 bOnOpeningChange = false;
             }
-
-            //Debug.Log(newSize);
-
-            // float currentSize = spawnShader.GetFloat("_Size");
-            // float lerpRatio =
-            //     1
-            //     - (
-            //         Mathf.Abs(currentSize - targetOpening) / Mathf.Abs(startOpening - targetOpening)
-            //     );
-
-            // float newSize = Mathf.Lerp(
-            //     startOpening,
-            //     targetOpening,
-            //     lerpRatio + (openingSpeed * Time.unscaledDeltaTime)
-            // );
-            //
         }
     }
 

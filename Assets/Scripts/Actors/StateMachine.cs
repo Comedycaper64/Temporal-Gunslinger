@@ -16,7 +16,7 @@ public abstract class StateMachine : MonoBehaviour
     private DissolveController dissolveController;
 
     //REMOVE ON RELEASE
-    private void DebugKill()
+    protected virtual void DebugKill()
     {
         SwitchToDeadState();
     }

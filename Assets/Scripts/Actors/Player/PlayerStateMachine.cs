@@ -15,6 +15,8 @@ public class PlayerStateMachine : StateMachine
 
     public override void ToggleInactive(bool toggle) { }
 
+    protected override void DebugKill() { }
+
     public Transform GetRevenantChest()
     {
         return revenantChest;

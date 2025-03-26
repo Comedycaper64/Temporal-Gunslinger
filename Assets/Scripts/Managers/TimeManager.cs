@@ -4,6 +4,7 @@ public class TimeManager
 {
     private static bool bTimeSlowed;
     private static bool bTimeTurbo;
+    private static bool bLevelLostPause = false;
     private static float normalTimeScale = 1f;
     private static float turboTimeScale = 2f;
     private static float slowTimeScale = 0.05f;
@@ -15,10 +16,16 @@ public class TimeManager
 
         bTimeSlowed = false;
         bTimeTurbo = false;
+        bLevelLostPause = false;
     }
 
     public static void ToggleMenuTimePause(bool toggle)
     {
+        if (bLevelLostPause)
+        {
+            return;
+        }
+
         if (toggle)
         {
             Time.timeScale = pausedTimeScale;
@@ -78,12 +85,14 @@ public class TimeManager
     public static void SetPausedTime()
     {
         Time.timeScale = pausedTimeScale;
+        bLevelLostPause = true;
         StopTime.TimeStopped();
     }
 
     public static void UnpauseTime()
     {
         Time.timeScale = normalTimeScale;
+        bLevelLostPause = false;
         UpdateTimeScale();
     }
 }

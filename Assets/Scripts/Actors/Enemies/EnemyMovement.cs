@@ -54,6 +54,11 @@ public class EnemyMovement : RewindableMovement
         DangerTracker.dangers.Remove(this);
     }
 
+    private void Update()
+    {
+        transform.position += transform.forward * GetSpeed() * Time.deltaTime;
+    }
+
     private bool WillKillRevenant(out float deathTime)
     {
         if (Mathf.Abs(GetUnscaledSpeed()) > 0f)
