@@ -7,10 +7,11 @@ public abstract class RewindableMovement : MonoBehaviour
 
     [SerializeField]
     protected float startSpeed = 1f;
-    private float speed = 0f;
+    protected float speed = 0f;
     private static float timeScale = 1f;
 
     private const float timeScaleLowerLimit = 0.002f;
+    private const float timeScaleUpperLimit = 0.01f;
     public static HashSet<RewindableMovement> Instances = new HashSet<RewindableMovement>();
 
     public virtual void BeginRewind()
@@ -49,10 +50,10 @@ public abstract class RewindableMovement : MonoBehaviour
         }
     }
 
-    protected float GetSpeed()
+    protected virtual float GetSpeed()
     {
         // Debug.Log("Speed: " + speed + " Timescale: " + timeScale);
-        return speed * timeScale;
+        return speed * GetTimescale();
     }
 
     protected float GetUnscaledSpeed()
@@ -89,9 +90,15 @@ public abstract class RewindableMovement : MonoBehaviour
     {
         //timeScale = Mathf.Clamp01(newTimeScale);
         timeScale = Mathf.Clamp(newTimeScale, timeScaleLowerLimit, 1f);
+        //timeScale = Mathf.Clamp(newTimeScale, timeScaleLowerLimit, timeScaleUpperLimit);
     }
 
     public static float GetTimescale()
+    {
+        return Mathf.Clamp(timeScale, timeScaleLowerLimit, timeScaleUpperLimit);
+    }
+
+    public static float GetUnclampedTimescale()
     {
         return timeScale;
     }

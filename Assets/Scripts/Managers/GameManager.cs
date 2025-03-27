@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     protected CinematicSO levelOutroCinematic;
-
+    protected Coroutine windDownCoroutine;
     public event EventHandler<bool> OnLevelLost;
     public event EventHandler<bool> OnNoBulletsLeft;
 
@@ -75,6 +75,11 @@ public class GameManager : MonoBehaviour
         rewindManager.OnResetLevel -= RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart -= RewindManager_OnRewindToStart;
 
+        if (windDownCoroutine != null)
+        {
+            StopCoroutine(windDownCoroutine);
+        }
+
         EnemyDeadState.enemiesAlive = 0;
     }
 
@@ -120,6 +125,11 @@ public class GameManager : MonoBehaviour
 
     public virtual void EndLevel(Transform lastEnemy)
     {
+        if (!bLevelActive)
+        {
+            return;
+        }
+
         bLevelActive = false;
         OnGameStateChange?.Invoke(this, StateEnum.inactive);
         rewindManager.ToggleCanRewind(false);
@@ -129,7 +139,7 @@ public class GameManager : MonoBehaviour
         endOfLevelCam.m_LookAt = lastEnemy;
         //switch on last enemy killed camera
         // do a focus on it
-        StartCoroutine(EndOfLevelWindDown());
+        windDownCoroutine = StartCoroutine(EndOfLevelWindDown());
     }
 
     public virtual IEnumerator EndOfLevelWindDown()

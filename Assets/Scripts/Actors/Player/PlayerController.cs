@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnFocusAction += InputManager_OnFocus;
         OptionsManager.OnGunSensitivityUpdated += OnSensitivityUpdated;
         TutorialUI.OnDisplayTutorial += TutorialUI_OnDisplayTutorial;
+        BulletPossessTarget.OnEmergencyRepossess += BulletPossessTarget_OnEmergencyRepossess;
     }
 
     private void OnDisable()
@@ -65,6 +66,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnFocusAction -= InputManager_OnFocus;
         OptionsManager.OnGunSensitivityUpdated -= OnSensitivityUpdated;
         TutorialUI.OnDisplayTutorial -= TutorialUI_OnDisplayTutorial;
+        BulletPossessTarget.OnEmergencyRepossess -= BulletPossessTarget_OnEmergencyRepossess;
 
         InputManager.Instance.OnFreeCamAction -= InputManager_OnFreeCamAction;
         InputManager.Instance.OnPossessAction -= InputManager_OnPossessAction;
@@ -360,6 +362,14 @@ public class PlayerController : MonoBehaviour
         }
         ToggleFreeCamModeDuringLevel(true);
         bulletPossessor.PossessFreeCamBullet();
+    }
+
+    private void BulletPossessTarget_OnEmergencyRepossess(object sender, BulletPossessTarget e)
+    {
+        if (e == null)
+        {
+            ToggleFreeCamModeDuringLevel(true);
+        }
     }
 
     private void OnSensitivityUpdated(object sender, float newSensitivity)

@@ -19,6 +19,7 @@ public class BulletLockOn : MonoBehaviour
     private LayerMask lockOnLayermask;
 
     public static EventHandler<bool> OnLockOnUI;
+    public static Action OnLockOnFinish;
 
     private void Awake()
     {
@@ -171,7 +172,7 @@ public class BulletLockOn : MonoBehaviour
         SetTarget(lockingOnTarget, false);
 
         //Turn off lockon UI;
-        OnLockOnUI?.Invoke(this, false);
+        OnLockOnFinish?.Invoke();
         lockingOnTarget = null;
     }
 

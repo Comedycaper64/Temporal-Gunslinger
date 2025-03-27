@@ -12,6 +12,9 @@ public class PlayerFamineAbility : MonoBehaviour
     private AudioClip abilitySFX;
 
     [SerializeField]
+    private AudioClip abilityNoTargetSFX;
+
+    [SerializeField]
     private AudioClip[] famineVoicelines;
 
     [SerializeField]
@@ -37,6 +40,13 @@ public class PlayerFamineAbility : MonoBehaviour
         if (!centralBullet)
         {
             //Play SFX for no available bullet
+            AudioManager.PlaySFX(
+                abilityNoTargetSFX,
+                0.8f,
+                3,
+                Camera.main.transform.position,
+                false
+            );
             return;
         }
 

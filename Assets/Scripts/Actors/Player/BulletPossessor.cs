@@ -128,7 +128,14 @@ public class BulletPossessor : MonoBehaviour
 
     private void EmergencyPossess(object sender, BulletPossessTarget possessTarget)
     {
-        PossessBullet(possessTarget);
+        if (possessTarget == null)
+        {
+            PossessFreeCamBullet();
+        }
+        else
+        {
+            PossessBullet(possessTarget);
+        }
     }
 
     public void PossessFreeCamBullet()

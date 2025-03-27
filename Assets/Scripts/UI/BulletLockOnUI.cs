@@ -1,3 +1,4 @@
+using System;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
 using UnityEngine;
@@ -44,6 +45,7 @@ public class BulletLockOnUI : MonoBehaviour
         lockOnUI.SetCanvasGroupAlpha(0f);
 
         BulletLockOn.OnLockOnUI += ToggleLockingOn;
+        BulletLockOn.OnLockOnFinish += DisableUI;
         FocusManager.OnFocusToggle += ToggleUI;
         BulletPossessor.OnNewBulletPossessed += SetNewRaycastOrigin;
         BulletPossessor.OnBulletCharging += ToggleCharging;
@@ -54,6 +56,7 @@ public class BulletLockOnUI : MonoBehaviour
     private void OnDisable()
     {
         BulletLockOn.OnLockOnUI -= ToggleLockingOn;
+        BulletLockOn.OnLockOnFinish -= DisableUI;
         FocusManager.OnFocusToggle -= ToggleUI;
         BulletPossessor.OnNewBulletPossessed -= SetNewRaycastOrigin;
         BulletPossessor.OnBulletCharging -= ToggleCharging;
@@ -202,6 +205,11 @@ public class BulletLockOnUI : MonoBehaviour
     private void SetNewRaycastOrigin(object sender, BulletPossessTarget possessTarget)
     {
         raycastOrigin = possessTarget;
+    }
+
+    private void DisableUI()
+    {
+        ToggleUI(null, false);
     }
 
     private void ToggleUI(object sender, bool toggle)

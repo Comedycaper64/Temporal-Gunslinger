@@ -56,6 +56,12 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         revenantTarget = GameManager.GetRevenant().GetComponent<LockOnTarget>();
     }
 
+    public override void OnDisable()
+    {
+        base.OnDisable();
+        SwitchState(new EnemyInactiveState(this));
+    }
+
     public override void ToggleInactive(bool toggle)
     {
         deathVFX.StopEffect();

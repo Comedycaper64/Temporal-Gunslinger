@@ -33,6 +33,11 @@ public class VFXPlayback : RewindableMovement
         }
     }
 
+    protected override float GetSpeed()
+    {
+        return speed * GetUnclampedTimescale();
+    }
+
     private void Update()
     {
         if (!effectPlaying)

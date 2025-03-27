@@ -22,5 +22,9 @@ public class NewAbilityUI : MonoBehaviour
         {
             pulseFeedback.PlayFeedbacks();
         }
+        else if (state == StateEnum.active)
+        {
+            pulseFeedback.StopFeedbacks();
+        }
     }
 }

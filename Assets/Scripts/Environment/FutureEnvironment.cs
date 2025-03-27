@@ -27,6 +27,11 @@ public class FutureEnvironment : RewindableMovement
     [SerializeField]
     private List<VFXPlayback> futureVolumeVFX = new List<VFXPlayback>();
 
+    protected override float GetSpeed()
+    {
+        return speed * GetUnclampedTimescale();
+    }
+
     private void Update()
     {
         particleTimer += GetSpeed() * Time.deltaTime;
