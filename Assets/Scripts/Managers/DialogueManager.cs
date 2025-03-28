@@ -41,6 +41,7 @@ public struct DialogueChoiceUIEventArgs
 
 public class DialogueManager : MonoBehaviour
 {
+    private bool bLogActive = false;
     private bool bIsSentenceTyping;
     private bool bLoopToChoice;
     private bool bAutoPlay = false;
@@ -81,11 +82,13 @@ public class DialogueManager : MonoBehaviour
         bAutoPlay = PlayerOptions.GetDialogueAutoPlay();
 
         DialogueAutoPlayUI.OnAutoPlayToggle += ToggleAutoPlay;
+        DialogueLogUI.OnLogToggle += OnLogToggle;
     }
 
     private void OnDisable()
     {
         DialogueAutoPlayUI.OnAutoPlayToggle -= ToggleAutoPlay;
+        DialogueLogUI.OnLogToggle -= OnLogToggle;
         InputManager.Instance.OnShootAction -= InputManager_OnShootAction;
 
         if (animationCoroutine != null)
@@ -490,6 +493,11 @@ public class DialogueManager : MonoBehaviour
 
     private void InputManager_OnShootAction()
     {
+        if (bLogActive)
+        {
+            return;
+        }
+
         DisplayNextSentence();
     }
 
@@ -497,6 +505,16 @@ public class DialogueManager : MonoBehaviour
     {
         bAutoPlay = e;
         PlayerOptions.SetDialogueAutoPlay(bAutoPlay);
+
+        if (autoPlayCoroutine != null)
+        {
+            StopCoroutine(autoPlayCoroutine);
+        }
+    }
+
+    private void OnLogToggle(object sender, bool toggle)
+    {
+        bLogActive = toggle;
 
         if (autoPlayCoroutine != null)
         {

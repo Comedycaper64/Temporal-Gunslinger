@@ -56,6 +56,8 @@ public class DialogueUI : MonoBehaviour
     [SerializeField]
     private DialogueChoiceUI[] dialogueChoiceUI;
 
+    public EventHandler<DialogueLog> OnNewDialogue;
+
     private void Awake()
     {
         DialogueManager.OnToggleDialogueUI += DialogueManager_OnToggleDialogueUI;
@@ -69,6 +71,7 @@ public class DialogueUI : MonoBehaviour
         SetActorName("", Color.black);
         dialogueFader = GetComponent<CanvasGroupFader>();
         dialogueFader.SetCanvasGroupAlpha(0f);
+        dialogueFader.ToggleBlockRaycasts(false);
         actorSpriteFader.SetCanvasGroupAlpha(0f);
         dialogueNoiseSource = GetComponent<AudioSource>();
     }
@@ -80,6 +83,8 @@ public class DialogueUI : MonoBehaviour
         DialogueManager.OnFinishTypingDialogue -= DialogueManager_OnFinishTypingDialogue;
         DialogueManager.OnDisplayChoices -= DialogueManager_OnDisplayChoices;
         DialogueChoiceUI.OnChoose -= DialogueChoiceUI_OnChoose;
+
+        InputManager.Instance.OnChooseDialogueAction -= InputManager_OnChooseDialogueAction;
 
         if (typingCoroutine != null)
         {
@@ -128,6 +133,7 @@ public class DialogueUI : MonoBehaviour
     {
         bIsDialogueActive = toggle;
         dialogueFader.ToggleFade(toggle);
+        dialogueFader.ToggleBlockRaycasts(toggle);
 
         if (!toggle)
         {
@@ -249,6 +255,8 @@ public class DialogueUI : MonoBehaviour
             dialogueChoiceUI[i].ResetChoiceColour();
             dialogueChoiceUI[i].CloseDialogueChoice();
         }
+
+        InputManager.Instance.OnChooseDialogueAction -= InputManager_OnChooseDialogueAction;
     }
 
     public void ChooseDialogueOption(DialogueChoice choice)
@@ -257,6 +265,8 @@ public class DialogueUI : MonoBehaviour
         {
             dialogueChoiceUI[i].CloseDialogueChoice();
         }
+
+        InputManager.Instance.OnChooseDialogueAction -= InputManager_OnChooseDialogueAction;
 
         onDialogueChosen?.Invoke(this, choice);
     }
@@ -276,6 +286,7 @@ public class DialogueUI : MonoBehaviour
     private void DialogueManager_OnDialogue(object sender, DialogueUIEventArgs dialogueArgs)
     {
         typingCoroutine = StartCoroutine(TypeSentence(dialogueArgs));
+        OnNewDialogue?.Invoke(this, new DialogueLog(dialogueArgs.actorSO, dialogueArgs.sentence));
     }
 
     private void DialogueManager_OnToggleDialogueUI(object sender, bool e)
@@ -306,11 +317,23 @@ public class DialogueUI : MonoBehaviour
 
             SetNewActor(dialogueChoiceUIArgs.dialogueChoice.GetDialogueChoices()[0].actor);
             DisplayDialogueChoices();
+
+            InputManager.Instance.OnChooseDialogueAction += InputManager_OnChooseDialogueAction;
         }
     }
 
     private void DialogueChoiceUI_OnChoose(object sender, DialogueChoice choice)
     {
         ChooseDialogueOption(choice);
+    }
+
+    private void InputManager_OnChooseDialogueAction(object sender, int choiceIndex)
+    {
+        if (dialogueChoices.Length < choiceIndex)
+        {
+            return;
+        }
+
+        ChooseDialogueOption(dialogueChoices[choiceIndex - 1]);
     }
 }

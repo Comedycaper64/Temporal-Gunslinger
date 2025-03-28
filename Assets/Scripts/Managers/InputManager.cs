@@ -16,12 +16,15 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public event Action OnShootAction;
     public event Action OnShootReleaseAction;
     public event Action OnFocusAction;
+    public event Action OnRewindAction;
+
     public event Action OnPossessAction;
     public event Action OnConquestAction;
     public event Action OnFamineAction;
     public event Action OnPauseAction;
     public event Action OnFreeCamAction;
     public event Action OnFreeCamPossessAction;
+    public event EventHandler<int> OnChooseDialogueAction;
 
     private void Awake()
     {
@@ -127,6 +130,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         if (context.performed)
         {
             bIsRewinding = true;
+            OnRewindAction?.Invoke();
         }
         else if (context.canceled)
         {
@@ -273,6 +277,40 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else
         {
             OnPauseAction?.Invoke();
+        }
+    }
+
+    public void OnSelectDialogue(InputAction.CallbackContext context)
+    {
+        if (PauseMenuUI.pauseActive)
+        {
+            return;
+        }
+
+        if (!context.performed)
+        {
+            return;
+        }
+        else
+        {
+            Vector2 choice = context.ReadValue<Vector2>();
+
+            int dialogueChoice = 1;
+
+            if (choice.y < 0f)
+            {
+                dialogueChoice = 2;
+            }
+            else if (choice.x < 0f)
+            {
+                dialogueChoice = 3;
+            }
+            else if (choice.x > 0f)
+            {
+                dialogueChoice = 4;
+            }
+
+            OnChooseDialogueAction?.Invoke(this, dialogueChoice);
         }
     }
 }

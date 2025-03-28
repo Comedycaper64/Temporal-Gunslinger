@@ -152,6 +152,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Select Dialogue"",
+                    ""type"": ""Value"",
+                    ""id"": ""2c62f387-98e3-4da3-9c97-58954f05f68f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -352,6 +361,61 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""Famine Abiltity"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""27f401f2-0630-4ffb-a089-8c2ca12f6730"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select Dialogue"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""428345d5-eae9-487b-b2a9-3c7e617d57c6"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Select Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""1cafb772-c68f-426b-bc4d-3452c4854cc8"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Select Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""19052c93-3520-49dd-8845-afc130a9eeda"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Select Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b6218f52-632b-4ff6-a5cd-bb07a845f685"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Select Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -380,6 +444,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Player_FreeCam = m_Player.FindAction("FreeCam", throwIfNotFound: true);
         m_Player_FreeCamPossess = m_Player.FindAction("FreeCam Possess", throwIfNotFound: true);
         m_Player_FreeCamMovement = m_Player.FindAction("FreeCam Movement", throwIfNotFound: true);
+        m_Player_SelectDialogue = m_Player.FindAction("Select Dialogue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -453,6 +518,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_FreeCam;
     private readonly InputAction m_Player_FreeCamPossess;
     private readonly InputAction m_Player_FreeCamMovement;
+    private readonly InputAction m_Player_SelectDialogue;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -471,6 +537,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @FreeCam => m_Wrapper.m_Player_FreeCam;
         public InputAction @FreeCamPossess => m_Wrapper.m_Player_FreeCamPossess;
         public InputAction @FreeCamMovement => m_Wrapper.m_Player_FreeCamMovement;
+        public InputAction @SelectDialogue => m_Wrapper.m_Player_SelectDialogue;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -522,6 +589,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @FreeCamMovement.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamMovement;
                 @FreeCamMovement.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamMovement;
                 @FreeCamMovement.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFreeCamMovement;
+                @SelectDialogue.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectDialogue;
+                @SelectDialogue.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectDialogue;
+                @SelectDialogue.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSelectDialogue;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -568,6 +638,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @FreeCamMovement.started += instance.OnFreeCamMovement;
                 @FreeCamMovement.performed += instance.OnFreeCamMovement;
                 @FreeCamMovement.canceled += instance.OnFreeCamMovement;
+                @SelectDialogue.started += instance.OnSelectDialogue;
+                @SelectDialogue.performed += instance.OnSelectDialogue;
+                @SelectDialogue.canceled += instance.OnSelectDialogue;
             }
         }
     }
@@ -597,5 +670,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnFreeCam(InputAction.CallbackContext context);
         void OnFreeCamPossess(InputAction.CallbackContext context);
         void OnFreeCamMovement(InputAction.CallbackContext context);
+        void OnSelectDialogue(InputAction.CallbackContext context);
     }
 }

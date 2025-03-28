@@ -1,18 +1,22 @@
 using System;
 using Cinemachine;
 using MoreMountains.Tools;
+using Steamworks;
 using UnityEngine;
 
 public class FocusManager : MonoBehaviour
 {
     private bool bCanFocus = false;
     private bool bFocusing = false;
+    private float bulletSpeed = 300f;
     private const float NORMAL_CAMERA_Y = 3f;
     private const float NORMAL_CAMERA_X = 225f;
     private const float FOCUS_CAMERA_Y = 1.5f;
     private const float FOCUS_CAMERA_X = 120f;
     private float PLAYER_SENSITIVITY = 1f;
     private float NORMAL_FOV = 50f;
+    private float FAST_FOV = 40f;
+    private float SLOW_FOV = 60f;
 
     [SerializeField]
     private float normalFOVOverride = -1f;
@@ -88,6 +92,7 @@ public class FocusManager : MonoBehaviour
         }
 
         targetFOV = NORMAL_FOV;
+
         nonTargetFOV = FOCUS_FOV;
 
         bulletCamera.m_XAxis.m_MaxSpeed =
@@ -102,6 +107,8 @@ public class FocusManager : MonoBehaviour
         {
             CreateAimLine();
         }
+        float fovLerp = Mathf.Clamp01(Mathf.InverseLerp(100f, 500f, bulletSpeed));
+        targetFOV = Mathf.Lerp(SLOW_FOV, FAST_FOV, fovLerp);
     }
 
     private void OnEnable()
@@ -210,7 +217,17 @@ public class FocusManager : MonoBehaviour
     private void UnFocus()
     {
         TimeManager.SetSlowedTime(false);
-        targetFOV = NORMAL_FOV;
+        //targetFOV = NORMAL_FOV;
+        if (normalFOVOverride > 0f)
+        {
+            targetFOV = NORMAL_FOV;
+        }
+        else
+        {
+            float fovLerp = Mathf.Clamp01(Mathf.InverseLerp(100f, 500f, bulletSpeed));
+            targetFOV = Mathf.Lerp(SLOW_FOV, FAST_FOV, fovLerp);
+        }
+
         nonTargetFOV = FOCUS_FOV;
 
         bulletCamera.m_XAxis.m_MaxSpeed =
@@ -240,7 +257,16 @@ public class FocusManager : MonoBehaviour
     {
         TimeManager.SetSlowedTime(true);
         targetFOV = FOCUS_FOV;
-        nonTargetFOV = NORMAL_FOV;
+        //nonTargetFOV = NORMAL_FOV;
+        if (normalFOVOverride > 0f)
+        {
+            nonTargetFOV = NORMAL_FOV;
+        }
+        else
+        {
+            float fovLerp = Mathf.Clamp01(Mathf.InverseLerp(100f, 500f, bulletSpeed));
+            nonTargetFOV = Mathf.Lerp(SLOW_FOV, FAST_FOV, fovLerp);
+        }
 
         bulletCamera.m_XAxis.m_MaxSpeed =
             FOCUS_CAMERA_X * PLAYER_SENSITIVITY * cameraSpecificSensitivityMult;
@@ -283,6 +309,11 @@ public class FocusManager : MonoBehaviour
         {
             focusAimLine.ToggleLine(toggle);
         }
+    }
+
+    public void SetBulletSpeed(float speed)
+    {
+        bulletSpeed = speed;
     }
 
     private void OnSensitivityUpdated(object sender, float newSensitivity)
