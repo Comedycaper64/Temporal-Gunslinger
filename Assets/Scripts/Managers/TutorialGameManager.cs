@@ -150,7 +150,7 @@ public class TutorialGameManager : GameManager
         endOfLevelCam.m_LookAt = lastEnemy;
         //switch on last enemy killed camera
         // do a focus on it
-        StartCoroutine(EndOfTutorialDerail());
+        windDownCoroutine = StartCoroutine(EndOfTutorialDerail());
     }
 
     private IEnumerator EndOfTutorialDerail()

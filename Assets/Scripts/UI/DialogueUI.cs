@@ -163,6 +163,12 @@ public class DialogueUI : MonoBehaviour
         else
         {
             actorSpriteFader.ToggleFade(false);
+
+            if (actorFadeInCoroutine != null)
+            {
+                StopCoroutine(actorFadeInCoroutine);
+            }
+
             actorFadeInCoroutine = StartCoroutine(ActorFadeInDelay());
         }
     }
@@ -285,6 +291,11 @@ public class DialogueUI : MonoBehaviour
 
     private void DialogueManager_OnDialogue(object sender, DialogueUIEventArgs dialogueArgs)
     {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
+
         typingCoroutine = StartCoroutine(TypeSentence(dialogueArgs));
         OnNewDialogue?.Invoke(this, new DialogueLog(dialogueArgs.actorSO, dialogueArgs.sentence));
     }

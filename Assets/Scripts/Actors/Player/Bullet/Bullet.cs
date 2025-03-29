@@ -22,6 +22,9 @@ public class Bullet : MonoBehaviour
 
     [SerializeField]
     private BulletDamager bulletDamager;
+
+    [SerializeField]
+    private Collider bulletCollider;
     private BulletCameraController bulletCameraController;
     private BulletStateMachine bulletStateMachine;
     private FocusManager focusManager;
@@ -42,6 +45,7 @@ public class Bullet : MonoBehaviour
         bulletFlightSFX = GetComponent<AudioSource>();
         gunParent = transform.parent;
         focusManager.SetBulletSpeed(bulletMovement.GetMaxVelocity());
+        SetBulletCollider();
 
         bulletMovement.OnLowVelocity += SetLowVelocity;
     }
@@ -81,6 +85,33 @@ public class Bullet : MonoBehaviour
             float newMovementTimescale = Mathf.Clamp(1f / bulletMovementVelocity, 0f, 0.1f);
             RewindableMovement.UpdateMovementTimescale(newMovementTimescale);
         }
+    }
+
+    private void SetBulletCollider()
+    {
+        float colliderRadius;
+
+        if (!bulletCollider)
+        {
+            return;
+        }
+
+        if (bulletCollider.GetType() == typeof(SphereCollider))
+        {
+            SphereCollider collider = bulletCollider as SphereCollider;
+            colliderRadius = collider.radius;
+        }
+        else if (bulletCollider.GetType() == typeof(BoxCollider))
+        {
+            BoxCollider collider = bulletCollider as BoxCollider;
+            colliderRadius = collider.size.x / 2;
+        }
+        else
+        {
+            colliderRadius = 0.025f;
+        }
+        focusManager.SetColliderRadius(colliderRadius);
+        bulletMovement.SetColliderRadius(colliderRadius);
     }
 
     public void RedirectBullet()

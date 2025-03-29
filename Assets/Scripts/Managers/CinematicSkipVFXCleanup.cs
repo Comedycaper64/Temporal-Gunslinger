@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CinematicSkipVFXCleanup : MonoBehaviour
 {
+    private Coroutine skipCoroutine;
+
     [SerializeField]
     private VFXPlayback[] visualEffects;
 
@@ -20,11 +22,16 @@ public class CinematicSkipVFXCleanup : MonoBehaviour
     private void OnDisable()
     {
         PauseMenuUI.OnSkipCutscene -= VFXCleanup;
+
+        if (skipCoroutine != null)
+        {
+            StopCoroutine(skipCoroutine);
+        }
     }
 
     private void VFXCleanup()
     {
-        StartCoroutine(DelayedCleanup());
+        skipCoroutine = StartCoroutine(DelayedCleanup());
     }
 
     private IEnumerator DelayedCleanup()

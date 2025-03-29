@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     private bool fadeOut = false;
     private bool activeSwitch = false;
     private bool inactiveSwitch = false;
+    private Coroutine clockCoroutine;
 
     [SerializeField]
     private AudioSource leadMusicAudioSource;
@@ -80,6 +81,11 @@ public class AudioManager : MonoBehaviour
         OptionsManager.OnMusicVolumeUpdated -= UpdateMusicVolume;
 
         GameManager.OnGameStateChange -= UpdateMusicTracks;
+
+        if (clockCoroutine != null)
+        {
+            StopCoroutine(clockCoroutine);
+        }
     }
 
     private void Start()
@@ -111,7 +117,7 @@ public class AudioManager : MonoBehaviour
                 PlayerOptions.GetMasterVolume() * PlayerOptions.GetMusicVolume() * REDUCED_VOLUME;
         }
 
-        StartCoroutine(ClockTickSFX());
+        clockCoroutine = StartCoroutine(ClockTickSFX());
     }
 
     private void Update()
@@ -364,7 +370,7 @@ public class AudioManager : MonoBehaviour
                 );
             }
         }
-        StartCoroutine(ClockTickSFX());
+        clockCoroutine = StartCoroutine(ClockTickSFX());
     }
 
     private void SetMusicAudioSourceVolume(float newVolume)

@@ -8,6 +8,7 @@ public class DialogueChoiceUI : MonoBehaviour
     private CanvasGroup choiceCanvasGroup;
     private CanvasGroupFader canvasFader;
     private DialogueChoice dialogueChoice;
+    private Coroutine delayCoroutine;
     public static event EventHandler<DialogueChoice> OnChoose;
 
     [SerializeField]
@@ -26,12 +27,20 @@ public class DialogueChoiceUI : MonoBehaviour
         CloseDialogueChoice();
     }
 
+    private void OnDisable()
+    {
+        if (delayCoroutine != null)
+        {
+            StopCoroutine(delayCoroutine);
+        }
+    }
+
     public void SetupDialogueChoice(DialogueChoice dialogueChoice)
     {
         this.dialogueChoice = dialogueChoice;
         choiceText.text = dialogueChoice.dialogueOption;
         canvasFader.ToggleFade(true);
-        StartCoroutine(InteractDelay());
+        delayCoroutine = StartCoroutine(InteractDelay());
     }
 
     private IEnumerator InteractDelay()

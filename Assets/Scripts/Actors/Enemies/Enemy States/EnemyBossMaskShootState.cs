@@ -5,6 +5,7 @@ public class EnemyBossMaskShootState : State
     private float animationTimeNormalised;
     private readonly int ActiveAnimHash;
     private EnemyRangedStateMachine enemyStateMachine;
+    private EnemyMaskBossStateMachine maskStateMachine;
     private RewindState rewindState;
     private float timer;
     private float shootTime;
@@ -14,6 +15,7 @@ public class EnemyBossMaskShootState : State
         : base(stateMachine)
     {
         enemyStateMachine = stateMachine as EnemyRangedStateMachine;
+        maskStateMachine = stateMachine as EnemyMaskBossStateMachine;
         shootTime = enemyStateMachine.GetShootTimer();
         rewindState = enemyStateMachine.GetComponent<RewindState>();
         ActiveAnimHash = Animator.StringToHash(stateMachine.GetActiveAnimationName());
@@ -55,6 +57,12 @@ public class EnemyBossMaskShootState : State
 
             enemyStateMachine.SetProjectileAtFirePoint();
             enemyStateMachine.GetBulletStateMachine().SwitchToActive();
+            AudioManager.PlaySFX(
+                maskStateMachine.GetFireSFX(),
+                0.75f,
+                0,
+                stateMachine.transform.position
+            );
             return;
         }
         else if (projectileFired && timer < shootTime)

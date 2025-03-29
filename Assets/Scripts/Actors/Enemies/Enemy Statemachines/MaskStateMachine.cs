@@ -5,6 +5,9 @@ public class MaskStateMachine : EnemyRangedStateMachine
     [SerializeField]
     private bool reaperMask = false;
 
+    [SerializeField]
+    private AudioClip fireSFX;
+
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
@@ -26,5 +29,10 @@ public class MaskStateMachine : EnemyRangedStateMachine
         //fireProjectile = true;
         stateDictionary.Remove(StateEnum.active);
         stateDictionary.Add(StateEnum.active, new EnemyMaskShootState(this));
+    }
+
+    public AudioClip GetFireSFX()
+    {
+        return fireSFX;
     }
 }

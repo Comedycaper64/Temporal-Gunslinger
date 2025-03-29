@@ -282,6 +282,11 @@ public class DialogueManager : MonoBehaviour
             StopCoroutine(autoPlayCoroutine);
         }
 
+        if (animationCoroutine != null)
+        {
+            StopCoroutine(animationCoroutine);
+        }
+
         if (!currentDialogue.TryDequeue(out currentSentence))
         {
             TryPlayNextDialogue();

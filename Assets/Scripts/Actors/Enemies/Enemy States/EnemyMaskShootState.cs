@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyMaskShootState : State
 {
     private EnemyRangedStateMachine enemyStateMachine;
+    private MaskStateMachine maskStateMachine;
     private RewindState rewindState;
     private float timer;
     private float shootTime;
@@ -12,6 +13,7 @@ public class EnemyMaskShootState : State
         : base(stateMachine)
     {
         enemyStateMachine = stateMachine as EnemyRangedStateMachine;
+        maskStateMachine = stateMachine as MaskStateMachine;
         shootTime = enemyStateMachine.GetShootTimer();
         rewindState = enemyStateMachine.GetComponent<RewindState>();
     }
@@ -38,6 +40,12 @@ public class EnemyMaskShootState : State
 
             enemyStateMachine.SetProjectileAtFirePoint();
             enemyStateMachine.GetBulletStateMachine().SwitchToActive();
+            AudioManager.PlaySFX(
+                maskStateMachine.GetFireSFX(),
+                0.75f,
+                0,
+                stateMachine.transform.position
+            );
             return;
         }
         else if (projectileFired && timer < shootTime)

@@ -18,7 +18,8 @@ public class BulletMovement : RewindableMovement
     private float rotationTimer;
     private float rotationSpeed = 2.5f;
     private float spinSpeedModifier = 200f;
-    private float ricochetRaycastDistance = 5f;
+    private float ricochetRaycastDistance = 1f;
+    private float colliderRadius = 0.025f;
 
     [SerializeField]
     private float lowVelocityThreshhold = 50f;
@@ -223,6 +224,7 @@ public class BulletMovement : RewindableMovement
     public void RicochetBullet(Collision hitObject, float velocityAugment)
     {
         Vector3 hitNormal;
+        Vector3 backUpNormal;
 
         if (
             Physics.Raycast(
@@ -235,15 +237,44 @@ public class BulletMovement : RewindableMovement
         )
         {
             hitNormal = hit.normal.normalized;
+            backUpNormal = hitObject.GetContact(0).normal.normalized;
+            //Debug.Log("Contact Normal: " + hitObject.GetContact(0).normal);
+
+            if (hitObject.collider != hit.collider)
+            {
+                RaycastHit[] allHits = Physics.SphereCastAll(
+                    transform.position - (flightDirection * 0.1f),
+                    colliderRadius,
+                    GetFlightDirection(),
+                    ricochetRaycastDistance,
+                    ricochetLayermask
+                );
+
+                //Debug.Log("Ayaya");
+                hitNormal = backUpNormal;
+
+                foreach (RaycastHit newHit in allHits)
+                {
+                    if (hitObject.collider == newHit.collider)
+                    {
+                        //Debug.Log("Found Actual");
+                        hitNormal = newHit.normal.normalized;
+                    }
+                }
+            }
         }
         else
         {
             hitNormal = hitObject.GetContact(0).normal.normalized;
         }
 
+        //Debug.Log("Hit object: " + hitObject.gameObject.name);
+
         Vector3 flightNormalized = GetFlightDirection().normalized;
 
         Vector3 ricochetDirection = Vector3.Reflect(flightNormalized, hitNormal);
+
+        //Debug.Log("Ricochet Direction: " + ricochetDirection);
 
         int randomIndex = Random.Range(0, ricochetSFX.Length);
 
@@ -345,6 +376,11 @@ public class BulletMovement : RewindableMovement
     public bool IsBulletReversing()
     {
         return GetUnscaledSpeed() < 0f;
+    }
+
+    public void SetColliderRadius(float radius)
+    {
+        colliderRadius = radius + (radius * 0.25f);
     }
 
     public void SetIsDead(bool isDead)

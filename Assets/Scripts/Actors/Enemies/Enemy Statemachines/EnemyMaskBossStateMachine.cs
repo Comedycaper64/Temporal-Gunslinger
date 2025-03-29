@@ -1,5 +1,10 @@
+using UnityEngine;
+
 public class EnemyMaskBossStateMachine : EnemyRangedStateMachine
 {
+    [SerializeField]
+    private AudioClip fireSFX;
+
     protected override void SetupDictionary()
     {
         stateDictionary.Add(StateEnum.inactive, new EnemyInactiveState(this));
@@ -18,6 +23,11 @@ public class EnemyMaskBossStateMachine : EnemyRangedStateMachine
         base.ToggleInactive(toggle);
 
         stateMachineAnimator.SetBool("deactivate", toggle);
+    }
+
+    public AudioClip GetFireSFX()
+    {
+        return fireSFX;
     }
 
     public override void GameManager_OnGameStateChange(object sender, StateEnum stateChange)

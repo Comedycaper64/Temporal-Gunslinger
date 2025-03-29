@@ -118,7 +118,7 @@ public class DefianceGameManager : GameManager
         endOfLevelCam.m_LookAt = lastEnemy;
         //switch on last enemy killed camera
         // do a focus on it
-        StartCoroutine(EndOfLevelWindDown());
+        windDownCoroutine = StartCoroutine(EndOfLevelWindDown());
     }
 
     private void ShowCredits()

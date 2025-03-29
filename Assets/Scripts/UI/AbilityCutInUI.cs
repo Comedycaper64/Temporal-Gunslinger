@@ -42,6 +42,11 @@ public class AbilityCutInUI : MonoBehaviour
         PlayerConquestAbility.OnConquestAbility -= TriggerCutIn;
         PlayerFamineAbility.OnFamineAbility -= TriggerCutIn;
         PlayerPestilenceAbility.OnPestilenceAbility -= TriggerCutIn;
+
+        if (cutInCoroutine != null)
+        {
+            StopCoroutine(cutInCoroutine);
+        }
     }
 
     private void TriggerCutIn(object sender, CutInType cutIn)
