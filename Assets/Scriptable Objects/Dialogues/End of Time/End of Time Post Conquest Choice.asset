@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueChoices:
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
-    dialogueOption: (How is <color="red">War</color> supposed to assist me?)
+    dialogueOption: (How is <color="red">War</color> supposed to help me?)
     correspondingDialogue: 0
     loopBackToChoice: 1
   - actor: {fileID: 11400000, guid: 3084d91d8af33cc44be3972a1e63d21c, type: 2}
@@ -30,42 +30,66 @@ MonoBehaviour:
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - You bested me without knowing my powers? This humiliation is too much to
-        bear...
+      - "You bested me without knowledge of my powers? This humiliation is too much
+        to bear\u2026"
       - ...
-      - <size=125%>* sigh *<size=100%>... I was imbued with two powers when I became
-        a Herald.
-      - One was tied to my sword, Balmung. I was able to dominate others with my
-        presence, leading the populace to single-mindedly work for the war effort.
-      - The Reaper has reclaimed the sword, and the power along with it.
-      - "Although\u2026 aye, I still have some control over my latent ability to
-        conjure portals. I presume that is how the Reaper wishes me to contribute."
+      - ... I was imbued with two powers when I became a Herald.
+      - "With my sword, Balmung, in my grasp, I commanded the very will of mortals.
+        The feeble and the mighty each bent the knee at my gaze. \u2018Twas with
+        this power I would lead the world, shaping it to serve the war effort as
+        I saw fit. "
+      - "Alas, the <color=\"green\">Reaper</color> hath reclaimed the sword, and
+        the power along with it. If it were to be returned to me\u2026"
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip:
-      - {fileID: 8300000, guid: d063440c0e0437342bf2862d707e6ae2, type: 3}
+      - {fileID: 8300000, guid: b86997f7ddd5cb34eb5c4186b78dcf94, type: 3}
       - {fileID: 8300000, guid: 878f34e0731a5ff40bc8dc0c6cffcf02, type: 3}
       - {fileID: 8300000, guid: a726a093d20bd214bab76e0823310ab9, type: 3}
-      - {fileID: 8300000, guid: f23409be2db3863429761afcd2c4954e, type: 3}
-      - {fileID: 8300000, guid: 8e205c0dfd3229647b51d39694cb5e81, type: 3}
-      - {fileID: 8300000, guid: 1c6d7fa27b4ab0748b4d76f0e370f13d, type: 3}
+      - {fileID: 8300000, guid: 364edc0202f8d6a449c7b0db7c7eb58c, type: 3}
+      - {fileID: 8300000, guid: 521b3f35c12b5fc4e8498ee270d74e07, type: 3}
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - Ah, I shall explain.
-      - To each of my friends I have bestowed a single item, and with it a single
-        ability. But making contact with a powerful relic can awaken one's latent
-        ability.
+      - Do not take me for a fool, <color="red">War</color>. Your sword will not
+        be returned, as you still retain some of your power without it.
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip: []
+    - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
+      actorNo: 0
+      dialogue:
+      - "\u2026Very well. Aye, I still hold dominion over my latent power to conjure
+        blades. I presume that is the manner in which the Reaper doth wish me to
+        contribute."
+      animations: []
+      animationCrossFadeTime: []
+      animationTime: []
+      cameraModes: 
+      disableCameraOnEnd: 0
+      voiceClip:
+      - {fileID: 8300000, guid: e78ca346c3e1c9c42bd816baaa96dff2, type: 3}
+    - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
+      actorNo: 0
+      dialogue:
+      - Indeed. Allow me to explain.
+      - "To each of my Heralds, I bestowed a single relic which granted a single
+        power. However, making contact with such a powerful relic can awaken one\u2019s
+        latent ability. In <color=\"red\">War</color>\u2019s case, his time as a
+        weaponsmith appears to have influenced this ability."
       - The same happened to you, old friend. The <color="green">Timepiece</color>
         is the item of power I gave you. The power to redirect bullets is one that
         <i>you</i> manifested.
-      - Though, <i>to be clear</i>, this power still comes from the staff. I have
-        partial control over how you use it because of the <color="green">coins</color>.
+      - However, to be clear, this power still comes from the staff. I have partial
+        control over how you use it because of the <color="green">coins</color>.
       - I foolishly gave the Heralds full control over their latent powers. I have
-        <i>learned</i> from my errors.
+        learned from my errors.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -82,13 +106,9 @@ MonoBehaviour:
       actorNo: 0
       dialogue:
       - You will travel into the Western Era and deal with <color="yellow">Famine</color>.
-      - 'He''s a wily and silver-tongued scoundrel. I don''t doubt that he plans
-        to sway you once you come face-to-face.
-
-'
-      - "Furthermore, he has an affinity with money. <i>Any</i> currency, to be exact.\r"
-      - I fear that it may be difficult for me to grant you <color="green">coins</color>
-        while you are within his domain.
+      - He may be physically weaker than <color="red">War</color>, but he has an
+        extremely quick wit. Once you reach him, it is likely he will use his silver
+        tongue to try to sway your resolve and avoid his fate.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -97,24 +117,25 @@ MonoBehaviour:
       voiceClip:
       - {fileID: 8300000, guid: 05897d629ed635d43bf07c6a72ced369, type: 3}
       - {fileID: 8300000, guid: 2e812a23d4792744d864cafa077c6a81, type: 3}
-      - {fileID: 8300000, guid: 6a19933ebea296e4abe12248bcc45793, type: 3}
-      - {fileID: 8300000, guid: c5acfc1e6a6a62847aa662bef1d6f63a, type: 3}
     - actor: {fileID: 11400000, guid: be632462839849546842682b09217efb, type: 2}
       actorNo: 0
       dialogue:
-      - Do you speak the truth? Or is this a bold lie for you to conserve your power?
+      - Thou dost claim our quest is to slay <color="yellow">Famine</color>, yet
+        what proof is there we are not being led to our deaths now that thou hast
+        vanquished me?
       animations: []
       animationCrossFadeTime: []
       animationTime: []
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip:
-      - {fileID: 8300000, guid: 2675e8781c11f814883a6fd4e7d2958d, type: 3}
+      - {fileID: 8300000, guid: 1fdf63e9756f844478322238de66ace0, type: 3}
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - Your doubts are misplaced. I expect you to turn your attention to the fate
-        of the world, instead of <i>pointlessly</i> needling me.
+      - Your doubts are misplaced. My concern lies with the imminent destruction
+        of the universe, not petty vengeance. As I explained to the <color="green">Revenant</color>,
+        there are three other Heralds which I require assistance in dealing with.
       animations: []
       animationCrossFadeTime: []
       animationTime: []
@@ -132,14 +153,12 @@ MonoBehaviour:
       cameraModes: 
       disableCameraOnEnd: 0
       voiceClip:
-      - {fileID: 8300000, guid: c0881e316fd4f774f8de4d8ce65f5b35, type: 3}
+      - {fileID: 8300000, guid: a1d93ea5e9b24784a9a6352aec6bf62b, type: 3}
   - dialogueAnswers:
     - actor: {fileID: 11400000, guid: 454c55e711d4d5b419d643720bde0940, type: 2}
       actorNo: 0
       dialogue:
-      - 'I believe it''s time for our next act.
-
-'
+      - I believe it is time for our next act.
       - "As always I shall maintain contact. I trust in both of your abilities, but
         I wish you luck nonetheless.\r"
       animations: []
