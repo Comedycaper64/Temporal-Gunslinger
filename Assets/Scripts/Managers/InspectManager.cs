@@ -50,49 +50,54 @@ public class InspectManager : MonoBehaviour
                 return;
             }
 
-            InspectTarget closestTarget = null;
-            float closestTargetDistance = Mathf.Infinity;
+            FindInspectables();
+        }
+    }
 
-            foreach (InspectTarget target in sceneInspectables)
+    private void FindInspectables()
+    {
+        InspectTarget closestTarget = null;
+        float closestTargetDistance = Mathf.Infinity;
+
+        foreach (InspectTarget target in sceneInspectables)
+        {
+            Vector3 viewPos = Camera.main.WorldToViewportPoint(target.transform.position);
+
+            //Debug.Log(viewPos);
+
+            if (
+                viewPos.z < 0f
+                || viewPos.x < 0.4f
+                || viewPos.x > 0.6f
+                || viewPos.y < 0.4f
+                || viewPos.y > 0.6f
+            )
             {
-                Vector3 viewPos = Camera.main.WorldToViewportPoint(target.transform.position);
-
-                //Debug.Log(viewPos);
-
-                if (
-                    viewPos.z < 0f
-                    || viewPos.x < 0.4f
-                    || viewPos.x > 0.6f
-                    || viewPos.y < 0.4f
-                    || viewPos.y > 0.6f
-                )
-                {
-                    continue;
-                }
-
-                Vector3 toCenter = viewPos - new Vector3(0.5f, 0.5f);
-                if (toCenter.sqrMagnitude < closestTargetDistance)
-                {
-                    closestTarget = target;
-                    closestTargetDistance = toCenter.sqrMagnitude;
-                }
+                continue;
             }
 
-            if (closestTarget == null)
+            Vector3 toCenter = viewPos - new Vector3(0.5f, 0.5f);
+            if (toCenter.sqrMagnitude < closestTargetDistance)
             {
-                if (targetInspectable != null)
-                {
-                    targetInspectable = null;
-                    OnCanInspect?.Invoke(this, null);
-                }
-                return;
+                closestTarget = target;
+                closestTargetDistance = toCenter.sqrMagnitude;
             }
+        }
 
-            if (closestTarget != targetInspectable)
+        if (closestTarget == null)
+        {
+            if (targetInspectable != null)
             {
-                targetInspectable = closestTarget;
-                OnCanInspect?.Invoke(this, targetInspectable);
+                targetInspectable = null;
+                OnCanInspect?.Invoke(this, null);
             }
+            return;
+        }
+
+        if (closestTarget != targetInspectable)
+        {
+            targetInspectable = closestTarget;
+            OnCanInspect?.Invoke(this, targetInspectable);
         }
     }
 

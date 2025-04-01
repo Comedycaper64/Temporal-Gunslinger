@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BulletPossessor : MonoBehaviour
 {
+    private int interval = 2;
     private BulletPossessTarget possessedBullet;
     private BulletPossessTarget centreOfScreenPossessable;
     private PlayerPestilenceAbility pestilenceAbility;
@@ -42,7 +43,10 @@ public class BulletPossessor : MonoBehaviour
             return;
         }
 
-        FindCentreOfScreenPossessable();
+        if (Time.frameCount % interval == 0)
+        {
+            FindCentreOfScreenPossessable();
+        }
 
         if (bLockOnStarted || bPestilenceLockOn)
         {

@@ -19,8 +19,6 @@ public class EnemyDeathScytheAState : State
 
     public override void Enter()
     {
-        Debug.Log(" Scythe A Pattern ");
-
         deathSM.transform.position = deathSM.GetScytheAPosition().position;
         deathSM.transform.rotation = deathSM.GetScytheAPosition().rotation;
 

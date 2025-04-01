@@ -18,8 +18,6 @@ public class EnemyDeathTeleportBufferState : State
 
     public override void Enter()
     {
-        Debug.Log(" Death is Teleporting ");
-
         if (rewindState.IsRewinding())
         {
             timer = bufferTime;

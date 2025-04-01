@@ -23,8 +23,6 @@ public class EnemyDeathQuillFlurryState : State
 
     public override void Enter()
     {
-        Debug.Log(" Quill Pattern ");
-
         deathSM.GetDissolveController().StartDissolve(deathSM.etherealDissolveValue);
 
         if (rewindState.IsRewinding())

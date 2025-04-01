@@ -27,8 +27,6 @@ public class EnemyDeathDeadzonesState : State
 
     public override void Enter()
     {
-        Debug.Log(" Deadzone Pattern ");
-
         deathSM.GetDissolveController().StartDissolve(deathSM.etherealDissolveValue);
 
         if (rewindState.IsRewinding())

@@ -24,8 +24,6 @@ public class EnemyDeathHeavyCastState : State
 
     public override void Enter()
     {
-        Debug.Log(" Heavy Pattern ");
-
         deathSM.GetDissolveController().StartDissolve(0f);
         deathSM.ToggleShield(true);
         deathSM.ToggleWeakPoint(true);

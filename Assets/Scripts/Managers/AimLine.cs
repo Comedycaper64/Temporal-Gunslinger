@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class AimLine : MonoBehaviour
 {
+    private int randomInterval = 0;
+    private int interval = 2;
     private float lineRange = 100f;
     private float sphereCastRadius = 0.1f;
     private float hitVisualHoverDistance = 0.01f;
     private bool bShowLine = false;
+    private Vector3 linePosSave;
 
     //private bool bShowFocusLine = false;
     private Transform lineOrigin;
@@ -39,6 +42,7 @@ public class AimLine : MonoBehaviour
     private void Awake()
     {
         ToggleHitVisualVisibility(false);
+        randomInterval = Random.Range(0, interval + 1);
     }
 
     // private void OnEnable()
@@ -71,7 +75,18 @@ public class AimLine : MonoBehaviour
         // }
         // else
         // {
-        DrawLine();
+        if ((Time.frameCount + randomInterval) % interval == 0)
+        {
+            DrawLine();
+        }
+        else
+        {
+            Vector3 originPosition = lineOrigin.position;
+            Vector3[] positionArray = new Vector3[2] { originPosition, linePosSave };
+
+            lineRenderer.SetPositions(positionArray);
+            highlightLineRenderer.SetPositions(positionArray);
+        }
         //}
     }
 
@@ -114,6 +129,7 @@ public class AimLine : MonoBehaviour
             ToggleHitVisualVisibility(false);
             positionArray[1] = lineDirection * lineRange;
         }
+        linePosSave = positionArray[1];
         lineRenderer.SetPositions(positionArray);
         highlightLineRenderer.SetPositions(positionArray);
     }

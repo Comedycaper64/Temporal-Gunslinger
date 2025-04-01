@@ -14,6 +14,7 @@ public class FocusHighlight : MonoBehaviour, IHighlightable
     private void OnDisable()
     {
         BulletPossessTarget.highlightables.Remove(this);
+        ToggleHighlight(false);
     }
 
     public void ToggleHighlight(bool toggle)

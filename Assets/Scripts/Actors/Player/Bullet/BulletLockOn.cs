@@ -3,11 +3,17 @@ using UnityEngine;
 
 public class BulletLockOn : MonoBehaviour
 {
+    private bool activelyHoming = false;
+
     [SerializeField]
     private bool persistentLockOn = true;
 
+    //[SerializeField]
+    private bool experimentalLockOn = true;
+
     [SerializeField]
-    private float rotationSpeed = 5f;
+    private float rotationSpeed = 10f;
+    private float reactivateHomingThreshold = 0.02f;
     private float currentLockOnTotalRotation = 0f;
     private Vector3 initialDirection;
 
@@ -86,9 +92,70 @@ public class BulletLockOn : MonoBehaviour
 
         float distanceRotated = (newDirection - currentDirection).magnitude;
 
-        currentLockOnTotalRotation += distanceRotated * rewindModifier;
-
+        //currentLockOnTotalRotation += distanceRotated * rewindModifier;
+        float lockOnRotationincrease = distanceRotated * rewindModifier;
         //Debug.Log("Current LockOn Rotation: " + currentLockOnTotalRotation);
+
+
+        if (experimentalLockOn)
+        {
+            if (activelyHoming)
+            {
+                currentLockOnTotalRotation += lockOnRotationincrease;
+                if (
+                    !bulletMovement.IsBulletReversing()
+                    && ((targetDirection - currentDirection).magnitude <= 0.01f)
+                )
+                {
+                    activelyHoming = false;
+                    FinishLockOn.BulletLockOnFinished(
+                        bulletTarget,
+                        this,
+                        currentLockOnTotalRotation,
+                        transform.position,
+                        bulletMovement.GetFlightDirection(),
+                        initialDirection,
+                        true
+                    );
+                    currentLockOnTotalRotation = 0f;
+                    return;
+                }
+
+                if (currentLockOnTotalRotation > 0f)
+                {
+                    Quaternion newRotation = Quaternion.LookRotation(newDirection);
+                    bulletMovement.ChangeTravelDirection(newDirection, newRotation);
+                }
+                else
+                {
+                    //Debug.Log("No More Rotation");
+                    currentLockOnTotalRotation = 0f;
+                }
+                return;
+            }
+            else
+            {
+                if (
+                    !bulletMovement.IsBulletReversing()
+                    && ((targetDirection - currentDirection).magnitude > reactivateHomingThreshold)
+                )
+                {
+                    activelyHoming = true;
+                    initialDirection = bulletMovement.GetFlightDirection();
+                    StartLockOn.BulletLockedOn(
+                        this,
+                        transform.position,
+                        bulletMovement.GetFlightDirection(),
+                        true
+                    );
+                    return;
+                }
+            }
+
+            return;
+        }
+
+        currentLockOnTotalRotation += lockOnRotationincrease;
 
         if (
             !persistentLockOn
@@ -167,8 +234,6 @@ public class BulletLockOn : MonoBehaviour
             Quaternion.LookRotation(redirectDirection)
         );
 
-        Debug.Log("Locking On");
-
         SetTarget(lockingOnTarget, false);
 
         //Turn off lockon UI;
@@ -176,10 +241,17 @@ public class BulletLockOn : MonoBehaviour
         lockingOnTarget = null;
     }
 
+    private void ResetTarget()
+    {
+        activelyHoming = true;
+    }
+
     public void SetTarget(LockOnTarget newTarget, bool rewinding)
     {
         if (bulletTarget != null)
         {
+            activelyHoming = false;
+
             bulletTarget.OnTargetDestroyed -= DisableLockOn;
 
             if (!rewinding)
@@ -190,7 +262,8 @@ public class BulletLockOn : MonoBehaviour
                     currentLockOnTotalRotation,
                     transform.position,
                     bulletMovement.GetFlightDirection(),
-                    initialDirection
+                    initialDirection,
+                    false
                 );
             }
         }
@@ -199,6 +272,8 @@ public class BulletLockOn : MonoBehaviour
         //Debug.Log("Setting target");
         if (bulletTarget != null)
         {
+            activelyHoming = true;
+
             //Debug.Log("Has target");
             bulletTarget.OnTargetDestroyed += DisableLockOn;
             currentLockOnTotalRotation = 0f;
@@ -219,9 +294,17 @@ public class BulletLockOn : MonoBehaviour
         SetTarget(target, false);
     }
 
-    public void UndoLockOn(Vector3 initialPosition, Vector3 initialDirection)
+    public void UndoLockOn(Vector3 initialPosition, Vector3 initialDirection, bool persistent)
     {
-        SetTarget(null, true);
+        if (!persistent)
+        {
+            SetTarget(null, true);
+        }
+        else
+        {
+            activelyHoming = false;
+        }
+
         transform.position = initialPosition;
         Quaternion undoRotation = Quaternion.LookRotation(initialDirection);
         bulletMovement.ChangeTravelDirection(initialDirection, undoRotation);
@@ -232,13 +315,24 @@ public class BulletLockOn : MonoBehaviour
         float lockOnRotationAmount,
         Vector3 initialPosition,
         Vector3 lastDirection,
-        Vector3 lockOnStartDirection
+        Vector3 lockOnStartDirection,
+        bool persistent
     )
     {
         //Debug.Log("Lock On Restarted");
-        SetTarget(oldTarget, true);
+        if (!persistent)
+        {
+            SetTarget(oldTarget, true);
+        }
+        else
+        {
+            ResetTarget();
+        }
         currentLockOnTotalRotation = lockOnRotationAmount;
         transform.position = initialPosition;
+
+        Quaternion undoRotation = Quaternion.LookRotation(lastDirection);
+        bulletMovement.ChangeTravelDirection(lastDirection, undoRotation);
         initialDirection = lockOnStartDirection;
         // Quaternion undoRotation = Quaternion.LookRotation(lastDirection);
         // bulletMovement.ChangeTravelDirection(lastDirection, undoRotation);

@@ -20,8 +20,6 @@ public class EnemyDeathHeavyCastInterruptState : State
 
     public override void Enter()
     {
-        Debug.Log(" Interrupt ");
-
         deathSM.GetDissolveController().StartDissolve(deathSM.etherealDissolveValue);
 
         if (rewindState.IsRewinding())

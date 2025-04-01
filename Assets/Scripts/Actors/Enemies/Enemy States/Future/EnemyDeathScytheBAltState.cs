@@ -23,8 +23,6 @@ public class EnemyDeathScytheBAltState : State
 
     public override void Enter()
     {
-        Debug.Log(" Scythe B Alt Pattern ");
-
         deathSM.transform.position = deathSM.GetScytheBPosition().position;
         deathSM.transform.rotation = deathSM.GetScytheBPosition().rotation;
 

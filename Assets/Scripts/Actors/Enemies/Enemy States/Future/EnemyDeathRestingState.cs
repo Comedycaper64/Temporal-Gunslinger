@@ -22,8 +22,6 @@ public class EnemyDeathRestingState : State
 
     public override void Enter()
     {
-        Debug.Log(" Death is Resting ");
-
         stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0.01f, 0);
 
         //If teleport and not reversing, start off dissolves, teleport to rest point, then undissolve

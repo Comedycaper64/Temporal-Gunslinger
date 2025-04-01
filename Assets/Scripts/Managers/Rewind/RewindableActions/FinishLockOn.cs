@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class FinishLockOn : RewindableAction
 {
+    private bool persistent;
     private float lockOnRotationAmount;
     private Vector3 initialPosition;
     private Vector3 initialDirection;
@@ -15,7 +16,8 @@ public class FinishLockOn : RewindableAction
         float lockOnRotationAmount,
         Vector3 initialPosition,
         Vector3 initialDirection,
-        Vector3 lockOnStartDirection
+        Vector3 lockOnStartDirection,
+        bool persistent = false
     )
     {
         new FinishLockOn(
@@ -24,7 +26,8 @@ public class FinishLockOn : RewindableAction
             lockOnRotationAmount,
             initialPosition,
             initialDirection,
-            lockOnStartDirection
+            lockOnStartDirection,
+            persistent
         );
     }
 
@@ -34,7 +37,8 @@ public class FinishLockOn : RewindableAction
         float lockOnRotationAmount,
         Vector3 initialPosition,
         Vector3 initialDirection,
-        Vector3 lockOnStartDirection
+        Vector3 lockOnStartDirection,
+        bool persistent
     )
     {
         this.bulletLockOn = bulletLockOn;
@@ -43,6 +47,7 @@ public class FinishLockOn : RewindableAction
         this.initialPosition = initialPosition;
         this.initialDirection = initialDirection;
         this.lockOnStartDirection = lockOnStartDirection;
+        this.persistent = persistent;
 
         Execute();
     }
@@ -54,7 +59,8 @@ public class FinishLockOn : RewindableAction
             lockOnRotationAmount,
             initialPosition,
             initialDirection,
-            lockOnStartDirection
+            lockOnStartDirection,
+            persistent
         );
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 [ExecuteAlways]
 public class MentalLinkTether : MonoBehaviour
 {
+    private int randomInterval = 0;
+    private int interval = 3;
     private LineRenderer lineRenderer;
     private bool linkEnabled = false;
     private float tau = 2 * Mathf.PI;
@@ -40,13 +42,17 @@ public class MentalLinkTether : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         linkOffset = Random.Range(0f, linkOffsetRange);
+        randomInterval = Random.Range(0, interval + 1);
     }
 
     void Update()
     {
         if (linkEnabled)
         {
-            Draw();
+            if ((Time.frameCount + randomInterval) % interval == 0)
+            {
+                Draw();
+            }
         }
     }
 
