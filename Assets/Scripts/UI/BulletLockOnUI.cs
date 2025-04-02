@@ -75,7 +75,15 @@ public class BulletLockOnUI : MonoBehaviour
                 ChargingLockOn();
             }
         }
-        else if (uiActive)
+        // else if (uiActive)
+        // {
+        //     FindLockOnTargets();
+        // }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!lockingOn && uiActive)
         {
             FindLockOnTargets();
         }

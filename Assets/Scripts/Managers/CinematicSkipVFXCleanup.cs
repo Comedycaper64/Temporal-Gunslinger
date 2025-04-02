@@ -54,7 +54,7 @@ public class CinematicSkipVFXCleanup : MonoBehaviour
         {
             foreach (GameObject obj in objectsToEnable)
             {
-                Debug.Log("Setting active: " + obj.name);
+                //Debug.Log("Setting active: " + obj.name);
                 obj.SetActive(true);
             }
         }

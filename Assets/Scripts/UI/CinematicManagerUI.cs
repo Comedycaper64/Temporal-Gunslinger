@@ -17,6 +17,8 @@ public class CinematicManagerUI : MonoBehaviour
     private MMF_Player loadingScreenPlayer;
     private CanvasGroup canvasGroup;
     private Action onFade;
+    public static EventHandler<bool> OnFadeStart;
+    public static EventHandler<bool> OnFadeEnd;
 
     private void Awake()
     {
@@ -44,6 +46,7 @@ public class CinematicManagerUI : MonoBehaviour
                 canvasGroup.alpha += fadeSpeed * Time.deltaTime;
                 if (canvasGroup.alpha >= 1f)
                 {
+                    OnFadeEnd?.Invoke(this, true);
                     FadeFinished();
                 }
             }
@@ -53,6 +56,7 @@ public class CinematicManagerUI : MonoBehaviour
                 if (canvasGroup.alpha <= 0f)
                 {
                     FadeFinished();
+                    OnFadeEnd?.Invoke(this, false);
                 }
             }
         }
@@ -71,6 +75,8 @@ public class CinematicManagerUI : MonoBehaviour
     private void ToggleFade(object sender, UIChangeSO uIChange)
     {
         fadeTarget = uIChange.fadeToBlackToggle;
+
+        OnFadeStart?.Invoke(this, fadeTarget);
 
         if (uIChange.midLevelFade)
         {

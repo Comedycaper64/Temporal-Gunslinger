@@ -30,12 +30,12 @@ public class SteamOverlay : MonoBehaviour
     {
         if (pCallback.m_bActive != 0)
         {
-            Debug.Log("Steam Overlay has been activated");
+            //Debug.Log("Steam Overlay has been activated");
             OnOverlayEnable?.Invoke();
         }
         else
         {
-            Debug.Log("Steam Overlay has been closed");
+            //Debug.Log("Steam Overlay has been closed");
         }
     }
 }

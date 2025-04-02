@@ -64,7 +64,7 @@ public class TutorialUIManager : MonoBehaviour
     public void PreviousTutorial()
     {
         openTutorialIndex = CustomMod(openTutorialIndex - 1, tutorialSlides.Count);
-        Debug.Log(openTutorialIndex);
+        //Debug.Log(openTutorialIndex);
         openTutorial.ToggleCanvas(false);
         openTutorial = tutorialSlides[openTutorialIndex];
         openTutorial.ToggleCanvas(true);

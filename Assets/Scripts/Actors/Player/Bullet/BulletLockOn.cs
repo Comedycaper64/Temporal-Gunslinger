@@ -46,7 +46,7 @@ public class BulletLockOn : MonoBehaviour
         bulletMovement.OnMovementStopped -= DisableLockOn;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!bulletTarget)
         {
@@ -62,7 +62,9 @@ public class BulletLockOn : MonoBehaviour
 
         Vector3 targetDirection = (targetPosition - transform.position).normalized;
 
-        float singleStep = rotationSpeed * Time.deltaTime * RewindableMovement.GetTimescale(); // * rewindModifier;
+        //float singleStep = rotationSpeed * Time.deltaTime * RewindableMovement.GetTimescale(); // * rewindModifier;
+        //FIXED UPDATE VERSION \/
+        float singleStep = rotationSpeed * Time.fixedDeltaTime * RewindableMovement.GetTimescale(); // * rewindModifier;
 
         Vector3 currentDirection = bulletMovement.GetFlightDirection();
 

@@ -34,7 +34,7 @@ public class FamineBossACH : MonoBehaviour
             return;
         }
 
-        Debug.Log("Locusts Spawned: " + locustsSpawned);
+        //Debug.Log("Locusts Spawned: " + locustsSpawned);
 
         if (locustsSpawned < locustThreshold)
         {
