@@ -44,7 +44,7 @@ public class Bullet : MonoBehaviour
         focusManager = GetComponent<FocusManager>();
         bulletFlightSFX = GetComponent<AudioSource>();
         gunParent = transform.parent;
-        focusManager.SetBulletSpeed(bulletMovement.GetMaxVelocity());
+        //focusManager.SetBulletSpeed(bulletMovement.GetMaxVelocity());
         SetBulletCollider();
 
         bulletMovement.OnLowVelocity += SetLowVelocity;
@@ -65,7 +65,7 @@ public class Bullet : MonoBehaviour
         if (bBulletActive)
         {
             bulletMovement.LoseVelocity();
-            focusManager.SetBulletSpeed(bulletMovement.GetVelocity());
+            //focusManager.SetBulletSpeed(bulletMovement.GetVelocity());
 
             if (bulletMovement.ShouldBulletStop() && !RewindManager.bRewinding)
             {

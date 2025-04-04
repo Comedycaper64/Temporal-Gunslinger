@@ -20,6 +20,6 @@ public class TimescaleSetter : RewindableMovement
 
     private void Update()
     {
-        shader.SetFloat("_Timescale", GetSpeed());
+        shader.SetFloat("_Timescale", Mathf.Clamp01(GetSpeed()));
     }
 }

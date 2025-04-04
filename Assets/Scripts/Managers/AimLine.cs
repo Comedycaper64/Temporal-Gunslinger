@@ -6,7 +6,7 @@ public class AimLine : MonoBehaviour
     private int interval = 2;
     private float lineRange = 100f;
     private float sphereCastRadius = 0.1f;
-    private float hitVisualHoverDistance = 0.01f;
+    private float hitVisualHoverDistance = 0.025f;
     private bool bShowLine = false;
     private Vector3 linePosSave;
 

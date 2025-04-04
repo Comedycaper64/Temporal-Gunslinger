@@ -2560,6 +2560,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.00000025795285
       objectReference: {fileID: 0}
+    - target: {fileID: 3078333899882131674, guid: 08a073799e28d784fb654b201620c170,
+        type: 3}
+      propertyPath: movingAnimations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: 2236b55a5bfd03c42ae7e766ca639fde, type: 2}
     - target: {fileID: 3081295595725918236, guid: 08a073799e28d784fb654b201620c170,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4808,6 +4813,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1590191503582445842, guid: 883bdd3df01aabe4d8915d28a98607be,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590191503582445842, guid: 883bdd3df01aabe4d8915d28a98607be,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590191503582445842, guid: 883bdd3df01aabe4d8915d28a98607be,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1672286107481753876, guid: 883bdd3df01aabe4d8915d28a98607be,
         type: 3}
       propertyPath: m_Alpha
@@ -6997,6 +7017,7 @@ GameObject:
   - component: {fileID: 888441684}
   - component: {fileID: 888441686}
   - component: {fileID: 888441685}
+  - component: {fileID: 888441688}
   m_Layer: 5
   m_Name: Opening Cutscene UI
   m_TagString: Untagged
@@ -7143,7 +7164,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 50
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 9999
@@ -7248,6 +7269,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f353c2b37c0e88041b7e9027682eb0e5, type: 3}
   - {fileID: 8300000, guid: 1ca95ec1d5b8e9d469a7b38b0946a79d, type: 3}
   introSO: {fileID: 11400000, guid: 47a4affa106dd3d41be36f87bd3d724c, type: 2}
+--- !u!114 &888441688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888441679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c027da33871d6e49a1eeb95e7f91bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseDuringLevel: 0
+  loopingSFX: 1
+  sfxVolume: 1
 --- !u!1001 &901143319
 PrefabInstance:
   m_ObjectHideFlags: 0
