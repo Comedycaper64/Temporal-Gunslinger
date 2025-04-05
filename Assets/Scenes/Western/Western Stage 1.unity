@@ -1563,7 +1563,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 71629540}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1587,10 +1587,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: It has not rained in months. Wilted crops line a dusty track that joins
-    a farmstead. A set of fresh tracks betray the arrival of a newcomer in town.
-    Short but proud, a wiry man steps out of a lavish carriage, surveying the area
-    and heading towards the ramshackle farmhouse.
+  m_text: It has not rained in months. Wilted crops wither along a dusty trail joining
+    the railway to a ramshackle farmstead. A set of fresh tracks betray the arrival
+    of a lavish carriage pulled by pristine horses. A short and wiry man steps out,
+    surveying the area before approaching the farmhouse.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ecc4eef08bef7d4083406f284c093d8, type: 2}
   m_sharedMaterial: {fileID: -6159658335563363560, guid: 2ecc4eef08bef7d4083406f284c093d8,
@@ -2778,7 +2778,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111170871}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2802,11 +2802,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A farmer and his wife, both gaunt from starvation, step out to meet the
-    man. He is here to make a deal. They are cautious. Who in their right mind would
-    want to purchase such infertile land? The businessman sets them at ease, he is
-    looking to strike it rich drilling for oil. Their eyes boggle as he shows them
-    the stacks of banknotes in his briefcase.
+  m_text: 'A farmer and his wife, both gaunt from starvation, step out onto the porch.
+    The man states his business: he is here to make a deal. They are cautious at
+    first, but he soon sets them at ease. He explains he is looking to strike it
+    rich drilling for oil, and their eyes boggle as he shows them the stacks of banknotes
+    in his briefcase.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ecc4eef08bef7d4083406f284c093d8, type: 2}
   m_sharedMaterial: {fileID: -6159658335563363560, guid: 2ecc4eef08bef7d4083406f284c093d8,
@@ -15510,6 +15510,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590191503582445842, guid: 883bdd3df01aabe4d8915d28a98607be,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590191503582445842, guid: 883bdd3df01aabe4d8915d28a98607be,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590191503582445842, guid: 883bdd3df01aabe4d8915d28a98607be,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1602245488240024664, guid: 883bdd3df01aabe4d8915d28a98607be,
         type: 3}
@@ -33244,7 +33259,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468611652}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -33269,11 +33284,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "They sign his paperwork and they shake his hand. Locusts flit around the
-    man\u2019s face as he heads back inside his carriage. Shutting the door, he rests
-    against the plush velvet seat, spotting another locust as he takes his hat off.
-    He watches with a strange captivation as it slowly crawls along the felt, as
-    if its every twitch hints at some otherworldly knowledge. He chuckles. What a
-    fascinating creature\u2026\r"
+    man\u2019s face as he strolls back to his carriage, where his coachman tries
+    to calm the horses. He climbs inside and shuts the door, reclining on the plush
+    velvet seat. Doffing his hat, he spots another insect clinging to it. As he raises
+    a hand to crush it, something makes him pause. He watches with a strange captivation
+    as it slowly crawls across the felt. He chuckles. What a fascinating creature\u2026"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ecc4eef08bef7d4083406f284c093d8, type: 2}
   m_sharedMaterial: {fileID: -6159658335563363560, guid: 2ecc4eef08bef7d4083406f284c093d8,
@@ -34944,7 +34959,10 @@ MonoBehaviour:
   - {fileID: 1328232274}
   - {fileID: 718296937}
   - {fileID: 134992106}
-  introTextNarration: []
+  introTextNarration:
+  - {fileID: 8300000, guid: 6579689fc253bc941bcd633b01cb9bbb, type: 3}
+  - {fileID: 8300000, guid: 0567c15d718d19440834c6409f3f4676, type: 3}
+  - {fileID: 8300000, guid: 86b601f8e75223c4cbb0471b76fb6214, type: 3}
   introSO: {fileID: 11400000, guid: 47a4affa106dd3d41be36f87bd3d724c, type: 2}
 --- !u!114 &1549456922
 MonoBehaviour:
