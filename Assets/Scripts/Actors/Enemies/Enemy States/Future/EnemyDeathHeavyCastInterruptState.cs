@@ -4,6 +4,7 @@ public class EnemyDeathHeavyCastInterruptState : State
 {
     private float timer = 0f;
     private float stateTime = 0.015f;
+    private AudioSource lineAudioSource;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
 
@@ -31,6 +32,19 @@ public class EnemyDeathHeavyCastInterruptState : State
         {
             timer = 0f;
             stateMachine.stateMachineAnimator.CrossFade(StateAnimHash, 0f, 0);
+
+            if (deathSM.GetFlowIndex() < 6)
+            {
+                lineAudioSource = deathSM.GetDeathAudioSource();
+                lineAudioSource.clip = deathSM.GetDeathLines()[0];
+                lineAudioSource.Play();
+            }
+            else
+            {
+                lineAudioSource = deathSM.GetDeathAudioSource();
+                lineAudioSource.clip = deathSM.GetDeathLines()[1];
+                lineAudioSource.Play();
+            }
         }
     }
 
@@ -50,5 +64,11 @@ public class EnemyDeathHeavyCastInterruptState : State
         }
     }
 
-    public override void Exit() { }
+    public override void Exit()
+    {
+        if (lineAudioSource)
+        {
+            lineAudioSource.Stop();
+        }
+    }
 }

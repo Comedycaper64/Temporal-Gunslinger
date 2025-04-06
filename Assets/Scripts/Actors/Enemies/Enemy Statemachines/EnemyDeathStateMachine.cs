@@ -40,6 +40,12 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     private DeathDeadzone[] deathDeadzones;
 
     [SerializeField]
+    private AudioClip[] deathBossVoiceLines;
+
+    [SerializeField]
+    private AudioSource deathSource;
+
+    [SerializeField]
     private DeathHealth health;
 
     [SerializeField]
@@ -196,6 +202,16 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         return deathSpell;
     }
 
+    public AudioClip[] GetDeathLines()
+    {
+        return deathBossVoiceLines;
+    }
+
+    public AudioSource GetDeathAudioSource()
+    {
+        return deathSource;
+    }
+
     public DeathDeadzone GetDeathDeadzone()
     {
         DeathDeadzone deadzone = deathDeadzones[deadZoneIndex];
@@ -250,6 +266,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     public void ToggleWeakPoint(bool toggle)
     {
         weakPoint.SetActive(toggle);
+    }
+
+    public int GetFlowIndex()
+    {
+        return flowIndex;
     }
 
     public bool GetIsOutOfMoves()

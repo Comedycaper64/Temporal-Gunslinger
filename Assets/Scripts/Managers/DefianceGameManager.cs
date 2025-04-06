@@ -73,6 +73,7 @@ public class DefianceGameManager : GameManager
         }
 
         rewindManager.ToggleCanReset(false);
+        rewindManager.ToggleCanRewind(false);
 
         rewindManager.OnResetLevel += RewindManager_OnResetLevel;
         rewindManager.OnRewindToStart += RewindManager_OnRewindToStart;
