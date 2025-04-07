@@ -6,7 +6,8 @@ public enum CutInType
 {
     Conquest,
     Famine,
-    Pestilence
+    Pestilence,
+    Death
 }
 
 public class AbilityCutInUI : MonoBehaviour

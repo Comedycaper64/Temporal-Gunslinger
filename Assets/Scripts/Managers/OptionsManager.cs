@@ -1,10 +1,12 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour
 {
     private bool vSyncState;
+    private bool focusSettingState;
 
     private const float SLIDER_MOD = 8f;
     private AudioSource sampleAudioSource;
@@ -39,6 +41,12 @@ public class OptionsManager : MonoBehaviour
     // [SerializeField]
     // private Slider bulletSensitivityYSlider;
     [SerializeField]
+    private TextMeshProUGUI focusHoldButton;
+
+    [SerializeField]
+    private TextMeshProUGUI focusToggleButton;
+
+    [SerializeField]
     private Image vsyncButtonImage;
 
     public static EventHandler<float> OnMasterVolumeUpdated;
@@ -48,6 +56,7 @@ public class OptionsManager : MonoBehaviour
     public static EventHandler<float> OnGunSensitivityUpdated;
     public static EventHandler<float> OnBulletSensitivityUpdated;
     public static EventHandler<bool> OnVSyncUpdated;
+    public static EventHandler<bool> OnFocusUpdated;
 
     private void OnEnable()
     {
@@ -71,6 +80,9 @@ public class OptionsManager : MonoBehaviour
         {
             vsyncButtonImage.color = Color.gray;
         }
+
+        focusSettingState = PlayerOptions.GetFocusSetting();
+        UpdateFocusControlUI();
 
         sampleAudioSource = GetComponent<AudioSource>();
     }
@@ -152,6 +164,34 @@ public class OptionsManager : MonoBehaviour
             newSensitivity
         //new Vector2(newSensitivity, PlayerOptions.GetBulletYSensitivity())
         );
+    }
+
+    public void DisableFocus()
+    {
+        ToggleFocusControl(false);
+    }
+
+    public void ToggleFocusControl(bool toggle)
+    {
+        focusSettingState = toggle;
+        PlayerOptions.SetFocusSetting(focusSettingState);
+
+        UpdateFocusControlUI();
+        OnFocusUpdated?.Invoke(this, focusSettingState);
+    }
+
+    private void UpdateFocusControlUI()
+    {
+        if (focusSettingState)
+        {
+            focusHoldButton.color = Color.gray;
+            focusToggleButton.color = Color.white;
+        }
+        else
+        {
+            focusHoldButton.color = Color.white;
+            focusToggleButton.color = Color.grey;
+        }
     }
 
     public void ToggleVSync()

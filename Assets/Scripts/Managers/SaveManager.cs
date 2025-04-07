@@ -37,4 +37,9 @@ public class SaveManager
             PlayerPrefs.SetInt(LEVEL_PROGRESS, newProgress);
         }
     }
+
+    public static void ResetProgress()
+    {
+        PlayerPrefs.SetInt(LEVEL_PROGRESS, 0);
+    }
 }

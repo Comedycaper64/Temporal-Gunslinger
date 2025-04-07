@@ -14,9 +14,13 @@ public class PlayerPestilenceAbility : MonoBehaviour
     private AudioClip[] pestilenceVoicelines;
 
     [SerializeField]
+    private string[] pestilenceLineText;
+
+    [SerializeField]
     private AudioSource pestilenceAudioSource;
     public static event Action OnAbilityUIUsed;
     public static EventHandler<CutInType> OnPestilenceAbility;
+    public static EventHandler<string> OnPestilenceAbilityText;
 
     private void OnEnable()
     {
@@ -67,5 +71,10 @@ public class PlayerPestilenceAbility : MonoBehaviour
         pestilenceAudioSource.clip = pestilenceVoicelines[randomInt];
         pestilenceAudioSource.transform.position = Camera.main.transform.position;
         pestilenceAudioSource.Play();
+
+        if (randomInt < pestilenceLineText.Length)
+        {
+            OnPestilenceAbilityText?.Invoke(this, pestilenceLineText[randomInt]);
+        }
     }
 }

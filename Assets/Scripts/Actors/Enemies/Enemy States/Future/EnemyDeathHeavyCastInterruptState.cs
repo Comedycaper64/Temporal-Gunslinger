@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyDeathHeavyCastInterruptState : State
@@ -10,6 +11,7 @@ public class EnemyDeathHeavyCastInterruptState : State
 
     private readonly int StateAnimHash;
     private readonly string StateAnimName = "Death Heavy Cast Interrupt";
+    public static EventHandler<string> OnDeathInterrupted;
 
     public EnemyDeathHeavyCastInterruptState(StateMachine stateMachine)
         : base(stateMachine)
@@ -38,12 +40,16 @@ public class EnemyDeathHeavyCastInterruptState : State
                 lineAudioSource = deathSM.GetDeathAudioSource();
                 lineAudioSource.clip = deathSM.GetDeathLines()[0];
                 lineAudioSource.Play();
+
+                OnDeathInterrupted?.Invoke(this, deathSM.GetDeathLineText()[0]);
             }
             else
             {
                 lineAudioSource = deathSM.GetDeathAudioSource();
                 lineAudioSource.clip = deathSM.GetDeathLines()[1];
                 lineAudioSource.Play();
+
+                OnDeathInterrupted?.Invoke(this, deathSM.GetDeathLineText()[1]);
             }
         }
     }

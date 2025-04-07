@@ -43,6 +43,9 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     private AudioClip[] deathBossVoiceLines;
 
     [SerializeField]
+    private string[] deathBossLineText;
+
+    [SerializeField]
     private AudioSource deathSource;
 
     [SerializeField]
@@ -205,6 +208,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     public AudioClip[] GetDeathLines()
     {
         return deathBossVoiceLines;
+    }
+
+    public string[] GetDeathLineText()
+    {
+        return deathBossLineText;
     }
 
     public AudioSource GetDeathAudioSource()

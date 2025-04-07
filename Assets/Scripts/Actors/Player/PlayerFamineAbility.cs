@@ -18,9 +18,13 @@ public class PlayerFamineAbility : MonoBehaviour
     private AudioClip[] famineVoicelines;
 
     [SerializeField]
+    private string[] famineLineText;
+
+    [SerializeField]
     private AudioSource famineAudioSource;
     public static event Action OnAbilityUIUsed;
     public static EventHandler<CutInType> OnFamineAbility;
+    public static EventHandler<string> OnFamineAbilityText;
 
     private void Start()
     {
@@ -94,14 +98,10 @@ public class PlayerFamineAbility : MonoBehaviour
         famineAudioSource.transform.position = Camera.main.transform.position;
         famineAudioSource.Play();
 
-        // AudioManager.PlaySFX(
-        //     famineVoicelines[randomInt],
-        //     0.75f,
-        //     0,
-        //     Camera.main.transform.position,
-        //     false,
-        //     false
-        // );
+        if (randomInt < famineLineText.Length)
+        {
+            OnFamineAbilityText.Invoke(this, famineLineText[randomInt]);
+        }
     }
 
     public void UndoAbility()

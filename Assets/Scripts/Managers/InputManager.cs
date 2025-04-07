@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public event Action OnShootAction;
     public event Action OnShootReleaseAction;
     public event Action OnFocusAction;
+    public event Action OnFocusReleaseAction;
     public event Action OnRewindAction;
 
     public event Action OnPossessAction;
@@ -110,13 +111,13 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
             return;
         }
 
-        if (!context.performed)
-        {
-            return;
-        }
-        else
+        if (context.performed)
         {
             OnFocusAction?.Invoke();
+        }
+        else if (context.canceled)
+        {
+            OnFocusReleaseAction?.Invoke();
         }
     }
 

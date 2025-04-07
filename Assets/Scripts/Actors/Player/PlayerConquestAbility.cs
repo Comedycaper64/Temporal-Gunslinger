@@ -44,8 +44,12 @@ public class PlayerConquestAbility : MonoBehaviour
     [SerializeField]
     private AudioClip[] conquestVoicelines;
 
+    [SerializeField]
+    private string[] conquestLineText;
+
     public static EventHandler<bool> OnAbilityUIUsed;
     public static EventHandler<CutInType> OnConquestAbility;
+    public static EventHandler<string> OnConquestAbilityText;
 
     private void Start()
     {
@@ -160,6 +164,11 @@ public class PlayerConquestAbility : MonoBehaviour
 
         // Activate conquest flair
         OnConquestAbility?.Invoke(this, CutInType.Conquest);
+
+        if (randomInt < conquestLineText.Length)
+        {
+            OnConquestAbilityText?.Invoke(this, conquestLineText[randomInt]);
+        }
 
         daggerSpawnTimer = 0f;
         spawned = false;

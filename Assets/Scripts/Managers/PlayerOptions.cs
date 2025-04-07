@@ -9,6 +9,7 @@ public class PlayerOptions
     private const string GUN_SENSITIVITY = "GunSens";
     private const string BULLET_SENSITIVITY = "BulletSens";
     private const string DIALOGUE_AUTOPLAY = "AutoPlay";
+    private const string FOCUS_SETTING = "Focus";
     private const string VSYNC = "VSync";
 
     private static float MASTER_VOLUME_DEF = 0.5f;
@@ -20,6 +21,7 @@ public class PlayerOptions
     private static float BULLET_SENSITIVITY_DEF = 1f;
 
     private static bool DIALOGUE_AUTOPLAY_DEF = false;
+    private static bool FOCUS_SETTING_DEF = false;
     private static bool VSYNC_DEF = true;
 
     public static void SetMasterVolume(float newVolume)
@@ -84,6 +86,17 @@ public class PlayerOptions
         }
 
         PlayerPrefs.SetInt(VSYNC, vSync);
+    }
+
+    public static void SetFocusSetting(bool toggle)
+    {
+        int focus = 0;
+        if (toggle)
+        {
+            focus = 1;
+        }
+
+        PlayerPrefs.SetInt(FOCUS_SETTING, focus);
     }
 
     public static float GetMasterVolume()
@@ -191,6 +204,24 @@ public class PlayerOptions
             }
 
             return vSync;
+        }
+    }
+
+    public static bool GetFocusSetting()
+    {
+        if (!PlayerPrefs.HasKey(FOCUS_SETTING))
+        {
+            return FOCUS_SETTING_DEF;
+        }
+        else
+        {
+            bool focus = false;
+            if (PlayerPrefs.GetInt(FOCUS_SETTING) == 1)
+            {
+                focus = true;
+            }
+
+            return focus;
         }
     }
 }

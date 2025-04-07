@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool bIsPlayerActive = false;
     private bool bIsFocusing = false;
     private bool bIsFreeCam = false;
+    private bool bFocusToggle;
     private bool bFreeCamSaveState = false;
 
     [SerializeField]
@@ -56,14 +57,19 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         InputManager.Instance.OnFocusAction += InputManager_OnFocus;
+        InputManager.Instance.OnFocusReleaseAction += InputManager_OnFocusRelease;
         OptionsManager.OnGunSensitivityUpdated += OnSensitivityUpdated;
         TutorialUI.OnDisplayTutorial += TutorialUI_OnDisplayTutorial;
         BulletPossessTarget.OnEmergencyRepossess += BulletPossessTarget_OnEmergencyRepossess;
+
+        bFocusToggle = PlayerOptions.GetFocusSetting();
+        OptionsManager.OnFocusUpdated += OptionsManager_OnFocusUpdated;
     }
 
     private void OnDisable()
     {
         InputManager.Instance.OnFocusAction -= InputManager_OnFocus;
+        InputManager.Instance.OnFocusReleaseAction -= InputManager_OnFocusRelease;
         OptionsManager.OnGunSensitivityUpdated -= OnSensitivityUpdated;
         TutorialUI.OnDisplayTutorial -= TutorialUI_OnDisplayTutorial;
         BulletPossessTarget.OnEmergencyRepossess -= BulletPossessTarget_OnEmergencyRepossess;
@@ -73,6 +79,8 @@ public class PlayerController : MonoBehaviour
         InputManager.Instance.OnShootAction -= InputManager_OnStartLockOnAction;
         InputManager.Instance.OnShootReleaseAction -= InputManager_OnRedirect;
         InputManager.Instance.OnFreeCamPossessAction -= InputManager_OnPossessAction;
+
+        OptionsManager.OnFocusUpdated -= OptionsManager_OnFocusUpdated;
     }
 
     void Update()
@@ -321,6 +329,23 @@ public class PlayerController : MonoBehaviour
         IsFocusingChanged(bIsFocusing);
     }
 
+    private void InputManager_OnFocusRelease()
+    {
+        if (!bIsPlayerActive && !bBulletFired)
+        {
+            return;
+        }
+
+        if (bFocusToggle)
+        {
+            return;
+        }
+
+        bIsFocusing = false;
+        mouseSensitivity = REST_MOUSE_SENSITIVITY;
+        IsFocusingChanged(bIsFocusing);
+    }
+
     private void InputManager_OnStartLockOnAction()
     {
         if (!bIsFocusing || !bCanRedirect)
@@ -380,6 +405,11 @@ public class PlayerController : MonoBehaviour
     private void TutorialUI_OnDisplayTutorial(object sender, bool toggle)
     {
         TogglePlayerController(!toggle);
+    }
+
+    private void OptionsManager_OnFocusUpdated(object sender, bool focusToggle)
+    {
+        bFocusToggle = focusToggle;
     }
 
     private void IsFocusingChanged(bool isFocusing)

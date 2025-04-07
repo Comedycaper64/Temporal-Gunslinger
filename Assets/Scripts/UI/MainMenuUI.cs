@@ -181,6 +181,18 @@ public class MainMenuUI : MonoBehaviour
         CinematicManager.Instance.PlayCinematic(levelLoadFade, LoadLevel);
     }
 
+    public void ClearSaveData()
+    {
+        SaveManager.ResetProgress();
+        SceneManager.LoadScene(0);
+    }
+
+    public void UnlockLevels()
+    {
+        SaveManager.SetLevelProgress(24);
+        SceneManager.LoadScene(0);
+    }
+
     private void LoadLevel()
     {
         SceneManager.LoadSceneAsync(loadBuildIndex);
