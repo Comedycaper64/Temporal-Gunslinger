@@ -22,7 +22,7 @@ public class PlayerConquestAbility : MonoBehaviour
     // private MeshRenderer daggerRenderer;
 
     [SerializeField]
-    private GameObject conquestPortal;
+    private RewindableAnimator conquestPortal;
 
     [SerializeField]
     private GameObject daggerSpawnModel;
@@ -200,7 +200,10 @@ public class PlayerConquestAbility : MonoBehaviour
         SetDaggerMaterialPoints();
 
         //Spawn Portal object
-        Factory.InstantiateGameObject(conquestPortal, daggerSpawnPoint, daggerSpawnRotation);
+        //Factory.InstantiateGameObject(conquestPortal, daggerSpawnPoint, daggerSpawnRotation);
+        conquestPortal.transform.SetPositionAndRotation(daggerSpawnPoint, daggerSpawnRotation);
+        conquestPortal.gameObject.SetActive(true);
+        conquestPortal.BeginPlay();
 
         BulletDeadState.bulletNumber++;
 
@@ -217,6 +220,7 @@ public class PlayerConquestAbility : MonoBehaviour
 
     public void RefreshAbility()
     {
+        conquestPortal.gameObject.SetActive(false);
         bAbilityUsed = false;
         BulletDeadState.bulletNumber--;
         OnAbilityUIUsed?.Invoke(this, false);

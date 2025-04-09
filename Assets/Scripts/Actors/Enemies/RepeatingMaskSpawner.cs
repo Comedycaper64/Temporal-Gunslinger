@@ -32,6 +32,13 @@ public class RepeatingMaskSpawner : RewindableMovement
             }
             else if (spawnTimer < 0f)
             {
+                if (spawnIndex <= 0)
+                {
+                    spawnTimer = 0f;
+                    spawnIndex = 0;
+                    return;
+                }
+
                 spawnIndex--;
                 spawnTimer = spawnTimes[spawnIndex];
             }

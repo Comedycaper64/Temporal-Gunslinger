@@ -5,19 +5,20 @@ using UnityEngine;
 public class DebugFPSUI : MonoBehaviour
 {
     public int MaxFrames = 60; //maximum frames to average over
-    private TextMeshProUGUI text;
+
+    //private TextMeshProUGUI text;
 
     // [SerializeField]
     // private TextMeshProUGUI rrtext;
-    private static float lastFPSCalculated = 0f;
+    //private static float lastFPSCalculated = 0f;
     private List<float> frameTimes = new List<float>();
 
     private void Awake()
     {
         Application.targetFrameRate = MaxFrames;
 
-        text = GetComponent<TextMeshProUGUI>();
-        lastFPSCalculated = 0f;
+        //text = GetComponent<TextMeshProUGUI>();
+        //lastFPSCalculated = 0f;
         frameTimes.Clear();
         //rrtext.text = "Hz: " + Screen.mainWindowDisplayInfo.refreshRate.value.ToString("0.0");
 
@@ -61,9 +62,9 @@ public class DebugFPSUI : MonoBehaviour
 
     private void Update()
     {
-        AddFrame();
-        lastFPSCalculated = CalculateFPS();
-        text.text = "FPS: " + lastFPSCalculated.ToString("0.0");
+        // AddFrame();
+        // lastFPSCalculated = CalculateFPS();
+        // text.text = "FPS: " + lastFPSCalculated.ToString("0.0");
     }
 
     private void AddFrame()

@@ -1,14 +1,19 @@
 using System;
 using UnityEngine;
 
-public class RedirectManager : MonoBehaviour
+public class RedirectManager : MonoBehaviour, IReactable
 {
     public static RedirectManager Instance { get; private set; }
 
     [SerializeField]
     private int levelRedirects;
+    private static int redirectIndex;
 
     private int redirects = 0;
+
+    [SerializeField]
+    private TrickshotCoin[] localRedirectCoins;
+    private static TrickshotCoin[] redirectCoins;
 
     public static Action OnRedirectFailed;
     public static event EventHandler<int> OnRedirectsChanged;
@@ -25,6 +30,8 @@ public class RedirectManager : MonoBehaviour
             return;
         }
         Instance = this;
+        redirectIndex = 0;
+        redirectCoins = localRedirectCoins;
     }
 
     //Debug, redirects should be set in level/game manager
@@ -92,5 +99,31 @@ public class RedirectManager : MonoBehaviour
     public void ResetLevel()
     {
         SetRedirects(levelRedirects);
+    }
+
+    public static void SpawnRedirectCoin(Vector3 spawnPosition)
+    {
+        redirectCoins[redirectIndex].gameObject.SetActive(true);
+        redirectCoins[redirectIndex].SetCoin(spawnPosition);
+
+        redirectIndex++;
+
+        if (redirectIndex >= redirectCoins.Length)
+        {
+            redirectIndex = 0;
+        }
+
+        StartReaction.ReactionStarted(Instance);
+    }
+
+    public void UndoReaction()
+    {
+        redirectIndex--;
+
+        if (redirectIndex < 0)
+        {
+            redirectIndex = redirectCoins.Length - 1;
+        }
+        redirectCoins[redirectIndex].gameObject.SetActive(false);
     }
 }

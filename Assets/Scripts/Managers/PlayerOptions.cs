@@ -15,7 +15,7 @@ public class PlayerOptions
     private static float MASTER_VOLUME_DEF = 0.5f;
     private static float MUSIC_VOLUME_DEF = 1f;
     private static float SFX_VOLUME_DEF = 1f;
-    private static float VOICE_VOLUME_DEF = 1f;
+    private static float VOICE_VOLUME_DEF = 0.8f;
 
     private static float GUN_SENSITIVITY_DEF = 1f;
     private static float BULLET_SENSITIVITY_DEF = 1f;

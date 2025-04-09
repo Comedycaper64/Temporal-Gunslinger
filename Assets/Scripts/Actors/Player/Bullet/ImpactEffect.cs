@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class ImpactEffect : RewindableMovement
 {
-    private float dampVelocity;
-
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
@@ -13,12 +11,18 @@ public class ImpactEffect : RewindableMovement
 
     private void Update()
     {
-        float newAlpha = Mathf.SmoothDamp(spriteRenderer.color.a, 0f, ref dampVelocity, 5f);
+        float newAlpha = spriteRenderer.color.a - (GetUnscaledSpeed() * Time.deltaTime);
         spriteRenderer.color = new Color(1f, 1f, 1f, newAlpha);
 
-        if (newAlpha <= 0f)
+        if ((newAlpha <= 0f) || (newAlpha > 1f))
         {
-            Destroy(this);
+            ToggleMovement(false);
+            gameObject.SetActive(false);
         }
+    }
+
+    public void ResetEffect()
+    {
+        spriteRenderer.color = new Color(1f, 1f, 1f, 1f);
     }
 }

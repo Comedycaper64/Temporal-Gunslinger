@@ -79,4 +79,9 @@ public class EnemyDeathScytheBState : State
             new EnemyDeathTeleportBufferState(deathSM, new EnemyDeathRestingState(deathSM, true))
         );
     }
+
+    public override string GetStateName()
+    {
+        return "Scythe B State";
+    }
 }

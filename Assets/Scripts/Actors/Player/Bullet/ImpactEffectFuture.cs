@@ -5,8 +5,9 @@ public class ImpactEffectFuture : ImpactEffect
 {
     public static EventHandler<Vector3> OnHitEnvironment;
 
-    private void Start()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         OnHitEnvironment?.Invoke(this, transform.position);
     }
 }

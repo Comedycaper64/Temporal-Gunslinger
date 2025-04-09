@@ -20,12 +20,6 @@ public class BulletDamager : MonoBehaviour
     [SerializeField]
     private BulletStateMachine bulletStateMachine;
 
-    [SerializeField]
-    private GameObject impactEffect;
-
-    [SerializeField]
-    private GameObject ricochetVFX;
-
     public EventHandler<IDamageable> OnHitAchievementCheck;
 
     private void Awake()
@@ -58,18 +52,13 @@ public class BulletDamager : MonoBehaviour
                 return;
             }
 
-            Factory.InstantiateGameObject(ricochetVFX, transform.position, transform.rotation);
-            impulseSource.GenerateImpulse();
-
-            Vector3 impactPoint = other.GetContact(0).point;
             Vector3 impactNormal = other.GetContact(0).normal;
+            Quaternion impactRotation = Quaternion.LookRotation(-impactNormal);
 
-            GameObject impact = Factory.InstantiateGameObject(
-                impactEffect,
-                other.gameObject.transform
-            );
-            impact.transform.position = impactPoint + 0.1f * impactNormal.normalized;
-            impact.transform.rotation = Quaternion.LookRotation(-impactNormal);
+            RicochetManager.SpawnRicochetVFX(transform, impactRotation);
+
+            RicochetManager.SpawnRicochetImpact(other);
+            impulseSource.GenerateImpulse();
 
             damageable.ProjectileHit(out float velocityConservation);
             bulletMovement.RicochetBullet(other, velocityConservation);

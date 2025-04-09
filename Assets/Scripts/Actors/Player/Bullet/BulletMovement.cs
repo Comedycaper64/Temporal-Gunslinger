@@ -62,8 +62,6 @@ public class BulletMovement : RewindableMovement
     [SerializeField]
     private GameObject redirectCoinPrefab;
 
-    [SerializeField]
-    private GameObject redirectVFXPrefab;
     private CinemachineImpulseSource cinemachineImpulseSource;
     private RedirectManager redirectManager;
 
@@ -168,23 +166,16 @@ public class BulletMovement : RewindableMovement
     {
         if (TryRedirect())
         {
-            GameObject coin = Factory.InstantiateGameObject(
-                redirectCoinPrefab,
-                bulletTip.position,
-                Quaternion.identity
-            );
+            RedirectManager.SpawnRedirectCoin(bulletTip.position);
 
             cinemachineImpulseSource.GenerateImpulse();
-
-            coin.transform.eulerAngles = new Vector3(0f, coin.transform.eulerAngles.y, 0f);
 
             Redirect.BulletRedirected(transform.position, GetFlightDirection(), this, 1f, false);
             int randomPitch = Random.Range(2, 5);
             AudioManager.PlaySFX(redirectSFX, 0.2f, randomPitch, transform.position);
 
-            Factory.InstantiateGameObject(
-                redirectVFXPrefab,
-                transform.position,
+            RicochetManager.SpawnRicochetVFX(
+                transform,
                 Quaternion.LookRotation(GetFlightDirection())
             );
 
@@ -250,14 +241,12 @@ public class BulletMovement : RewindableMovement
                     ricochetLayermask
                 );
 
-                //Debug.Log("Ayaya");
                 hitNormal = backUpNormal;
 
                 foreach (RaycastHit newHit in allHits)
                 {
                     if (hitObject.collider == newHit.collider)
                     {
-                        //Debug.Log("Found Actual");
                         hitNormal = newHit.normal.normalized;
                     }
                 }

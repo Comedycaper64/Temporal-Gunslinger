@@ -139,7 +139,7 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
     {
         int newFlow = flowIndex + 1;
 
-        if (newFlow < stateFlow.Count)
+        if (newFlow <= stateFlow.Count)
         {
             flowIndex = newFlow;
         }
@@ -192,7 +192,9 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
 
     public State GetNextState()
     {
-        return stateFlow[flowIndex];
+        int index = Mathf.Clamp(flowIndex, 0, stateFlow.Count - 1);
+
+        return stateFlow[index];
     }
 
     public DeathScythe GetWeapon()

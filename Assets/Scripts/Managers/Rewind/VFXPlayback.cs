@@ -27,9 +27,20 @@ public class VFXPlayback : RewindableMovement
     {
         visualEffect = GetComponent<VisualEffect>();
 
+        // if (bPlayOnStart)
+        // {
+        //     PlayEffect();
+        // }
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        visualEffect = GetComponent<VisualEffect>();
         if (bPlayOnStart)
         {
             PlayEffect();
+            BeginPlay();
         }
     }
 

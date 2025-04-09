@@ -100,4 +100,9 @@ public class EnemyDeathHeavyCastState : State
             deathSM.SwitchState(new EnemyDeathHeavyCastInterruptState(deathSM));
         }
     }
+
+    public override string GetStateName()
+    {
+        return "Heavy Cast State";
+    }
 }
