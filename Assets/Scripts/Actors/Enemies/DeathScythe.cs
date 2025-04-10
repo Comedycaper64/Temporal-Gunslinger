@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class DeathScythe : MonoBehaviour, ISetAttacker
 {
+    private bool scytheActive = false;
+
     [SerializeField]
     private WeakPoint[] scytheWeakPoints;
 
@@ -39,7 +41,10 @@ public class DeathScythe : MonoBehaviour, ISetAttacker
 
             if (toggle)
             {
-                weakPoint.OnHit += ScytheHit;
+                if (!scytheActive)
+                {
+                    weakPoint.OnHit += ScytheHit;
+                }
             }
             else
             {
@@ -50,6 +55,8 @@ public class DeathScythe : MonoBehaviour, ISetAttacker
         scytheMeleeWeapon.gameObject.SetActive(toggle);
 
         ToggleAttack(toggle);
+
+        scytheActive = toggle;
 
         if (toggle)
         {

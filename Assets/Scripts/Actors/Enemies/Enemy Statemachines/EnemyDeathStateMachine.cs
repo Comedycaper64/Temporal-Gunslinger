@@ -123,6 +123,7 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         stateDurationTimes = new Stack<float>();
 
         deathVFX.PlayEffect();
+        deathSpell.EnableKillBox(false);
 
         foreach (BulletStateMachine bullet in deathQuills)
         {

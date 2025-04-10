@@ -32,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &6896051754062612966
 VisualEffect:
@@ -63,7 +63,10 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 10
+        m_Name: Spark Count
+        m_Overridden: 1
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -128,4 +131,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startSpeed: 5
   controlTimeVariable: 1
+  controlPlaybackVariable: 0
+  clamp01: 0
   bPlayOnStart: 1

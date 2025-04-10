@@ -240,6 +240,7 @@ public class DialogueManager : MonoBehaviour
         currentAnimations = new Queue<AnimationClip>(dialogueNode.animations);
         currentCameraModes = new Queue<CameraMode>(dialogueNode.cameraModes);
         currentAnimationTimes = new Queue<float>(dialogueNode.animationTime);
+
         dialogueAudioSource.outputAudioMixerGroup = currentActor?.GetAudioMixer();
 
         if (dialogueNode.animationCrossFadeTime != null)
@@ -297,7 +298,7 @@ public class DialogueManager : MonoBehaviour
 
         TryChangeCameraMode();
 
-        TryPlayVoiceClip();
+        bool playingVoiceClip = TryPlayVoiceClip();
 
         float animationTimer = TrySetAnimationTimer();
 
@@ -318,7 +319,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             ToggleDialogueUI(true);
-            StartTypingSentence();
+            StartTypingSentence(playingVoiceClip);
         }
     }
 
@@ -358,7 +359,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void TryPlayVoiceClip()
+    private bool TryPlayVoiceClip()
     {
         if (dialogueAudioSource.isPlaying)
         {
@@ -370,7 +371,9 @@ public class DialogueManager : MonoBehaviour
             dialogueAudioSource.clip = voiceClip;
             dialogueAudioSource.volume =
                 PlayerOptions.GetMasterVolume() * PlayerOptions.GetVoiceVolume();
-            dialogueAudioSource.Play();
+
+            dialogueAudioSource.Play(); //Delayed(0.25f);
+            //dialogueAudioSource.bypassEffects = false;
 
             if (bAutoPlay)
             {
@@ -380,7 +383,10 @@ public class DialogueManager : MonoBehaviour
                     )
                 );
             }
+            return true;
         }
+
+        return false;
     }
 
     private float TrySetAnimationTimer()
@@ -401,11 +407,11 @@ public class DialogueManager : MonoBehaviour
         DisplayNextSentence();
     }
 
-    private void StartTypingSentence()
+    private void StartTypingSentence(bool playingVoiceClip)
     {
         bIsSentenceTyping = true;
 
-        bool playDialogueNoises = !dialogueAudioSource.isPlaying;
+        bool playDialogueNoises = !playingVoiceClip;
 
         OnDialogue?.Invoke(
             this,
