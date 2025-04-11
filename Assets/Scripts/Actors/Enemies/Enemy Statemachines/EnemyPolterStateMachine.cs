@@ -26,4 +26,10 @@ public class EnemyPolterStateMachine : EnemyRangedStateMachine
     {
         shootVFX.StopEffect();
     }
+
+    public override void ResetProjectile()
+    {
+        base.ResetProjectile();
+        shootVFX.StopEffect();
+    }
 }

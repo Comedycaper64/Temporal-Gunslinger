@@ -90,6 +90,5 @@ public class EnemyWitchStateMachine : EnemyRangedStateMachine
         bullet2.ResetBullet(projectileRestPoint);
         bullet3.ResetBullet(projectileRestPoint);
         SetRunAnimationExitTime(0f);
-        //Debug.Log("Animation Time Reset");
     }
 }

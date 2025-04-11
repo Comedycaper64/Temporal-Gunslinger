@@ -42,10 +42,4 @@ public class EnemyLibrarianStateMachine : EnemyRangedStateMachine, ISetAttacker
     {
         OnTimeOffset?.Invoke(this, offset);
     }
-
-    // public override void ResetProjectile()
-    // {
-    //     base.ResetProjectile();
-    //     stateTimerSave = 0f;
-    // }
 }

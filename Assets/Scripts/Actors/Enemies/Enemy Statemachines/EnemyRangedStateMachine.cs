@@ -87,8 +87,6 @@ public class EnemyRangedStateMachine : StateMachine
             Bullet bullet = projectile.GetComponent<Bullet>();
             bullet.ResetBullet(projectileRestPoint);
         }
-
-        //Debug.Log("Animation Time Reset");
     }
 
     public virtual void PlayShootFX()

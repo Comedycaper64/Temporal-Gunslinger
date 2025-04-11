@@ -40,6 +40,16 @@ public class RedirectManager : MonoBehaviour, IReactable
         SetRedirects(levelRedirects);
     }
 
+    private void OnEnable()
+    {
+        GameManager.OnGameStateChange += GameManager_OnGameStateChange;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameStateChange -= GameManager_OnGameStateChange;
+    }
+
     public bool TryRedirect()
     {
         if (redirects > 0)
@@ -125,5 +135,18 @@ public class RedirectManager : MonoBehaviour, IReactable
             redirectIndex = redirectCoins.Length - 1;
         }
         redirectCoins[redirectIndex].gameObject.SetActive(false);
+    }
+
+    private void GameManager_OnGameStateChange(object sender, StateEnum stateEnum)
+    {
+        if (stateEnum == StateEnum.inactive)
+        {
+            redirectIndex = 0;
+
+            foreach (TrickshotCoin coin in localRedirectCoins)
+            {
+                coin.gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -91,12 +91,6 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
         stateDictionary.Add(StateEnum.active, new EnemyDeathRestingState(this, true));
         stateDictionary.Add(StateEnum.dead, new EnemyBossDeadState(this));
 
-        // stateFlow.Add(new EnemyDeathScytheAAltState(this));
-        // stateFlow.Add(new EnemyDeathScytheBAltState(this));
-        // stateFlow.Add(new EnemyDeathDeadzonesState(this));
-        // stateFlow.Add(new EnemyDeathHeavyCastState(this));
-        // stateFlow.Add(new EnemyDeathQuillFlurryState(this));
-
         stateFlow.Add(new EnemyDeathScytheAAltState(this));
         stateFlow.Add(new EnemyDeathScytheBAltState(this));
         stateFlow.Add(new EnemyDeathQuillFlurryState(this));
@@ -225,6 +219,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
 
     public DeathDeadzone GetDeathDeadzone()
     {
+        if (deadZoneIndex >= deathDeadzones.Length)
+        {
+            return deathDeadzones[0];
+        }
+
         DeathDeadzone deadzone = deathDeadzones[deadZoneIndex];
         deadZoneIndex++;
         return deadzone;
@@ -247,6 +246,11 @@ public class EnemyDeathStateMachine : StateMachine, IReactable
 
     private void ReplaceQuill()
     {
+        if (quillIndex <= 0)
+        {
+            return;
+        }
+
         quillIndex--;
     }
 

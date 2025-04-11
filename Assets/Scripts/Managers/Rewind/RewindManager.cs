@@ -9,7 +9,6 @@ public class RewindManager : MonoBehaviour
 
     private double rewindTimer = 0f;
 
-    //private float timerAugment = 1f;
     private float resetTimer;
     private const float RESET_TIME = 1f;
     private bool bCanReset = true;
@@ -95,7 +94,6 @@ public class RewindManager : MonoBehaviour
     {
         if (!bRewindActive)
         {
-            //Debug.Log(rewindTimer);
             rewindTimer += Time.deltaTime * RewindableMovement.GetTimescale();
         }
         else
@@ -162,7 +160,6 @@ public class RewindManager : MonoBehaviour
                 }
                 else
                 {
-                    //Debug.Log("Undo");
                     rewindableActions.Pop();
 
                     rewindable.Undo();
@@ -187,8 +184,6 @@ public class RewindManager : MonoBehaviour
         {
             rewindableActions.Push(rewindable);
         }
-
-        // Debug.Log("Timestamp: " + rewindTimer + ", Object: " + rewindable.GetType());
     }
 
     private void ToggleTimer(bool toggle)
@@ -256,7 +251,6 @@ public class RewindManager : MonoBehaviour
         ToggleRewind(false);
         ToggleTurbo(false);
 
-        //hopefully won't break shit
         if (!endOfLevel)
         {
             while (priorityActions.Count > 0)
@@ -275,7 +269,7 @@ public class RewindManager : MonoBehaviour
         priorityActions = new Stack<RewindableAction>();
         rewindableActions = new Stack<RewindableAction>();
         rewindTimer = 0f;
-        //timerAugment = 1f;
+
         RewindableMovement.UpdateMovementTimescale(1f);
     }
 

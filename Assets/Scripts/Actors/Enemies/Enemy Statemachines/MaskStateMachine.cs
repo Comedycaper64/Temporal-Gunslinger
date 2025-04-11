@@ -26,7 +26,6 @@ public class MaskStateMachine : EnemyRangedStateMachine
 
     public void EnableFireProjectile()
     {
-        //fireProjectile = true;
         stateDictionary.Remove(StateEnum.active);
         stateDictionary.Add(StateEnum.active, new EnemyMaskShootState(this));
     }
