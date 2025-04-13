@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class EnemyDeathScytheBState : State
 {
+    private bool killBoxEnabled = false;
     private float timer = 0f;
     private float animationTimeNormalised = 0f;
+    private float attackTime = 0.07f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
     private readonly int StateAnimHash;
@@ -48,6 +50,8 @@ public class EnemyDeathScytheBState : State
         deathSM.GetWeapon().ToggleScythe(false);
         deathSM.GetWeapon().OnHit -= CounterAttack;
 
+        deathSM.GetSpell().EnableKillBox(false);
+
         if (!rewindState.IsRewinding())
         {
             deathSM.AddAnimationTime(animationTimeNormalised);
@@ -62,15 +66,14 @@ public class EnemyDeathScytheBState : State
             .GetCurrentAnimatorStateInfo(0)
             .normalizedTime;
 
-        // if (timer > attackTime)
-        // {
-        //     deathSM.SwitchState(
-        //         new EnemyDeathTeleportBufferState(
-        //             deathSM,
-        //             new EnemyDeathRestingState(deathSM, true)
-        //         )
-        //     );
-        // }
+        if (!killBoxEnabled && (timer > attackTime))
+        {
+            deathSM.GetSpell().EnableKillBox(true);
+        }
+        else if (killBoxEnabled && (timer <= attackTime))
+        {
+            deathSM.GetSpell().EnableKillBox(false);
+        }
     }
 
     private void CounterAttack()

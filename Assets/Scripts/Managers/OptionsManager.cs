@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class OptionsManager : MonoBehaviour
 {
     private bool vSyncState;
+    private bool fullScreenState;
     private bool focusSettingState;
 
     private const float SLIDER_MOD = 8f;
@@ -49,6 +50,9 @@ public class OptionsManager : MonoBehaviour
     [SerializeField]
     private Image vsyncButtonImage;
 
+    [SerializeField]
+    private Image fullScreenButtonImage;
+
     public static EventHandler<float> OnMasterVolumeUpdated;
     public static EventHandler<float> OnMusicVolumeUpdated;
     public static EventHandler<float> OnSFXVolumeUpdated;
@@ -56,6 +60,7 @@ public class OptionsManager : MonoBehaviour
     public static EventHandler<float> OnGunSensitivityUpdated;
     public static EventHandler<float> OnBulletSensitivityUpdated;
     public static EventHandler<bool> OnVSyncUpdated;
+    public static EventHandler<bool> OnFullScreenUpdated;
     public static EventHandler<bool> OnFocusUpdated;
 
     private void OnEnable()
@@ -71,6 +76,7 @@ public class OptionsManager : MonoBehaviour
         //bulletSensitivityYSlider.value = PlayerOptions.GetBulletYSensitivity();
 
         vSyncState = PlayerOptions.GetVSync();
+        fullScreenState = PlayerOptions.GetFullScreen();
 
         if (vSyncState)
         {
@@ -79,6 +85,15 @@ public class OptionsManager : MonoBehaviour
         else
         {
             vsyncButtonImage.color = Color.gray;
+        }
+
+        if (fullScreenState)
+        {
+            fullScreenButtonImage.color = Color.white;
+        }
+        else
+        {
+            fullScreenButtonImage.color = Color.gray;
         }
 
         focusSettingState = PlayerOptions.GetFocusSetting();
@@ -210,6 +225,24 @@ public class OptionsManager : MonoBehaviour
         PlayerOptions.SetVSync(vSyncState);
 
         OnVSyncUpdated?.Invoke(this, vSyncState);
+    }
+
+    public void ToggleFullScreen()
+    {
+        fullScreenState = !fullScreenState;
+
+        if (fullScreenState)
+        {
+            fullScreenButtonImage.color = Color.white;
+        }
+        else
+        {
+            fullScreenButtonImage.color = Color.gray;
+        }
+
+        PlayerOptions.SetFullScreen(fullScreenState);
+
+        OnFullScreenUpdated?.Invoke(this, fullScreenState);
     }
 
     // public void SetBulletYSensitivity(float newSensitivity)

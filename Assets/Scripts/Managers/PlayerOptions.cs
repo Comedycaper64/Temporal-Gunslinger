@@ -11,6 +11,7 @@ public class PlayerOptions
     private const string DIALOGUE_AUTOPLAY = "AutoPlay";
     private const string FOCUS_SETTING = "Focus";
     private const string VSYNC = "VSync";
+    private const string FULLSCREEN = "Fullscreen";
 
     private static float MASTER_VOLUME_DEF = 0.5f;
     private static float MUSIC_VOLUME_DEF = 1f;
@@ -23,6 +24,7 @@ public class PlayerOptions
     private static bool DIALOGUE_AUTOPLAY_DEF = false;
     private static bool FOCUS_SETTING_DEF = false;
     private static bool VSYNC_DEF = true;
+    private static bool FULLSCREEN_DEF = true;
 
     public static void SetMasterVolume(float newVolume)
     {
@@ -86,6 +88,17 @@ public class PlayerOptions
         }
 
         PlayerPrefs.SetInt(VSYNC, vSync);
+    }
+
+    public static void SetFullScreen(bool toggle)
+    {
+        int fullScreen = 0;
+        if (toggle)
+        {
+            fullScreen = 1;
+        }
+
+        PlayerPrefs.SetInt(FULLSCREEN, fullScreen);
     }
 
     public static void SetFocusSetting(bool toggle)
@@ -204,6 +217,24 @@ public class PlayerOptions
             }
 
             return vSync;
+        }
+    }
+
+    public static bool GetFullScreen()
+    {
+        if (!PlayerPrefs.HasKey(FULLSCREEN))
+        {
+            return FULLSCREEN_DEF;
+        }
+        else
+        {
+            bool fullScreen = false;
+            if (PlayerPrefs.GetInt(FULLSCREEN) == 1)
+            {
+                fullScreen = true;
+            }
+
+            return fullScreen;
         }
     }
 

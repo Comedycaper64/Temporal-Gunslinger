@@ -3,11 +3,12 @@ using UnityEngine;
 public class EnemyDeathScytheAAltState : State
 {
     private bool quillThrown = false;
+    private bool killBoxEnabled = false;
     private float timer = 0f;
     private float animationTimeNormalised = 0f;
     private float throwTime = 0.016f;
 
-    //private float attackTime = 0.075f;
+    private float attackTime = 0.07f;
     private RewindState rewindState;
     private EnemyDeathStateMachine deathSM;
     private readonly int StateAnimHash;
@@ -54,6 +55,8 @@ public class EnemyDeathScytheAAltState : State
         deathSM.GetWeapon().ToggleScythe(false);
         deathSM.GetWeapon().OnHit -= CounterAttack;
 
+        deathSM.GetSpell().EnableKillBox(false);
+
         if (!rewindState.IsRewinding())
         {
             deathSM.AddAnimationTime(animationTimeNormalised);
@@ -78,15 +81,14 @@ public class EnemyDeathScytheAAltState : State
             quillThrown = false;
         }
 
-        // if (timer > attackTime)
-        // {
-        //     deathSM.SwitchState(
-        //         new EnemyDeathTeleportBufferState(
-        //             deathSM,
-        //             new EnemyDeathRestingState(deathSM, true)
-        //         )
-        //     );
-        // }
+        if (!killBoxEnabled && (timer > attackTime))
+        {
+            deathSM.GetSpell().EnableKillBox(true);
+        }
+        else if (killBoxEnabled && (timer <= attackTime))
+        {
+            deathSM.GetSpell().EnableKillBox(false);
+        }
     }
 
     private void ThrowQuill()

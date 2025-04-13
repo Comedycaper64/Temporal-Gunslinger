@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class DebugFPSUI : MonoBehaviour
 {
+    private bool vSyncEnabled;
     public int MaxFrames = 60; //maximum frames to average over
 
     //private TextMeshProUGUI text;
@@ -28,15 +30,19 @@ public class DebugFPSUI : MonoBehaviour
     private void OnEnable()
     {
         OptionsManager.OnVSyncUpdated += UpdateVSync;
+        OptionsManager.OnFullScreenUpdated += UpdateFullScreen;
     }
 
     private void OnDisable()
     {
         OptionsManager.OnVSyncUpdated -= UpdateVSync;
+        OptionsManager.OnFullScreenUpdated -= UpdateFullScreen;
     }
 
     private void SetupVsync(bool toggle)
     {
+        vSyncEnabled = toggle;
+
         if (!toggle)
         {
             QualitySettings.vSyncCount = 0;
@@ -93,5 +99,15 @@ public class DebugFPSUI : MonoBehaviour
     private void UpdateVSync(object sender, bool toggle)
     {
         SetupVsync(toggle);
+    }
+
+    private void UpdateFullScreen(object sender, bool toggle)
+    {
+        Screen.fullScreen = toggle;
+
+        if (vSyncEnabled)
+        {
+            SetupVsync(true);
+        }
     }
 }

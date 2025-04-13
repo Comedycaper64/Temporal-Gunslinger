@@ -229,6 +229,7 @@ public class CinematicManager : MonoBehaviour
         else if (nodeType == typeof(UIChangeSO))
         {
             UIChangeSO uIChange = cinematicNode as UIChangeSO;
+            uIChange.onFaded = null;
             //uIChange.onFaded = TrySkipNextNode;
             OnFadeToBlackToggle?.Invoke(this, uIChange);
             TrySkipNextNode();

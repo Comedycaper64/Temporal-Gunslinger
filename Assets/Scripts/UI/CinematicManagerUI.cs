@@ -29,12 +29,15 @@ public class CinematicManagerUI : MonoBehaviour
             fadeStatus = true;
             fadeTarget = true;
         }
+
         CinematicManager.OnFadeToBlackToggle += ToggleFade;
+        PauseMenuUI.OnSkipCutscene += RemoveFadeEvent;
     }
 
     private void OnDisable()
     {
         CinematicManager.OnFadeToBlackToggle -= ToggleFade;
+        PauseMenuUI.OnSkipCutscene -= RemoveFadeEvent;
     }
 
     private void Update()
@@ -90,6 +93,7 @@ public class CinematicManagerUI : MonoBehaviour
 
         if (uIChange.waitUntilFaded)
         {
+            //Debug.Log("On Fade Set");
             onFade = uIChange?.onFaded;
         }
         else
@@ -99,5 +103,10 @@ public class CinematicManagerUI : MonoBehaviour
                 uIChange?.onFaded();
             }
         }
+    }
+
+    private void RemoveFadeEvent()
+    {
+        onFade = null;
     }
 }

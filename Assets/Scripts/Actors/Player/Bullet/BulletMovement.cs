@@ -59,9 +59,6 @@ public class BulletMovement : RewindableMovement
     [SerializeField]
     private Sprite pocketwatchDangerSprite;
 
-    [SerializeField]
-    private GameObject redirectCoinPrefab;
-
     private CinemachineImpulseSource cinemachineImpulseSource;
     private RedirectManager redirectManager;
 
@@ -259,7 +256,7 @@ public class BulletMovement : RewindableMovement
 
         //Debug.Log("Hit object: " + hitObject.gameObject.name);
 
-        Vector3 flightNormalized = GetFlightDirection().normalized;
+        Vector3 flightNormalized = GetFlightDirection(); //.normalized;
 
         Vector3 ricochetDirection = Vector3.Reflect(flightNormalized, hitNormal);
 
