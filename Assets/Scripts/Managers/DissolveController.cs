@@ -76,6 +76,7 @@ public class DissolveController : RewindableMovement
     public virtual void StartDissolve(float targetDissolve = 1f)
     {
         ToggleMovement(true);
+        BeginPlay();
         counter = 0;
         dissolveTarget = targetDissolve;
 

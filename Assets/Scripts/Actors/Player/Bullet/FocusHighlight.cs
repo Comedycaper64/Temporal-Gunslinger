@@ -21,7 +21,7 @@ public class FocusHighlight : MonoBehaviour, IHighlightable
     {
         if (!targetHighlight)
         {
-            Debug.Log("ERROR: highlight for " + gameObject.name + " not assigned");
+            //Debug.Log("ERROR: highlight for " + gameObject.name + " not assigned");
             return;
         }
 

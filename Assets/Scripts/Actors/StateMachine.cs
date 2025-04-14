@@ -18,7 +18,7 @@ public abstract class StateMachine : MonoBehaviour
     //REMOVE ON RELEASE
     protected virtual void DebugKill()
     {
-        SwitchToDeadState();
+        //SwitchToDeadState();
     }
 
     public virtual void Awake()
@@ -36,10 +36,10 @@ public abstract class StateMachine : MonoBehaviour
     {
         currentState?.Tick(Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            DebugKill();
-        }
+        // if (Input.GetKeyDown(KeyCode.K))
+        // {
+        //     DebugKill();
+        // }
     }
 
     public virtual void SwitchState(State newState)

@@ -95,7 +95,7 @@ Transform:
   m_Children:
   - {fileID: 8328746203264226959}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3007063521244812764
 MonoBehaviour:
@@ -4431,6 +4431,19 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3007063520705536876}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3188115205366655632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9013834209306747568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e2494faf51befc4a892a5af19b2f2ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetHighlight: {fileID: 5770540331906360225}
 --- !u!114 &5260654062510163922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4445,19 +4458,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletTarget: {fileID: 4195786506825916650}
   targetWeakPoint: {fileID: 8421879933993116423}
---- !u!114 &3188115205366655632
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9013834209306747568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e2494faf51befc4a892a5af19b2f2ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetHighlight: {fileID: 5770540331906360225}
 --- !u!4 &9166758134971644525 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6236889152400939265, guid: 8df03ea92490aba47b5cd004e75457fb,
@@ -4642,6 +4642,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -89.989
+      objectReference: {fileID: 0}
+    - target: {fileID: 7828219722662083374, guid: 82610fddb3cb9a14baa714b8df409ef6,
+        type: 3}
+      propertyPath: possessableWhileInactive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7828219723217615443, guid: 82610fddb3cb9a14baa714b8df409ef6,
         type: 3}

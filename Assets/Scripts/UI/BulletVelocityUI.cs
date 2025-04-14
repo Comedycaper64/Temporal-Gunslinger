@@ -44,9 +44,9 @@ public class BulletVelocityUI : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError(
-                "There's more than one BulletVelocityUI! " + transform + " - " + Instance
-            );
+            // Debug.LogError(
+            //     "There's more than one BulletVelocityUI! " + transform + " - " + Instance
+            // );
             Destroy(gameObject);
             return;
         }

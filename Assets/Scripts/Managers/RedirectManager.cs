@@ -23,9 +23,9 @@ public class RedirectManager : MonoBehaviour, IReactable
     {
         if (Instance != null)
         {
-            Debug.LogError(
-                "There's more than one RedirectManager! " + transform + " - " + Instance
-            );
+            // Debug.LogError(
+            //     "There's more than one RedirectManager! " + transform + " - " + Instance
+            // );
             Destroy(gameObject);
             return;
         }

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError("There's more than one GameManager! " + transform + " - " + Instance);
+            //Debug.LogError("There's more than one GameManager! " + transform + " - " + Instance);
             Destroy(gameObject);
             return;
         }

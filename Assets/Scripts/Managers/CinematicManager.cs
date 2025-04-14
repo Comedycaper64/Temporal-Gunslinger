@@ -36,9 +36,9 @@ public class CinematicManager : MonoBehaviour
     {
         if (Instance != null)
         {
-            Debug.LogError(
-                "There's more than one CinematicManager! " + transform + " - " + Instance
-            );
+            // Debug.LogError(
+            //     "There's more than one CinematicManager! " + transform + " - " + Instance
+            // );
             Destroy(gameObject);
             return;
         }
@@ -160,7 +160,7 @@ public class CinematicManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Error, undefined type");
+            //Debug.Log("Error, undefined type");
         }
     }
 
